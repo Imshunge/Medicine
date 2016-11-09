@@ -23,7 +23,15 @@
         android:layout_marginBottom="50dip"
         android:scrollbars="none"
         android:smoothScrollbar="true" />
-
+    <!--<GridLayout-->
+        <!--android:id="@+id/search_key_grid"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="50dip"-->
+        <!--android:layout_marginBottom="50dip"-->
+        <!--android:columnCount="4"-->
+        <!-->-->
+    <!--</GridLayout>-->
     <Button
         android:id="@+id/search_delete_btn"
         android:layout_width="match_parent"

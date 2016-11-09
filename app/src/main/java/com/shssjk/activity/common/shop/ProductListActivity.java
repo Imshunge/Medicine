@@ -221,6 +221,7 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
 
                             if (mDataJson.has("product")) {
                                 mProducts = (List<SPProduct>) mDataJson.get("product");
+                                
                             }
                             if (mDataJson.has("order")) {
                                 mShopOrder = (SPShopOrder) mDataJson.get("order");
@@ -292,12 +293,13 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
                         if (mDataJson != null) {
                             mShopOrder = (SPShopOrder) mDataJson.get("order");
                             List<SPProduct> results = (List<SPProduct>) mDataJson.get("product");
-                            if (results != null && mProducts != null) {
+                            if (results.size() != 0 && mProducts != null) {
                                 mProducts.addAll(results);
                                 mAdapter.setData(mProducts);
                                 mAdapter.notifyDataSetChanged();
-                            } else if (results == null) {
+                            } else if (results.size() == 0) {
                                 ptrClassicFrameLayout.setLoadMoreEnable(false);
+                                showToast(getString(R.string.toast_load_nodata));
                             }
                             if (ProductListFilterFragment.getInstance(mHandler) != null) {
                                 ProductListFilterFragment.getInstance(mHandler).setDataSource(mDataJson);
@@ -308,6 +310,7 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
                             mIsMaxPage = true;
                             ptrClassicFrameLayout.setLoadMoreEnable(false);
                         }
+                        ptrClassicFrameLayout.loadMoreComplete(true);  //
                         refreshView();
                     } catch (Exception e) {
                         e.printStackTrace();

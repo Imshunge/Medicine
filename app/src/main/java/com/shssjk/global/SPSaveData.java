@@ -104,5 +104,11 @@ public class SPSaveData {
 		editor.putBoolean(key, val);
 		editor.commit();
 	}
+	public  static void  removeValue(Context context,String key){
+		Editor editor = getShared(context).edit();
+		editor.remove(key);
+		editor.commit();
+	}
+
 }
  

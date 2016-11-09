@@ -10,16 +10,17 @@ import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.BaseActivity;
 import com.shssjk.adapter.SPSearchkeyListAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.SPSaveData;
 import com.shssjk.utils.SPDialogUtils;
+import com.shssjk.utils.SSUtils;
 import com.shssjk.view.SPSearchView;
 import com.soubao.tpshop.utils.SPStringUtils;
 
@@ -52,6 +53,7 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
     private ImageView iamgeSearch;
     private ImageView iamgeBack;
     private TextView searchedTextView;
+    private Button searchDeleteBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -69,6 +71,7 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
         iamgeSearch = (ImageView) findViewById(R.id.search_icon);
         iamgeBack= (ImageView) findViewById(R.id.back_imgv);
         searchedTextView = (TextView) findViewById(R.id.search_edtv);
+        searchDeleteBtn= (Button) findViewById(R.id.search_delete_btn);
     }
 
     @Override
@@ -105,7 +108,7 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
             @Override
             public void onClick(View v) {
                 if (SPStringUtils.isEmpty(searchedTextView.getText().toString().trim())) {
-                    SPDialogUtils.showToast(mContext,"搜索内容不能为空");
+                    SPDialogUtils.showToast(mContext, "搜索内容不能为空");
                     return;
                 }
                 startSearch(searchedTextView.getText().toString().trim());
@@ -146,9 +149,15 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
                 finish();
             }
         });
-
-
+        searchDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteKet();
+            }
+        });
     }
+
+
 
     @Override
     public void onBackClick() {
@@ -191,7 +200,16 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
         }
         SPSaveData.putValue(this, MobileConstants.KEY_SEARCH_KEY, searchKey);
     }
+    private void deleteKet() {
+         SPSaveData.removeValue(this, MobileConstants.KEY_SEARCH_KEY);
+        String searchKey = SPSaveData.getString(this, MobileConstants.KEY_SEARCH_KEY);
+//        if(SSUtils.isEmpty(searchKey)){
+//            showToast("");
+//        }
+        loadKey();
+        mAdapter.setData(mSearchkeys);
 
+    }
     public void loadKey() {
         mSearchkeys = new ArrayList<String>();
         String searchKey = SPSaveData.getString(this, MobileConstants.KEY_SEARCH_KEY);

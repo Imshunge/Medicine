@@ -97,7 +97,6 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 	ImageView bottomLeftImgv;	//下-> 左
 	ImageView bottomRightImgv;	//下-> 右
 	MainActivity mainActivity;
-	
 	private final static int SCANNIN_GREQUEST_CODE = 1;
 	TextView scanView;
 	Button searchView;

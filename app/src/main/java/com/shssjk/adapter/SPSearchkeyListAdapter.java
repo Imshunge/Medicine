@@ -1,5 +1,6 @@
 package com.shssjk.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -95,6 +96,7 @@ public class SPSearchkeyListAdapter extends BaseAdapter {
 		return -1;
 	}
 
+	@SuppressLint("WrongViewCast")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
