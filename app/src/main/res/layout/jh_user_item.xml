@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/com_relative2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="#fafafa" >
+    <RelativeLayout
+        android:id="@+id/jc_relat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <ImageView
+            android:id="@+id/img_essayuser"
+            android:layout_width="@dimen/item_usericon_width"
+            android:layout_height="@dimen/item_usericon_height"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_header" />
+        <ImageView
+            android:id="@+id/delete_image"
+            android:layout_width="@dimen/item_sicon_width"
+            android:layout_height="@dimen/item_sicon_height"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/praise_image"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/icon_delete"
+            android:contentDescription="@null"
+            android:visibility="invisible"
+            />
+        <TextView
+            android:id="@+id/jc_nickname"
+            style="@style/text_15"
+            android:layout_marginBottom="5dp"
+            android:layout_toRightOf="@+id/img_essayuser"
+            android:clickable="false"
+            android:text="秋天黄河"
+            android:textColor="#000000" />
+        <ImageView
+            android:id="@+id/jc_grade"
+            android:layout_width="30dp"
+            android:layout_height="15dp"
+            android:layout_toRightOf="@+id/jc_nickname"
+            android:layout_alignBottom="@+id/jc_nickname"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter" />
+        <TextView
+            android:id="@+id/jc_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/jc_nickname"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/jc_id"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:clickable="false"
+            android:textColor="#363636"
+            android:text="男"
+
+            android:textSize="12sp" />
+
+        <TextView
+            android:text="ID：001"
+            android:id="@+id/jc_id"
+            style="@style/date_text"
+            android:layout_below="@+id/jc_nickname"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@+id/img_essayuser"
+            android:clickable="false" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/jc_sin"
+        style="@style/text_15"
+        android:layout_below="@+id/jc_relat"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:ellipsize="end"
+        android:lines="2"
+        android:text="秋天去黄河看海" />
+    <LinearLayout
+        android:id="@+id/ll_check"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        android:gravity="top"
+        android:layout_marginTop="10dp"
+        android:paddingRight="10dp"
+        android:layout_below="@+id/jc_sin"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+            <TextView
+                android:id="@+id/throughTxtv"
+                style="@style/date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@drawable/button_add_selector"
+                android:text="通过" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/refuseTxtv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                style="@style/date_text"
+                android:background="@drawable/button_refuse_selector"
+                android:text="拒绝" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

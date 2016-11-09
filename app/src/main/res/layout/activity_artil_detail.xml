@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:cube_ptr="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <ScrollView
+        android:id="@+id/detail_scrollv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp"
+        android:scrollbars="none"
+        android:orientation="vertical"
+        android:layout_above="@+id/bottom">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp" >
+
+            <LinearLayout
+                android:id="@+id/infor_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/infor_title"
+                style="@style/title_text"
+                android:layout_below="@+id/infor_imageview"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="@dimen/article_title_size"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/infor_text"
+                style="@style/content_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/infor_title"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="6dp"
+                android:text="" />
+            <org.sufficientlysecure.htmltextview.HtmlTextView
+                android:id="@+id/htNewsContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/infor_title"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="6dp"
+                android:textAppearance="@android:style/TextAppearance.Medium" />
+            <TextView
+                android:id="@+id/not_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:id="@+id/layout_pinglun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/infor_text" >
+
+                <TextView
+                    android:id="@+id/shop_pinglun0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/tv_pinglun"
+                    android:textColor="#363636"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/infor_pinglun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/shop_pinglun0"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/infor_view"
+                    android:textColor="#9c9c9c"
+                    android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/infor_pinglun0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/shop_pinglun0"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/infor_view"
+                    android:textColor="#9c9c9c"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+                <TextView
+                    android:id="@+id/infor_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/shop_pinglun0"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:textColor="#9c9c9c"
+                    android:textSize="13sp" />
+                <com.chanven.lib.cptr.PtrClassicFrameLayout
+                    android:layout_below="@+id/toprela"
+                    android:id="@+id/articles_pcf"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="#f0f0f0"
+                    cube_ptr:ptr_resistance="1.7"
+                    android:layout_marginTop="0dip"
+                    cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+                    cube_ptr:ptr_duration_to_close="200"
+                    cube_ptr:ptr_duration_to_close_header="1000"
+                    cube_ptr:ptr_keep_header_when_refresh="true"
+                    cube_ptr:ptr_pull_to_fresh="false">
+
+                </com.chanven.lib.cptr.PtrClassicFrameLayout>
+                <com.shssjk.view.ListViewNobar
+                    android:id="@+id/list_pinglun"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/line"
+                    android:gravity="center"
+                    android:numColumns="1"
+                    android:stretchMode="columnWidth" />
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/shop_pinglun0"
+                    android:layout_marginTop="4dp"
+                    android:background="#646464" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/pinglun_layout" />
+    </LinearLayout>
+</RelativeLayout>

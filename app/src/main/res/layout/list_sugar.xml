@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:id="@+id/top_sugar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_9c"
+        android:orientation="horizontal"
+        android:padding="0.5dp" >
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.3"
+            android:background="#f0f0f0"
+            android:text="测量时间" />
+          
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="0.5dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="早饭前" />
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="0.5dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="早饭后" />
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="0.5dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="午饭前" />
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="0.5dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="午饭后" />
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="0.5dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="晚饭前" />
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="0.5dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="晚饭后" />
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="0.5dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="睡前" />
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="0.5dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="凌晨" />
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/list_sugar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_sugar"
+        android:layout_marginTop="1px"
+        android:cacheColorHint="#00000000" />
+    <View 
+        android:id="@+id/list_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/list_sugar"
+        android:background="@color/black_64"/>
+
+</RelativeLayout>

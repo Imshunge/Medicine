@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#fafafa"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+
+    <ImageView
+        android:id="@+id/list_sch_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerInside"
+        android:contentDescription="@null" />
+    <TextView
+        android:id="@+id/list_sch_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:lines="1"
+        android:gravity="center"
+        android:textColor="#363636"
+        android:text="" />
+
+</LinearLayout>

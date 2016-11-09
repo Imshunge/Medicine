@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="55dip"
+    android:background="@color/bg_view"
+    android:orientation="horizontal" >
+
+   <!-- 产品列表ITEM -->
+   <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/view_bg_clickable_selector">
+
+        <ImageView
+            android:id="@+id/product_pic_imgv"
+            android:layout_width="60.0dip"
+            android:layout_height="60.0dip"
+            android:src="@drawable/product_default"
+            android:background="@color/white"
+            android:layout_gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/product_name_txtv"
+            android:layout_toRightOf="@id/product_pic_imgv"
+            android:layout_width="match_parent"
+            android:layout_height="60.0dip"
+            android:layout_marginLeft="@dimen/arrow_image_size"
+            android:layout_marginRight="@dimen/margin_space"
+            android:textSize="@dimen/textSizeBig"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:text="针织衫"
+            android:maxEms="6"
+            android:maxLines="3"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            style="@style/textStyle.Normal.black" />
+
+   </RelativeLayout>
+</LinearLayout>

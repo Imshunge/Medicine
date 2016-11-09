@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_view"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+        <ImageView
+            android:id="@+id/pinglun_image"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/icon_header"
+            android:contentDescription="@null" />
+        <ImageView
+            android:id="@+id/praise_image"
+            android:layout_width="@dimen/item_ssicon_width"
+            android:layout_height="@dimen/item_ssicon_height"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/pinglun_content"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/praise"
+            android:contentDescription="@null" />
+        <ImageView
+            android:id="@+id/delete_image"
+            android:layout_width="@dimen/item_sicon_width"
+            android:layout_height="@dimen/item_sicon_height"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/icon_delete"
+            android:contentDescription="@null" />
+        <TextView
+            android:id="@+id/pinglun_title"
+            style="@style/text_13"
+            android:layout_toRightOf="@+id/pinglun_image"
+            android:textColor="@color/blue_9f"
+            android:text="" />
+        <TextView
+            android:id="@+id/pinglun_date"
+            style="@style/text_10"
+            android:layout_below="@+id/pinglun_title"
+            android:layout_toRightOf="@+id/pinglun_image"
+            android:text="" />
+        <TextView
+            android:id="@+id/pinglun_content"
+            android:layout_width="fill_parent"
+            style="@style/content_15"
+            android:layout_below="@+id/pinglun_date"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/pinglun_image" />
+        <TextView
+            android:id="@+id/pinglun_ids"
+            style="@style/text_10"
+            android:layout_alignParentRight="true"
+            android:text="" />
+        <TextView
+            android:id="@+id/click_sums"
+            style="@style/text_10"
+            android:layout_toLeftOf="@+id/praise_image"
+            android:layout_below="@+id/pinglun_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:text="" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc" />
+
+</LinearLayout>

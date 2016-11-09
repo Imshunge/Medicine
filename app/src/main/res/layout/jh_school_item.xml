@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fafafa"
+    android:orientation="horizontal"
+    android:padding="10dp" >
+
+    <ImageView
+        android:id="@+id/sch_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginRight="10dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_image" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="2dp" >
+
+        <TextView
+            android:id="@+id/sch_name"
+            style="@style/title_text"
+            android:maxEms="7"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/image_bodys"
+            android:layout_width="18dp"
+            android:layout_height="15dp"
+            android:layout_alignBottom="@+id/sch_name"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/sch_bodys"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_body" />
+
+        <TextView
+            android:id="@+id/sch_bodys"
+            style="@style/date_text"
+            android:layout_alignBottom="@+id/sch_name"
+            android:layout_toLeftOf="@+id/image_essay" />
+
+        <ImageView
+            android:id="@+id/image_essay"
+            android:layout_width="16dp"
+            android:layout_height="15dp"
+            android:layout_alignBottom="@+id/sch_name"
+            android:layout_marginLeft="15dp"
+            android:layout_toLeftOf="@+id/sch_essays"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_essay" />
+
+        <TextView
+            android:id="@+id/sch_essays"
+            style="@style/date_text"
+            android:layout_alignBottom="@+id/sch_name"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" >
+
+            <TextView
+                style="@style/text_15"
+                android:textSize="13sp"
+                android:text="@string/jh_master" />
+
+            <ImageView
+                android:id="@+id/sch_host_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="10dp"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_header" />
+
+            <TextView
+                android:id="@+id/sch_host"
+                style="@style/text_15"
+                android:textSize="13sp"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

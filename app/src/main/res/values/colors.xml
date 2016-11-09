@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="bottom_text_defualt">#FFFFFF</color>
+    <color name="bottom_text_check">#E20300</color>
+
+    <!--指针左半部分颜色-->
+    <color name="leftPointer">#e1dcd6</color>
+    <!--指针右半部分颜色-->
+    <color name="rightPointer">#f4efe9</color>
+    <!--背景颜色-->
+    <color name="temperatureBackground">#FFFAFA</color>
+
+    <!-- 公共颜色属性 -->
+    <color name="bg_activity">#fff0f2f5</color>
+    <color name="bg_activity_ss">#F3F5C6</color>
+
+    <color name="separate_color">#d7d7d7</color>
+    <color name="broder">#a0a0a0</color>
+    <color name="select_broder">#898787</color>
+
+
+    <color name="color_tab_item_fous">#e55f24</color>
+    <color name="color_tab_item_normal">#000000</color>
+
+    <color name="personal_head_bg">#ff6a505d</color>
+
+    <!-- 公共颜色属性 -->
+
+    <color name="bg_view">#ffffffff</color>
+    <color name="bg_header">#fff8f8f8</color>
+
+    <color name="color_font_gray">#9e9d9d</color>
+    <color name="color_font_blue">#47B0DA</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="yellow">#ff9c00</color>//黄色
+    <color name="select_yellow">#f2b350</color>//选中黄色
+
+    <color name="button_fouces_gray">#f6f6f6</color>
+    <color name="button_bg_gray">#dddcdc</color>//按钮背景灰色
+
+    <color name="text_color_red_price">#f26969</color>
+
+    <color name="move_line">#f15353</color>//FilterBar 选中颜色
+    <color name="light_red">#f15353</color>//京东红
+    <color name="btn_address">#A0D79D</color>//收货地址三级按钮
+    <color name="select_light_red">#f03f3f</color>//京东红:选中背景颜色
+
+    <color name="sub_title">#848689</color>//副标题文本颜色
+
+
+    <color name="sort_selected_text_color">#fff15353</color>
+    <color name="sort_normal_text_color">#ff000000</color>
+    <color name="search_title_hint_text_color">#ffb6b6b6</color>
+    <color name="search_title_text_color">#ff474646</color>
+    <color name="transparent">#00000000</color>
+    <color name="separator_line">#ffcccccc</color>
+    <color name="transparentblue">#445CACEE</color>
+    <color name="transparentwhite">#44ffffff</color>
+
+
+
+    <color name="color_ff">#F0F0F0</color>
+    <color name="color_00">#8A000000</color>
+
+
+
+
+    <color name="botton_nav_bg">#f8f8f8</color>
+
+    <color name="bn">#ffa0a0a0</color>
+
+    <!-- 商城颜色属性 -->
+    <color name="shop_title">#24B326</color>
+    <color name="bg_category_title">#FDFDF3</color>
+    <color name="green">#00FF00</color>
+
+    <color name="colorNormalTitle">#3d3d3d</color>
+    <color name="colorNormalText">#808080</color>
+
+    <!-- 右上角按钮 -->
+    <color name="right_press">@color/black_64</color>
+
+    <color name="right_disabled">@color/transparent</color>
+
+
+    <!-- 黑色线条或背景 -->
+    <color name="black_36">#ff363636</color>
+    <color name="black_64">#ff646464</color>
+    <color name="black_9c">#ff9c9c9c</color>
+    <color name="black_eb">#ffebebeb</color>
+    <color name="black_fa">#fffafafa</color>
+    <color name="black_cc">#ffcccccc</color>
+    <!-- 蓝色线条或背景 -->
+    <color name="blue_9f">#ff0099ff</color>
+
+    <!-- 蓝色 -->
+    <color name="blue_3c">#33ccff</color>
+    <color name="blue_39">#3399cc</color>
+    <color name="red">#fff10800</color>
+
+    <color name="primary">#0066ff</color><!--主题蓝色 -->
+    <!-- 二维码扫描-->
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color> <!-- Android standard ICS color -->
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#60000000</color>
+
+    <!-- 健康云首页-->
+    <color name="rl_bg_color">#f1f1f1</color>
+
+    <color name="line_start_color">#d9d9d9</color>
+    <color name="line_end_color">#b5b5b5</color>
+    <!-- 主要等级 -->
+    <color name="primary_pressed">#FF1595E9</color>
+    <color name="primary_border">#FF1A99F0</color>
+
+    <color name="primary_pressed_border">#FF1696EE</color>
+    <!-- 危险等级 -->
+    <color name="primary_disabled">#FF1C9BF9</color>
+
+    <color name="primary_disabled_border">#FF1D9CFA</color>
+
+    <!--绑定设备按钮代码 -->
+    <color name="primary_btn_border">#E5E5E5</color>
+    <color name="primary_btn_pressed">#E5E5E2</color>
+    <color name="primary_btn_disabled">#E5E5E5</color>
+    <color name="primary_btn">#E5E5E5</color><!--主题蓝色 -->
+
+
+</resources>

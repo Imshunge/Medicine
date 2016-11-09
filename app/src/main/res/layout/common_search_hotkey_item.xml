@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:background="@color/bg_view">
+
+    <!--<ScrollView-->
+        <!--android:id="@+id/search_hotkey_scrollv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:scrollbars="none"-->
+        <!--android:layout_height="50dip">-->
+
+   <!-- -->
+    <!--</ScrollView>-->
+    <!--android:id="@+id/search_tittle_txtv"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dip"-->
+    <!--android:gravity="left|center_vertical"-->
+    <!--android:singleLine="true"-->
+    <!--android:text="@string/search_history"-->
+    <!--android:paddingLeft="@dimen/margin_space"-->
+    <!--style="@style/textStyle.Medium.black"-->
+    <!-- -->
+
+    <TextView
+        android:id="@+id/id_index_gallery_item_text"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|left"
+        android:layout_marginLeft="@dimen/margin_space"
+        android:text="@string/hot_search"
+        style="@style/textStyle.Medium.black"
+        android:layout_centerVertical="true"/>
+    <GridLayout
+        android:layout_toRightOf="@+id/id_index_gallery_item_text"
+        android:id="@+id/search_hotkey_lyaout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        >
+    </GridLayout>
+</RelativeLayout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fafafa"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:padding="15dp" >
+
+        <ImageView
+            android:id="@+id/school_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_image" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/school_name"
+                style="@style/title_text"
+                android:maxEms="18"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/image_bodys"
+                android:layout_width="18dp"
+                android:layout_height="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_body"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:id="@+id/school_bodys"
+                style="@style/date_text"
+                android:textColor="@color/black_9c"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/image_bodys" />
+
+            <ImageView
+                android:id="@+id/image_essay"
+                android:layout_width="16dp"
+                android:layout_height="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/school_bodys"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_essay"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:id="@+id/school_essays"
+                style="@style/date_text"
+                android:textColor="@color/black_9c"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/image_essay" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            style="@style/title_text"
+            android:layout_width="wrap_content"
+            android:text="@string/jh_master"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/school_host_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/school_hosts"
+            style="@style/content_text"
+            android:layout_marginLeft="5dp"
+            android:textColor="#363636"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <include layout="@layout/line_long" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff"
+        android:padding="10dp" >
+
+        <TextView
+            style="@style/title_text"
+            android:layout_width="wrap_content"
+            android:text="@string/jh_jianjie"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/school_content"
+            style="@style/content_text"
+            android:layout_marginLeft="10dp"
+            android:textColor="#363636" />
+    </LinearLayout>
+
+</LinearLayout>

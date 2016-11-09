@@ -1,0 +1,395 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="title_activity_main2">尚尚健康</string>
+    <!-- 底部 导航条  选项卡 -->
+
+
+    <string name="app_name">尚尚健康</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_spproduct_detail_inner">SPProductDetailInnerActivity</string>
+    <string name="title_activity_spconfirm_order">SPConfirmOrderActivity</string>
+
+    <item name="key_tag_index1" type="id"></item>
+    <item name="key_tag_index2" type="id"></item>
+    <string name="digate_1">12</string>
+    <!-- 商城主界面相关字符串 -->
+    <string name="tab_item_infor">资讯</string>
+    <string name="tab_item_shop">健界</string>
+    <string name="tab_item_community">江湖</string>
+    <string name="tab_item_healthy">健康云</string>
+    <string name="tab_item_my">我</string>
+    <string name="text_item_category">分类</string>
+    <string name="text_item_shopcatd">购物车</string>
+    <string name="text_item_order">订单</string>
+    <string name="text_item_coupon">优惠券</string>
+    <!-- 主页 home -->
+    <string name="home_menu_first">限时抢购</string>
+    <string name="home_menu_sec">新品</string>
+    <string name="home_menu_third">推荐</string>
+    <string name="home_menu_fourth">充值</string>
+
+    <!-- 产品列表 -->
+    <string name="product_price">¥%1$2.2f</string>
+    <string name="sort_composite">综合</string>
+    <string name="sort_salenum">销量</string>
+    <string name="sort_price">价格</string>
+    <string name="sort_filter">筛选</string>
+    <string name="hint_search">请输入要搜索的商品</string>
+    <string name="hint_comment">请输入评价</string>
+
+    <!-- 产品列表 -> 产品详情 -->
+    <string name="product_details_spec">产品规格</string>
+    <string name="product_details_attr">商品属性</string>
+    <string name="product_details_detail">详情</string>
+    <string name="product_details_comment">累计评价</string>
+    <string name="product_details_like">已收藏</string>
+    <string name="product_details_unlike">未收藏</string>
+    <string name="product_details_home">首页</string>
+    <string name="product_add_cart">加入购物车</string>
+    <string name="product_buy_now">立即购买</string>
+    <string name="product_delete">删除商品</string>
+
+    <!-- 订单 , 确认订单 -->
+    <string name="order_deliver_type">配送方式</string>
+    <string name="order_coupon">代金券/优惠券</string>
+    <string name="order_invoice">发票抬头</string>
+    <string name="order_residue_balance">当前余额</string>
+    <string name="order_goods_fee">商品总额</string>
+    <string name="order_shopping_fee">运费</string>
+    <string name="order_amount_fee">应付金额</string>
+    <string name="order_coupon_hint">请输入优惠码</string>
+
+    <!-- 订单列表 , 订单详情 -->
+    <string name="toast_no_ordersn_data">无订单数据</string>
+
+
+    <!--支付列表 -->
+    <string name="pay_money">支付金额</string>
+    <string name="pay_wechat">微信支付</string>
+    <string name="pay_alipay">支付宝支付</string>
+    <string name="pay_cod">货到付款</string>
+    <string name="go_home">回首页</string>
+    <string name="look_order">查看订单</string>
+
+    <!-- 我的 -->
+    <string name="person_nickname">点击此处登录</string>
+    <string name="person_mine_order">我的订单</string>
+    <string name="person_all_order">查看全部订单</string>
+    <string name="person_order_waitpay">待付款</string>
+    <string name="person_order_waitreceive">待收货</string>
+    <string name="person_order_waitcomment">待评价</string>
+    <string name="person_order_returned">退货</string>
+    <string name="person_order_canceled">已取消</string>
+    <string name="person_goods_collect">我的收藏</string>
+    <string name="person_receive_address">收货地址</string>
+    <string name="person_user_info">个人资料</string>
+    <string name="person_integrate_detail">积分明细</string>
+    <string name="person_coupon">优惠券</string>
+    <string name="person_setting">设置</string>
+    <string name="person_stone">石头</string>
+
+
+    <!-- 我的 -> 收货地址  -->
+    <string name="person_consignee_name">收货人:</string>
+    <string name="person_consignee_name_hit">请输入收货人姓名</string>
+    <string name="person_consignee_phone">手机号码:</string>
+    <string name="person_consignee_phone_hit">请输入手机号码</string>
+    <string name="person_consignee_district">所在地区:</string>
+    <string name="person_consignee_district_hit">选择所在地区</string>
+    <string name="person_consignee_street">详细地址:</string>
+    <string name="person_consignee_street_hit">输入详细地址:</string>
+    <string name="person_consignee_default">设置为默认收货地址</string>
+    <string name="address_add">新建地址</string>
+    <string name="address_save">保存</string>
+
+
+    <!-- 公共字符串 -->
+    <string name="count">购买数量</string>
+    <string name="comment">评论</string>
+    <string name="image_text_detail">图文详情</string>
+    <string name="order_pay">去结算</string>
+    <string name="coupon">优惠券</string>
+    <string name="use">使用</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="settings">设置</string>
+    <string name="exit">安全退出</string>
+    <string name="province">省</string>
+    <string name="city">市</string>
+    <string name="district">区</string>
+    <string name="town">镇</string>
+    <string name="delete">删除</string>
+    <string name="delete_history">删除历史记录</string>
+    <string name="search_history">搜索历史</string>
+    <string name="hot_search">热搜</string>
+    <string name="apply_return">申请售后</string>
+    <string name="apply_comment">去评价</string>
+    <string name="submit_comment">提交评论</string>
+    <string name="scan">扫一扫</string>
+
+    <!-- 通用提示语  -->
+    <string name="data_error">数据异常</string>
+    <string name="toast_collect_success">成功收藏</string>
+    <string name="toast_collect_cancel">取消收藏</string>
+    <string name="toast_not_datal">请选择商品数量</string>
+    <string name="toast_shopcart_action_success">购物车操作成功</string>
+    <string name="toast_count_not_small_zero">"数量不能少于0"</string>
+    <string name="toast_low_stocks">库存不足</string>
+    <string name="toast_load_data">正在加载数据</string>
+    <string name="toast_person_unlogin">请先登录</string>
+    <string name="toast_address_nocompletion">地址信息不完整</string>
+
+
+    <string name="title_spec">规格属性</string>
+    <string name="title_product_detail">商品详情</string>
+    <string name="title_consignee_list">收货人地址</string>
+    <string name="title_collect">收藏</string>
+    <string name="title_balance_points">积分金额明细</string>
+    <string name="title_confirm_order">确认订单</string>
+    <string name="title_product_list">商品列表</string>
+    <string name="title_pay_completed">支付完成</string>
+    <string name="title_pay_list">支付列表</string>
+    <string name="title_logistic">物流</string>
+    <string name="title_getcontent">获取内容</string>
+    <string name="title_detail">订单详情</string>
+    <string name="title_exchange_list">退换货列表</string>
+    <string name="title_consignee">收货地址</string>
+    <string name="title_home">尚尚健康</string>
+    <string name="toast_no_select_province">请先选择省份</string>
+    <string name="toast_no_select_city">请先选择城市</string>
+    <string name="toast_no_select_district">请先选择区县</string>
+    <string name="toast_no_preview_district">请选择上级地区</string>
+    <string name="toast_next_version">该版本为公测版,下版本开放该功能</string>
+
+    <string name="login_title">登录</string>
+    <string name="login_phone_number">手机号码</string>
+    <string name="login_phone_number_null">请输入手机号码</string>
+    <string name="login_password">登录密码</string>
+    <string name="login_password_null">请输入密码</string>
+    <string name="login_btn_login">登录</string>
+    <string name="changepwd_btn">更改密码</string>
+
+
+    <string name="login_register">快速注册</string>
+    <string name="login_forget_pwd">找回密码</string>
+    <string name="forget_pwd_title">忘记密码</string>
+    <string name="change_pwd_title">修改密码</string>
+    <string name="register_title">注册</string>
+    <string name="register_phone_number">手机号码</string>
+    <string name="register_phone_number_null">请输入手机号码</string>
+    <string name="register_btn_next">下一步</string>
+    <string name="register_sub_title">请输入手机号码<xliff:g id="step_count">%1$s</xliff:g>收到的校验码</string>
+    <string name="register_check_code">校验码</string>
+    <string name="register_btn_re_code"><xliff:g id="step_count">%1$d</xliff:g>秒后重发</string>
+    <string name="register_btn_re_code_done">获取验证码</string>
+    <string name="edit_code_null">请输入验证码</string>
+    <string name="register_inviter">邀请码</string>
+    <string name="register_password">密码</string>
+    <string name="register_password_null">请输入密码</string>
+    <string name="register_inviter_null">请输入邀请码</string>
+
+    <!-- 修改密码-->
+    <string name="change_password_old">  旧密码</string>
+    <string name="change_password_new">  新密码</string>
+
+    <string name="change_pwd_old_null">请输入旧密码</string>
+    <string name="change_pwd_new_null">请输入新密码</string>
+    <string name="change_pwd_new2_null">请输入确认密码</string>
+
+    <string name="register_confirm_password">确认密码</string>
+    <string name="register_error_info_re">两次输入的密码不一致</string>
+    <string name="register_error_info">*密码和确认密码必须是字母大小写或数字，长度为6-20位</string>
+    <string name="register_error_forgetpwd_info">*密码必须是字母大小写或数字，长度为6-20位</string>
+
+    <string name="register_inviter_info">没有邀请人则可填写公用邀请码：200059</string>
+    <string name="register_btn_register">注册</string>
+    <string name="register_forget_password">找回密码</string>
+    <string name="register_edit_digits" translatable="false">0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+    <string name="user_head">头像</string>
+    <string name="user_phone">手机号码</string>
+    <string name="user_nick">昵称</string>
+    <string name="user_sex">性别</string>
+    <string name="user_age">出生日期</string>
+    <string name="user_save">保存</string>
+    <string-array name="user_sex_name">
+        <item>保密</item>
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+    <string name="user_age_format"><xliff:g id="year">%1$d</xliff:g>-<xliff:g id="month">%2$02d</xliff:g>-<xliff:g id="day">%3$02d</xliff:g></string>
+    <string name="user_head_title">选择头像</string>
+    <string-array name="user_head_name">
+        <item>拍照</item>
+        <item>相册</item>
+    </string-array>
+    <string name="home_title_scan">扫扫</string>
+    <string name="home_title_msg">消息</string>
+    <string name="title_coupon">优惠券</string>
+    <string name="title_goods_comment">商品评论</string>
+    <string name="title_apply_exchnage">申请售后</string>
+    <string name="title_exchange_detail">售后详情</string>
+    <string name="title_product_spec">商品规格</string>
+
+    <string name="title_shopcart">购物车</string>
+    <string name="title_category">分类</string>
+
+
+    <string name="scan_explain">说明</string>
+
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+    <string name="scan_back">返回</string>
+    <string name="scan_title">二维码扫描</string>
+    <string name="copyright_title">获取完整功能,请联系官方客服</string>
+    <string name="title_activity_person_info">PersonInfoActivity</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_shop_cart">ShopCartActivity</string>
+    <string name="title_activity_product_list">ProductListActivity</string>
+
+    <string name="use_stone">请输入的要使用的石头数</string>
+    <!-- 设置-->
+    <string name="string_setting">设置</string>
+    <string name="setting_team">我的团队</string>
+    <string name="setting_message">消息通知</string>
+    <string name="setting_changpwd">修改密码</string>
+    <string name="setting_help">帮助</string>
+    <string name="setting_telephone">尚尚热线</string>
+    <string name="setting_telephone_number">40000011253</string>
+
+    <string name="setting_about">关于尚尚</string>
+    <string name="setting_exit">退出</string>
+    <string name="title_activity_order_base">OrderBaseActivity</string>
+    <!--资讯-->
+    <string name="information_title">尚尚健康资讯分类</string>
+    <string name="information_title_2">每天学习一点点就是进步！</string>
+    <string name="article_title_hot">热门资讯</string>
+    <string name="article_title_detail">资讯详情</string>
+
+
+    <string name="article_title">你会洗手吗</string>
+    <string name="article_content">据澎湃新闻报道，住建部相关人士接受采访时表示，以往调控都是国务院直接发布政策，此次楼市调控是中央领导亲自下的批示，因此调控的着重点和以往略有不同。此前多以限购、限贷为主，现在就是有针对性的根据楼市情况出政策，各个城市间的差异非常大，因此调控的力度也不一样。有针对性的出台政策就是为了逼出楼市存在的泡沫。</string>
+    <!--资讯评论-->
+    <string name="information_comment">评论</string>
+    <string name="information_comment_hit">请输入评论内容</string>
+    <string name="information_comment_publish">发表</string>
+    <string name="tv_pinglun">最新评论</string>
+    <!--江湖-->
+    <string name="quack_my_menpai_list">我的门派</string>
+    <string name="quack_menpai_list">门派列表</string>
+    <string name="article_menpai_list">帖子列表</string>
+    <string name="article_tiezi_detail">帖子详情</string>
+    <string name="article_menpai_detail">门派详情</string>
+    <string name="add">加入</string>
+    <string name="hint_pinglun">输入评论内容&#8230;</string>
+    <string name="pinglun">评论</string>
+    <string name="fabiao">发表</string>
+    <string name="jh_jingcai">精彩推荐</string>
+    <string name="jh_jianghu">尚尚江湖</string>
+    <string name="jh_mysch">我的门派</string>
+    <string name="jh_mypost">我的帖子</string>
+    <string name="jh_fenlei">江湖分类</string>
+    <string name="jh_cate_explain">江湖分类说明</string>
+    <string name="jh_explain">江湖说明</string>
+    <string name="jh_jianjie">简介</string>
+    <string name="jh_creatdate">创建日期</string>
+    <string name="jh_classify">门派分类</string>
+    <string name="jh_manager">门派管理</string>
+    <string name="jh_persons">成员审核</string>
+    <string name="jh_persons_check_list">审核用户列表</string>
+
+    <string name="jh_shenme">帖子审核</string>
+    <string name="jh_member">成员列表</string>
+    <string name="jh_text1">为门派起个名字……</string>
+    <string name="jh_text2">门派名字8个字以内</string>
+    <string name="jh_text3">设置门派个性图标</string>
+    <string name="jh_text4">门派标签</string>
+    <string name="jh_text5">赶紧为您的门派起个名字，来吸引更多的伙伴吧</string>
+    <string name="jh_text6">（80字以内）</string>
+    <string name="jh_master">版主</string>
+    <string name="jh_louzhu">楼主</string>
+    <string name="jh_essay_fabiao">发表文章</string>
+    <string name="jh_essay_title">文章主题</string>
+    <string name="jh_essay_Des">文章描述</string>
+    <string name="jh_essay_content">文章内容</string>
+    <string name="jh_essayg_image">选择图片</string>
+    <string name="jh_essay_titlehint">限制最多16字</string>
+    <string name="jh_essay_Deshint">限制最多36字</string>
+    <string name="jh_menpai_add">添加门派</string>
+    <string name="jh_menpai_name">门派名字</string>
+    <string name="jh_menpai_tag">门派标签</string>
+    <string name="jh_menpai_logo">门派个性图标</string>
+    <string name="jh_menpai_name_hint">门派名字（8字以内）</string>
+    <string name="jh_menpai_name_null">请输入门派名字</string>
+    <string name="jh_menpai_logo_null">请输入门派标签</string>
+    <string name="action_exit_menpai">退出门派</string>
+
+
+
+    <string name="jh_exit">退出</string>
+
+
+    <string name="jh_article_name_null">请输入文章主题</string>
+    <string name="jh_article_content_null">请输入文章内容</string>
+
+    <string name="menpai_list_nodata">没有数据</string>
+    <!--二维码-->
+    <string name="activity_catureactivity_title">扫描二维码</string>
+
+    <string name="msg_camera_framework_bug">抱歉，Android相机出现问题。您可能需要重启设备。</string>
+    <string name="msg_default_status">请将二维码置于屏幕中间(若光线暗请按音量键打开闪光灯)。  </string>
+    <string name="msg_default_adds">扫描商品二维码加入购物车。</string>
+    <string name="memo">提示</string>
+    <string name="barcode_msg_fail">扫描失败！  </string>
+    <string name="barcode_tow_dimen_success">"已检测到地址:%1$s是否打开?"</string>
+    <string name="barcode_one_dimen_success">"已检测到文本内容:%1$s是否复制?"</string>
+    <string name="confirm">确定</string>
+    <string name="guid">说明</string>
+
+    <!--健康云-->
+    <string name="bind_set">设为最关心</string>
+
+    <string name="bind_add">添加设备</string>
+    <string name="bind_number">设备编码</string>
+    <string name="rab_xueya">血压</string>
+    <string name="rab_xuetang">血糖</string>
+    <string name="start_time">开始日期</string>
+    <string name="end_time">结束日期</string>
+    <string name="blood_code1">血压计IEMI码</string>
+    <string name="blood_code2">请输入您的血压计IMEI码</string>
+    <string name="blood_text1">您尚未设置血压计</string>
+    <string name="blood_change">绑定血压计</string>
+    <string name="blood_user">查询对象</string>
+    <string name="blood_date">选择日期</string>
+    <string name="blood_title1">测量时间</string>
+    <string name="blood_title2">舒张压</string>
+    <string name="blood_title3">收缩压</string>
+    <string name="blood_title4">心率</string>
+    <string name="blood_top1">列表</string>
+    <string name="blood_top2">曲线图</string>
+    <string name="blood_top3">统计</string>
+    <string name="blood_type1">爸爸</string>
+    <string name="blood_type2">妈妈</string>
+    <string name="test_4">非常不好</string>
+    <string name="find">查询</string>
+    <string name="tv_all1">近一月</string>
+    <string name="tv_all2">近三月</string>
+    <string name="tv_all3">全部</string>
+    <string name="tv_blood1">偏低</string>
+    <string name="tv_blood2">正常</string>
+    <string name="tv_blood3">偏高</string>
+    <string name="zero">0</string>
+    <string name="ci">次</string>
+    <string name="left">(</string>
+    <string name="right">)</string>
+    <string name="start">开始</string>
+    <string name="end">结束</string>
+    <string name="frequency">次</string>
+    <string name="tianjia">绑定设备</string>
+    <!-- 商城-->
+    <string name="order_list_titiel">订单列表</string>
+    <string name="hint_search_information">请输入要搜索的资讯</string>
+    <string name="activity_product_title">商品</string>
+    <string name="hot_product_recommend"><b>热门推荐商品</b></string>
+    hot_product_recommend
+
+</resources>

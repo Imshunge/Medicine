@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="164dp"
+        android:background="@color/shop_title">
+        <ImageView
+            android:id="@+id/iv_menu_avatar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/icon"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_1"
+            android:layout_toStartOf="@+id/tv_1" />
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_title"
+            android:textColor="@color/bg_view"
+            android:textSize="@dimen/textSizeBig"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/tv_menu_username"
+            android:layout_alignStart="@+id/tv_menu_username"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp" />
+        <TextView
+            android:id="@+id/tv_menu_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_menu_avatar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/information_title_2"
+            android:textColor="@color/bg_view"
+
+            android:textSize="@dimen/textSizeSmall" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/category_listv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/separator_line"
+        android:dividerHeight="1px"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:scrollbars="none"
+        android:smoothScrollbar="true" />
+</LinearLayout>

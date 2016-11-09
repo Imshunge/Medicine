@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical"
+    tools:context=".common.person.SettingActivity">
+
+    <!-- 消息通知 -->
+    <com.shssjk.view.SPArrowRowView
+        android:id="@+id/person_setting_message_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/setting_message" />
+    <View  style="@style/separator_line"/>
+    <!-- 修改密码 -->
+    <com.shssjk.view.SPArrowRowView
+        android:id="@+id/person_setting_changepwd_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/setting_changpwd" />
+    <View  style="@style/separator_line"
+        android:layout_height="@dimen/gapSize"
+        />
+    <!-- 帮助 -->
+    <com.shssjk.view.SPArrowRowView
+        android:id="@+id/person_setting_help_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/setting_help" />
+    <View  style="@style/separator_line"/>
+    <!-- 尚尚热线-->
+    <RelativeLayout
+        android:id="@+id/rl_tel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:background="@drawable/view_bg_clickable_selector">
+
+        <ImageView
+            android:id="@+id/image_imgv"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/arrow_image_size"
+            android:layout_height="@dimen/arrow_image_size"/>
+
+        <TextView
+            android:id="@+id/title_txtv"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical|left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:text="@string/setting_telephone"
+            style="@style/textStyle.Normal.black"/>
+
+        <ImageView
+            android:id="@+id/arrow_imgv"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_space"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/personal_arrow_right"/>
+
+        <TextView
+            android:id="@+id/sub_phonenum_txtv"
+            android:gravity="center_vertical|right"
+            android:layout_toLeftOf="@id/arrow_imgv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/setting_telephone_number"
+            android:textColor="@color/shop_title"
+            style="@style/textStyle.Normal.black"/>
+
+    </RelativeLayout>
+    <View  style="@style/separator_line"/>
+
+    <!-- 关于 -->
+    <com.shssjk.view.SPArrowRowView
+        android:id="@+id/person_setting_about_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/setting_about" />
+    <View  style="@style/separator_line"/>
+
+    <View  style="@style/separator_line"
+        android:layout_height="@dimen/gapSize"
+        />
+    <!-- 退出 -->
+    <com.shssjk.view.SPArrowRowView
+        android:id="@+id/person_setting_exit_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/setting_exit" />
+    <View  style="@style/separator_line"/>
+
+
+</LinearLayout>

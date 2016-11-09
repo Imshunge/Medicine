@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/detail_scrollv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <include layout="@layout/top_school" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:gravity="bottom"
+                android:padding="10dp" >
+
+                <TextView
+                    style="@style/text_15"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/jh_creatdate" />
+
+                <TextView
+                    android:id="@+id/sch_date"
+                    style="@style/date_text"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <include layout="@layout/line_long" />
+
+            <TextView
+                android:id="@+id/sch_bodylist"
+                style="@style/text_15"
+                android:layout_width="match_parent"
+                android:background="#ffffff"
+                android:drawableRight="@drawable/right"
+                android:padding="10dp"
+                android:text="@string/jh_member" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#cccccc" />
+
+            <LinearLayout
+                android:id="@+id/layout_host"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/sch_manager"
+                    style="@style/text_15"
+                    android:layout_width="match_parent"
+                    android:background="@color/black_fa"
+                    android:padding="10dp"
+                    android:text="@string/jh_manager" />
+
+                <include layout="@layout/line_long" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rl_check_user"
+                    android:layout_marginLeft="20dp" >
+
+                    <TextView
+                        android:id="@+id/tv_mng1"
+                        style="@style/text_15"
+                        android:layout_width="match_parent"
+                        android:background="#ffffff"
+                        android:drawableRight="@drawable/right"
+                        android:padding="10dp"
+                        android:text="@string/jh_persons"
+                        android:textColor="@color/black_36" />
+
+                    <TextView
+                        android:id="@+id/num_mng1"
+                        style="@style/date_text"
+                        android:textSize="10dp"
+                        android:layout_marginLeft="90dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/corners_red" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/tv_mng1"
+                        android:visibility="gone"
+                        android:background="@color/black_cc" />
+
+                    <TextView
+                        android:id="@+id/tv_mng2"
+                        style="@style/text_15"
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/tv_mng1"
+                        android:layout_marginTop="1dp"
+                        android:background="#ffffff"
+                        android:drawableRight="@drawable/right"
+                        android:padding="10dp"
+                        android:visibility="gone"
+                        android:text="@string/jh_shenme"
+                        android:textColor="@color/black_36" />
+
+                    <TextView
+                        android:id="@+id/num_mng2"
+                        style="@style/date_text"
+                        android:textSize="10dp"
+                        android:layout_below="@+id/tv_mng1"
+                        android:layout_marginLeft="90dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        android:background="@drawable/corners_red" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_cc" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/sch_add"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_add_selector"
+                android:gravity="center"
+                android:text="@string/add"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

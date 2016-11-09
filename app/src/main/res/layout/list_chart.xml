@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:id="@+id/list_charttop"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="#fafafa"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/activity_top_text"
+            android:layout_weight="0.6"
+            android:text="@string/blood_title1"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_weight="0.4"
+            android:background="#fafafa"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/activity_top_text"
+                android:layout_weight="1"
+                android:text="@string/blood_title3"
+                android:textSize="13sp" />
+
+            <TextView
+                style="@style/activity_top_text"
+                android:layout_weight="1"
+                android:text="@string/blood_title2"
+                android:textSize="13sp" />
+
+            <TextView
+                style="@style/activity_top_text"
+                android:layout_weight="1"
+                android:text="@string/blood_title4"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/black_9c"
+        android:layout_below="@+id/list_charttop"/>
+    <ListView
+        android:id="@+id/list_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list_charttop"
+        android:layout_marginTop="1px"
+        android:cacheColorHint="#00000000" />
+
+</RelativeLayout>

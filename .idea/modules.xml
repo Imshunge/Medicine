@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HeaderAndFooterRecyclerView_library/HeaderAndFooterRecyclerView_library.iml" filepath="$PROJECT_DIR$/HeaderAndFooterRecyclerView_library/HeaderAndFooterRecyclerView_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Medicine.iml" filepath="$PROJECT_DIR$/Medicine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StickyGridHeaders_library/StickyGridHeaders_library.iml" filepath="$PROJECT_DIR$/StickyGridHeaders_library/StickyGridHeaders_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/magicindicator_library/magicindicator_library.iml" filepath="$PROJECT_DIR$/magicindicator_library/magicindicator_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slidingMenu_library/slidingMenu_library.iml" filepath="$PROJECT_DIR$/slidingMenu_library/slidingMenu_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/viewpagerindicator/viewpagerindicator.iml" filepath="$PROJECT_DIR$/viewpagerindicator/viewpagerindicator.iml" />
+    </modules>
+  </component>
+</project>

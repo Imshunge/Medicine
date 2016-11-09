@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shssjk.fragment.SSJKCommunityFragment">
+    <!-- 我的门派 -->
+    <com.shssjk.view.SPArrowRowView
+        android:id="@+id/frament_jh_mymenpai_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/jh_mysch" />
+    <View  style="@style/separator_line"/>
+    <!-- 我的帖子 -->
+    <com.shssjk.view.SPArrowRowView
+        android:id="@+id/frament_jh_mypost_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/jh_mypost" />
+    <View  style="@style/separator_line"/>
+    <!-- 江湖分类 -->
+    <com.shssjk.view.SPArrowRowView
+        android:id="@+id/frament_jh_fenlei_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/jh_fenlei" />
+    <View  style="@style/separator_line"/>
+    <com.shssjk.view.MyGridView
+        android:id="@+id/list_school_my"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:listSelector="@null"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="1dp" />
+     </LinearLayout>

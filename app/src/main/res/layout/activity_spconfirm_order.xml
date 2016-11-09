@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_activity">
+
+    <include layout="@layout/titlebar" />
+
+    <ScrollView
+        android:id="@+id/confirm_scrollv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/order_confirm_order_consignee_slice"
+                android:layout_width="match_parent"
+                android:layout_height="65dip" />
+
+            <include layout="@layout/separator_line_margin_slice" />
+
+            <include
+                layout="@layout/order_confirm_order_productlist_slice"
+                android:layout_width="match_parent"
+                android:layout_height="100dip" />
+
+            <View style="@style/separator_line" />
+
+            <!--<com.shssjk.view.SPArrowRowView-->
+                <!--android:id="@+id/order_deliver_aview"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/height_row"-->
+                <!--android:clickable="true"-->
+                <!--android:focusable="true"-->
+                <!--custom:titleText="@string/order_deliver_type" />-->
+
+            <!--<View style="@style/separator_line" />-->
+
+            <com.shssjk.view.SPArrowRowView
+                android:id="@+id/order_coupon_aview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_row"
+                android:clickable="true"
+                android:focusable="true"
+                custom:titleText="@string/order_coupon" />
+
+            <View style="@style/separator_line" />
+
+            <!--<com.shssjk.view.SPArrowRowView-->
+            <!--android:id="@+id/order_invoce_aview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/height_row"-->
+            <!--android:clickable="true"-->
+            <!--android:focusable="true"-->
+            <!--custom:titleText="@string/order_invoice" />-->
+            <!--<View  style="@style/separator_line"/>-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_row"
+                android:background="@color/bg_view"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/order_point_txtv"
+                    style="@style/textStyle.Normal.black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_space"
+                    android:gravity="center_horizontal|center_vertical|left"
+                    android:text="当前石头900" />
+                <EditText
+                    android:id="@+id/order_stone_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_space"
+                    android:hint="@string/use_stone"
+                    android:inputType="number"
+                    android:background="@null"
+                    />
+               <!--<com.shssjk.view.SwitchButton-->
+                    <!--android:id="@+id/order_point_sth"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="@dimen/margin_space" />-->
+
+            </RelativeLayout>
+
+            <View style="@style/separator_line" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_row"
+                android:background="@color/bg_view"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+                <TextView
+                    android:id="@+id/order_balance_txtv"
+                    style="@style/textStyle.Normal.black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_space"
+                    android:gravity="center_horizontal|center_vertical|left"
+                    android:text="当前余额" />
+
+                <com.shssjk.view.SwitchButton
+                    android:id="@+id/order_balance_sth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_space" />
+            </RelativeLayout>
+
+            <View style="@style/separator_line" />
+
+            <include
+                layout="@layout/order_confirm_order_overview_slice"
+                android:layout_width="match_parent"
+                android:layout_height="180dip"
+                android:layout_marginBottom="45dip" />
+        </LinearLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:layout_gravity="bottom"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/payfee_txtv"
+            style="@style/textStyle.Medium.white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_weight="2.5"
+            android:gravity="left|center_vertical"
+            android:text="应付金额: ¥999.0" />
+
+        <Button
+            android:id="@+id/pay_btn"
+            android:layout_width="120dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_selector"
+            android:text="@string/order_pay"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</FrameLayout>

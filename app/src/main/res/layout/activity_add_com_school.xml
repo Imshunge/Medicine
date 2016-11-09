@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/com_relative2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fafafa"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/articl_title"
+        style="@style/text_15"
+        android:layout_below="@+id/jc_relat"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lines="2"
+        android:text="@string/jh_menpai_name" />
+
+    <EditText
+
+        android:id="@+id/tv_content_title"
+        style="@style/text_17"
+        android:layout_below="@+id/articl_title"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:hint="@string/jh_menpai_name_hint"
+        android:lines="2" />
+
+    <TextView
+        android:id="@+id/articl_content"
+        style="@style/text_15"
+        android:layout_below="@+id/tv_content_title"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lines="2"
+        android:text="@string/jh_menpai_tag" />
+
+    <EditText
+
+        android:id="@+id/tv_content"
+        style="@style/text_16"
+        android:layout_below="@+id/articl_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lines="10" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/jc_view"
+            style="@style/text_15"
+            android:layout_below="@+id/tv_content_title"
+            android:layout_marginTop="10dp"
+            android:gravity="left"
+            android:text="@string/jh_menpai_logo" />
+        <ImageView
+            android:id="@+id/articl_image"
+            android:layout_width="90dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_image" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_view"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/iv_item_article"
+        android:layout_marginLeft="@dimen/item_icon_marginLeft"
+        android:layout_width="@dimen/item_icon_width"
+        android:layout_height="@dimen/item_icon_height"
+        android:src="@drawable/product_default" />
+    <TextView
+        android:id="@+id/tv_item_article_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/article_marginTop"
+        android:layout_toRightOf="@+id/iv_item_article"
+        android:singleLine="true"
+        android:text="@string/article_title"
+        android:textColor="@color/colorNormalTitle"
+        android:textSize="@dimen/article_title_size" />
+
+    <TextView
+        android:id="@+id/tv_item_hot_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_item_article_title"
+        android:layout_below="@+id/tv_item_article_title"
+        android:layout_marginTop="@dimen/article_marginTop"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="@string/article_content"
+        android:textColor="@color/colorNormalText"
+        android:textSize="@dimen/article_content_size" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_item_hot_content"
+        android:layout_below="@+id/tv_item_hot_content">
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/article_marginTop"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/colorNormalText"
+            android:textSize="@dimen/article_content_size" />
+        <ImageView
+            android:id="@+id/iv_item_article_comment"
+            android:layout_marginTop="@dimen/article_marginIcon"
+            android:layout_width="@dimen/item_ssicon_width"
+            android:layout_height="@dimen/item_ssicon_height"
+            android:src="@drawable/icon_pinglun"
+
+                        />
+        <TextView
+            android:layout_marginLeft="@dimen/article_marginLeft2"
+            android:id="@+id/tv_item_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/article_marginTop"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="1"
+            android:textColor="@color/colorNormalText"
+            android:textSize="@dimen/article_content_size"
+            />
+        <ImageView
+            android:layout_marginLeft="@dimen/article_marginLeft2"
+            android:id="@+id/iv_item_article_read"
+            android:layout_marginTop="@dimen/article_marginIcon"
+            android:layout_width="@dimen/item_ssicon_width"
+            android:layout_height="@dimen/item_ssicon_height"
+            android:src="@drawable/icon_essay" />
+        <TextView
+            android:layout_marginLeft="@dimen/article_marginLeft2"
+            android:id="@+id/tv_item_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_item_comment"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_item_hot_content"
+            android:layout_marginTop="@dimen/article_marginTop"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="1"
+            android:textColor="@color/colorNormalText"
+            android:textSize="@dimen/article_content_size" />
+    </LinearLayout>
+</RelativeLayout>
