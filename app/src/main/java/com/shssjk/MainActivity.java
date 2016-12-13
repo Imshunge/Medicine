@@ -1,17 +1,4 @@
-/**
- * shopmobile for tpshop
- * ============================================================================
- * 版权所有 2015-2127 深圳搜豹网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.tp-shop.cn
- * ——————————————————————————————————————
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和使用 .
- * 不允许对程序代码以任何形式任何目的的再发布。
- * ============================================================================
- * Author: 飞龙  wangqh01292@163.com
- * Date: @date 2015-10-15 20:32:41
- * Description: 商城主界面Activity (底部包含四个tab item)
- * @version V1.0
- */
+
 package com.shssjk;
 
 import android.content.Intent;
@@ -94,13 +81,13 @@ public class MainActivity extends BaseActivity {
 	FragmentManager mFragmentManager ;
 	InforFragment mInforFragment;
 	HealthyFragment mHealthyFragment;
-	CommunityFragment mCommunityFragment;
+//	CommunityFragment mCommunityFragment;
 	ShopFragment mShopFragment;
 	PersonFragment mPersonFragment ;
 
 	RadioGroup mRadioGroup;
 	RadioButton rbtnHome;
-	RadioButton rbtnCategory;
+//	RadioButton rbtnCategory;
 	RadioButton rbtnShopcart;
 	RadioButton rbtnPerson;
 	RadioButton rbtnMy; //我
@@ -149,14 +136,14 @@ public class MainActivity extends BaseActivity {
 	public void initSubViews() {
 		mInforFragment = new InforFragment();
 		mHealthyFragment = new HealthyFragment();
-		mCommunityFragment = new CommunityFragment();
+//		mCommunityFragment = new CommunityFragment();
 		mShopFragment = new ShopFragment();
 //		mInforFragment.setMainActivity(this);
 		mPersonFragment = new PersonFragment();
 
 		mRadioGroup = (RadioGroup) this.findViewById(R.id.radioGroup);
 		rbtnHome = (RadioButton) this.findViewById(R.id.rbtn_home);
-		rbtnCategory = (RadioButton) this.findViewById(R.id.rbtn_category);
+//		rbtnCategory = (RadioButton) this.findViewById(R.id.rbtn_category);
 		rbtnShopcart = (RadioButton) this.findViewById(R.id.rbtn_shopcart);
 		rbtnPerson = (RadioButton) this.findViewById(R.id.rbtn_mine);
 		rbtnMy = (RadioButton) this.findViewById(R.id.rbtn_my);
@@ -201,9 +188,9 @@ public class MainActivity extends BaseActivity {
 					case R.id.rbtn_home:
 						setSelectIndex(INDEX_INFOR);
 						break;
-					case R.id.rbtn_category:
-						setSelectIndex(INDEX_COMMUNITY);
-						break;
+//					case R.id.rbtn_category:
+//						setSelectIndex(INDEX_COMMUNITY);
+//						break;
 					case R.id.rbtn_shopcart:
 						setSelectIndex(INDEX_SHOP);
 						break;
@@ -234,10 +221,10 @@ public class MainActivity extends BaseActivity {
 				break;
 			case INDEX_COMMUNITY:
 				//setTitleType(TITLE_CATEGORY);
-				showFragment(mCommunityFragment);
-				changeTabtextSelector(rbtnCategory);
-				setTitle(getString(R.string.tab_item_shop));
-				mCurrentSelectIndex = INDEX_COMMUNITY;
+//				showFragment();
+//				changeTabtextSelector(rbtnCategory);
+//				setTitle(getString(R.string.tab_item_shop));
+//				mCurrentSelectIndex = INDEX_COMMUNITY;
 				break;
 			case INDEX_SHOP:
 				//setTitleType(TITLE_DEFAULT);
@@ -301,7 +288,7 @@ public class MainActivity extends BaseActivity {
 		FragmentTransaction mTransaction = mFragmentManager.beginTransaction();
 		mTransaction.hide(mInforFragment);
 		mTransaction.hide(mHealthyFragment);
-		mTransaction.hide(mCommunityFragment);
+//		mTransaction.hide(mCommunityFragment);
 		mTransaction.hide(mShopFragment);
 		mTransaction.hide(mPersonFragment);
 		mTransaction.commitAllowingStateLoss();
@@ -320,7 +307,7 @@ public class MainActivity extends BaseActivity {
 
 		FragmentTransaction mTransaction = mFragmentManager.beginTransaction();
 		mTransaction.add(R.id.fragmentView, mInforFragment);
-		mTransaction.add(R.id.fragmentView, mCommunityFragment);
+//		mTransaction.add(R.id.fragmentView, mCommunityFragment);
 		mTransaction.add(R.id.fragmentView, mShopFragment);
 		mTransaction.add(R.id.fragmentView, mHealthyFragment);
 		mTransaction.add(R.id.fragmentView, mPersonFragment);

@@ -60,7 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 商品首页
+ * 健界
  */
 public class ShopFragment extends BaseFragment implements View.OnClickListener,
 		MobileScrollLayout.PageListener,
@@ -205,7 +205,7 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 	@Override
 	public void onResume() {
 		super.onResume();
-//		refreshData();
+		refreshData();
 	}
 	public void refreshData() {
 
@@ -274,27 +274,65 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 
 	}
 	private void dealHomeFive(List<Five> homeFives) {
+//		显示 顺序
+//		0  1
+//		   2
+//		4  3
+
 //		有机系列
-		String url1= MobileConstants.BASE_HOST+ homeFives.get(0).getad_code();
-		Glide.with(mContext).load(url1).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightTopImgv);
+		if(homeFives.size()>=5) {
+			String url1 = MobileConstants.BASE_HOST + homeFives.get(1).getad_code();
+			Glide.with(mContext).load(url1).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightTopImgv);
+		}
 		//		case R.id.bottom_right_imgv:
 ////			 黑粮系列
-		String url2= MobileConstants.BASE_HOST+ homeFives.get(3).getad_code();
-		Glide.with(mContext).load(url2).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomRightImgv);
-
+		if(homeFives.size()>=5) {
+			String url2 = MobileConstants.BASE_HOST + homeFives.get(4).getad_code();
+			Glide.with(mContext).load(url2).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomRightImgv);
+		}
 		//		case R.id.bottom_left_imgv:
 ////               食品加工
-		String url3= MobileConstants.BASE_HOST+ homeFives.get(2).getad_code();
-		Glide.with(mContext).load(url3).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomLeftImgv);
+		if(homeFives.size()>=5) {
+			String url3 = MobileConstants.BASE_HOST + homeFives.get(2).getad_code();
+			Glide.with(mContext).load(url3).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomLeftImgv);
+		}
 //		待变   	case R.id.up_left_imgv:
 ////				自我检测设备
-		String url4= MobileConstants.BASE_HOST+ homeFives.get(3).getad_code();
-		Glide.with(mContext).load(url4).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upLeftImgv);
-
+		if(homeFives.size()>=5) {
+			String url4 = MobileConstants.BASE_HOST + homeFives.get(0).getad_code();
+			Glide.with(mContext).load(url4).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upLeftImgv);
+		}
 		////        菌菇系列
 //		case R.id.up_right_bottom_imgv:
-		String url5= MobileConstants.BASE_HOST+ homeFives.get(1).getad_code();
-		Glide.with(mContext).load(url5).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightBottomImgv);
+		if(homeFives.size()>=5) {
+			String url5 = MobileConstants.BASE_HOST + homeFives.get(2).getad_code();
+			Glide.with(mContext).load(url5).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightBottomImgv);
+		}
+
+//		//		有机系列
+//		String url1= MobileConstants.BASE_HOST+ homeFives.get(0).getad_code();
+//		Glide.with(mContext).load(url1).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightTopImgv);
+//		//		case R.id.bottom_right_imgv:
+//////			 黑粮系列
+//		String url2= MobileConstants.BASE_HOST+ homeFives.get(3).getad_code();
+//		Glide.with(mContext).load(url2).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomRightImgv);
+//
+//		//		case R.id.bottom_left_imgv:
+//////               食品加工
+//		String url3= MobileConstants.BASE_HOST+ homeFives.get(2).getad_code();
+//		Glide.with(mContext).load(url3).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomLeftImgv);
+////		待变   	case R.id.up_left_imgv:
+//////				自我检测设备
+//		String url4= MobileConstants.BASE_HOST+ homeFives.get(3).getad_code();
+//		Glide.with(mContext).load(url4).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upLeftImgv);
+//
+//		////        菌菇系列
+////		case R.id.up_right_bottom_imgv:
+//		String url5= MobileConstants.BASE_HOST+ homeFives.get(1).getad_code();
+//		Glide.with(mContext).load(url5).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightBottomImgv);
+//
+
+
 	}
 
 	private ImageView getImageViewByBg(int imageResId){
@@ -387,24 +425,39 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
                 //跳转搜索页面
 				startupSearchActivity();
 				break;
+				//		显示 顺序
+              //		0  1
+              //		   2
+               //		4  3
 			case R.id.up_left_imgv:
 //				自我检测设备
+				if(homeFives.size()>=5) {
+					startupProductListActivity(homeFives.get(0));
+				}
 				break;
 			case R.id.up_right_top_imgv:
 //              有机系列
-				startupProductListActivity(homeFives.get(0));
+				if(homeFives.size()>=5) {
+					startupProductListActivity(homeFives.get(1));
+				}
 				break;
 			case R.id.up_right_bottom_imgv:
 //              菌菇系列
-				startupProductListActivity(homeFives.get(1));
+				if(homeFives.size()>=5) {
+					startupProductListActivity(homeFives.get(2));
+				}
 				break;
 			case R.id.bottom_left_imgv:
 //               食品加工
-				startupProductListActivity(homeFives.get(2));
+				if(homeFives.size()>=5) {
+					startupProductListActivity(homeFives.get(4));
+				}
 				break;
 			case R.id.bottom_right_imgv:
 //			 黑粮系列
-				startupProductListActivity(homeFives.get(3));
+				if(homeFives.size()>=5) {
+					startupProductListActivity(homeFives.get(3));
+				}
 				break;
 			case R.id.home_menu_categroy_layout :
 //				产品分类

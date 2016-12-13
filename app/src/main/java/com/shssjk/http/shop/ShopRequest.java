@@ -13,6 +13,7 @@ import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.condition.ProductCondition;
 import com.shssjk.model.SPHomeCategory;
 import com.shssjk.model.SPProduct;
+import com.shssjk.model.order.PayOrder;
 import com.shssjk.model.person.SPConsigneeAddress;
 import com.shssjk.model.shop.Data;
 import com.shssjk.model.shop.SPCoupon;
@@ -469,10 +470,10 @@ public class ShopRequest {
 					}
 
 					if (result.has("comment")) {
-						Object obj =  result.get("comment");
-						if(!SSUtils.isEmpty(obj)){
-						List<GoodsComment> comments = SPJsonUtil.fromJsonArrayToList(result.getJSONArray("comment"), GoodsComment.class);
-						dataJson.put("comments", comments);
+						Object obj = result.get("comment");
+						if (!SSUtils.isEmpty(obj)) {
+							List<GoodsComment> comments = SPJsonUtil.fromJsonArrayToList(result.getJSONArray("comment"), GoodsComment.class);
+							dataJson.put("comments", comments);
 						}
 					}
 
@@ -600,7 +601,7 @@ public class ShopRequest {
 						int count = response.getInt(Response.RESULT);
 						successListener.onRespone(msg , count);
 					}else{
-						failuredListener.handleResponse(msg , status);
+						failuredListener.handleResponse(msg, status);
 					}
 				} catch (Exception e) {
 					failuredListener.onRespone(e.getMessage(), -1);
@@ -724,37 +725,37 @@ public class ShopRequest {
 						if (response.has("result")) {
 							JSONObject resultJson = response.getJSONObject("result");
 //							地址信息
-							if (resultJson.has("addressList")){
+							if (!resultJson.isNull("addressList")&&resultJson.has("addressList")){
 								if(resultJson.getJSONObject("addressList")!=null) {  //判断是否为空
 									SPConsigneeAddress consignees = SPJsonUtil.fromJsonToModel(resultJson.getJSONObject("addressList"), SPConsigneeAddress.class);
 									jsonObject.put("consigneeAddress", consignees);
 								}
 							}
 							//物流信息
-							if (resultJson.has("shippingList")){
+							if (!resultJson.isNull("shippingList")&&resultJson.has("shippingList")){
 								JSONArray delivers = resultJson.getJSONArray("shippingList");
 								jsonObject.put("delivers" , delivers);//总金额(需要支付的金额
 							}
 							//商品列表
-							if (resultJson.has("cartList")){
+							if (!resultJson.isNull("cartList")&&resultJson.has("cartList")){
 								List<SPProduct> products = SPJsonUtil.fromJsonArrayToList(resultJson.getJSONArray("cartList"), SPProduct.class);
 								jsonObject.put("products" , products);//总金额(需要支付的金额
 							}
 
 							//优惠券, 代金券
-							if (resultJson.has("cartList")){
+							if (!resultJson.isNull("cartList")&&resultJson.has("cartList")){
 								List<SPCoupon> coupons = SPJsonUtil.fromJsonArrayToList(resultJson.getJSONArray("couponList"), SPCoupon.class);
 								jsonObject.put("coupons" , coupons);
 							}
 
-							if (resultJson.has("userInfo")){
+							if (!resultJson.isNull("userInfo")&&resultJson.has("userInfo")){
 								JSONObject userJson = resultJson.getJSONObject("userInfo");
 								jsonObject.put("userInfo" , userJson);
 							}
 						}
 						successListener.onRespone(msg ,jsonObject );
 					}else{
-						failuredListener.onRespone(msg , -1);
+						failuredListener.onRespone(msg, -1);
 					}
 				} catch (Exception e) {
 					failuredListener.onRespone(e.getMessage(), -1);
@@ -850,14 +851,14 @@ public class ShopRequest {
 					/** 针对返回的业务数据会重新包装一遍再返回到View */
 					String msg = (String) response.getString(Response.MSG);
 					int status = response.getInt(Response.STATUS);
+					PayOrder payOrder=null;
 					if(status > 0) {
-						String orderId = null ;
-						if (response.has("result")) {
-//							orderId = response.getString("result");
+						if (response.has("data")) {
+							payOrder = SPJsonUtil.fromJsonToModel(response.getJSONObject(Response.DATA), PayOrder.class);
 						}
-						successListener.onRespone(msg ,orderId);
+						successListener.onRespone(msg ,payOrder);
 					}else{
-						failuredListener.handleResponse(msg , status);
+						failuredListener.handleResponse(msg, status);
 					}
 				} catch (Exception e) {
 					failuredListener.onRespone(e.getMessage(), -1);
@@ -921,7 +922,7 @@ public class ShopRequest {
 						}
 						successListener.onRespone(msg ,comments);
 					}else{
-						failuredListener.onRespone(msg , -1);
+						failuredListener.onRespone(msg, -1);
 					}
 				} catch (Exception e) {
 					failuredListener.onRespone(e.getMessage(), -1);
@@ -1106,5 +1107,63 @@ public class ShopRequest {
 			}
 		});
 	}
+
+	/**
+	 *
+	 * @param orderid
+	 * @param txnAmt 价格 单位 分
+	 * @param successListener
+	 * @param failuredListener
+	 */
+
+	public static void orderPay(String orderid ,String txnAmt, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+
+		assert(successListener!=null);
+		assert(failuredListener!=null);
+		String url =  MobileConstants.PAY_Union;
+
+		RequestParams params = new RequestParams();
+		params.put("orderid",orderid);
+		params.put("txnAmt",txnAmt);
+
+		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+				/** 针对返回的业务数据会重新包装一遍再返回到View */
+				try {
+					String msg = (String) response.get(Response.MSG);
+					int status = response.getInt(Response.STATUS);
+					if (status == 0){
+						String id = response.getString(Response.DATA);
+						successListener.onRespone(msg , id);
+										} else {
+						failuredListener.onRespone(msg, -1);
+					}
+				} catch (JSONException e) {
+					failuredListener.onRespone(e.getMessage(), -1);
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+					failuredListener.onRespone(e.getMessage(), -1);
+				}
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+				failuredListener.onRespone(throwable.getMessage(), statusCode);
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+				failuredListener.onRespone(throwable.getMessage(), statusCode);
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+				failuredListener.onRespone(throwable.getMessage(), statusCode);
+			}
+		});
+	}
+
 
 }

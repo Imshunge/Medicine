@@ -55,5 +55,4 @@
         android:layout_below="@+id/list_charttop"
         android:layout_marginTop="1px"
         android:cacheColorHint="#00000000" />
-
 </RelativeLayout>

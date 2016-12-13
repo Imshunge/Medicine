@@ -21,9 +21,8 @@
     <color name="separate_color">#d7d7d7</color>
     <color name="broder">#a0a0a0</color>
     <color name="select_broder">#898787</color>
-
-
-    <color name="color_tab_item_fous">#e55f24</color>
+    <color name="paybefor_colcor">#B2C78F</color>
+    <color name="color_tab_item_fous">@color/shop_title</color>
     <color name="color_tab_item_normal">#000000</color>
 
     <color name="personal_head_bg">#ff6a505d</color>

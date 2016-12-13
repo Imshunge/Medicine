@@ -81,7 +81,6 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
     private JSONObject specJson;//Map<String , List<SPProductSpec>>
     private Map<String, String> selectSpecMap;//保存选择的规格ID
     private String currShopPrice;//当前商品价格
-
     private Context mContext;
     private boolean isFirstLoad;
     SPProductSpecListAdapter specAdapter;  //产品规格

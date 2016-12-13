@@ -76,7 +76,6 @@ public class SPPersonRequest {
                     failuredListener.onRespone(e.getMessage(), -1);
                 }
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
@@ -196,7 +195,7 @@ public class SPPersonRequest {
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     String msg = (String) response.get(MobileConstants.Response.MSG);
 
-                    if (status > 0) {
+                    if (status > 0&& !msg.equals("没有数据")) {
                         List<SPConsigneeAddress> consignees = SPJsonUtil.fromJsonArrayToList(response.getJSONArray(MobileConstants.Response.RESULT), SPConsigneeAddress.class);
                         successListener.onRespone(msg, consignees);
                     } else {
@@ -207,25 +206,20 @@ public class SPPersonRequest {
                     failuredListener.onRespone(e.getMessage(), -1);
                 }
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
             }
         });
     }
-
-
     /**
      *  根据订单编号获取订单详情
      *  @URL index.php?m=Api&c=User&a=getOrderDetail

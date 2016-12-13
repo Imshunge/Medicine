@@ -46,7 +46,15 @@ public class SPCoupon implements Model,Serializable {
 //condition 使用条件
     String condition;
 
+    public String getIs_use() {
+        return is_use;
+    }
 
+    public void setIs_use(String is_use) {
+        this.is_use = is_use;
+    }
+
+    String is_use;
 
 /******** 额外增加属性 **********************/
 

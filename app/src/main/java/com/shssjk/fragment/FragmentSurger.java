@@ -72,7 +72,6 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_healthy_sugger, null,false);
         super.init(view);
         return view;

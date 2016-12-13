@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.shssjk.MainActivity;
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.BaseActivity;
 import com.shssjk.common.MobileConstants;

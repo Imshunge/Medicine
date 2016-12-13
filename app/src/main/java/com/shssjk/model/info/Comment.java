@@ -21,6 +21,15 @@ public class Comment implements Model, Serializable {
     private String user_id;
     private String username;
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    private String nickname;
     public String getHeader_pic() {
         return header_pic;
     }

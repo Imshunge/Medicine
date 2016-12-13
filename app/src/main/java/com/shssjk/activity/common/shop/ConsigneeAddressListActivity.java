@@ -88,6 +88,8 @@ public class ConsigneeAddressListActivity extends BaseActivity implements SPAddr
                 }
             }
         });
+        View emptyView = findViewById(R.id.empty_lstv);
+        addressLstv.setEmptyView(emptyView);
     }
 
     @Override
@@ -165,9 +167,9 @@ public class ConsigneeAddressListActivity extends BaseActivity implements SPAddr
 
             String firstAddress = SPPersonDao.getInstance(this).queryFirstRegion(consigneeAddress.getProvince() , consigneeAddress.getCity() ,consigneeAddress.getDistrict(), consigneeAddress.getTown());
             if (firstAddress != null){
-                consigneeAddress.setFullAddress(firstAddress+consigneeAddress.getAddress());;
+                consigneeAddress.setFullAddress(firstAddress+consigneeAddress.getAddress());
             }else{
-                consigneeAddress.setFullAddress(consigneeAddress.getAddress());;
+                consigneeAddress.setFullAddress(consigneeAddress.getAddress());
             }
         }
     }

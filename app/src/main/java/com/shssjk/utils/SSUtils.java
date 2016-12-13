@@ -3,11 +3,13 @@ package com.shssjk.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 
 import java.io.InputStream;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -130,6 +132,56 @@ public class SSUtils {
             e.printStackTrace();
         }
         return result;
+    }
+    public  static Double string2double(String content) {
+        if(!SSUtils.isEmpty(content)){
+            return    Double.parseDouble(content);
+        }
+        return 0.0;
+    }
+
+
+    public  static String  float2String(Float content) {
+        if(!SSUtils.isEmpty(content)){
+            String f1Str = Float.toString(content);
+            return f1Str.split("\\.")[0];
+        }
+        return "";
+    }
+
+    public  static Float string2float(String content) {
+        if(!SSUtils.isEmpty(content)){
+            return   Float.parseFloat(content);
+        }
+        return 0.00f;
+    }
+
+    /*
+     * 将时间戳转换为时间
+     */
+    public static String stampToDate(String s){
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long lt = new Long(s);
+        Date date = new Date(lt);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+
+
+    /**
+     * Java将Unix时间戳转换成指定格式日期字符串
+     * @param timestampString 时间戳 如："1473048265";
+     * @param formats 要格式化的格式 默认："yyyy-MM-dd HH:mm:ss";
+     *
+     * @return 返回结果 如："2016-09-05 16:06:42";
+     */
+    public static String TimeStamp2Date(String timestampString, String formats) {
+        if (TextUtils.isEmpty(formats))
+            formats = "yyyy-MM-dd HH:mm:ss";
+        Long timestamp = Long.parseLong(timestampString) * 1000;
+        String date = new SimpleDateFormat(formats, Locale.CHINA).format(new Date(timestamp));
+        return date;
     }
 
 }

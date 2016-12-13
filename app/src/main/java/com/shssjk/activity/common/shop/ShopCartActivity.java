@@ -47,8 +47,6 @@ public class ShopCartActivity extends BaseActivity  implements View.OnClickListe
     private Button checkallBtn;
     private Button buyBtn;
     Button backBtn;
-
-
     private PtrClassicFrameLayout shopcartPcf;
     private List<SPProduct> products;
     private SPProduct currentProduct;

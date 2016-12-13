@@ -99,8 +99,6 @@
 			android:text="¥0"
 			style="@style/textStyle.Normal.lightRed"/>
 
-
-
 	</RelativeLayout>
 	<View style="@style/separator_line" />
 	<TextView
@@ -111,17 +109,8 @@
 		android:layout_alignParentRight="true"
 		android:layout_marginRight="@dimen/margin_space"
 		android:gravity="right|center_vertical"
-		android:text="实付款: ¥20"
+		android:text="实付款: "
 		style="@style/textStyle.Big.black"/>
-	<TextView
-		android:id="@+id/buy_time_txtv"
-		style="@style/textStyle.Normal.subTitle"
-		android:layout_below="@id/title_point_txtv"
-		android:layout_width="match_parent"
-		android:layout_height="20dip"
-		android:layout_alignParentRight="true"
-		android:layout_marginRight="@dimen/margin_space"
-		android:gravity="right|center_vertical"
-		android:text="下单时间: 2016年8月5日20:15:50"/>
+
 	<View  style="@style/separator_line"/>
 </LinearLayout>

@@ -47,17 +47,16 @@
                 style="@style/tab_bottom"
                 android:checked="true"
                 />
-            <RadioButton
-                android:id="@+id/rbtn_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tab_item_community"
-                android:drawableTop="@drawable/tab_item_category_selector"
-                android:drawablePadding="@dimen/padding_tab_bottom_drawable"
-                android:textSize="@dimen/font_size_tab_item"
-                style="@style/tab_bottom"
-                />
+            <!--<RadioButton-->
+                <!--android:id="@+id/rbtn_category"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="@string/tab_item_community"-->
+                <!--android:drawablePadding="@dimen/padding_tab_bottom_drawable"-->
+                <!--android:textSize="@dimen/font_size_tab_item"-->
+                <!--style="@style/tab_bottom"-->
+                <!--/>-->
             <RadioButton
                 android:id="@+id/rbtn_shopcart"
                 android:layout_width="wrap_content"
@@ -75,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/tab_item_healthy"
-                android:drawableTop="@drawable/tab_item_mine_selector"
+                android:drawableTop="@drawable/tab_item_health_selector"
                 android:drawablePadding="@dimen/padding_tab_bottom_drawable"
                 android:textSize="@dimen/font_size_tab_item"
                 style="@style/tab_bottom"

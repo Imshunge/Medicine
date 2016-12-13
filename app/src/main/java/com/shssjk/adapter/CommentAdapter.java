@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.util.Util;
 import com.shssjk.activity.R;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.model.info.Comment;
+import com.shssjk.utils.SSUtils;
 import com.soubao.tpshop.utils.SPStringUtils;
 
 import java.util.List;
@@ -95,15 +97,17 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener 
 		String imgUrl1 = MobileConstants.BASE_HOST+article.getHeader_pic();
 		Glide.with(mContext).load(imgUrl1).placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.picIngv);
 //		用户名
-		if (!SPStringUtils.isEmpty(article.getUsername())){
-			holder.titleTxtv.setText(article.getUsername());
+		if (!SPStringUtils.isEmpty(article.getNickname())){
+			holder.titleTxtv.setText(article.getNickname());
+		}else{
+			holder.titleTxtv.setText(article.getUserId()+"用户");
 		}
 //
 		if (!SPStringUtils.isEmpty(article.getContent())){
 			holder.contentTxtv.setText(article.getContent());
 		}
 		if (!SPStringUtils.isEmpty(article.getAddTime())){
-			holder.dataTxtv.setText(article.getAddTime());
+			holder.dataTxtv.setText(SSUtils.TimeStamp2Date(article.getAddTime(), "yyyy-MM-dd HH:mm:ss"));
 		}
 //		点赞数
 		if (!SPStringUtils.isEmpty(article.getClick())){

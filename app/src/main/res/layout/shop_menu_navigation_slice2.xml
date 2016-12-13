@@ -20,9 +20,9 @@
             
              <ImageView 
                 android:id="@+id/home_menu_categroy_imgv"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:src="@drawable/icon_categroy_shop"/>
+		        android:layout_width="@dimen/item_icon_width"
+		        android:layout_height="@dimen/item_icon_height"
+		        android:src="@drawable/list"/>
              
              <TextView
 		        android:id="@+id/home_menu_categroy_txtv"
@@ -30,7 +30,7 @@
 		        android:layout_height="wrap_content"
 		        android:text="@string/text_item_category"
 		        android:layout_marginTop="@dimen/home_menu_text_top"
-		        android:textColor="@color/color_font_gray"
+		        android:textColor="@color/black"
 				 android:textSize="@dimen/font_size_normal"/>
         </LinearLayout>
 
@@ -47,9 +47,9 @@
             
              <ImageView 
                 android:id="@+id/home_menu_order_imgv"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:src="@drawable/icon_order_shop"/>
+                 android:layout_width="@dimen/item_icon_width"
+                 android:layout_height="@dimen/item_icon_height"
+		        android:src="@drawable/order"/>
              
              <TextView
 		        android:id="@+id/home_menu_order_txtv"
@@ -57,7 +57,7 @@
 		        android:layout_height="wrap_content"
 		        android:text="@string/text_item_order"
 		        android:layout_marginTop="@dimen/home_menu_text_top"
-				 android:textColor="@color/color_font_gray"
+				 android:textColor="@color/black"
 				 android:textSize="@dimen/font_size_normal"/>
         </LinearLayout>
 
@@ -73,9 +73,9 @@
 
         <ImageView
             android:id="@+id/home_menu_shopcart_imgv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_shopcart_shop"/>
+            android:layout_width="@dimen/item_icon_width"
+            android:layout_height="@dimen/item_icon_height"
+            android:src="@drawable/cart"/>
 
         <TextView
             android:id="@+id/home_menu_shopcart_txtv"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:text="@string/text_item_shopcatd"
             android:layout_marginTop="@dimen/home_menu_text_top"
-            android:textColor="@color/color_font_gray"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_normal"/>
     </LinearLayout>
          <LinearLayout 
@@ -98,17 +98,17 @@
             
              <ImageView 
                 android:id="@+id/home_menu_coupon_imgv"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:src="@drawable/icon_coupon_shop"/>
-             
+                 android:layout_width="@dimen/item_icon_width"
+                 android:layout_height="@dimen/item_icon_height"
+		        android:src="@drawable/collect"/>
+
              <TextView
 		        android:id="@+id/home_menu_coupon_txtv"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:text="@string/person_goods_collect"
 		        android:layout_marginTop="@dimen/home_menu_text_top"
-				 android:textColor="@color/color_font_gray"
+				 android:textColor="@color/black"
 		        android:textSize="@dimen/font_size_normal"/>
         </LinearLayout>
 </LinearLayout>

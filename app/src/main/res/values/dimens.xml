@@ -12,12 +12,12 @@
     <dimen name="font_size_tab_item">9.0sp</dimen>
 
     <!-- 公共属性 -->
-
     <dimen name="height_row">45dip</dimen>
     <dimen name="height_button">40dip</dimen>
     <dimen name="height_text">40dip</dimen>
     <dimen name="margin_space">10dip</dimen>
     <dimen name="margin_space_big">15dip</dimen>
+    <dimen name="margin_space_lage">55dip</dimen>
     <dimen name="margin_space_half">5dip</dimen>
     <dimen name="arrow_image_size">25dip</dimen>
 
@@ -113,4 +113,14 @@
     <dimen name="button_rounded_corner_radius">5dp</dimen>
     <dimen name="thumbnail_rounded_corner_radius">3dp</dimen>
 
+    <dimen name="margin5dp">5dp</dimen>
+    <dimen name="margin10dp">10dp</dimen>
+    <dimen name="margin15dp">15dp</dimen>
+    <dimen name="margin20dp">20dp</dimen>
+    <dimen name="margi30dp">30dp</dimen>
+
+    <dimen name="margin40dp">40dp</dimen>
+    <dimen name="margin70dp">70dp</dimen>
+    <dimen name="margin100dp">100dp</dimen>
+    <dimen name="margin150dp">150dp</dimen>
 </resources>

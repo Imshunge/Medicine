@@ -50,7 +50,7 @@
 
     <!-- 订单 , 确认订单 -->
     <string name="order_deliver_type">配送方式</string>
-    <string name="order_coupon">代金券/优惠券</string>
+    <string name="order_coupon">代金券</string>
     <string name="order_invoice">发票抬头</string>
     <string name="order_residue_balance">当前余额</string>
     <string name="order_goods_fee">商品总额</string>
@@ -86,7 +86,7 @@
     <string name="person_coupon">优惠券</string>
     <string name="person_setting">设置</string>
     <string name="person_stone">石头</string>
-
+    <string name="person_stone_explain">说明</string>
 
     <!-- 我的 -> 收货地址  -->
     <string name="person_consignee_name">收货人:</string>
@@ -323,8 +323,6 @@
     <string name="jh_menpai_logo_null">请输入门派标签</string>
     <string name="action_exit_menpai">退出门派</string>
 
-
-
     <string name="jh_exit">退出</string>
 
 
@@ -390,6 +388,16 @@
     <string name="hint_search_information">请输入要搜索的资讯</string>
     <string name="activity_product_title">商品</string>
     <string name="hot_product_recommend"><b>热门推荐商品</b></string>
-    hot_product_recommend
+    <string name="activity_paybefor_success">订单提交成功</string>
+    <string name="activity_title_pay_hini">请您尽快完成支付！</string>
+    <string name="activity_title_pay_befor">提交订单</string>
+
+    <string name="activity_title_pay_befor_btn_pay">支付</string>
+
+    <!--hot_product_recommend-->
+    <!--测试结果页面-->
+    <string name="resultactivity_bnt_gxysf">高血压随访</string>
+    <string name="resultactivity_bnt_gxtsf">高血糖随访</string>
+
 
 </resources>

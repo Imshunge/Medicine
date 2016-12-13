@@ -11,12 +11,14 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.BaseActivity;
 import com.shssjk.adapter.SPSearchkeyListAdapter;
+import com.shssjk.adapter.SeachKeyAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.SPSaveData;
 import com.shssjk.utils.SPDialogUtils;
@@ -33,6 +35,7 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
 
 
     SPSearchkeyListAdapter mAdapter;
+    SeachKeyAdapter mSeachKeyAdapter;
     List<String> mSearchkeys;
     ListView searchkeyListv;
     Context mContext;
@@ -54,6 +57,7 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
     private ImageView iamgeBack;
     private TextView searchedTextView;
     private Button searchDeleteBtn;
+    private GridView searchList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -68,6 +72,7 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
         searchView = (SPSearchView) findViewById(R.id.search_view);
         searchView.getSearchEditText().setFocusable(true);
         searchkeyListv = (ListView) findViewById(R.id.search_key_listv);
+        searchList = (GridView) findViewById(R.id.search_key_grid);
         iamgeSearch = (ImageView) findViewById(R.id.search_icon);
         iamgeBack= (ImageView) findViewById(R.id.back_imgv);
         searchedTextView = (TextView) findViewById(R.id.search_edtv);
@@ -77,6 +82,8 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
     @Override
     public void initData() {
         mAdapter = new SPSearchkeyListAdapter(this, mHandler);
+        mSeachKeyAdapter= new SeachKeyAdapter(this);
+//        searchList.setAdapter(mSeachKeyAdapter);
         searchkeyListv.setAdapter(mAdapter);
         if (getIntent() != null && getIntent().getStringExtra("searchKey") != null) {
             String searchKey = getIntent().getStringExtra("searchKey");
@@ -88,6 +95,7 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
 
         loadKey();
         mAdapter.setData(mSearchkeys);
+        mSeachKeyAdapter.setData(mSearchkeys);
     }
     @Override
     public void initEvent() {
@@ -208,6 +216,7 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
 //        }
         loadKey();
         mAdapter.setData(mSearchkeys);
+//        mSeachKeyAdapter.setData(mSearchkeys);
 
     }
     public void loadKey() {

@@ -83,8 +83,6 @@ public class ShopcartListAdapter extends BaseAdapter implements View.OnClickList
 			holder.checkBtn = ((Button) convertView.findViewById(R.id.check_btn));
 			holder.deleteBtn = ((Button) convertView.findViewById(R.id.delete_btn));
 
-
-
 			convertView.setTag(holder);//设置标记
 
 		}else{

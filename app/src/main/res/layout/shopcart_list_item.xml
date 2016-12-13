@@ -121,8 +121,8 @@
         <Button
             android:id="@+id/delete_btn"
             android:layout_toLeftOf="@id/name_txtv"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/item_sicon_width"
+            android:layout_height="@dimen/item_sicon_height"
             android:layout_marginRight="10dp"
             android:textColor="@color/white"
             android:background="@drawable/icon_delete"

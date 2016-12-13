@@ -72,7 +72,6 @@ public class AvailableCouponActivity extends BaseActivity implements View.OnClic
         if (getIntent()!=null){
             selectCoupon = (SPCoupon)getIntent().getSerializableExtra("coupon");
         }
-
         if (selectCoupon!=null && selectCoupon.getCouponType() == 2){
             checkBtn.setBackgroundResource(R.drawable.icon_checked);
         }else{

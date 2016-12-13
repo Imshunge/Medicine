@@ -53,7 +53,6 @@ public class SPAddressListAdapter extends BaseAdapter implements View.OnClickLis
 	public long getItemId(int position) {
 		if(mConsignees == null) return -1;
 		return Long.valueOf(mConsignees.get(position).getAddressID());
-		
 	}
 
 	@Override

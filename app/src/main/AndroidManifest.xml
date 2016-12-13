@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:uses-permissionandroid="http://schemas.android.com/tools"
     package="com.shssjk.activity">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,6 +19,21 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature android:name="android.hardware.nfc.hce" />
+
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="org.simalliance.openmobileapi.SMARTCAR" />
+
 
     <application
         android:name="com.shssjk.global.MobileApplication"
@@ -36,6 +52,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <uses-library
+            android:name="org.simalliance.openmobileapi"
+            android:required="false" />
+
+        <activity
+            android:name="com.unionpay.uppay.PayActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="com.unionpay.UPPayWapActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+
         <activity android:name=".common.user.LoginActivity" />
         <activity
             android:name=".common.PersonInfoActivity"
@@ -72,21 +107,21 @@
         <activity android:name=".common.user.ChangePasswordActivity" />
         <activity android:name=".common.user.MyMessageActivity" />
         <activity android:name=".common.shop.OrderDetailActivity" />
-        <activity android:name=".common.information.ArticleDetailActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:configChanges="orientation|keyboardHidden"            />
+        <activity
+            android:name=".common.information.ArticleDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".common.information.ArticleSearchActivity" />
         <activity android:name=".common.community.QuackListActivity" />
         <activity android:name=".common.community.ComArticleListActivity" />
         <activity android:name=".common.community.ComMyArticleListActivity" />
-        <activity android:name=".common.community.ComArticleDetailActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+        <activity
+            android:name=".common.community.ComArticleDetailActivity"
             android:configChanges="orientation|keyboardHidden"
-            />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".common.community.SchoolDetailActivity" />
         <activity android:name=".common.community.MySchoolActivity" />
         <activity android:name=".common.community.MyQuackListActivity" />
-
         <activity android:name=".common.community.AddComArticleActivity" />
         <activity android:name=".common.community.AddSchoolActivity" />
         <activity android:name="com.shssjk.capture.CaptureActivity" />
@@ -96,8 +131,9 @@
         <activity android:name=".common.shop.OrderWaitcommentActivity" />
         <activity android:name=".common.shop.OrderReturnedActivity" />
         <activity android:name=".common.user.MyTeamActivity" />
-        <activity android:name=".common.user.CouponListActivity"></activity>
-        <activity android:name="com.zbar.lib.CaptureActivity"></activity>
+        <activity android:name=".common.user.CouponListActivity" />
+        <activity android:name="com.zbar.lib.CaptureActivity" />
+        <activity android:name=".common.shop.BeforPayActivity"></activity>
     </application>
 
 </manifest>

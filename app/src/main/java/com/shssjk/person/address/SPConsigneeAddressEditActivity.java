@@ -140,12 +140,10 @@ public class SPConsigneeAddressEditActivity extends BaseActivity implements View
                 if (!checkData()){
                     return;
                }
-
                 RequestParams params = new RequestParams();
                 params.put("consignee" , consignee.getConsignee());
                 params.put("province" , consignee.getProvince());
                 params.put("city" , consignee.getCity());
-
                 params.put("district" , consignee.getDistrict());
                 params.put("street" , consignee.getTown());
                 params.put("address" , consignee.getAddress());

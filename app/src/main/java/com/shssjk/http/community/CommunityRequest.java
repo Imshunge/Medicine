@@ -1207,7 +1207,7 @@ public class CommunityRequest {
 		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "quack_check");
 
 		RequestParams params = new RequestParams();
-		params.put("cid" , cid);
+		params.put("cid" , cid); //门派id
 		params.put("uid" , uid);
 		params.put("status" , status);
 

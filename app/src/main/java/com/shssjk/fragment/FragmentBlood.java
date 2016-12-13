@@ -67,9 +67,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     private String[] binds;
     private int addId = 0;
 
-
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

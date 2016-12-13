@@ -85,7 +85,7 @@ public class SPOrderCouponAdapter extends BaseAdapter{
 		}
 
 		holder.titleTxtv.setText(coupon.getName());
-
+		holder.subTitleTxtv.setText(coupon.getUseEndTime());
 		if (coupon.getSendTime()!=null){
 			String sendTime = SPCommonUtils.getDateShortTime(Long.valueOf(coupon.getSendTime().trim()));
 			holder.subTitleTxtv.setText("发放时间:"+sendTime);

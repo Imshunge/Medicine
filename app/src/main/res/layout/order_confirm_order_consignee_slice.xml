@@ -18,14 +18,12 @@
 		android:layout_height="match_parent"
 		android:layout_marginLeft="30dip"
 		android:layout_marginRight="33dip">
-
 		<TextView
 			android:id="@+id/order_consignee_txtv"
 			android:layout_width="match_parent"
 			android:layout_height="30dip"
 			android:layout_marginTop="@dimen/margin_space"
-
-			android:text="收货人 13800138006"
+			android:text="请添加收货人信息"
 			android:textStyle="bold"
 			style="@style/textStyle.Medium.black"/>
 
@@ -35,9 +33,7 @@
 			android:layout_height="15dip"
 			android:layout_alignParentBottom="true"
 			android:layout_marginBottom="@dimen/margin_space"
-
-			android:text="福田上梅林"
-			style="@style/textStyle.Normal.black"/>
+			style="@style/textStyle.Normal.black" />
 	</RelativeLayout>
 
 	<ImageView
