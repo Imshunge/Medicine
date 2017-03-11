@@ -5,8 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,33 +28,32 @@ import com.cundong.recyclerview.RecyclerViewUtils;
 
 import com.shssjk.MainActivity;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.shop.CategoryActivity;
+import com.shssjk.activity.common.shop.Category2Activity;
 import com.shssjk.activity.common.shop.CollectListActivity;
-import com.shssjk.activity.common.shop.OrderListActivity;
-import com.shssjk.activity.common.shop.ProductActivity;
+import com.shssjk.activity.common.shop.OrderActivity;
+import com.shssjk.activity.common.shop.ProductAllActivity;
 import com.shssjk.activity.common.shop.ProductListActivity;
 import com.shssjk.activity.common.shop.SearchCommonActivity;
 import com.shssjk.activity.common.shop.ShopCartActivity;
 import com.shssjk.adapter.HomeCategoryAdapter;
 import com.shssjk.adapter.HomeCategoryAdapter2;
 import com.shssjk.adapter.HomeProductListAdapter;
+import com.shssjk.adapter.ImagePagerAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.home.SPHomeRequest;
-import com.shssjk.model.SPCategory;
 import com.shssjk.model.SPHomeBanners;
 import com.shssjk.model.SPHomeCategory;
 import com.shssjk.model.shop.Five;
 import com.shssjk.model.shop.Product;
-import com.shssjk.utils.SPOrderUtils;
 import com.shssjk.utils.SSUtils;
+import com.shssjk.view.LoadListView;
 import com.shssjk.view.MobileScrollLayout;
 import com.shssjk.view.SPHomeListView;
 import com.shssjk.view.ScrollBottomScrollView;
-import com.soubao.tpshop.utils.SPCommonUtils;
-import com.zbar.lib.CaptureActivity;
+import com.shssjk.activity.common.shop.CaptureActivity;
 
 
 import org.json.JSONObject;
@@ -59,12 +61,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
+
 /**
  * 健界
  */
 public class ShopFragment extends BaseFragment implements View.OnClickListener,
 		MobileScrollLayout.PageListener,
-		HomeProductListAdapter.ItemClickListener ,ScrollBottomScrollView.ScrollBottomListener {
+		HomeProductListAdapter.ItemClickListener ,ScrollBottomScrollView.ScrollBottomListener,
+		ImagePagerAdapter.OnBinnerOnClickListener, LoadListView.ILoadListener {
 
 	private String TAG = "ShopFragment";
 	public final static int CATEGORY_FRAGMENT = 1;
@@ -102,11 +107,14 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 	Button searchView;
 	private List<SPHomeBanners> mBanners;
 	private List<Five> homeFives;
-	SPHomeListView mHomeListView;
+//	SPHomeListView mHomeListView;
+    LoadListView mHomeListView;
 	private TextView mCommentLoadMore;
 	private HomeProductListAdapter homeProductListAdapter;
     private ScrollBottomScrollView mScrollBottomScrollView;
-	private List<Product> mProducts = new ArrayList<>();
+	private List<Product> mProducts = new ArrayList<Product>();
+	private AutoScrollViewPager viewPager;
+	private ImagePagerAdapter imagePagerAdapter;
 
 	@Override
 	public void onAttach(Context context) {
@@ -123,7 +131,6 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.fragment_shop, null,false);
-
 		mHeaderView = inflater.inflate(R.layout.shop_header_view, null);
 //		分类 收藏 购物车 订单 布局
 		categoryLayout = mHeaderView.findViewById(R.id.home_menu_categroy_layout);
@@ -138,7 +145,6 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 		homeTitleView = (RelativeLayout) view.findViewById(R.id.toprela);
 		mRecyclerView = (RecyclerView)view.findViewById(R.id.home_listv);
 		mScrollBottomScrollView= (ScrollBottomScrollView)view.findViewById(R.id.scrollview);
-
 //		homeTitleView.getBackground().setAlpha(0);
 		searchText = (EditText) homeTitleView.findViewById(R.id.searchkey_edtv);
 		searchText.setFocusable(false);
@@ -146,15 +152,11 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 		scanView= (TextView) view.findViewById(R.id.image_left);
 //	    个人中心
 		searchView = (Button) view.findViewById(R.id.btn_image_right);
-		mHomeListView=(SPHomeListView) view.findViewById(R.id.home_lsit_item_grid);
-
+		mHomeListView=(LoadListView) view.findViewById(R.id.home_lsit_item_grid);
 		View footerView =  ((LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.listview_footer, null, false);
 		mHomeListView.addFooterView(footerView);
 		mCommentLoadMore= (TextView) footerView.findViewById(R.id.footer_hint_textview);
 		mCommentLoadMore.setOnClickListener(this);
-
-
-
 		homeProductListAdapter = new HomeProductListAdapter(mContext,this);
 		mHomeListView.setAdapter(homeProductListAdapter);
 		mAdapter2  = new HomeCategoryAdapter2(mContext);
@@ -164,7 +166,23 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 		mRecyclerView.addOnScrollListener(mOnScrollListener);
 		RecyclerViewUtils.setHeaderView(mRecyclerView, mHeaderView);
 		/** 设置listView header view : 广告轮播 */
-		mScrolllayout = (MobileScrollLayout)mHeaderView.findViewById(R.id.banner_slayout);
+//		mScrolllayout = (MobileScrollLayout)mHeaderView.findViewById(R.id.banner_slayout);
+//		mScrolllayout = (MobileScrollLayout)mHeaderView.findViewById(R.id.banner_slayout);
+		viewPager= (AutoScrollViewPager)mHeaderView.findViewById(R.id.view_pager);
+
+
+//		viewPager = (viewPager) findViewById(R.id.test_top);
+		// 获取屏幕像素
+		DisplayMetrics display = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay()
+				.getMetrics(display);
+		viewPager.setLayoutParams(new LinearLayout.LayoutParams(
+				display.widthPixels, display.widthPixels * 3 / 5));
+		imagePagerAdapter = new ImagePagerAdapter(mContext, this).setInfiniteLoop(true);
+//		viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
+//		viewPager.setInterval(2000);
+//		viewPager.startAutoScroll();
+//		viewPager.setCurrentItem(Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % imageIdList.size());
 		super.init(view);
 		return view;
 	}
@@ -191,7 +209,7 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 		shopcartLayout.setOnClickListener(this);
 		orderLayout.setOnClickListener(this);
 		couponLayout.setOnClickListener(this);
-		mScrolllayout.setPageListener(this);
+//		mScrolllayout.setPageListener(this);
 		scanView.setOnClickListener(this);
 		searchView.setOnClickListener(this);
 		mScrollBottomScrollView.setScrollBottomListener(this);
@@ -205,10 +223,18 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 	@Override
 	public void onResume() {
 		super.onResume();
-		refreshData();
+		// start auto scroll when onResume
+		viewPager.startAutoScroll();
+//		refreshData();
 	}
-	public void refreshData() {
+	@Override
+	public void onPause() {
+		super.onPause();
+		// stop auto scroll when onPause
+		viewPager.stopAutoScroll();
+	}
 
+	public void refreshData() {
 		SPHomeRequest.getHomeData(new SPSuccessListener() {
 			@Override
 			public void onRespone(String msg, Object response) {
@@ -226,14 +252,15 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 					}
 					if (mDataJson.has("banners")) {
 						mBanners = (List<SPHomeBanners>) mDataJson.get("banners");
-						mScrolllayout.removeAllViews();
-						for (SPHomeBanners banner : mBanners) {
-							ImageView img = getImageViewByBg(R.drawable.b_m);
-							Glide.with(mContext).load(String.format(banner.getAdCode())).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(img);
-							img.setScaleType(ImageView.ScaleType.FIT_XY);
-							mScrolllayout.addView(img);
-						}
-						mScrolllayout.invalidate();
+//						mScrolllayout.removeAllViews();
+//						for (SPHomeBanners banner : mBanners) {
+//							ImageView img = getImageViewByBg(R.drawable.b_m);
+//							Glide.with(mContext).load(String.format(banner.getAdCode())).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(img);
+//							img.setScaleType(ImageView.ScaleType.FIT_XY);
+////							mScrolllayout.addView(img);
+//						}
+//						mScrolllayout.invalidate();
+						bulidBanner(mBanners);
 						buildPointer();
 					}
 				} catch (Exception e) {
@@ -245,7 +272,6 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 			@Override
 			public void onRespone(String msg, int errorCode) {
 				hideLoadingToast();
-
 				Log.e(TAG, "zzx==>error msg: " + msg);
 			}
 		});
@@ -256,7 +282,7 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 				mDataJson = (JSONObject) response;
 				try {
 					if (mDataJson.has("products")) {
-						mProducts = (List<Product>)mDataJson.get("products");
+						mProducts = (List<Product>) mDataJson.get("products");
 						dealModels(mProducts);
 					}
 				} catch (Exception e) {
@@ -268,10 +294,20 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 			@Override
 			public void onRespone(String msg, int errorCode) {
 				hideLoadingToast();
-              Log.e(TAG, "zzx==>error msg: " + msg);
+				Log.e(TAG, "zzx==>error msg: " + msg);
 			}
 		});
 
+	}
+
+	private void bulidBanner(List<SPHomeBanners> mBanners) {
+		imagePagerAdapter = new ImagePagerAdapter(mContext, this).setInfiniteLoop(true);
+		imagePagerAdapter.setData(mBanners);
+		viewPager.setAdapter(imagePagerAdapter);
+		viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
+		viewPager.setInterval(2000);
+		viewPager.startAutoScroll();
+		viewPager.setCurrentItem(Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % mBanners.size());
 	}
 	private void dealHomeFive(List<Five> homeFives) {
 //		显示 顺序
@@ -282,59 +318,38 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 //		有机系列
 		if(homeFives.size()>=5) {
 			String url1 = MobileConstants.BASE_HOST + homeFives.get(1).getad_code();
-			Glide.with(mContext).load(url1).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightTopImgv);
+			Glide.with(mContext).load(url1).placeholder(R.drawable.product_default).
+					diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightTopImgv);
 		}
 		//		case R.id.bottom_right_imgv:
-////			 黑粮系列
+////	 黑粮系列
 		if(homeFives.size()>=5) {
 			String url2 = MobileConstants.BASE_HOST + homeFives.get(4).getad_code();
-			Glide.with(mContext).load(url2).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomRightImgv);
+			Glide.with(mContext).load(url2).placeholder(R.drawable.product_default).
+					diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomRightImgv);
 		}
 		//		case R.id.bottom_left_imgv:
-////               食品加工
+////     食品加工
 		if(homeFives.size()>=5) {
-			String url3 = MobileConstants.BASE_HOST + homeFives.get(2).getad_code();
-			Glide.with(mContext).load(url3).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomLeftImgv);
+			String url3 = MobileConstants.BASE_HOST + homeFives.get(3).getad_code();
+			Glide.with(mContext).load(url3).placeholder(R.drawable.product_default)
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomLeftImgv);
 		}
 //		待变   	case R.id.up_left_imgv:
-////				自我检测设备
+////	自我检测设备
 		if(homeFives.size()>=5) {
 			String url4 = MobileConstants.BASE_HOST + homeFives.get(0).getad_code();
-			Glide.with(mContext).load(url4).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upLeftImgv);
+			Glide.with(mContext).load(url4).placeholder(R.drawable.product_default).
+					diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upLeftImgv);
 		}
-		////        菌菇系列
+		////    菌菇系列
 //		case R.id.up_right_bottom_imgv:
 		if(homeFives.size()>=5) {
 			String url5 = MobileConstants.BASE_HOST + homeFives.get(2).getad_code();
-			Glide.with(mContext).load(url5).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightBottomImgv);
+			Glide.with(mContext).load(url5).placeholder(R.drawable.product_default).
+					diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightBottomImgv);
 		}
-
-//		//		有机系列
-//		String url1= MobileConstants.BASE_HOST+ homeFives.get(0).getad_code();
-//		Glide.with(mContext).load(url1).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightTopImgv);
-//		//		case R.id.bottom_right_imgv:
-//////			 黑粮系列
-//		String url2= MobileConstants.BASE_HOST+ homeFives.get(3).getad_code();
-//		Glide.with(mContext).load(url2).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomRightImgv);
-//
-//		//		case R.id.bottom_left_imgv:
-//////               食品加工
-//		String url3= MobileConstants.BASE_HOST+ homeFives.get(2).getad_code();
-//		Glide.with(mContext).load(url3).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(bottomLeftImgv);
-////		待变   	case R.id.up_left_imgv:
-//////				自我检测设备
-//		String url4= MobileConstants.BASE_HOST+ homeFives.get(3).getad_code();
-//		Glide.with(mContext).load(url4).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upLeftImgv);
-//
-//		////        菌菇系列
-////		case R.id.up_right_bottom_imgv:
-//		String url5= MobileConstants.BASE_HOST+ homeFives.get(1).getad_code();
-//		Glide.with(mContext).load(url5).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(upRightBottomImgv);
-//
-
-
 	}
-
 	private ImageView getImageViewByBg(int imageResId){
 		ImageView imageView = new ImageView(mContext);
 		ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
@@ -344,39 +359,32 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 		imageView.setBackgroundResource(imageResId);
 		return imageView;
 	}
-
 	/**
 	 * 构建轮播广告"圆点指示器"
 	 */
 	public void buildPointer(){
 		// 获取子view个数, 用来计算圆点指示器个数
-		int pageCount = mScrolllayout.getChildCount();
-		mPointerLayout = (ViewGroup)mHeaderView.findViewById(R.id.pointer_layout);
-
-		ImageView[] pointerImgv = new ImageView[pageCount];
-		mPointerLayout.removeAllViews();
-		for (int i = 0; i < pageCount; i++) {
-			ImageView imageView = new ImageView(this.mContext);
-			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(20 , 20);//圆点指示器宽高
-			lp.setMargins(8, 0, 8, 0);
-			imageView.setLayoutParams(lp);
-			imageView.setPadding(20, 0, 20, 0);
-			pointerImgv[i] = imageView;
-			if (i == 0) {
-				//默认选中第一张图片
-				pointerImgv[i].setBackgroundResource(R.drawable.ic_home_arrows_focus);
-			} else {
-				pointerImgv[i].setBackgroundResource(R.drawable.ic_home_arrows_normal);
-			}
-			mPointerLayout.addView(pointerImgv[i]);
-		}
+//		int pageCount = mScrolllayout.getChildCount();
+//		mPointerLayout = (ViewGroup)mHeaderView.findViewById(R.id.pointer_layout);
+//		ImageView[] pointerImgv = new ImageView[pageCount];
+//		mPointerLayout.removeAllViews();
+//		for (int i = 0; i < pageCount; i++) {
+//			ImageView imageView = new ImageView(this.mContext);
+//			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(20 , 20);//圆点指示器宽高
+//			lp.setMargins(8, 0, 8, 0);
+//			imageView.setLayoutParams(lp);
+//			imageView.setPadding(20, 0, 20, 0);
+//			pointerImgv[i] = imageView;
+//			if (i == 0) {
+//				//默认选中第一张图片
+//				pointerImgv[i].setBackgroundResource(R.drawable.ic_home_arrows_focus);
+//			} else {
+//				pointerImgv[i].setBackgroundResource(R.drawable.ic_home_arrows_normal);
+//			}
+//			mPointerLayout.addView(pointerImgv[i]);
+//		}
 	}
 
-//	private void dealModels(List<SPHomeCategory> cate){
-//
-//		mAdapter.setData(cate);
-//
-//	}
 	private void dealModels(List<Product> cate){
 		homeProductListAdapter.setData(cate);
 	}
@@ -396,18 +404,11 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 			super.onScrolled(recyclerView, dx, dy);
 
 			int scrollY = getScrolledDistance();
-//			showToast("hhhhhh");
 
 			if (scrollY == 0) {
-				//int progress = (int) (new Float(dy) / new Float(lHeight) * 200);//255
-//				homeTitleView.getBackground().setAlpha(0);
-				//homeTitleView.setAlpha(0);
-//				showToast("sssssssssssss");
 
 			} else {
-//				homeTitleView.getBackground().setAlpha(255 - 55);
-				//homeTitleView.setAlpha(0.9f);
-//				showToast("sssssssssssss");
+
 			}
 		}
 	};
@@ -461,7 +462,7 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 				break;
 			case R.id.home_menu_categroy_layout :
 //				产品分类
-				Intent categoryIntent = new Intent(getActivity() , CategoryActivity.class);
+				Intent categoryIntent = new Intent(getActivity() , Category2Activity.class);
 				getActivity().startActivity(categoryIntent);
 				break;
 			case R.id.home_menu_shopcart_layout :
@@ -469,35 +470,24 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 				startupProductCarActivity();
 				break;
 			case R.id.home_menu_order_layout :
-				startupOrderList(SPOrderUtils.OrderStatus.all.value());
+				startupOrderList(0);
 				break;
 //			收藏
 			case R.id.home_menu_coupon_layout :
 				startupCollection();
 				break;
 			case R.id.image_left:  //扫描
-//				Intent intentC = new Intent();
-//				intentC.setClass(getActivity(), MipcaActivityCapture.class);
-//				intentC.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//				startActivityForResult(intentC, SCANNIN_GREQUEST_CODE);
 				startupActivityCapture();
 				break;
-//			case R.id.image_right://个人中心
-//				Intent collectIntent = new Intent(getActivity() , PersonInfoActivity.class);
-//				getActivity().startActivity(collectIntent);
-//				break;
-
 			case R.id.footer_hint_textview:
 				showLoadingToast("正在加载数据");
 				laodaMoreData();
 				break;
-
 		}
 	}
-	//扫描界面
+	//搜索界面
 	private void startupSearchActivity() {
 		Intent SearchCommonIntent = new Intent(getActivity() , SearchCommonActivity.class);
-
 		getActivity().startActivity(SearchCommonIntent);
 	}
 
@@ -523,8 +513,8 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 			toLoginPage();
 			return;
 		}
-		Intent allOrderList = new Intent(getActivity() , OrderListActivity.class);
-		allOrderList.putExtra("orderStatus" , orderStatus);
+		Intent allOrderList = new Intent(getActivity() , OrderActivity.class);
+		allOrderList.putExtra("index" , orderStatus);
 		getActivity().startActivity(allOrderList);
 	}
 // 跳转分类界面
@@ -569,10 +559,6 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 			switch (requestCode){
 				case SCANNIN_GREQUEST_CODE:
 					Bundle bundle = data.getExtras();
-					//显示扫描到的内容
-					//mTextView.setText(bundle.getString("result"));
-					//显示
-					//mImageView.setImageBitmap((Bitmap) data.getParcelableExtra("bitmap"));
 					showToast(bundle.getString("result"));
 					break;
 			}
@@ -586,7 +572,7 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 		startupActivity(googdsId);
 	}
 	public void startupActivity(String goodsID) {
-		Intent intent = new Intent(getActivity(), ProductActivity.class);
+		Intent intent = new Intent(getActivity(), ProductAllActivity.class);
 		intent.putExtra("goodsId", goodsID);
 		startActivity(intent);
 	}
@@ -600,9 +586,16 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 	@Override
 	public void scrollBottom() {
 //		showLoadingToast("正在加载数据");
-//		laodaMoreData();
+//		Handler handler = new Handler();
+//		handler.postDelayed(new Runnable() {
+//			@Override
+//			public void run() {
+//				//获取更多数据
+//				laodaMoreData();
+//			}
+//		}, 2000);
+//		onLoad();
 	}
-
 	private void laodaMoreData() {
 		if (mProducts.size() > 0) {
 			int size = mProducts.size();
@@ -644,4 +637,50 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 		});
 
 	}
+
+	@Override
+	public void onBinnerClick(int index) {
+		String url=	mBanners.get(index).getAdLink();
+		String googdsId=SSUtils.getNumbers(url);
+		startupActivity(googdsId);
+	}
+
+	@Override
+	public void gotoLoginPageClearUserDate() {
+
+	}
+
+	@Override
+	public void onLoad() {
+//		Handler handler = new Handler();
+//		handler.postDelayed(new Runnable() {
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				//获取更多数据
+////                getLoadData();
+//				//更新listview显示；
+////                showListView(apk_list);
+//				//通知listview加载完毕
+//				synchronized(this){
+//					laodaMoreData();
+//				}
+//				mHomeListView.loadComplete();
+//			}
+//		}, 2000);
+	}
+
+	public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+		@Override
+		public void onPageSelected(int position) {
+//			indexText.setText(new StringBuilder().append((position) %imageIdList.size() + 1).append("/")
+//					.append(imageIdList.size()));
+		}
+		@Override
+		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+		@Override
+		public void onPageScrollStateChanged(int arg0) {}
+	}
+
 }

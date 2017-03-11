@@ -1,7 +1,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:id="@+id/ll_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        >
     <com.chanven.lib.cptr.PtrClassicFrameLayout
         android:id="@+id/coupon_list_view_frame"
         xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
@@ -22,14 +31,30 @@
             android:fastScrollEnabled="false"
             android:footerDividersEnabled="false"
             android:headerDividersEnabled="false"
-
             android:listSelector="@android:color/transparent"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@null"
             android:dividerHeight="10dp"
-
             android:scrollbars="none"
             android:smoothScrollbar="true" />
-
     </com.chanven.lib.cptr.PtrClassicFrameLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/empty_lstv"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:background="@color/bg_view"
+        android:visibility="gone"
+        android:padding="10.0dip" >
+        <TextView
+            android:id="@+id/empty_txtv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:singleLine="true"
+            android:text="@string/order_list_nodata"
+            style="@style/textStyle.Normal.black" />
+    </RelativeLayout>
+
+
 </LinearLayout>

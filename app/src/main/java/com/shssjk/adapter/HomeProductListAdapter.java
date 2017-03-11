@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shssjk.activity.R;
 import com.shssjk.common.MobileConstants;
-import com.shssjk.model.SPProduct;
 import com.shssjk.model.shop.Product;
 import com.soubao.tpshop.utils.SPCommonUtils;
 
@@ -112,18 +111,18 @@ public class HomeProductListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				if (mListener != null) {
-					mListener.onItemClickListener((Product)mProductLst.get(position * 2) );
+					mListener.onItemClickListener((Product) mProductLst.get(position * 2));
 				}
 			}
-		 });
-        
+		});
+		holder.view2.setVisibility(View.INVISIBLE);
         if ((position * 2 + 1) < mProductLst.size()) {
-
-			Product product2 = (Product)mProductLst.get(position * 2+1 );
+			holder.view2.setVisibility(View.VISIBLE);
+			Product product2 = (Product)mProductLst.get(position * 2+1);
             
             //设置数据到View
             //格式化价格
-            String price2 = String.format(mContext.getResources().getString(R.string.product_price),Float.valueOf( product2.getShopPrice()));
+            String price2 = String.format(mContext.getResources().getString(R.string.product_price),Float.valueOf(product2.getShopPrice()));
             holder.nameTxtv2.setText(product2.getGoodsName());
             holder.priceTxtv2.setText(""+String.valueOf(price2));
             holder.nameTxtv2.setText(product2.getGoodsName());
@@ -138,8 +137,6 @@ public class HomeProductListAdapter extends BaseAdapter {
 				}
 			 });
         }
-        
-        
         return convertView;
 	}
 	

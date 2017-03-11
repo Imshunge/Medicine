@@ -1,0 +1,116 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:descendantFocusability="blocksDescendants"
+	android:background="@color/bg_activity">
+
+	<View  style="@style/separator_line"/>
+
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/bg_view"
+		android:orientation="vertical">
+		<TextView
+			android:layout_marginTop="@dimen/dp_14"
+			android:id="@+id/order_id"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="@dimen/margin10dp"
+			android:layout_marginRight="@dimen/margin_space"
+			android:gravity="left|center_vertical"
+			android:text="订单编号：201666666666"
+			style="@style/textStyle.Normal.black"/>
+
+		<View  style="@style/separator_line"
+			android:layout_marginTop="@dimen/dp_14"
+			/>
+
+		<include layout="@layout/lv_order_item" />
+		<View  style="@style/separator_line"
+			/>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="40dip"
+			android:background="@color/bg_view"
+			android:orientation="horizontal">
+			<TextView
+				android:id="@+id/order_product_detail_txtv"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="match_parent"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="@dimen/margin_space_half"
+				android:gravity="center_vertical"
+				android:text="共1件商品 实付金额¥699"
+				style="@style/textStyle.Normal.black"
+				android:visibility="invisible"
+				/>
+			<Button
+				android:id="@+id/btn_returngoods"
+				android:layout_width="60dp"
+				android:layout_height="30dp"
+				style="@style/textStyle.Small.black"
+				android:background="@drawable/tag_button_bg_unchecked"
+				android:text="@string/btn_ordercommnet_list_return"
+				android:layout_gravity="left|center_vertical"
+				android:layout_margin="@dimen/margin20dp"
+
+				/>
+			<Button
+				android:id="@+id/btn_commnet"
+				android:layout_width="60dp"
+				android:layout_height="30dp"
+				style="@style/textStyle.Small.black"
+				android:text="@string/btn_ordercommnet_list_commnet"
+				android:background="@drawable/tag_button_bg_unchecked"
+				android:layout_alignParentTop="true"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="@dimen/margin20dp"
+				/>
+
+		</LinearLayout>
+		<LinearLayout
+			android:id="@+id/ll_commnent"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/bg_view"
+			android:visibility="gone"
+			android:orientation="vertical">
+
+
+			<TextView
+				android:id="@+id/comment_txtv"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_marginLeft="@dimen/margin_space"
+				android:text="评价内容"
+				android:padding="15dp"
+				 />
+
+			<HorizontalScrollView
+				android:id="@+id/order_product_scrollv"
+				android:layout_width="match_parent"
+				android:layout_height="80dip"
+				android:layout_gravity="center_vertical"
+				android:layout_marginLeft="@dimen/margin_space"
+				android:layout_marginRight="@dimen/margin_space">
+
+				<LinearLayout
+					android:id="@+id/product_list_gallery_lyaout"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:orientation="horizontal"></LinearLayout>
+			</HorizontalScrollView>
+		</LinearLayout>
+	</LinearLayout>
+
+
+
+</LinearLayout>

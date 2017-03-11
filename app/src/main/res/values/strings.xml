@@ -1,8 +1,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="title_activity_main2">尚尚健康</string>
     <!-- 底部 导航条  选项卡 -->
-
-
     <string name="app_name">尚尚健康</string>
     <string name="hello_world">Hello world!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -62,6 +60,8 @@
     <string name="toast_no_ordersn_data">无订单数据</string>
 
 
+    <string name="toast_no_data">无数据</string>
+
     <!--支付列表 -->
     <string name="pay_money">支付金额</string>
     <string name="pay_wechat">微信支付</string>
@@ -87,7 +87,21 @@
     <string name="person_setting">设置</string>
     <string name="person_stone">石头</string>
     <string name="person_stone_explain">说明</string>
-
+    <string name="cameralistactivity_title">我的摄像机</string>
+    <string name="banklistactivity_title">我的银行卡</string>
+    <string name="bankaddoreditactivity_title">银行卡</string>
+    <string name="camera_add">添加摄像机</string>
+    <string name="addcameraactivity_devicename">设备名称</string>
+    <string name="addcameraactivity_devicestate">设备状态</string>
+    <string name="addcameraactivity_deviceid">设备ID</string>
+    <string name="addcameraactivity_btn_link">连接</string>
+    <string name="addcameraactivity_btn_cancel">取消</string>
+    <string name="addcameraactivity_btn_preview">预览模式</string>
+    <string name="addcameraactivity_btn_search">局域网搜索</string>
+    <string name="addcameraactivity_btn_setting_wifi">配置WiFi</string>
+    <string name="cameralistactivity_nodata_hint">您还没有绑定摄像机</string>
+    <string name="camera_wifi_name">WiFi名称</string>
+    <string name="camera_wifi_paw">WiFi密码</string>
     <!-- 我的 -> 收货地址  -->
     <string name="person_consignee_name">收货人:</string>
     <string name="person_consignee_name_hit">请输入收货人姓名</string>
@@ -100,8 +114,12 @@
     <string name="person_consignee_default">设置为默认收货地址</string>
     <string name="address_add">新建地址</string>
     <string name="address_save">保存</string>
-
-
+    <!-- 我的银行卡-->
+    <string name="bank_add">添加银行卡</string>
+    <string name="bankcard_user">持卡人:</string>
+    <string name="bankcard_number">卡号:</string>
+    <string name="bankcard_issuer">发卡行:</string>
+    <string name="bankcard_settingdefault">设置为默认银行卡</string>
     <!-- 公共字符串 -->
     <string name="count">购买数量</string>
     <string name="comment">评论</string>
@@ -110,7 +128,15 @@
     <string name="coupon">优惠券</string>
     <string name="use">使用</string>
     <string name="ok">确定</string>
+
     <string name="cancel">取消</string>
+    <string name="bind">去绑定</string>
+
+    <string name="to_login">去登录</string>
+
+    <string name="update">更新</string>
+
+    <string name="buy">去购买</string>
     <string name="settings">设置</string>
     <string name="exit">安全退出</string>
     <string name="province">省</string>
@@ -132,7 +158,9 @@
     <string name="toast_collect_cancel">取消收藏</string>
     <string name="toast_not_datal">请选择商品数量</string>
     <string name="toast_shopcart_action_success">购物车操作成功</string>
-    <string name="toast_count_not_small_zero">"数量不能少于0"</string>
+    <string name="toast_shopcart_add_success">添加购物车成功</string>
+
+    <string name="toast_count_not_small_zero">"数量不能少于1"</string>
     <string name="toast_low_stocks">库存不足</string>
     <string name="toast_load_data">正在加载数据</string>
     <string name="toast_load_nodata">没有更多商品了</string>
@@ -144,6 +172,8 @@
     <string name="title_product_detail">商品详情</string>
     <string name="title_consignee_list">收货人地址</string>
     <string name="title_collect">收藏</string>
+    <string name="title_all_collect">我的收藏</string>
+
     <string name="title_balance_points">积分金额明细</string>
     <string name="title_confirm_order">确认订单</string>
     <string name="title_product_list">商品列表</string>
@@ -250,13 +280,20 @@
     <!-- 设置-->
     <string name="string_setting">设置</string>
     <string name="setting_team">我的团队</string>
+    <string name="setting_mycamera">我的摄像机</string>
+    <string name="person_bank_aview">我的银行卡</string>
+
     <string name="setting_message">消息通知</string>
+    <string name="setting_message_detail">消息详情</string>
     <string name="setting_changpwd">修改密码</string>
     <string name="setting_help">帮助</string>
     <string name="setting_telephone">尚尚热线</string>
-    <string name="setting_telephone_number">40000011253</string>
-
+    <string name="setting_telephone_number">4000011253</string>
     <string name="setting_about">关于尚尚</string>
+    <string name="setting_service">尚尚服务</string>
+
+    <string name="startbusinessactivity_title">创业说明</string>
+
     <string name="setting_exit">退出</string>
     <string name="title_activity_order_base">OrderBaseActivity</string>
     <!--资讯-->
@@ -328,8 +365,10 @@
 
     <string name="jh_article_name_null">请输入文章主题</string>
     <string name="jh_article_content_null">请输入文章内容</string>
-
+    <string name="order_list_nodata">没有适合条件的数据</string>
     <string name="menpai_list_nodata">没有数据</string>
+    <string name="comment_list_nodata">暂无评论</string>
+
     <!--二维码-->
     <string name="activity_catureactivity_title">扫描二维码</string>
 
@@ -383,6 +422,7 @@
     <string name="end">结束</string>
     <string name="frequency">次</string>
     <string name="tianjia">绑定设备</string>
+    <string name="bandDeviceSucess">绑定设备成功</string>
     <!-- 商城-->
     <string name="order_list_titiel">订单列表</string>
     <string name="hint_search_information">请输入要搜索的资讯</string>
@@ -390,14 +430,169 @@
     <string name="hot_product_recommend"><b>热门推荐商品</b></string>
     <string name="activity_paybefor_success">订单提交成功</string>
     <string name="activity_title_pay_hini">请您尽快完成支付！</string>
-    <string name="activity_title_pay_befor">提交订单</string>
+    <string name="activity_title_pay_befor">订单支付</string>
+    <string name="activity_paybefor_btn_sum">订单金额</string>
+
+    <string name="activity_paybefor_choose_pay">请选择支付方式</string>
+
+    <string name="activity_title_pay_alipay">支付宝</string>
+    <string name="activity_title_pay_union">银联支付</string>
 
     <string name="activity_title_pay_befor_btn_pay">支付</string>
+    <!-- 订单列表-->
+    <string name="btn_order_list_gopay">支付</string>
+    <string name="btn_order_list_nopay">取消订单</string>
+    <!-- 评价列表-->
+    <string name="btn_ordercommnet_list_commnet">评价</string>
+    <string name="btn_ordercommnet_list_return">退货</string>
+
+    <!--<string name="btn_order_list_nopay">取消订单</string>-->
+
+    <!-- 退货详情-->
+    <string name="title_service">售后信息</string>
+    <string name="title_question_des">问题描述</string>
+    <string name="title_question_remarks">问题备注</string>
+    <string name="title_question_pic">问题图片</string>
+
+    <string name="title_return_address">回寄地址</string>
+    <string name="title_express_name">物流名称</string>
+    <string name="title_express_num">物流编号</string>
+    <string name="title_returenorder_detail">申请服务详情</string>
+
+    <string name="return_btn_add">提交</string>
 
     <!--hot_product_recommend-->
     <!--测试结果页面-->
     <string name="resultactivity_bnt_gxysf">高血压随访</string>
     <string name="resultactivity_bnt_gxtsf">高血糖随访</string>
+    <!-- 商品评价-->
+    <string name="product_comment">评分:</string>
+    <string name="product_comment_start_des">与描述相符:</string>
+    <string name="product_comment_start_quality">客服服务质量:</string>
+    <string name="product_comment_start_logistics">物流发货速度:</string>
+    <string name="product_comment_uploadpic">上传图片:</string>
+    <string name="product_comment_check">匿名评价</string>
+    <!-- 退货-->
+    <string name="activity_order_returned">退货</string>
+    <string name="activity_product_des">问题描述</string>
+    <string name="activity_product_btn_add">提交</string>
+    <!-- 推送-->
+    <string name="push_title">推送标题</string>
+    <string name="push_content">血压推送。</string>
 
+    <!--更新-->
+    <string name="soft_updating">正在更新</string>
+    <string name="title_activity_add_camera">AddCameraActivity</string>
+
+    <!-- 摄像头-->
+    <string name="alerm_motion_alarm">移动侦测报警</string>
+    <string name="alerm_gpio_alarm">IO联动报警</string>
+    <string name="input_camera_user">请输入用户名</string>
+    <string name="input_camera_id">请输入设备ID</string>
+    <!--<string name="pppp_status_connecting">正在连接</string>-->
+    <!--<string name="pppp_status_online">在线</string>-->
+    <!--<string name="pppp_status_disconnect">断线</string>-->
+    <!--<string name="pppp_status_connect_failed">连接失败</string>-->
+    <!--<string name="pppp_status_pwd_error">密码错误</string>-->
+    <!--<string name="pppp_status_invalid_id">ID号无效</string>-->
+    <!--<string name="pppp_status_initialing">已连接, 正在初始化</string>-->
+    <!--<string name="device_not_on_line">摄像机不在线</string>-->
+    <!--<string name="pppp_status_connect_timeout">连接超时</string>-->
+    <!--<string name="pppp_status_unknown">未知状态</string>-->
+    <string name="setwifiactivity_title">配置WiFi</string>
+    <string name="add_search_result">搜索结果</string>
+    <string name="add_search_no">没有搜索到,请重试...</string>
+    <!-- 搜索相机界面 -->
+    <string name="searching_tip">正在搜索，请稍候...</string>
+    <string name="search_camera">搜索摄像机</string>
+    <string name="refresh">刷新</string>
+    <string name="str_cancel">取消</string>
+    <string name="title_activity_product_all">ProductAllActivity</string>
+    <string name="title_activity_bank_list">BankListActivity</string>
+
+    <!-- 主界面 -->
+    <string name="pppp_status_initialing">已连接, 正在初始化</string>
+    <string name="delete_camera">删除</string>
+    <string name="list_option">操作</string>
+    <string name="del_alert">确认删除?</string>
+    <string name="str_search">局域网搜索</string>
+    <string name="check_loction">查看录像</string>
+    <string name="str_add">添加</string>
+    <string name="str_about">关于</string>
+    <string name="connecting">正在连接...</string>
+    <string name="init_network_error">初始化网络失败</string>
+    <string name="connect_failed">连接失败</string>
+    <string name="edit">修改</string>
+    <string name="setting">设置</string>
+    <string name="string_about">关于我们</string>
+    <string name="camera_type">摄像机类型</string>
+    <string name="device_id_name">ID:</string>
+    <string name="device_type_name">类型:</string>
+    <string name="device_status_name">状态:</string>
+    <string name="pppp_status_unknown">未知状态</string>
+    <string name="pppp_status_connecting">正在连接</string>
+    <string name="pppp_status_online">在线</string>
+    <string name="pppp_status_disconnect">断线</string>
+    <string name="pppp_status_connect_failed">连接失败</string>
+    <string name="pppp_status_pwd_error">密码错误</string>
+    <string name="pppp_status_invalid_id">ID号无效</string>
+    <string name="pppp_dev_type_unknown">未知类型</string>
+    <string name="device_not_on_line">摄像机不在线</string>
+    <string name="pppp_mode">模式:</string>
+    <string name="pppp_mode_p2p_normal">p2p连接</string>
+    <string name="pppp_mode_p2p_relay">p2p转发</string>
+    <string name="pppp_mode_unknown">未知</string>
+    <string name="pppp_status_connect_timeout">连接超时</string>
+    <string name="main_tap_here_add_vidicon">请按此处新增摄像机</string>
+    <string name="back">返回</string>
+    <string name="done">完成</string>
+    <string name="main_select_all">全选</string>
+    <string name="main_select_reverse">反选</string>
+    <string name="main_edit">编辑</string>
+    <string name="main_check">查看</string>
+    <string name="main_vidicon">摄像机</string>
+    <string name="main_alarm_event">报警事件</string>
+    <string name="main_pic">图片</string>
+    <string name="main_vid">录像</string>
+    <string name="main_remote">远程</string>
+    <string name="main_phone">手机</string>
+    <string name="main_setting_prompt">摄像机不在线,无法进行设置</string>
+    <string name="exit_cam">退出</string>
+    <string name="main_alarm">报警</string>
+    <string name="main_more">更多</string>
+    <string name="main_plea_addcam">请先添加摄像机</string>
+    <string name="main_not_administrator">该用户不是管理员</string>
+    <string name="main_show_back">再按一次，退出摄像机！</string>
+    <!-- 视频参数设置界面 -->
+    <string name="vga">普清</string>
+    <string name="qvga">高清</string>
+    <string name="mobile">手机</string>
+    <string name="min">最低</string>
+    <string name="low">低</string>
+    <string name="middle">中</string>
+    <string name="high">高</string>
+    <string name="max">最高</string>
+    <string name="right_cam">向右</string>
+    <string name="left_cam">向左</string>
+    <string name="up">向上</string>
+    <string name="down">向下</string>
+    <string name="preset_set">预置位设置</string>
+    <string name="preset_call">预置位调用</string>
+
+    <string name="videoing">录像中...</string>
+    <string name="ptz_takevideo_end">录像结束</string>
+    <string name="ptz_takevideo_begin">开始录像</string>
+    <string name="ptz_takepic_ok">拍照成功</string>
+    <string name="ptz_takepic_fail">拍照失败</string>
+    <string name="ptz_takepic_save_fail">该设备没有SDCard,照片保存失败</string>
+    <string name="str_ok">确定</string>
+    <string name="exit_play_show">确认退出播放?</string>
+    <string name="exit_show">   提示：</string>
+    <string name="exit_alert">确认退出吗 ?</string>
+    <string name="eixt_show_toast">本地录像中，请先停止再退出！</string>
+
+    <string name="ptz_default_vedio_params">视频参数恢复默认值</string>
+    <string name="ptz_control">请按菜单键,进行云台控制</string>
+    <string name="login_stuta_camer">相机状态</string>
 
 </resources>

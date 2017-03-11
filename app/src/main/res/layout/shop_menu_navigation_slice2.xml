@@ -20,11 +20,10 @@
             
              <ImageView 
                 android:id="@+id/home_menu_categroy_imgv"
-		        android:layout_width="@dimen/item_icon_width"
-		        android:layout_height="@dimen/item_icon_height"
+		        android:layout_width="@dimen/shop_icon_width"
+		        android:layout_height="@dimen/shop_icon_height"
 		        android:src="@drawable/list"/>
-             
-             <TextView
+            <TextView
 		        android:id="@+id/home_menu_categroy_txtv"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
@@ -47,8 +46,8 @@
             
              <ImageView 
                 android:id="@+id/home_menu_order_imgv"
-                 android:layout_width="@dimen/item_icon_width"
-                 android:layout_height="@dimen/item_icon_height"
+                 android:layout_width="@dimen/shop_icon_width"
+                 android:layout_height="@dimen/shop_icon_height"
 		        android:src="@drawable/order"/>
              
              <TextView
@@ -73,8 +72,8 @@
 
         <ImageView
             android:id="@+id/home_menu_shopcart_imgv"
-            android:layout_width="@dimen/item_icon_width"
-            android:layout_height="@dimen/item_icon_height"
+            android:layout_width="@dimen/shop_icon_width"
+            android:layout_height="@dimen/shop_icon_height"
             android:src="@drawable/cart"/>
 
         <TextView
@@ -98,8 +97,8 @@
             
              <ImageView 
                 android:id="@+id/home_menu_coupon_imgv"
-                 android:layout_width="@dimen/item_icon_width"
-                 android:layout_height="@dimen/item_icon_height"
+                 android:layout_width="@dimen/shop_icon_width"
+                 android:layout_height="@dimen/shop_icon_height"
 		        android:src="@drawable/collect"/>
 
              <TextView

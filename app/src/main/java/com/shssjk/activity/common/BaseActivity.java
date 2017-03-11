@@ -1,8 +1,10 @@
 
 package com.shssjk.activity.common;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -18,10 +20,17 @@ import android.widget.TextView;
 
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.user.LoginActivity;
-import com.shssjk.utils.SMobileLog;
-import com.shssjk.utils.SPConfirmDialog;
+import com.shssjk.global.MobileApplication;
+import com.shssjk.global.SPSaveData;
+import com.shssjk.http.base.SPFailuredListener;
+import com.shssjk.http.base.SPSuccessListener;
+import com.shssjk.http.person.SPUserRequest;
+import com.shssjk.model.SPUser;
+import com.shssjk.utils.Logger;
+import com.shssjk.utils.ConfirmDialog;
 import com.shssjk.utils.SPDialogUtils;
 import com.shssjk.utils.SPLoadingDialog;
+import com.shssjk.utils.SSUtils;
 
 import org.json.JSONObject;
 
@@ -37,6 +46,7 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 	public final int TITLE_HOME = 1;
 	public final int TITLE_DEFAULT = 0;
 	public final int TITLE_CATEGORY = 2;
+	private SharedPreferences pref;
 
 	public JSONObject mDataJson;		//包含网络请求所有结果
 	public SPLoadingDialog mLoadingDialog;
@@ -52,9 +62,8 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 	FrameLayout mDefaultLayout;
 	LinearLayout mHomeLayout;
 	LinearLayout mCategoryLayout;
-	SearchView homeSearch;
-	SearchView categorySearch;
 	RelativeLayout fragmentView;
+	private Context mContext;
 	/**
 	 * 是否自定义标题 , 该方法必须在子Activity的 super.onCreate()之前调用, 否则无效
 	 * @param customerTtitle
@@ -71,13 +80,10 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 		isMenuShow = menuShow;
 		mTtitle = title;
 	}
-
-
 	public void setTitle(String title){
 		mTtitle = title;
 		if (mTitleTxtv!=null)mTitleTxtv.setText(mTtitle);
 	}
-
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -85,34 +91,23 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 		if (isCustomerTtitle){
 			//自定义标题
 			requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		}}
-
+		}
+		mContext=this;
+	}
 	public void bindClickListener(View v , View.OnClickListener listener){
 		if(v != null && listener != null){
 			v.setOnClickListener(listener);
 		}
-
 	}
-
 	/**
 	 * activity初始化
 	 *
 	 */
 	public void init(){
-
 		if (isCustomerTtitle){
 			//设置标题为某个layout
 			getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
 		}
-		//mTitleBarLayout = (FrameLayout) findViewById(R.id.titlebar_layout);
-		//mDefaultLayout = (FrameLayout) findViewById(R.id.titlebar_normal_layout);
-		//mHomeLayout = (LinearLayout) findViewById(R.id.titlebar_home_layout);
-		//mCategoryLayout = (LinearLayout) findViewById(R.id.titlebar_category_layout);
-		//homeSearch =(SearchView) findViewById(R.id.titlebar_home_seach_view);
-		//categorySearch =(SearchView) findViewById(R.id.titlebar_category_seach_view);
-		//fragmentView = (RelativeLayout)findViewById(R.id.fragmentView);
-		//View line = findViewById(R.id.titlebar_line);
-		//if(line != null)line.requestFocus();
 		mBackBtn = (Button)findViewById(R.id.titlebar_back_btn);
 		if (isBackShow){
 			mBackBtn.setVisibility(View.VISIBLE);
@@ -138,9 +133,6 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 		}else{
 			if(mMenuBtn!=null)mMenuBtn.setVisibility(View.GONE);
 		}
-
-
-
 		String title = this.getTitle().toString();
 
 		mTitleTxtv = (TextView)findViewById(R.id.titlebar_title_txtv);
@@ -150,13 +142,12 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 		initSubViews();
 		initEvent();
 		initData();
-		SMobileLog.e("now is runing:", getClass().getSimpleName());
-
+		Logger.e("now is runing:", getClass().getSimpleName());
 	}
 
 	public void setTitleType(int type){
 		int padding = getResources().getDimensionPixelSize(R.dimen.height_tab_bottom_item);
-		fragmentView.setPadding(0,padding-10,0,padding);
+		fragmentView.setPadding(0, padding - 10, 0, padding);
 		mTitleBarLayout.setBackgroundResource(R.color.bg_activity);
 		if(type == TITLE_HOME){
 			mHomeLayout.setVisibility(View.VISIBLE);
@@ -233,8 +224,10 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 		mLoadingDialog.show();
 	}
 
-	public void showConfirmDialog(String message , String title , final SPConfirmDialog.ConfirmDialogListener confirmDialogListener , final int actionType){
-		SPConfirmDialog.Builder builder = new SPConfirmDialog.Builder(this);
+	public void showConfirmDialog(String message , String title ,
+								  final ConfirmDialog.ConfirmDialogListener confirmDialogListener ,
+								  final int actionType){
+		ConfirmDialog.Builder builder = new ConfirmDialog.Builder(this);
 		builder.setMessage(message);
 		builder.setTitle(title);
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -246,6 +239,18 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 		});
 
 		builder.setNegativeButton("取消",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		builder.create().show();
+	}
+	public void showConfirmDialog(String message , String title){
+		ConfirmDialog.Builder builder = new ConfirmDialog.Builder(this);
+		builder.setMessage(message);
+		builder.setTitle(title);
+		builder.setNegativeButton("关闭",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
@@ -268,7 +273,23 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 	public void  toLoginPage(){
 		Intent loginIntent = new Intent(this , LoginActivity.class);
 		startActivity(loginIntent);
+
 	}
+//	当账号在别处登录时调用
+	public void  toLoginPage2(){
+		String username = SPSaveData.getString(mContext, "username");
+
+//		清空用户信息
+		MobileApplication.getInstance().exitLogin();
+		SPSaveData.clearLoginData(mContext);
+		ActivityCollector.finishAll();
+		//跳转登录页面
+		Intent loginIntent = new Intent(this , LoginActivity.class);
+		loginIntent.putExtra("isFristLogin",false);
+		loginIntent.putExtra("username",username);
+		startActivity(loginIntent);
+	}
+
 
 	/**
 	 * 进入产品详情页
@@ -315,15 +336,105 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 	public void dealModel(){}
 
 	@Override
+	public void gotoLoginPageClearUserDate() {
+		ConfirmDialog.Builder builder = new ConfirmDialog.Builder(mContext);
+		builder.setMessage("您的账号在其它设备登陆");
+		builder.setTitle("系统提示");
+//		builder.setCanceledOnTouchOutside(false);
+
+		builder.setPositiveButton(R.string.to_login, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				//设置你的操作事项
+				toLoginPage2();
+			}
+		});
+		builder.setNegativeButton(R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						toLoginPage2();
+					}
+				});
+		builder.create().show();
+	}
+
+	@Override
 	public void gotoLoginPage() {
 		/*if (!SPStringUtils.isEmpty(msg)){
 			showToast(msg);
 		}*/
-		toLoginPage();
+//		ConfirmDialog.Builder builder = new ConfirmDialog.Builder(mContext);
+//		builder.setMessage("您的账号在其它设备登陆");
+//		builder.setTitle("系统提示");
+////		builder.setCanceledOnTouchOutside(false);
+//
+//		builder.setPositiveButton(R.string.to_login, new DialogInterface.OnClickListener() {
+//			public void onClick(DialogInterface dialog, int which) {
+//				dialog.dismiss();
+//				//设置你的操作事项
+//				toLoginPage();
+//			}
+//		});
+//		builder.setNegativeButton(R.string.cancel,
+//				new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int which) {
+//						dialog.dismiss();
+//						toLoginPage();
+//					}
+//				});
+//		builder.create().show();
+		Intent loginIntent = new Intent(this , LoginActivity.class);
+		startActivity(loginIntent);
+
+	}
+
+
+
+
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Logger.e("BaseActivity", "onResume");
+		Long time=SPSaveData.getLong(this, "time");
+		Long hour= SSUtils.getTimeLag(time);
+		if(hour>20L){
+			doLogin();
+		}
+	}
+	private void doLogin() {
+		pref = getSharedPreferences("com.shssjk.activity.push",
+				MODE_PRIVATE);
+	String	channalId = pref.getString("channalId", "");
+	String	appId = pref.getString("appId", "");
+	String	spikey = "yYcn0KjvpIte4HVs7qYczEQMbvGYkE98";
+	String	deviceyppe = "android";
+	String	username= SPSaveData.getString(getBaseContext(), "username");
+	String	pass=SPSaveData.getString(getBaseContext(),"pwd");
+		SPUserRequest.doLogin(username, pass,
+				channalId, appId, spikey, deviceyppe,
+				new SPSuccessListener() {
+					@Override
+					public void onRespone(String msg, Object response) {
+						if (response != null) {
+							SPUser user = (SPUser) response;
+							MobileApplication.getInstance().setLoginUser(user);
+							Logger.e("doLogin", "success" + user.getNickname());
+							Logger.e("doLogin  getToken", "success" + user.getToken());
+						}
+					}
+				}, new SPFailuredListener() {
+					@Override
+					public void onRespone(String msg, int errorCode) {
+						Logger.e("doLogin", "SPFailuredListener");
+					}
+				});
 	}
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		ActivityCollector.removeActivity(this);
 	}
+
 }

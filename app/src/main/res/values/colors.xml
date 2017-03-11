@@ -31,7 +31,6 @@
 
     <color name="bg_view">#ffffffff</color>
     <color name="bg_header">#fff8f8f8</color>
-
     <color name="color_font_gray">#9e9d9d</color>
     <color name="color_font_blue">#47B0DA</color>
     <color name="white">#ffffff</color>
@@ -75,6 +74,8 @@
 
     <!-- 商城颜色属性 -->
     <color name="shop_title">#24B326</color>
+    <color name="order_tab">#24B326</color>
+
     <color name="bg_category_title">#FDFDF3</color>
     <color name="green">#00FF00</color>
 
@@ -135,6 +136,13 @@
     <color name="primary_btn_pressed">#E5E5E2</color>
     <color name="primary_btn_disabled">#E5E5E5</color>
     <color name="primary_btn">#E5E5E5</color><!--主题蓝色 -->
-
+    <color name="grey">#FFE0E0E0</color>
+    <color name="edittext_disabled">#ffe0e0e0</color>
+    <color name="edittext_border">#ccc</color>
+    <color name="color_black">#ff000000</color>
+    <color name="color_ptz_blue">#ff0044aa</color>
+    <color name="color_white">#ffffffff</color>
+    <color name="color_blue">#ff0000ff</color>
+    <color name="color_line">#ff444444</color>
 
 </resources>

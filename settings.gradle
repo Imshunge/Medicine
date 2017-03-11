@@ -1,1 +1,1 @@
-include ':app', ':viewpagerindicator', ':HeaderAndFooterRecyclerView_library', ':StickyGridHeaders_library', ':magicindicator_library', ':slidingMenu_library'
+include ':app', ':viewpagerindicator', ':HeaderAndFooterRecyclerView_library', ':StickyGridHeaders_library', ':magicindicator_library', ':slidingMenu_library', ':galleryfinal', ':gallery'

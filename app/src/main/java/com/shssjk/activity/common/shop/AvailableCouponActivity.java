@@ -16,7 +16,7 @@ import com.shssjk.activity.R;
 import com.shssjk.activity.common.BaseActivity;
 import com.shssjk.adapter.SPOrderCouponAdapter;
 import com.shssjk.global.MobileApplication;
-import com.shssjk.model.shop.SPCoupon;
+import com.shssjk.model.shop.Coupon;
 
 import java.util.List;
 
@@ -37,8 +37,8 @@ public class AvailableCouponActivity extends BaseActivity implements View.OnClic
     public static final int MSG_CODE_CHECK_CLICK = 1;
     Handler mHandler ;
     SPOrderCouponAdapter mAdapter;
-    List<SPCoupon> coupons;
-    SPCoupon selectCoupon;
+    List<Coupon> coupons;
+    Coupon selectCoupon;
 
     FrameLayout titlbarFl;
     Button backBtn;       //返回按钮
@@ -68,9 +68,9 @@ public class AvailableCouponActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void initData() {
-        coupons = (List<SPCoupon>) MobileApplication.getInstance().list;
+        coupons = (List<Coupon>) MobileApplication.getInstance().list;
         if (getIntent()!=null){
-            selectCoupon = (SPCoupon)getIntent().getSerializableExtra("coupon");
+            selectCoupon = (Coupon)getIntent().getSerializableExtra("coupon");
         }
         if (selectCoupon!=null && selectCoupon.getCouponType() == 2){
             checkBtn.setBackgroundResource(R.drawable.icon_checked);
@@ -105,6 +105,12 @@ public class AvailableCouponActivity extends BaseActivity implements View.OnClic
                     showToast("请选择优惠券");
                     return;
                 }
+                String isuse= selectCoupon.getIs_use();
+                if(isuse.equals("0")){
+                    showToast("该优惠券满"+selectCoupon.getCondition()+"才可以使用");
+                    return;
+                }
+
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("selectCoupon" , selectCoupon);
                 setResult(2, resultIntent);
@@ -113,7 +119,7 @@ public class AvailableCouponActivity extends BaseActivity implements View.OnClic
         }
 //        if (v.getId() == R.id.coupon_check_btn){
 //            //优惠码
-//            selectCoupon = new SPCoupon();
+//            selectCoupon = new Coupon();
 //            selectCoupon.setCouponType(2);
 //            checkBtn.setBackgroundResource(R.drawable.icon_checked);
 //            if (mAdapter!= null)mAdapter.setSelectCoupon(selectCoupon);

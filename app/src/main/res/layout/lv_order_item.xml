@@ -1,0 +1,68 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="110dip">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dip"
+        android:background="@color/bg_view"
+        android:orientation="horizontal"
+        android:descendantFocusability="blocksDescendants">
+
+        <TextView
+            android:id="@+id/position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/pic_imgv"
+            android:layout_width="80.0dip"
+            android:layout_height="90.0dip"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginTop="@dimen/margin_space"
+            android:src="@drawable/product_default"
+            android:background="@color/white"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:layout_marginTop="@dimen/dp_14"
+            android:id="@+id/name_txtv"
+            android:layout_toRightOf="@id/pic_imgv"
+            android:layout_width="fill_parent"
+            android:layout_height="44.0dip"
+            android:paddingLeft="@dimen/dp_22"
+            android:paddingRight="@dimen/margin_space"
+            android:paddingTop="@dimen/margin_space"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="2"
+            android:text="@string/product_details_detail"
+            style="@style/textStyle.Normal.black" />
+        <TextView
+            android:id="@+id/shop_price_txtv"
+            android:layout_below="@id/name_txtv"
+            android:layout_toRightOf="@id/pic_imgv"
+            android:layout_width="wrap_content"
+            android:layout_height="20.0dip"
+            android:paddingLeft="@dimen/dp_22"
+            android:paddingRight="@dimen/margin_space"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="2"
+            android:text="¥9999"
+            style="@style/textStyle.Normal.lightRed" />
+        <TextView
+            android:id="@+id/num_txtv"
+            android:layout_below="@id/name_txtv"
+            android:layout_width="match_parent"
+            android:layout_height="20.0dip"
+            android:paddingLeft="@dimen/dp_170"
+            android:paddingRight="@dimen/margin_space"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="x1"
+            style="@style/textStyle.Normal.black" />
+    </RelativeLayout>
+</FrameLayout>

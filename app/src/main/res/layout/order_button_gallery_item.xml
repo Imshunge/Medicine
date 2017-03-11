@@ -11,6 +11,8 @@
         android:layout_height="30dp"
         style="@style/textStyle.Small.black"
         android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:background="@drawable/view_bg_clickable_selector"
+        />
 
 </RelativeLayout>

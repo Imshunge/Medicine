@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/person_head_bg"
+    android:background="@color/shop_title"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -66,7 +66,9 @@
             android:orientation="horizontal"
             android:layout_alignBottom="@id/head_mimgv"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/margin_space">
+            android:layout_marginRight="@dimen/margin_space"
+
+            >
             <ImageView
                 android:id="@+id/arrow_imgv"
                 android:layout_width="wrap_content"

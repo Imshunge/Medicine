@@ -1,37 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/bg_activity"
+    >
     <com.shssjk.view.SPSearchView
         android:background="@color/shop_title"
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="50dip" />
+    <TextView
+        android:id="@+id/hot_titlt_txtv"
+        android:layout_below="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin5dp"
+        android:text="热搜商品"
+        android:layout_marginTop="@dimen/margin5dp"
+        style="@style/textStyle.Medium.User"
+        android:gravity="left"
+        />
+    <View  style="@style/separator_line"/>
+    <GridView
+        android:layout_marginTop="@dimen/margin5dp"
+        android:layout_below="@+id/hot_titlt_txtv"
+        android:id="@+id/search_key_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="5"
+        >
+    </GridView>
+    <View  style="@style/separator_line"/>
+    <TextView
+        android:id="@+id/hostory_titlt_txtv"
+        android:layout_below="@+id/search_key_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="搜索历史"
+        android:layout_marginTop="@dimen/margin5dp"
+        style="@style/textStyle.Medium.User"
+        android:gravity="left"
+        android:paddingLeft="@dimen/margin5dp"
+        />
+    <View  style="@style/separator_line"/>
     <ListView
+        android:layout_below="@+id/hostory_titlt_txtv"
         android:id="@+id/search_key_listv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/separator_line"
-        android:dividerHeight="1px"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
-        android:layout_marginTop="50dip"
+        android:layout_marginTop="@dimen/margin5dp"
         android:layout_marginBottom="50dip"
         android:scrollbars="none"
         android:smoothScrollbar="true" />
-    <GridView
-        android:visibility="gone"
-        android:id="@+id/search_key_grid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dip"
-        android:layout_marginBottom="50dip"
-        android:columnCount="4"
-        >
-    </GridView>
     <Button
         android:id="@+id/search_delete_btn"
         android:layout_width="match_parent"
@@ -44,5 +71,4 @@
         android:text="@string/delete_history"
         android:background="@drawable/tag_button_bg_unchecked"
         android:layout_centerHorizontal="true"/>
-
 </RelativeLayout>

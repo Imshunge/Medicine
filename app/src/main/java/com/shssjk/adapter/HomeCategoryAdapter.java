@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.shop.ProductActivity;
+import com.shssjk.activity.common.shop.ProductAllActivity;
 import com.shssjk.model.SPHomeCategory;
 import com.shssjk.model.SPProduct;
 
@@ -159,7 +160,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter implements SPProdu
 
 	@Override
 	public void onItemClickListener(SPProduct product) {
-		Intent intent = new Intent(mContext , ProductActivity.class);
+		Intent intent = new Intent(mContext , ProductAllActivity.class);
 		intent.putExtra("goodsId", product.getGoodsID());
 		mContext.startActivity(intent);
 	}

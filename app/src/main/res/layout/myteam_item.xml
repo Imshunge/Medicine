@@ -1,0 +1,73 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="110dip">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dip"
+        android:background="@color/bg_view"
+        android:orientation="horizontal"
+        android:descendantFocusability="blocksDescendants">
+
+        <com.shssjk.view.SPMoreImageView
+            android:id="@+id/pic_imgv"
+            android:layout_width="80.0dip"
+            android:layout_height="90.0dip"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginTop="@dimen/margin_space"
+            android:src="@drawable/icon_header"
+            android:background="@color/white"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:layout_marginTop="@dimen/dp_14"
+            android:id="@+id/name_txtv"
+            android:layout_toRightOf="@id/pic_imgv"
+            android:layout_width="fill_parent"
+            android:layout_height="30.0dip"
+            android:paddingLeft="@dimen/dp_22"
+            android:paddingRight="@dimen/margin_space"
+            android:paddingTop="@dimen/margin_space"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="2"
+            android:text="武林新秀"
+            style="@style/textStyle.Normal.black" />
+        <View  style="@style/separator_line"
+            android:layout_below="@id/name_txtv"
+            android:layout_toRightOf="@id/pic_imgv"
+            android:layout_margin="@dimen/dp_5"
+            android:background="@color/black"
+            android:id="@+id/view" />
+
+        <TextView
+            android:id="@+id/shop_price_txtv"
+            android:layout_width="wrap_content"
+            android:layout_height="20.0dip"
+            android:paddingLeft="@dimen/dp_22"
+            android:paddingRight="@dimen/margin_space"
+            android:ellipsize="end"
+            android:gravity="left|center"
+            android:maxLines="2"
+            android:text="ID:1000"
+            style="@style/textStyle.Normal.black"
+            android:layout_below="@+id/view"
+            android:layout_toRightOf="@+id/pic_imgv"
+            android:layout_toEndOf="@+id/pic_imgv" />
+        <TextView
+            android:id="@+id/num_txtv"
+            android:layout_width="match_parent"
+            android:layout_height="20.0dip"
+            android:paddingLeft="@dimen/dp_36"
+            android:paddingRight="@dimen/margin_space"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="性别：男"
+            style="@style/textStyle.Normal.black"
+            android:layout_below="@+id/view"
+            android:layout_alignRight="@+id/name_txtv"
+            android:layout_alignEnd="@+id/name_txtv" />
+    </RelativeLayout>
+</FrameLayout>

@@ -7,8 +7,7 @@
     <RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="fill_parent">
-    
-	<TextView 
+    	<TextView
 	    android:id="@+id/tv_tittle"
 	    android:layout_width="fill_parent"
     	android:layout_height="fill_parent"

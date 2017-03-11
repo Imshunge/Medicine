@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+	android:descendantFocusability="blocksDescendants"
+    android:background="@color/bg_activity">
+
+	<View  style="@style/separator_line"/>
+
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/bg_view"
+		android:orientation="vertical">
+		<TextView
+			android:layout_marginTop="@dimen/dp_14"
+			android:id="@+id/order_id"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="@dimen/margin10dp"
+			android:layout_marginRight="@dimen/margin_space"
+			android:gravity="left|center_vertical"
+			android:text="订单编号：201666666666"
+			style="@style/textStyle.Normal.black"/>
+		<TextView
+			android:layout_marginTop="@dimen/dp_14"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="@dimen/margin10dp"
+			android:layout_marginRight="@dimen/margin_space"
+			android:gravity="left|center_vertical"
+			android:text=" 申请时间"
+			style="@style/textStyle.Normal.black"
+			android:id="@+id/order_addtime" />
+		<TextView
+			android:layout_marginTop="@dimen/dp_14"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="@dimen/margin10dp"
+			android:layout_marginRight="@dimen/margin_space"
+			android:gravity="left|center_vertical"
+			android:text="原因"
+			style="@style/textStyle.Normal.black"
+			android:id="@+id/order_reason" />
+		<View  style="@style/separator_line"
+			android:layout_marginTop="@dimen/dp_14"
+			/>
+
+
+		<FrameLayout
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/swipe"
+			android:layout_width="match_parent"
+			android:layout_height="110dip">
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="110dip"
+				android:background="@color/bg_view"
+				android:orientation="horizontal"
+				android:descendantFocusability="blocksDescendants">
+
+				<TextView
+					android:id="@+id/position"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" />
+
+				<ImageView
+					android:id="@+id/pic_imgv"
+					android:layout_width="80.0dip"
+					android:layout_height="90.0dip"
+					android:layout_marginLeft="@dimen/margin_space"
+					android:layout_marginTop="@dimen/margin_space"
+					android:src="@drawable/product_default"
+					android:background="@color/white"
+					android:scaleType="fitCenter" />
+
+				<TextView
+					android:id="@+id/name_txtv"
+					android:layout_toRightOf="@id/pic_imgv"
+					android:layout_width="fill_parent"
+					android:layout_height="match_parent"
+					android:paddingLeft="@dimen/dp_22"
+					android:paddingRight="@dimen/margin_space"
+					android:ellipsize="end"
+					android:gravity="center_vertical|left"
+					android:maxLines="2"
+					android:text="@string/product_details_detail"
+					style="@style/textStyle.Normal.black" />
+
+			</RelativeLayout>
+		</FrameLayout>
+
+
+
+	</LinearLayout>
+
+
+
+</LinearLayout>

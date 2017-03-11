@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp" >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    <TextView
+        style="@style/title_16"
+        android:padding="5dp"
+        android:text="@string/tv_all1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+        <com.shssjk.view.RoundImageView
+            android:id="@+id/all_image1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tongji1" />
+        <TextView
+            android:id="@+id/tv_all1"
+            style="@style/text_13"
+            android:layout_marginRight="60dp"
+            android:layout_toRightOf="@+id/all_image1"
+            android:maxEms="16"
+            android:singleLine="true"
+            android:text="" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_all1"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/all_image1"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/date_text"
+                android:text="@string/tv_blood1" />
+
+            <TextView
+                android:id="@+id/tongji_num1"
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/red"
+                android:text="@string/zero" />
+
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/ci" />
+            
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="10dp"
+                android:text="@string/tv_blood2" />
+
+            <TextView
+                android:id="@+id/tongji_num2"
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/zero" />
+
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/ci" />
+            
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="10dp"
+                android:text="@string/tv_blood3" />
+
+            <TextView
+                android:id="@+id/tongji_num3"
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/red"
+                android:text="@string/zero" />
+
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/ci" />
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_avg_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+    <LinearLayout
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin20dp"
+        android:background="#fafafa"
+        android:orientation="horizontal" >
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="#bababa" />
+        <TextView
+            android:id="@+id/item_sg0"
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.15"
+            android:background="#f0f0f0"
+            android:text="" />
+
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="#bababa" />
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="平均值" />
+
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="#bababa" />
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="最低值" />
+
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="#bababa" />
+
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0"
+            android:text="最高值" />
+
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="#bababa" />
+
+
+
+
+
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/black_9c" />
+
+    <LinearLayout
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin20dp"
+        android:background="#fafafa"
+        android:orientation="horizontal" >
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="#f0f0f0" />
+        <TextView
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.15"
+            android:background="#f0f0f0"
+            android:text="血糖值" />
+
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="#bababa" />
+        <TextView
+            android:id="@+id/average_tv"
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0" />
+
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="#bababa" />
+
+        <TextView
+            android:id="@+id/low_tv"
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0" />
+
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="#bababa" />
+
+        <TextView
+            android:id="@+id/hight_tv"
+            style="@style/text_10"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.1"
+            android:background="#f0f0f0" />
+
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="#bababa" />
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@color/black_9c" />
+    
+     <TextView
+        style="@style/title_16"
+        android:padding="5dp"
+        android:text="@string/tv_all2" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <com.shssjk.view.RoundImageView
+            android:id="@+id/all_image2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tongji1" />
+
+        <TextView
+            android:id="@+id/tv_all2"
+            style="@style/text_13"
+            android:layout_marginRight="60dp"
+            android:layout_toRightOf="@+id/all_image2"
+            android:maxEms="16"
+            android:singleLine="true"
+            android:text="" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_all2"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/all_image2"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/date_text"
+                android:text="@string/tv_blood1" />
+
+            <TextView
+                android:id="@+id/tongji_num11"
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/red"
+                android:text="@string/zero" />
+
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/ci" />
+            
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="10dp"
+                android:text="@string/tv_blood2" />
+
+            <TextView
+                android:id="@+id/tongji_num12"
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/zero" />
+
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/ci" />
+            
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="10dp"
+                android:text="@string/tv_blood3" />
+
+            <TextView
+                android:id="@+id/tongji_num13"
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/red"
+                android:text="@string/zero" />
+
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/ci" />
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_avg_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin20dp"
+            android:background="#fafafa"
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+            <TextView
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.15"
+                android:background="#f0f0f0"
+                android:text="" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+            <TextView
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0"
+                android:text="平均值" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+            <TextView
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0"
+                android:text="最低值" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+            <TextView
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0"
+                android:text="最高值" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+
+
+
+
+        </LinearLayout>
+        <View
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black_9c" />
+
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin20dp"
+            android:background="#fafafa"
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#f0f0f0" />
+            <TextView
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.15"
+                android:background="#f0f0f0"
+                android:text="血糖值" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+            <TextView
+                android:id="@+id/average1_tv"
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+            <TextView
+                android:id="@+id/low1_tv"
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+            <TextView
+                android:id="@+id/hight1_tv"
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@color/black_9c" />
+     <TextView
+        style="@style/title_16"
+        android:padding="5dp"
+        android:text="@string/tv_all3" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <com.shssjk.view.RoundImageView
+            android:id="@+id/all_image3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tongji1" />
+
+        <TextView
+            android:id="@+id/tv_all3"
+            style="@style/text_13"
+            android:layout_marginRight="60dp"
+            android:layout_toRightOf="@+id/all_image3"
+            android:maxEms="16"
+            android:singleLine="true"
+            android:text="" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_all3"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/all_image3"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/date_text"
+                android:text="@string/tv_blood1" />
+
+            <TextView
+                android:id="@+id/tongji_all1"
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/red"
+                android:text="@string/zero" />
+
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/ci" />
+            
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="10dp"
+                android:text="@string/tv_blood2" />
+
+            <TextView
+                android:id="@+id/tongji_all2"
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/zero" />
+
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/ci" />
+            
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="10dp"
+                android:text="@string/tv_blood3" />
+
+            <TextView
+                android:id="@+id/tongji_all3"
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/red"
+                android:text="@string/zero" />
+
+            <TextView
+                style="@style/date_text"
+                android:layout_marginLeft="2dp"
+                android:text="@string/ci" />
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_avg_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin20dp"
+            android:background="#fafafa"
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+            <TextView
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.15"
+                android:background="#f0f0f0"
+                android:text="" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+            <TextView
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0"
+                android:text="平均值" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+            <TextView
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0"
+                android:text="最低值" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+            <TextView
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0"
+                android:text="最高值" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+
+
+
+
+        </LinearLayout>
+        <View
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black_9c" />
+
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin20dp"
+            android:background="#fafafa"
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#f0f0f0" />
+            <TextView
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.15"
+                android:background="#f0f0f0"
+                android:text="血糖值" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+            <TextView
+                android:id="@+id/average2_tv"
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+            <TextView
+                android:id="@+id/low2_tv"
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0" />
+
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+
+            <TextView
+                android:id="@+id/hight3_tv"
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:background="#f0f0f0" />
+            <View
+                android:layout_width="0.5sp"
+                android:layout_height="match_parent"
+                android:background="#bababa" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@color/black_9c" />
+
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

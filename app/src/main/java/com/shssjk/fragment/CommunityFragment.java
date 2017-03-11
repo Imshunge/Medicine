@@ -173,4 +173,8 @@ public class CommunityFragment extends BaseFragment implements MobileScrollLayou
 
     }
 
+    @Override
+    public void gotoLoginPageClearUserDate() {
+
+    }
 }

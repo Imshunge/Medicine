@@ -17,11 +17,9 @@ public abstract class SPFailuredListener {
     public IViewController getViewController(){
         return viewController;
     }
-
     public SPFailuredListener(IViewController pViewController){
         viewController = pViewController;
     }
-
     /**
      * 预处理,
      * @param msg
@@ -32,8 +30,8 @@ public abstract class SPFailuredListener {
         if (isNeedLogin){
             //去登陆
             if(viewController != null){
-                viewController.gotoLoginPage();
-                onRespone(msg , errorCode);
+                viewController.gotoLoginPageClearUserDate();
+                onRespone("您的账号在其它设备登陆", errorCode);
             }else{
                 onRespone(msg , errorCode);
             }

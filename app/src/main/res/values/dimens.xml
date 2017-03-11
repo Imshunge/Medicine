@@ -57,6 +57,10 @@
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_72">72dp</dimen>
 
+
+    <dimen name="dp_170">170dp</dimen>
+
+
     <dimen name="sp_12">12sp</dimen>
     <dimen name="sp_14">14sp</dimen>
     <dimen name="sp_16">16sp</dimen>
@@ -80,8 +84,10 @@
     <dimen name="info_title_btn_width">26dp</dimen>
 
     <!--资讯列表图标-->
-    <dimen name="item_icon_width">50dp</dimen>
-    <dimen name="item_icon_height">50dp</dimen>
+    <dimen name="shop_icon_width">60dp</dimen>
+    <dimen name="shop_icon_height">60dp</dimen>
+    <dimen name="item_icon_width">40dp</dimen>
+    <dimen name="item_icon_height">40dp</dimen>
     <dimen name="item_icon_marginLeft">10dp</dimen>
 
 
@@ -97,6 +103,7 @@
     <dimen name="item_usericon_width">25dp</dimen>
     <dimen name="item_usericon_height">25dp</dimen>
     <!--资讯标题大小-->
+    <dimen name="article_detile_title_size">20sp</dimen>
     <dimen name="article_title_size">15sp</dimen>
     <!--资讯内容大小-->
     <dimen name="article_content_size">13sp</dimen>
@@ -120,7 +127,14 @@
     <dimen name="margi30dp">30dp</dimen>
 
     <dimen name="margin40dp">40dp</dimen>
+    <dimen name="margin50dp">50dp</dimen>
+
     <dimen name="margin70dp">70dp</dimen>
+    <dimen name="margin90dp">90dp</dimen>
+
     <dimen name="margin100dp">100dp</dimen>
     <dimen name="margin150dp">150dp</dimen>
+    <dimen name="margin250dp">250dp</dimen>
+    <dimen name="margin200dp">200dp</dimen>
+
 </resources>

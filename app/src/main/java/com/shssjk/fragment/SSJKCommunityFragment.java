@@ -171,6 +171,11 @@ public class SSJKCommunityFragment extends BaseFragment implements View.OnClickL
         getActivity().startActivity(myQuackListintent);
     }
 
+    @Override
+    public void gotoLoginPageClearUserDate() {
+
+    }
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

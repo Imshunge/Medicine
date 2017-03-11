@@ -5,10 +5,21 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 
 
+import com.afollestad.materialdialogs.BuildConfig;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.shssjk.activity.R;
 import com.shssjk.http.base.SPMobileHttptRequest;
 import com.shssjk.model.SPCategory;
 import com.shssjk.model.SPPlugin;
@@ -20,7 +31,9 @@ import com.soubao.tpshop.utils.SPStringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.litepal.LitePal;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -59,8 +72,8 @@ public class MobileApplication extends Application {
 		/** 初始化 Vollery 网络请求 */
 		SPMobileHttptRequest.init(getApplicationContext());
 		/** 初始化 Facebook SimpleDraweeView 网络请求 */
-
 		loginUser = SPSaveData.loadUser(getApplicationContext());
+
 		if (SPStringUtils.isEmpty(loginUser.getUserID()) || loginUser.getUserID().equals("-1")){
 			isLogined = false;
 		}else{
@@ -68,20 +81,43 @@ public class MobileApplication extends Application {
 		}
 		instance = this;
 		//初始化购物车管理类
-		SPShopCartManager.getInstance(getApplicationContext());
-
-
+//		SPShopCartManager.getInstance(getApplicationContext());
 		PackageManager manager = this.getPackageManager();
 		mDisplayMetrics = getResources().getDisplayMetrics();
-
 		telephonyManager = (TelephonyManager)getApplicationContext().getSystemService(TELEPHONY_SERVICE);
 		if(telephonyManager!=null){
 			String deviceId = telephonyManager.getDeviceId();
 			SPMyFileTool.cacheValue(this, SPMyFileTool.key1, deviceId);
-		}
 	}
-
-
+		initUIL();
+		LitePal.initialize(this);
+	}
+	private void initUIL() {
+		DisplayImageOptions userOptions = new DisplayImageOptions.Builder()
+				.cacheInMemory(true).cacheOnDisk(true).
+						showImageForEmptyUri(R.drawable.image_not_exist).
+						showImageOnLoading(R.drawable.image_not_exist).
+						showImageOnFail(R.drawable.image_not_exist).
+						imageScaleType(ImageScaleType.EXACTLY).
+						bitmapConfig(Bitmap.Config.RGB_565).
+						considerExifParams(true)
+				.build();
+		long maxMemory = Runtime.getRuntime().maxMemory()/8;
+		File cacheDir = StorageUtils.getOwnCacheDirectory(this, "ssjk/cache/image");
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+				.threadPriority(Thread.NORM_PRIORITY - 2) //线程池中线程的个数，一般配置1-5，这里配的是3
+				.memoryCache(new LRULimitedMemoryCache((int) maxMemory))
+				.memoryCacheSize((int) maxMemory)
+				.memoryCacheExtraOptions(480, 800) //即保存的每个缓存文件的最大长宽，大小自行配制
+				.diskCache(new UnlimitedDiskCache(cacheDir))
+				.diskCacheSize(80 * 1024 * 1024)
+				.imageDownloader(new BaseImageDownloader(this, 20 * 60 * 60, 30 * 60 * 60))
+				.diskCacheFileCount(100)
+				.denyCacheImageMultipleSizesInMemory()
+				.defaultDisplayImageOptions(userOptions)
+				.build();
+		ImageLoader.getInstance().init(config);
+	}
 
 	public DisplayMetrics getDisplayMetrics(){
 		return mDisplayMetrics;
@@ -107,9 +143,9 @@ public class MobileApplication extends Application {
 		this.servicePluginMap = servicePluginMap;
 	}
 	public SPUser getLoginUser() {
-		return loginUser;
+		SPUser	loginUser = SPSaveData.loadUser(getApplicationContext());
+		return 	loginUser ;
 	}
-
 	public void setLoginUser(SPUser loginUser) {
 		this.loginUser = loginUser;
 		if (this.loginUser !=null){
@@ -119,7 +155,6 @@ public class MobileApplication extends Application {
 			isLogined = false;
 		}
 	}
-
 	public String getApplicationName() {
 		PackageManager packageManager = null;
 		ApplicationInfo applicationInfo = null;

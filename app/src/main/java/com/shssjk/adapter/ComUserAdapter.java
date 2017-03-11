@@ -93,8 +93,6 @@ public class ComUserAdapter extends BaseAdapter implements View.OnClickListener 
             holder.refuseTxtv=((TextView) convertView.findViewById(id.refuseTxtv));
 
 
-
-
             //设置标记
             convertView.setTag(holder);
 
@@ -117,7 +115,7 @@ public class ComUserAdapter extends BaseAdapter implements View.OnClickListener 
         if (!SPStringUtils.isEmpty(article.getSex())) {
             if(article.getSex().equals("1")){
                 str="男";
-            }else if(article.getSex().equals("1")){
+            }else if(article.getSex().equals("2")){
                 str="女";
             }else{
                 str="保密";

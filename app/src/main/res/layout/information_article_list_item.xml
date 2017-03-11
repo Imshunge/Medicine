@@ -7,10 +7,13 @@
 
     <ImageView
         android:id="@+id/iv_item_article"
+        android:layout_marginTop="@dimen/article_marginTop"
         android:layout_marginLeft="@dimen/item_icon_marginLeft"
-        android:layout_width="@dimen/item_icon_width"
-        android:layout_height="@dimen/item_icon_height"
-        android:src="@drawable/product_default" />
+        android:layout_width="@dimen/shop_icon_width"
+        android:layout_height="@dimen/shop_icon_height"
+        android:src="@drawable/product_default"
+        android:scaleType="fitXY"
+        />
     <TextView
         android:id="@+id/tv_item_article_title"
         android:layout_width="wrap_content"
@@ -22,7 +25,6 @@
         android:text="@string/article_title"
         android:textColor="@color/colorNormalTitle"
         android:textSize="@dimen/article_title_size" />
-
     <TextView
         android:id="@+id/tv_item_hot_content"
         android:layout_width="wrap_content"
@@ -37,18 +39,15 @@
         android:textSize="@dimen/article_content_size" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tv_item_hot_content"
-        android:layout_below="@+id/tv_item_hot_content">
-        <TextView
-            android:layout_width="180dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/article_marginTop"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textColor="@color/colorNormalText"
-            android:textSize="@dimen/article_content_size" />
+        android:gravity="right"
+        android:layout_below="@+id/tv_item_hot_content"
+        android:layout_marginRight="@dimen/margin10dp"
+        >
+
+
+
         <ImageView
             android:id="@+id/iv_item_article_comment"
             android:layout_marginTop="@dimen/article_marginIcon"

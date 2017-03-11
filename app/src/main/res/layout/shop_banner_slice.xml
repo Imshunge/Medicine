@@ -2,26 +2,28 @@
 <LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="200dp"
     android:orientation="vertical">
-    
-    <RelativeLayout 
+    <!-- -->
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="140dp">-->
+    <!--<LinearLayout-->
+        <!--android:id="@+id/pointer_layout"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="@dimen/height_pointer"-->
+        <!--android:gravity="center_horizontal|center_vertical"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_alignParentBottom="true" >-->
+        <!--<com.shssjk.view.MobileScrollLayout-->
+            <!--android:id="@+id/banner_slayout"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+        <!--</com.shssjk.view.MobileScrollLayout>-->
+    <!--</LinearLayout>-->
+    <!--</RelativeLayout>-->
+    <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="140dp">
-        
-	    <com.shssjk.view.MobileScrollLayout
-	        android:id="@+id/banner_slayout"
-	        android:layout_width="match_parent"
-	        android:layout_height="140dp">
-		</com.shssjk.view.MobileScrollLayout>
-		
-	    <LinearLayout  
-	        android:id="@+id/pointer_layout"  
-	        android:layout_width="fill_parent"  
-	        android:layout_height="@dimen/height_pointer"
-	        android:gravity="center_horizontal|center_vertical"  
-	        android:orientation="horizontal"
-	        android:layout_alignParentBottom="true" /> 
-    </RelativeLayout>
-
+        android:layout_height="200dp" />v
 </LinearLayout>

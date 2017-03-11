@@ -3,7 +3,7 @@
 	xmlns:custom="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:orientation="vertical">
+	>
 
 	<ScrollView
 		android:id="@+id/detail_scrollv"
@@ -11,13 +11,11 @@
 		android:layout_height="match_parent"
 		android:scrollbars="none"
 		android:orientation="vertical" >
-
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:background="@color/bg_activity"
 			android:orientation="vertical">
-
 			<!-- 产品图片 -->
 			<RelativeLayout
 				android:layout_width="match_parent"
@@ -25,11 +23,11 @@
 				android:background="@color/bg_view">
 				<com.shssjk.view.SPPageView
 					android:id="@+id/banner_slayout"
-					android:layout_marginLeft="@dimen/margin_space"
 					android:layout_width="match_parent"
 					android:layout_gravity="center_vertical"
 					android:scrollbars="none"
-					android:layout_height="300dip">
+					android:layout_height="300dip"
+					android:fillViewport="false">
 					<LinearLayout
 						android:id="@+id/banner_lyaout"
 						android:layout_width="match_parent"

@@ -61,17 +61,15 @@ public class ShopcartListAdapter extends BaseAdapter implements View.OnClickList
 	@Override
 	public long getItemId(int position) {
 		if(mProducts == null) return -1;
-		return Integer.valueOf(mProducts.get(position).getGoodsID());
+		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
 		ViewHolder holder = null;
 		if (convertView == null){
 			holder = new ViewHolder();
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.shopcart_list_item, parent, false);
-
 			//使用减少findView的次数
 			holder.nameTxtv = ((TextView) convertView.findViewById(R.id.name_txtv));
 			holder.picImgv =  ((ImageView) convertView.findViewById(R.id.pic_imgv));
@@ -82,7 +80,6 @@ public class ShopcartListAdapter extends BaseAdapter implements View.OnClickList
 			holder.plusBtn = ((Button) convertView.findViewById(R.id.cart_plus_btn));
 			holder.checkBtn = ((Button) convertView.findViewById(R.id.check_btn));
 			holder.deleteBtn = ((Button) convertView.findViewById(R.id.delete_btn));
-
 			convertView.setTag(holder);//设置标记
 
 		}else{
@@ -92,6 +89,7 @@ public class ShopcartListAdapter extends BaseAdapter implements View.OnClickList
 		holder.minusBtn.setTag(position);
 		holder.plusBtn.setTag(position);
 		holder.checkBtn.setTag(position);
+		holder.deleteBtn.setTag(position);
 
 		holder.minusBtn.setOnClickListener(this);
 		holder.plusBtn.setOnClickListener(this);

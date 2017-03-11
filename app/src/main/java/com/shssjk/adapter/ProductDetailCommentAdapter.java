@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import com.shssjk.activity.R;
 import com.shssjk.model.shop.GoodsComment;
+import com.shssjk.utils.SSUtils;
 import com.shssjk.view.StarView;
 import com.soubao.tpshop.utils.SPCommonUtils;
 import com.soubao.tpshop.utils.SPStringUtils;
@@ -89,10 +90,9 @@ public class ProductDetailCommentAdapter extends BaseAdapter {
         //获取该行数据
 		GoodsComment goodsComment = (GoodsComment)mComments.get(position);
 		if (!SPStringUtils.isEmpty(goodsComment.getAddTime())){
-			 String date = SPCommonUtils.getDateFullTime(Long.valueOf(goodsComment.getAddTime()));
-			holder.dateTxtv.setText(date);
+			holder.dateTxtv.setText(SSUtils.TimeStamp2Date(goodsComment.getAddTime(), "yyyy-MM-dd HH:mm:ss"));
 		}
-		Glide.with(mContext).load(goodsComment.getHeadUrl()).placeholder(R.drawable.person_default_head).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.headImgv);
+		Glide.with(mContext).load(goodsComment.getHead_pic()).placeholder(R.drawable.person_default_head).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.headImgv);
 
 		holder.usernameTxtv.setText(goodsComment.getUsername());
 		holder.contentTxtv.setText(goodsComment.getContent());
@@ -134,7 +134,6 @@ public class ProductDetailCommentAdapter extends BaseAdapter {
 				View view = LayoutInflater.from(mContext).inflate(R.layout.activity_index_gallery_item, gallery, false);
 				ImageView img = (ImageView) view.findViewById(R.id.id_index_gallery_item_image);
 				Glide.with(mContext).load(url).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(img);
-
 				gallery.addView(view);
 			}
 		}

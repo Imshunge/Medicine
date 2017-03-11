@@ -5,39 +5,52 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.BaseActivity;
+import com.shssjk.adapter.HotSearchAdapter;
 import com.shssjk.adapter.SPSearchkeyListAdapter;
 import com.shssjk.adapter.SeachKeyAdapter;
+import com.shssjk.adapter.SearchhosAdapter;
 import com.shssjk.common.MobileConstants;
-import com.shssjk.global.SPSaveData;
+import com.shssjk.global.MobileApplication;
+import com.shssjk.http.base.SPFailuredListener;
+import com.shssjk.http.base.SPSuccessListener;
+import com.shssjk.http.home.SPHomeRequest;
+import com.shssjk.model.SPServiceConfig;
+import com.shssjk.model.Searchhistory;
 import com.shssjk.utils.SPDialogUtils;
-import com.shssjk.utils.SSUtils;
+import com.shssjk.utils.SPServerUtils;
 import com.shssjk.view.SPSearchView;
 import com.soubao.tpshop.utils.SPStringUtils;
 
-import java.util.ArrayList;
+import org.litepal.crud.DataSupport;
+
 import java.util.List;
 
 
-
 public class SearchCommonActivity extends BaseActivity implements SPSearchView.SPSearchViewListener {
-
-
+    private static final int DATACHANGE = 3;
     SPSearchkeyListAdapter mAdapter;
+
+    HotSearchAdapter hotSearchAdapter;//热门搜索
     SeachKeyAdapter mSeachKeyAdapter;
     List<String> mSearchkeys;
-    ListView searchkeyListv;
+    List<Searchhistory> mSearchHistory; //搜索历史
+    SearchhosAdapter  searchhosAdapter;//搜索历史
+    ListView searchkeyListv;    //搜索历史
     Context mContext;
     Handler mHandler = new Handler() {
 
@@ -51,52 +64,55 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
             }
         }
     };
-
     private SPSearchView searchView;
     private ImageView iamgeSearch;
     private ImageView iamgeBack;
     private TextView searchedTextView;
     private Button searchDeleteBtn;
-    private GridView searchList;
+    private GridView searchHotGridView;   //热门搜索
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_common);
-        mContext=this;
+        mContext = this;
         super.init();
     }
-
     @Override
     public void initSubViews() {
         searchView = (SPSearchView) findViewById(R.id.search_view);
         searchView.getSearchEditText().setFocusable(true);
         searchkeyListv = (ListView) findViewById(R.id.search_key_listv);
-        searchList = (GridView) findViewById(R.id.search_key_grid);
+        searchHotGridView = (GridView) findViewById(R.id.search_key_grid);
         iamgeSearch = (ImageView) findViewById(R.id.search_icon);
-        iamgeBack= (ImageView) findViewById(R.id.back_imgv);
+        iamgeBack = (ImageView) findViewById(R.id.back_imgv);
         searchedTextView = (TextView) findViewById(R.id.search_edtv);
-        searchDeleteBtn= (Button) findViewById(R.id.search_delete_btn);
+        searchDeleteBtn = (Button) findViewById(R.id.search_delete_btn);
     }
 
     @Override
     public void initData() {
-        mAdapter = new SPSearchkeyListAdapter(this, mHandler);
-        mSeachKeyAdapter= new SeachKeyAdapter(this);
-//        searchList.setAdapter(mSeachKeyAdapter);
-        searchkeyListv.setAdapter(mAdapter);
+        getHotKeyData();
+        hotSearchAdapter =  new HotSearchAdapter(this,mHandler);
+//        mAdapter = new SPSearchkeyListAdapter(this, mHandler);
+        searchhosAdapter    = new SearchhosAdapter(this);
+        mSeachKeyAdapter = new SeachKeyAdapter(this);
+        searchHotGridView.setAdapter(hotSearchAdapter);
+        searchkeyListv.setAdapter(searchhosAdapter);
         if (getIntent() != null && getIntent().getStringExtra("searchKey") != null) {
             String searchKey = getIntent().getStringExtra("searchKey");
             searchView.setSearchKey(searchKey);
         }
-
        /* InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         if(searchView.getSearchEditText()!=null)imm.showSoftInputFromInputMethod(searchView.getSearchEditText().getWindowToken(), 0);*/
-
         loadKey();
-        mAdapter.setData(mSearchkeys);
-        mSeachKeyAdapter.setData(mSearchkeys);
+//        mAdapter.setData(mSearchkeys);
+        List<String> hotKeys = SPServerUtils.getHotKeyword();
+        searchhosAdapter.setData(mSearchHistory);
+        hotSearchAdapter.setData(hotKeys);
     }
+
     @Override
     public void initEvent() {
         if (searchView.getSearchEditText() != null) {
@@ -120,29 +136,24 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
                     return;
                 }
                 startSearch(searchedTextView.getText().toString().trim());
-
             }
         });
 //       键盘搜索按钮监听
-       searchedTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        searchedTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
-            public boolean onEditorAction(TextView  v, int actionId, KeyEvent event) {
-
-
-
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                        // 先隐藏键盘
+                    // 先隐藏键盘
 //                    ((InputMethodManager) searchedTextView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
 //                            .hideSoftInputFromWindow(
 //                                    mContext.getCurrentFocus()
 //                                            .getWindowToken(),
 //                                    InputMethodManager.HIDE_NOT_ALWAYS);
                     //跳转activity
-
                     if (SPStringUtils.isEmpty(searchedTextView.getText().toString().trim())) {
-                        SPDialogUtils.showToast(mContext,"搜索内容不能为空");
-                    }else {
+                        SPDialogUtils.showToast(mContext, "搜索内容不能为空");
+                    } else {
                         startSearch(searchedTextView.getText().toString().trim());
                     }
                     return true;
@@ -163,8 +174,15 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
                 deleteKet();
             }
         });
-    }
+       searchkeyListv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               Searchhistory searchhistory = (Searchhistory) mSearchHistory.get(position);
+               startSearch(searchhistory.getTitle());
+           }
+       });
 
+    }
 
 
     @Override
@@ -176,65 +194,67 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
     public void onSearchBoxClick(String keyword) {
 //        startSearch(keyword.trim());
     }
-
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.search_view:
-//
-//                break;
-//            case R.id.search_key_listv:
-//
-//                break;
-//
-//        }
-//    }
-
     public void startSearch(String searchKey) {
         if (!SPStringUtils.isEmpty(searchKey)) {
             saveKey(searchKey);
         }
         Intent intent = new Intent(this, ProductListSearchResultActivity.class);
         intent.putExtra("searchKey", searchKey);
-        startActivity(intent);
-        this.finish();
+        startActivityForResult(intent, DATACHANGE);//888请求码
     }
 
     public void saveKey(String key) {
-        String searchKey = SPSaveData.getString(this, MobileConstants.KEY_SEARCH_KEY);
-        if (!SPStringUtils.isEmpty(searchKey) && !searchKey.contains(key)) {
-            searchKey += "," + key;
-        } else {
-            searchKey = key;
+        List<Searchhistory> newsList = DataSupport.select("title")
+                .where("title =?", key).find(Searchhistory.class);
+        if(newsList.size()==0){
+            Searchhistory searchhistory = new Searchhistory();
+            searchhistory.setTitle(key);
+            searchhistory.save();
         }
-        SPSaveData.putValue(this, MobileConstants.KEY_SEARCH_KEY, searchKey);
-    }
-    private void deleteKet() {
-         SPSaveData.removeValue(this, MobileConstants.KEY_SEARCH_KEY);
-        String searchKey = SPSaveData.getString(this, MobileConstants.KEY_SEARCH_KEY);
-//        if(SSUtils.isEmpty(searchKey)){
-//            showToast("");
-//        }
-        loadKey();
-        mAdapter.setData(mSearchkeys);
-//        mSeachKeyAdapter.setData(mSearchkeys);
 
+        List<Searchhistory> searchhistorie = DataSupport.findAll(Searchhistory.class);
+        for (Searchhistory push : searchhistorie) {
+            Log.e("MainActivity 搜索记录", push.getTitle());
+        }
+    }
+
+    private void deleteKet() {
+        DataSupport.deleteAll(Searchhistory.class);
+        loadKey();
+        searchhosAdapter.setData(mSearchHistory);
     }
     public void loadKey() {
-        mSearchkeys = new ArrayList<String>();
-        String searchKey = SPSaveData.getString(this, MobileConstants.KEY_SEARCH_KEY);
-        if (!SPStringUtils.isEmpty(searchKey)) {
-            String[] keys = searchKey.split(",");
-            if (keys != null)
-                for (int i = 0; i < keys.length; i++) {
-                    if (!SPStringUtils.isEmpty(keys[i])) {
-                        mSearchkeys.add(keys[i]);
-                    }
-                }
-        }/*else{
-            mSearchkeys.add("香水");
-            mSearchkeys.add("充值卡");
-        }*/
-
+         mSearchHistory = DataSupport.findAll(Searchhistory.class);
+//        getHotKeyData();
     }
 
+    private void getHotKeyData() {
+        SPHomeRequest.getServiceConfig(new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+                    List<SPServiceConfig> configs = (List<SPServiceConfig>) response;
+                    MobileApplication.getInstance().setServiceConfigs(configs);
+                }
+            }
+        }, new SPFailuredListener() {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case DATACHANGE: //
+                loadKey();
+//                mAdapter.setData(mSearchkeys);
+//                mSeachKeyAdapter.setData(mSearchkeys);
+                searchhosAdapter.setData(mSearchHistory);
+                break;
+        }
+    }
 }

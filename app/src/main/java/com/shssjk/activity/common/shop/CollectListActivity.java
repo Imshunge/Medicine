@@ -63,7 +63,6 @@ public class CollectListActivity extends BaseActivity {
     public void initData() {
         mAdapter = new CollectListAdapter(this);
         productListv.setAdapter(mAdapter);
-
         showLoadingToast();
         SPPersonRequest.getGoodsCollectWithSuccess(new SPSuccessListener() {
             @Override
@@ -77,7 +76,7 @@ public class CollectListActivity extends BaseActivity {
                 }
                 hideLoadingToast();
             }
-        }, new SPFailuredListener() {
+        }, new SPFailuredListener(CollectListActivity.this) {
             @Override
             public void onRespone(String msg, int errorCode) {
                 showToast(msg);
@@ -92,7 +91,7 @@ public class CollectListActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 SPCollect collect = (SPCollect)mAdapter.getItem(position);
-                Intent intent = new Intent(CollectListActivity.this , ProductActivity.class);
+                Intent intent = new Intent(CollectListActivity.this , ProductAllActivity.class);
                 intent.putExtra("goodsId", collect.getGoodsID());
                 CollectListActivity.this.startActivity(intent);
             }

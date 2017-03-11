@@ -20,7 +20,7 @@ import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.community.CommunityRequest;
 import com.shssjk.model.community.ComArticle;
-import com.shssjk.utils.SPConfirmDialog;
+import com.shssjk.utils.ConfirmDialog;
 import com.shssjk.view.PopupMenu;
 
 
@@ -29,7 +29,8 @@ import java.util.List;
 /**
  * 江湖模块  帖子列表
  */
-public class ComArticleListActivity extends BaseActivity implements View.OnClickListener, ComArticleAdapter.ComArtilceClickListener ,SPConfirmDialog.ConfirmDialogListener{
+public class ComArticleListActivity extends BaseActivity implements View.OnClickListener,
+        ComArticleAdapter.ComArtilceClickListener ,ConfirmDialog.ConfirmDialogListener{
     //江湖模块
     private ListView articlesListv;
     private PtrClassicFrameLayout articlesPcf;
@@ -117,7 +118,6 @@ public class ComArticleListActivity extends BaseActivity implements View.OnClick
                         if (response != null) {
                             mQuacks = (List<ComArticle>) response;
                             mComArticleAdapter.setData(mQuacks, uid);
-
                         } else {
 
                         }

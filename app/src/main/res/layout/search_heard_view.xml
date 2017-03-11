@@ -12,18 +12,28 @@
         android:gravity="center_vertical"
         android:paddingBottom="6.0dip"
         android:paddingTop="6.0dip" >
-
         <ImageView
             android:id="@+id/back_imgv"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/margin20dp"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:paddingLeft="15.0dip"
-            android:paddingRight="15.0dip"
+            android:layout_marginLeft="@dimen/margin5dp"
+            android:layout_marginRight="@dimen/margin5dp"
             android:clickable="true"
-            android:src="@drawable/common_title_back_selector" />
+            android:src="@drawable/title_back_selector" />
+        <!--<ImageView-->
+            <!--android:id="@+id/back_imgv"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:paddingLeft="15.0dip"-->
+            <!--android:paddingRight="15.0dip"-->
+            <!--android:clickable="true"-->
+            <!--android:src="@drawable/common_title_back_selector" />-->
 
         <TextView
             android:id="@+id/tv_seacch_keyword_book_text_title"

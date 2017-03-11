@@ -43,6 +43,15 @@ public class GoodsComment implements Model {
     // head_url - 用户头像
     String headUrl;
 
+    public String getHead_pic() {
+        return head_pic;
+    }
+
+    public void setHead_pic(String head_pic) {
+        this.head_pic = head_pic;
+    }
+
+    String head_pic ;
     
     @Override
     public String[] replaceKeyFromPropertyName() {

@@ -55,8 +55,6 @@ public class AddSchoolActivity extends BaseActivity implements View.OnClickListe
         editTextTitle = (EditText) findViewById(R.id.tv_content_title);
         editTextContent = (EditText) findViewById(R.id.tv_content);
         rithtBtn = (Button) findViewById(R.id.titlebar_menu_btn);
-
-
     }
 
     @Override

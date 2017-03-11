@@ -6,57 +6,102 @@ import com.shssjk.model.Model;
 
 import org.json.JSONArray;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by admin on 2016/7/4.
  */
-public class SPExchange implements Model {
+public class SPExchange implements Model ,Serializable {
 
-    String  exchangeId;
-    String  orderId;
-    String  orderSN;
-    String  goodsId;
-    String  goodsName;
+    String exchangeId;
+    String orderId;
+    String orderSN;
+    String goodsId;
+    String goodsName;
+
+    public String getOriginal_img() {
+        return original_img;
+    }
+
+    public void setOriginal_img(String original_img) {
+        this.original_img = original_img;
+    }
+
+    public String getReturn_address() {
+        return return_address;
+    }
+
+    public void setReturn_address(String return_address) {
+        this.return_address = return_address;
+    }
+
+    public String getShipping_name() {
+        return shipping_name;
+    }
+
+    public void setShipping_name(String shipping_name) {
+        this.shipping_name = shipping_name;
+    }
+
+    public String getShipping_code() {
+        return shipping_code;
+    }
+
+    public void setShipping_code(String shipping_code) {
+        this.shipping_code = shipping_code;
+    }
+
+    String original_img;
+    String return_address;
+    String shipping_name;
+    String shipping_code;
     /**
-     *  0:退货 ,  1:换货
+     * 0:退货 ,  1:换货
      */
-    String  type;
+    String type;
 
     /**
-     *  退换货原因
+     * 退换货原因
      */
-    String  reason;
+    String reason;
 
     /**
-     *  申请时间
+     * 申请时间
      */
-    String  addtime;
+    String addtime;
 
     /**
-     *  0:申请中, 1:处理中, 2:已完成
+     * 0:申请中, 1:处理中, 2:已完成
      */
-    String  status;
+    String status;
 
     /**
-     *  客服备注
+     * 客服备注
      */
-    String  remark;
+    String remark;
 
     //问题图片
-    List<String> images;
     JSONArray imageArray;
 
-    
+    public String getImgs() {
+        return imgs;
+    }
+
+    public void setImgs(String imgs) {
+        this.imgs = imgs;
+    }
+
+    String   imgs;
     @Override
     public String[] replaceKeyFromPropertyName() {
         return new String[]{
-                "orderId","order_id",
-                "orderSN","order_sn",
-                "goodsId","goods_id",
-                "exchangeId","id",
-                "goodsName","goods_name",
-                "imageArray","imgs"
+                "orderId", "order_id",
+                "orderSN", "order_sn",
+                "goodsId", "goods_id",
+                "exchangeId", "id",
+                "goodsName", "goods_name",
+
         };
     }
 
@@ -141,13 +186,7 @@ public class SPExchange implements Model {
         this.remark = remark;
     }
 
-    public List<String> getImages() {
-        return images;
-    }
 
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
 
     public JSONArray getImageArray() {
         return imageArray;

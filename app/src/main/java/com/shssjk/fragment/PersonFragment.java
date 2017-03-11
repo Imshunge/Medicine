@@ -3,23 +3,29 @@
  */
 package com.shssjk.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -32,28 +38,40 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shssjk.MainActivity;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.shop.OrderListActivity;
+import com.shssjk.activity.common.person.AllCollectActivity;
+import com.shssjk.activity.common.person.BankListActivity;
+import com.shssjk.activity.common.person.CameraListActivity;
+import com.shssjk.activity.common.person.StartBusinessActivity;
+import com.shssjk.activity.common.shop.OrderActivity;
 import com.shssjk.activity.common.shop.OrderReturnedActivity;
 import com.shssjk.activity.common.shop.OrderWaitcommentActivity;
-import com.shssjk.activity.common.user.CouponListActivity;
+import com.shssjk.activity.common.shop.ProductAllActivity;
+import com.shssjk.activity.common.user.CouponList2Activity;
 import com.shssjk.activity.common.user.LoginActivity;
 import com.shssjk.activity.common.person.SettingActivity;
 import com.shssjk.activity.common.person.UserDetailsActivity;
 import com.shssjk.activity.common.shop.ConsigneeAddressListActivity;
-import com.shssjk.activity.common.shop.ProductActivity;
 import com.shssjk.activity.common.user.MyTeamActivity;
+import com.shssjk.activity.common.user.TestCameraActivity;
+import com.shssjk.adapter.GuessYouLiketListAdapter;
 import com.shssjk.adapter.SPGuessYouLikeAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
+import com.shssjk.http.person.SPPersonRequest;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.SPUser;
-import com.shssjk.utils.SPOrderUtils;
+import com.ipcamera.demo.BridgeService;
+import com.shssjk.utils.OnClickEvent;
 import com.shssjk.utils.SPStringUtils;
+import com.shssjk.utils.SSUtils;
+import com.shssjk.view.SPHomeListView;
 import com.shssjk.view.SPMoreImageView;
+import vstc2.nativecaller.NativeCaller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -61,12 +79,10 @@ import java.util.List;
  *  首页 -> 我的
  *
  */
-public class PersonFragment extends BaseFragment implements View.OnClickListener {
-
+public class PersonFragment extends BaseFragment implements View.OnClickListener,
+        GuessYouLiketListAdapter.ItemClickListener {
     private String TAG = "PersonFragment";
-
     private Context mContext;
-
     //View addressView;
     View allOrderLayout;
     View waitPayLayout;            //待支付
@@ -79,22 +95,21 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     View receiveAddressView;    //收货地址
     View couponView;            //优惠券
     View myteamView;			//我的团队
+    View mycameraView;			//我的摄像机
+    View mybankView;			//我的银行卡
 
-    TextView balanceTxtv;            //余额
+    TextView stoneTxtv;            //石头
     TextView pointTxtv;                //积分
     TextView couponCountTxtv;        //优惠券数量
     //SPGuessYouLikeView  recommendProductView;
-
-    TextView nicknameTxtv;            //昵称
-
     RelativeLayout header_relayout;
     SPMoreImageView nickImage;
+//    TextView nicknameTxtv;            //昵称
     TextView nickNameTxtv;
-
     //setting_btn
     Button settingBtn;
 
-    //account_rlayout
+    //account_rlayout  设置
     View accountView;
 
     //level_img
@@ -104,9 +119,14 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     TextView levelName;
 
     GridView mGridView;
+    SPHomeListView mHomeListView;
     SPGuessYouLikeAdapter mAdapter;
     List<SPProduct> mProducts;
-
+    private GuessYouLiketListAdapter homeProductListAdapter;
+    private static final int MY_PERMISSIONS_REQUEST_TAKE_PHOTO = 6;
+    private static final int MY_PERMISSIONS_REQUEST_CHOSE_PHOTO = 7;
+    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
+    int mPageIndex=1;   //当前第几页:从1开始
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -121,14 +141,10 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.person_fragment, null, false);
-
-        initSubView(view);
-        initEvent();
-        initData();
-
+        super.init(view);
         return view;
+
     }
 
     @Override
@@ -144,28 +160,34 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         waitCommentLayout = view.findViewById(R.id.personal_order_waitcomment_layout);
         waitReturnLayout = view.findViewById(R.id.personal_order_returned);
         collectLayout = view.findViewById(R.id.person_collect_aview);
-        integrateView = view.findViewById(R.id.person_integrate_rlayout);            //积分,余额
+        integrateView = view.findViewById(R.id.person_integrate_rlayout);            //积分，石头，优惠券
         receiveAddressView = view.findViewById(R.id.person_receive_address_aview);    //收货地址
         couponView = view.findViewById(R.id.person_coupon_aview);                    //优惠券
         myteamView = view.findViewById(R.id.person_myteam_aview);				//我的团队
-
-        balanceTxtv = (TextView) view.findViewById(R.id.person_balance_txtv);    //余额
+        mycameraView = view.findViewById(R.id.person_camera_aview);				//我的摄像机
+        mybankView = view.findViewById(R.id.person_bank_aview);				//我的银行卡
+        stoneTxtv = (TextView) view.findViewById(R.id.person_stone_txtv);    //石头
         pointTxtv = (TextView) view.findViewById(R.id.person_point_txtv);        //积分
         couponCountTxtv = (TextView) view.findViewById(R.id.person_coupon_txtv);        //优惠券数量
-        nicknameTxtv = (TextView) view.findViewById(R.id.nickname_txtv);        //昵称
+        nickNameTxtv = (TextView) view.findViewById(R.id.nickname_txtv);        //昵称
         header_relayout = (RelativeLayout) view.findViewById(R.id.header_relayout);
         nickImage = (SPMoreImageView) view.findViewById(R.id.head_mimgv);
-        mGridView = (GridView) view.findViewById(R.id.product_gdv);
+//        mGridView = (GridView) view.findViewById(R.id.product_gdv);
+
+        mHomeListView= (SPHomeListView) view.findViewById(R.id.sphome_listview);
+        View footerView =  ((LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.listview_footer, null, false);
+        mHomeListView.addFooterView(footerView);
+      TextView  mCommentLoadMore= (TextView) footerView.findViewById(R.id.footer_hint_textview);
+        mCommentLoadMore.setOnClickListener(this);
 
         ////setting_btn
         settingBtn = (Button) view.findViewById(R.id.setting_btn);
-        //account_rlayout
+        //account_rlayout  设置
         accountView = view.findViewById(R.id.account_rlayout);
-        //level_img
+        //level_img  等级
         levelImgv = (ImageView) view.findViewById(R.id.level_img);
         //level_name_txtv
         levelName = (TextView) view.findViewById(R.id.level_name_txtv);
-        ;
 
         String path = Environment.getExternalStorageDirectory().getPath();
         //showToast(path);
@@ -176,56 +198,54 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             nickImage.setImageDrawable(drawable);
         } else {
             /** 从服务器取,同时保存在本地 ,后续的工作 */
-
-
         }
-        nickNameTxtv = (TextView) view.findViewById(R.id.nickname_txtv);
+        if (MobileApplication.getInstance().isLogined){
+            SPUser    spUser=   MobileApplication.getInstance().getLoginUser();
+            String url = MobileConstants.BASE_HOST+ MobileApplication.getInstance().getLoginUser().getHeader_pic();
+            Glide.with(mContext).load(url).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
+        }
+//        nickNameTxtv = (TextView) view.findViewById(R.id.nickname_txtv);
     }
 
     @Override
     public void initEvent() {
-
-        //addressView.setOnClickListener(this);
-
         allOrderLayout.setOnClickListener(this);
         waitPayLayout.setOnClickListener(this);
         waitReceiveLayout.setOnClickListener(this);
         waitCommentLayout.setOnClickListener(this);
         waitReturnLayout.setOnClickListener(this);
         collectLayout.setOnClickListener(this);
-
         integrateView.setOnClickListener(this);
         receiveAddressView.setOnClickListener(this);
         couponView.setOnClickListener(this);
         myteamView.setOnClickListener(this);
-
+//        mycameraView.setOnClickListener(this);
+        mybankView.setOnClickListener(this);
         header_relayout.setOnClickListener(this);
         nickImage.setOnClickListener(this);
         nickNameTxtv.setOnClickListener(this);
-
         settingBtn.setOnClickListener(this);
         accountView.setOnClickListener(this);
 
 
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        int delayTime=2000;
+        mycameraView.setOnClickListener(new OnClickEvent(delayTime) {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void singleClick(View v) {
+//           我的摄像机
+                if (!checkLogin()) return;
 
-                Log.i(TAG, "onItemClick...");
-
-                if (mProducts != null && position >= 0 && position < mProducts.size()) {
-                    SPProduct product = mProducts.get(position);
-                    startupActivity(product.getGoodsID());
-                    Log.i(TAG, "onItemClick product.goodsName :" + product.getGoodsName());
-                }
+                startCameraListActivity();
             }
         });
+
+
     }
 
     public void initData() {
+        homeProductListAdapter = new GuessYouLiketListAdapter(mContext,this);
 
-        mAdapter = new SPGuessYouLikeAdapter(getActivity());
-        mGridView.setAdapter(mAdapter);
+        mHomeListView.setAdapter(homeProductListAdapter);
         refreshData(1);
     }
 
@@ -233,22 +253,22 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.person_order_all_container) {
-            startupOrderList(SPOrderUtils.OrderStatus.all.value());
+            startupOrderList(0);
         } else if (v.getId() == R.id.personal_order_waitpay_layout) {
-            startupOrderList(SPOrderUtils.OrderStatus.waitPay.value());
+            startupOrderList(0);
         } else if (v.getId() == R.id.personal_order_waitreceive_layout) {
-            startupOrderList(SPOrderUtils.OrderStatus.waitReceive.value());
+            startupOrderList(2);
         } else if (v.getId() == R.id.personal_order_waitcomment_layout) {
 //            待评价
             startupOrderWaitcommentActivity();
         } else if (v.getId() == R.id.personal_order_returned) {
 //            退货
-            startupOrderReturnedActivity();
+            startupOrderList(3);
         } else if (v.getId() == R.id.person_collect_aview) {
             //我的收藏
             if (!checkLogin()) return;
-//			Intent collectIntent = new Intent(getActivity() , CollectListActivity.class);
-//			startActivity(collectIntent);
+			Intent collectIntent = new Intent(getActivity() , AllCollectActivity.class);
+			startActivity(collectIntent);
         } else if (v.getId() == R.id.person_integrate_rlayout) {
             //积分,余额
 //			if (!checkLogin())return;
@@ -260,35 +280,112 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         } else if (v.getId() == R.id.person_coupon_aview) {
             //优惠券
 			if (!checkLogin())return;
-			getActivity().startActivity(new Intent(getActivity() , CouponListActivity.class));
+			getActivity().startActivity(new Intent(getActivity() , CouponList2Activity.class));
         } else if (v.getId() == R.id.setting_btn) {
             //设置
             getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
         } /*else if(v.getId() == R.id.header_relayout){
             loginOrDetail(MobileApplication.getInstance().isLogined);
 		}*/ else if (v.getId() == R.id.nickname_txtv) {
-            loginOrDetail(false);
+            loginOrDetail(MobileApplication.getInstance().isLogined);
         } else if (v.getId() == R.id.head_mimgv || v.getId() == R.id.account_rlayout) {
             loginOrDetail(MobileApplication.getInstance().isLogined);
         }else if(v.getId()==R.id.person_myteam_aview){
 //            我的团队
+            if (!checkLogin()) return;
             getActivity().startActivity(new Intent(getActivity(), MyTeamActivity.class));
+        }
+        else if(v.getId()==R.id.person_camera_aview){
+////           我的摄像机
+//            if (!checkLogin()) return;
+//
+//            startCameraListActivity();
 
+
+       }
+        else if(v.getId()==R.id.person_bank_aview){
+//           我的银行卡
+            if (!checkLogin()) return;
+            checkIsToWork();
+        }
+
+
+        switch (v.getId()) {
+            case R.id.footer_hint_textview:
+//                showLoadingToast("正在加载数据");
+                loadMoreData();
+                break;
+        }
+    }
+
+    private void getPermissionsOther() {
+        if (ContextCompat.checkSelfPermission(mContext,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) mContext,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_CHOSE_PHOTO);
+        } else {
+            startCameraListActivity();
         }
 
     }
 
+    //    我的银行卡
+    private void startBankListActivity() {
+//
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), BankListActivity.class);
+        startActivity(intent);
+    }
+
+    //    启动摄像机列表界面
+    private void startCameraListActivity() {
+        showLoadingToast("正在打开");
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), BridgeService.class);
+        getActivity().startService(intent);
+//        NativeCaller.PPPPInitialOther("ADCBBFAOPPJAHGJGBBGLFLAGDBJJHNJGGMBFBKHIBBNKOKLDHOBHCBOEHOKJJJKJBPMFLGCPPJMJAPDOIPNL");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    NativeCaller.PPPPInitialOther("ADCBBFAOPPJAHGJGBBGLFLAGDBJJHNJGGMBFBKHIBBNKOKLDHOBHCBOEHOKJJJKJBPMFLGCPPJMJAPDOIPNL");
+                    Thread.sleep(3000);
+                    Message msg = new Message();
+                    mHandler.sendMessage(msg);
+                } catch (Exception e) {
+                 e.printStackTrace();
+                }
+            }
+        }).start();
+//        Intent in = new Intent(getActivity(), TestCameraActivity.class);
+//        getActivity().startActivity(in);
+
+    }
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            Intent in = new Intent(getActivity(), CameraListActivity.class);
+            getActivity().startActivity(in);
+            hideLoadingToast();
+        }
+    };
     /**
      * doLogin or details
      * @param flag  true go detail, false go login
      */
     private void loginOrDetail(boolean flag) {
+        Intent intent=null;
         if (flag) {
-            getActivity().startActivity(new Intent(getActivity(), UserDetailsActivity.class));
+            intent = new Intent(getActivity(), UserDetailsActivity.class);
+//            getActivity().startActivity(new Intent(getActivity(), UserDetailsActivity.class));
 
         } else {
-            getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+            intent = new Intent(getActivity(), LoginActivity.class);
+//            getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
         }
+        startActivityForResult(intent, 888);
+
 
     }
 
@@ -309,8 +406,9 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             return;
         }
 //订单列表
-		Intent allOrderList = new Intent(getActivity() , OrderListActivity.class);
-		allOrderList.putExtra("orderStatus", orderStatus);
+//		Intent allOrderList = new Intent(getActivity() , OrderListActivity.class);
+        Intent allOrderList = new Intent(getActivity() , OrderActivity.class);
+        allOrderList.putExtra("index", orderStatus);
 		getActivity().startActivity(allOrderList);
     }
     //待评价
@@ -332,38 +430,35 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         Intent allOrderWaitcommentList = new Intent(getActivity() , OrderReturnedActivity.class);
         getActivity().startActivity(allOrderWaitcommentList);
     }
-
-
-
     @Override
     public void onResume() {
         super.onResume();
         refreshView();
     }
-
     /**
      * 刷新View 数据
      */
     public void refreshView() {
-
         if (MobileApplication.getInstance().isLogined) {
             SPUser user = MobileApplication.getInstance().getLoginUser();
-            balanceTxtv.setText(String.valueOf(user.getDo_earnings()));
-            pointTxtv.setText(String.valueOf(user.getPayPoints()));
-            if (SPStringUtils.isEmpty(user.getCouponCount())) {
+            if(!SSUtils.isEmpty(user.getDo_earnings())) {
+                stoneTxtv.setText(user.getDo_earnings());
+            }
+            if(!SSUtils.isEmpty(user.getDo_score())){
+                pointTxtv.setText(user.getDo_score());
+            }
+            if (SPStringUtils.isEmpty(user.getCoupon())) {
                 couponCountTxtv.setText("0");
             } else {
-                couponCountTxtv.setText(String.valueOf(user.getCouponCount()));
+                couponCountTxtv.setText(user.getCoupon());
             }
             if (!SPStringUtils.isEmpty(user.getNickname())) {
-                nicknameTxtv.setText(user.getNickname());
+                nickNameTxtv.setText(user.getNickname());
             }
-
             if (!SPStringUtils.isEmpty(user.getLevelName())) {
                 levelImgv.setVisibility(View.VISIBLE);
                 levelName.setVisibility(View.VISIBLE);
                 levelName.setText(user.getLevelName());
-
                 switch (Integer.valueOf(user.getLevel())) {
                     case 1:
                         levelImgv.setImageResource(R.drawable.icon_level_one);
@@ -374,42 +469,52 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     case 3:
                         levelImgv.setImageResource(R.drawable.icon_level_three);
                         break;
+                    case 4:
+                        levelImgv.setImageResource(R.drawable.icon_level_four);
+                        break;
+                    case 5:
+                        levelImgv.setImageResource(R.drawable.icon_level_five);
+                        break;
+                    case 6:
+                        levelImgv.setImageResource(R.drawable.icon_level_six);
+                        break;
                     default:
                         levelImgv.setImageResource(R.drawable.icon_level_one);
                         break;
                 }
-
             }
-
-            RoundedBitmapDrawable roundedBitmap = getCycleBitmpa(false);
-            if (roundedBitmap != null) {
-                nickImage.setImageDrawable(roundedBitmap);
-            } else {
-                /** 从服务器取,同时保存在本地 ,后续的工作 */
-                if (MobileApplication.getInstance().isLogined){
-                    String url = MobileConstants.BASE_HOST+ MobileApplication.getInstance().getLoginUser().getHeadPic();
-                    Glide.with(mContext).load(url).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
-                }
+            if (MobileApplication.getInstance().isLogined){
+                String url = MobileConstants.BASE_HOST+ MobileApplication.getInstance().getLoginUser().getHeader_pic();
+                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
             }
+            accountView.setVisibility(View.VISIBLE);
+            settingBtn.setVisibility(View.VISIBLE);
         } else {
-            balanceTxtv.setText("0");
+            stoneTxtv.setText("0");
             pointTxtv.setText("0");
             couponCountTxtv.setText("0");
             nickNameTxtv.setText("点击登录");
             levelImgv.setVisibility(View.INVISIBLE);
             levelName.setVisibility(View.INVISIBLE);
-
-            RoundedBitmapDrawable roundedBitmap = getCycleBitmpa(true);
-            if (roundedBitmap != null) {
-                nickImage.setImageDrawable(roundedBitmap);
-            } else {
-                /** 从服务器取,同时保存在本地 ,后续的工作 */
+//            新增
+            accountView.setVisibility(View.INVISIBLE);
+            settingBtn.setVisibility(View.INVISIBLE);
+//            RoundedBitmapDrawable roundedBitmap = getCycleBitmpa(true);
+//            if (roundedBitmap != null) {
+//                nickImage.setImageDrawable(roundedBitmap);
+//            } else {
+//                /** 从服务器取,同时保存在本地 ,后续的工作 */
+//            }
+            if (MobileApplication.getInstance().isLogined){
+                String url = MobileConstants.BASE_HOST+ MobileApplication.getInstance().getLoginUser().getHeadPic();
+                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
+            }else{
+                Glide.with(mContext).load("").placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
             }
+
         }
     }
-
     public RoundedBitmapDrawable getCycleBitmpa(boolean isDefault) {
-
         RoundedBitmapDrawable circularBitmapDrawable = null;
         String path = Environment.getExternalStorageDirectory().getPath();
         Bitmap mBitmap = BitmapFactory.decodeFile(path + "/head.jpg");
@@ -420,7 +525,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         } else {
             mBitmap = BitmapFactory.decodeFile(path + "/head.jpg");
         }
-
         if (mBitmap != null) {
             circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getActivity().getResources(), mBitmap);
             circularBitmapDrawable.setCornerRadius(getActivity().getResources().getDimension(R.dimen.head_corner_35));
@@ -435,38 +539,148 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             public void onRespone(String msg, Object response) {
                 if (response != null) {
                     mProducts = (List<SPProduct>) response;
-                    mAdapter.setData(mProducts);
-                    //recommendProductView.refreshProducts(products, false);
+                    homeProductListAdapter.setData(mProducts);
+//                    recommendProductView.refreshProducts(products, false);
                 } else {
                     //recommendProductView.refreshProducts(null, true);
+                    showToast(msg);
                 }
-                setListViewHeightBasedOnChildren();
+
             }
         }, new SPFailuredListener() {
             @Override
             public void onRespone(String msg, int errorCode) {
-                //recommendProductView.refreshProducts(null, true);
                 showToast(msg);
             }
         });
     }
-
+//    判断是否创业
+    public void checkIsToWork() {
+        SPPersonRequest.isWork(new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+//                 （1、已创业；0未达到创业资格；2达到创业资格;
+                    String str = (String) response;
+                    if ("0".equals(str.trim())) {
+                        startBusinessActivity();
+                    } else if ("1".equals(str.trim())) {
+                        startBankListActivity();
+                    } else if ("2".equals(str.trim())) {
+                        startBankListActivity();
+                    }
+                } else {
+                    showToast(msg);
+                }
+            }
+        }, new SPFailuredListener() {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+                showToast(msg);
+            }
+        });
+    }
+    /**
+     * 创业说明
+     */
+    private void startBusinessActivity() {
+        Intent intent = new Intent(getActivity(), StartBusinessActivity.class);
+        startActivity(intent);
+    }
 
     private void setListViewHeightBasedOnChildren() {
-        int count = Double.valueOf(Math.ceil(Double.valueOf(mAdapter.getCount() / 2.0))).intValue();
+        int count = Double.valueOf(Math.ceil(Double.valueOf(homeProductListAdapter.getCount() / 2.0)))
+                .intValue();
         /**
          * 获取屏幕宽度和高度
          */
         DisplayMetrics metric = new DisplayMetrics();
         MainActivity.getmInstance().getWindowManager().getDefaultDisplay().getMetrics(metric);
         float itemheight = getResources().getDimension(R.dimen.product_item_height);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, Float.valueOf(count * itemheight).intValue());
-        mGridView.setLayoutParams(params);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.
+                FILL_PARENT, Float.valueOf(count * itemheight).intValue());
+        mHomeListView.setLayoutParams(params);
     }
 
     public void startupActivity(String goodsID) {
-        Intent intent = new Intent(getActivity(), ProductActivity.class);
+        Intent intent = new Intent(getActivity(), ProductAllActivity.class);
         intent.putExtra("goodsId", goodsID);
         startActivity(intent);
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 888: //
+                if (resultCode == Activity.RESULT_OK) {
+                    refreshView();
+                }
+                break;
+        }
+    }
+    @Override
+    public void onItemClickListener(SPProduct product) {
+        if (product != null ) {
+                    startupActivity(product.getGoodsID());
+                }
+    }
+    public void loadMoreData() {
+        mPageIndex ++;
+        ShopRequest.guessYouLike(mPageIndex, new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+                    List<SPProduct> tempProducts = (List<SPProduct>) response;
+                    if (tempProducts.size() > 0) {
+                        mProducts.addAll(tempProducts);
+                        homeProductListAdapter.setData(mProducts);
+                    } else {
+                        mPageIndex--;
+                        showToast("没有更多了");
+                    }
+                } else {
+                    showToast(msg);
+                }
+                hideLoadingToast();
+                setListViewHeightBasedOnChildren();
+            }
+        }, new SPFailuredListener() {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+                showToast(msg);
+                hideLoadingToast();
+            }
+        });
+    }
+    @Override
+    public void gotoLoginPageClearUserDate() {
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_TAKE_PHOTO) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                startCameraListActivity();
+                getPermissionsOther();
+            } else {
+                // Permission Denied
+                showToast("禁止使用相机权限将会导致摄像机功能异常!");
+            }
+        }
+        if (requestCode == MY_PERMISSIONS_REQUEST_CHOSE_PHOTO) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startCameraListActivity();
+            } else {
+                // Permission Denied
+                showToast("禁止选择图片将会导致上传图片功能异常!");
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+
+
+
+
 }

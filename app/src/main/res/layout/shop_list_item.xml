@@ -41,6 +41,18 @@
 			android:textSize="@dimen/font_size_normal"/>
 	</LinearLayout>
 	<View  style="@style/separator_line"/>
+
+	<GridView   android:id="@+id/mygradview"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:numColumns="4"
+		android:verticalSpacing="10dp"
+		android:horizontalSpacing="10dp"
+		android:columnWidth="80dp"
+		android:gravity="center"
+		></GridView>
+
+
 	<com.shssjk.view.SPHomeListView
 		android:id="@+id/home_lsit_item_grid"
 		android:layout_width="match_parent"
@@ -52,5 +64,8 @@
 		android:headerDividersEnabled="false"
 		android:scrollbars="none"
 		android:background="@color/white"
-		android:smoothScrollbar="true" />
+		android:smoothScrollbar="true"
+		android:visibility="gone"
+
+		/>
 </LinearLayout>

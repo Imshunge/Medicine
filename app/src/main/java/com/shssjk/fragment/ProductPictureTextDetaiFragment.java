@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.shop.ProductActivity;
+import com.shssjk.activity.common.shop.ProductAllActivity;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.condition.ProductCondition;
@@ -58,11 +59,10 @@ public class ProductPictureTextDetaiFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 //		获取地址
-        this.mHtml = ((ProductActivity) getActivity()).getContents();
+        this.mHtml = ((ProductAllActivity) getActivity()).getContents();
 
         isFirstLoad = true;
         View view = inflater.inflate(R.layout.common_webview_main, null, false);
-
         super.init(view);
 
 
@@ -86,7 +86,6 @@ public class ProductPictureTextDetaiFragment extends BaseFragment {
 
     @Override
     public void initSubView(View view) {
-
         mWebView = (WebView) view.findViewById(R.id.common_webview);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -157,4 +156,8 @@ public class ProductPictureTextDetaiFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void gotoLoginPageClearUserDate() {
+
+    }
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_activity"
+    android:orientation="vertical" >
+    <ListView
+        android:id="@+id/camera_listv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/separator_line"
+        android:dividerHeight="@dimen/margin_space_half"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:scrollbars="none"
+        android:background="@color/bg_activity"
+        android:smoothScrollbar="true"
+        android:layout_marginBottom="50dip"
+        />
+    <RelativeLayout
+        android:id="@+id/empty_lstv"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:background="@color/bg_view"
+        android:visibility="gone"
+        android:padding="10.0dip" >
+        <TextView
+            android:id="@+id/empty_txtv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:singleLine="true"
+            android:text="@string/cameralistactivity_nodata_hint"
+            style="@style/textStyle.Normal.black" />
+    </RelativeLayout>
+    <Button
+        android:id="@+id/add_address_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_button"
+        android:text="@string/camera_add"
+        android:textColor="@color/white"
+        android:background="@drawable/button_selector"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/margin_space"
+        android:layout_marginRight="@dimen/margin_space"
+        android:layout_marginBottom="@dimen/margin_space"
+        />
+</FrameLayout>

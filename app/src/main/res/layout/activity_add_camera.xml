@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shssjk.activity.common.person.AddCameraActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:id="@+id/login_top_linear"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/camera_state_txtv"
+                android:padding="@dimen/margin_space"
+                android:layout_width="80dip"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|left"
+                android:text="@string/addcameraactivity_devicename"
+                android:layout_gravity="center"
+                style="@style/textStyle.Normal.black"/>
+            <ProgressBar
+                android:id="@+id/main_model_progressBar1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone" />
+        </LinearLayout>
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:layout_marginTop="@dimen/margin_space"
+        android:background="@color/bg_view"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/bankcard_user_txtv"
+            android:padding="@dimen/margin_space"
+            android:layout_width="80dip"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|left"
+            android:text="@string/addcameraactivity_devicename"
+            android:layout_alignParentLeft="true"
+            style="@style/textStyle.Normal.black"/>
+        <EditText
+            android:id="@+id/bankcard_user_edtv"
+            style="@style/textStyle.Medium.User.Input"
+            android:background="@drawable/edittext_default_rounded"
+            android:paddingRight="@dimen/tag_common_margin"
+            android:layout_toRightOf="@id/bankcard_user_txtv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_text"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_space"
+            android:gravity="center_vertical|right"
+            android:text=""
+            />
+    </RelativeLayout>
+    <View  style="@style/separator_line"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:layout_marginTop="@dimen/margin_space"
+        android:background="@color/bg_view"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/device_name_txtv"
+            android:padding="@dimen/margin_space"
+            android:layout_width="80dip"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|left"
+            android:text="@string/addcameraactivity_deviceid"
+            android:layout_alignParentLeft="true"
+            style="@style/textStyle.Normal.black"/>
+        <EditText
+            android:id="@+id/device_id_edtv"
+            style="@style/textStyle.Medium.User.Input"
+            android:background="@drawable/edittext_default_rounded"
+            android:paddingRight="@dimen/tag_common_margin"
+            android:layout_toRightOf="@id/device_name_txtv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_text"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_space"
+            android:gravity="center_vertical|right"
+            android:text=""
+            />
+    </RelativeLayout>
+    </LinearLayout>
+    <View  style="@style/separator_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:layout_marginTop="5dip"
+        android:background="@drawable/background_white_corner"
+        android:orientation="vertical"
+        android:padding="10dp" >
+        <Button
+            android:background="@drawable/button_pop_selector"
+            android:id="@+id/btn_link"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:text="@string/addcameraactivity_btn_link"
+            />
+
+    </LinearLayout>
+    <View  style="@style/separator_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:background="@drawable/background_white_corner"
+        android:orientation="vertical"
+        android:padding="10dp" >
+        <Button
+            android:layout_marginTop="@dimen/margin5dp"
+            android:id="@+id/btn_preview"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:text="@string/addcameraactivity_btn_preview"
+            android:background="@drawable/button_pop_selector"
+            />
+        <Button
+            android:layout_marginTop="@dimen/margin5dp"
+            android:id="@+id/btn_searchCamera"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:text="@string/addcameraactivity_btn_search"
+            android:background="@drawable/button_pop_selector"
+            />
+        <Button
+            android:layout_marginTop="@dimen/margin5dp"
+            android:id="@+id/btn_settingwifi"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:text="@string/addcameraactivity_btn_setting_wifi"
+            android:background="@drawable/button_pop_selector"
+
+            />
+    </LinearLayout>
+    <View  style="@style/separator_line"/>
+
+</LinearLayout>

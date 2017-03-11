@@ -27,8 +27,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dip" />
             <View style="@style/separator_line" />
-
-
             <com.shssjk.view.SPArrowRowView
                 android:id="@+id/order_coupon_aview"
                 android:layout_width="match_parent"
@@ -37,12 +35,14 @@
                 android:focusable="true"
                 custom:titleText="@string/order_coupon" />
             <View style="@style/separator_line" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_row"
                 android:background="@color/bg_view"
-                android:orientation="horizontal">
+                android:id="@+id/rl_coupon"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
                 <TextView
                     android:id="@+id/coupon_time_txtv_title"
                     style="@style/textStyle.Normal.black"
@@ -54,12 +54,14 @@
                 <TextView
                     android:id="@+id/coupon_time_txtv"
                     style="@style/textStyle.Normal.black"
-                    android:layout_width="wrap_content"
+                    android:layout_width="76dp"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/coupon_time_txtv_title"
-                    android:layout_marginLeft="@dimen/margin_space"
+                    android:layout_marginLeft="18dp"
                     android:gravity="center_horizontal|center_vertical|left"
-                    android:text="2016-11-11" />
+                    android:layout_marginStart="18dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/coupon_time_txtv_title"
+                    android:layout_toEndOf="@+id/coupon_time_txtv_title" />
                 <TextView
                     style="@style/textStyle.Normal.black"
                     android:layout_toLeftOf="@+id/coupon_sum_use_txtv"
@@ -92,20 +94,6 @@
             <!--custom:titleText="@string/order_invoice" />-->
             <!--<View  style="@style/separator_line"/>-->
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_row"
-                android:background="@color/bg_view"
-                android:orientation="horizontal">
-                <TextView
-                    style="@style/textStyle.Normal.black"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_space"
-                    android:gravity="center_horizontal|center_vertical|left"
-                    android:text="我的石头" />
-            </RelativeLayout>
-
             <View style="@style/separator_line" />
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -113,33 +101,46 @@
                 android:background="@color/bg_view"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/text1"
+                    android:id="@+id/tv_stone"
                     style="@style/textStyle.Normal.black"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/margin_space"
                     android:gravity="center_horizontal|center_vertical|left"
+                    android:text="我的石头" />
+                <TextView
+                    android:id="@+id/text1"
+                    style="@style/textStyle.Normal.black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/margin20dp"
+                    android:layout_toRightOf="@+id/tv_stone"
+                    android:gravity="center_horizontal|center_vertical|left"
                     android:text="账户总共石头" />
                 <TextView
                     android:id="@+id/text2"
                     style="@style/textStyle.Normal.black"
-                    android:layout_toRightOf="@+id/stone_sum_txtv"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal|center_vertical|left"
-                    android:text="块" />
+                    android:text="个"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/stone_sum_txtv"
+                    android:layout_toEndOf="@+id/stone_sum_txtv" />
                 <TextView
                     android:id="@+id/stone_sum_txtv"
-                    android:layout_toRightOf="@+id/text1"
                     style="@style/textStyle.Normal.black"
-                    android:layout_marginLeft="@dimen/margin_space_lage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal|center_vertical|left"
-                    android:text="0.0" />
+                    android:text="0.0"
+                    android:layout_alignTop="@+id/btn_stone"
+                    android:layout_toRightOf="@+id/text1"
+                    android:layout_toEndOf="@+id/text1"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginStart="21dp" />
                 <Button
-                    android:id="@+id/order_stone_edit"
+                    android:id="@+id/btn_stone"
                     android:layout_width="70dp"
                     android:layout_height="@dimen/height_button"
                     android:gravity="center"
@@ -162,27 +163,35 @@
                     style="@style/textStyle.Normal.black"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_space"
+                    android:layout_marginLeft="76dp"
                     android:gravity="center_horizontal|center_vertical|left"
-                    android:text="使用数量" />
+                    android:text="使用数量"
+                    android:layout_marginStart="76dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
                 <EditText
                     android:id="@+id/edit_use_stone_num"
-                    android:layout_toRightOf="@+id/use"
-                    style="@style/textStyle.Normal.black"
-                    android:layout_marginLeft="@dimen/margin_space_lage"
+                    style="@style/textStyle.Medium.User.Input"
+                    android:background="@drawable/edittext_default_rounded"
+                    android:layout_marginLeft="48dp"
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal|center_vertical|left"
                     android:inputType="number"
-                    />
+                    android:layout_marginStart="48dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/use"
+                    android:layout_toEndOf="@+id/use" />
                 <TextView
                     style="@style/textStyle.Normal.black"
-                    android:layout_toRightOf="@+id/edit_use_stone_num"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal|center_vertical|left"
-                    android:text="块" />
+                    android:text="个"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/edit_use_stone_num"
+                    android:layout_toEndOf="@+id/edit_use_stone_num" />
                 <TextView
                     style="@style/textStyle.Normal.black"
                     android:layout_toLeftOf="@+id/stone_sum_use_txtv"
@@ -241,7 +250,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dip"
+        android:layout_height="50dip"
         android:layout_gravity="bottom"
         android:background="@color/bg_activity_ss">
 

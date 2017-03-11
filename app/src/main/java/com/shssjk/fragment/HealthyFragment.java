@@ -15,7 +15,9 @@ import android.widget.RadioGroup;
 
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.health.BindDeviceActivity;
+import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
+import com.shssjk.utils.Logger;
 import com.shssjk.view.MobileScrollLayout;
 
 import java.util.ArrayList;
@@ -24,29 +26,30 @@ import java.util.ArrayList;
  * 健康云
  */
 
-
-public class HealthyFragment extends BaseFragment implements MobileScrollLayout.PageListener, View.OnClickListener {
+public class HealthyFragment extends BaseFragment implements MobileScrollLayout.PageListener,
+        View.OnClickListener {
     private Context mContext;
     private ViewPager mPager;
     private RadioGroup group_radio;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mContext = context;
+        Logger.e(context,"onAttach");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Logger.e("onCreate", "onCreate");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_healthy, null, false);
         super.init(view);
+        Logger.e("", "onCreateView");
         return view;
     }
 
@@ -56,28 +59,33 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
         // 初始化ViewPage
         mPager = (ViewPager) view.findViewById(R.id.jky_viewpager);
         group_radio = (RadioGroup) view.findViewById(R.id.bottom_tools4);
-
     }
 
     @Override
     public void initEvent() {
         group_radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.radio_1:
                         mPager.setCurrentItem(0);// 选择某一页
+                        //更新设备列表 血糖仪
+                        if (mContext != null) {
+                            mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_LOADATA));
+                        }
                         break;
                     case R.id.radio_2:
                         mPager.setCurrentItem(1);
+                        //更新设备列表 血糖仪
+                        if (mContext != null) {
+                        mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_SUAGR_LOADATA));
+                    }
                         break;
                 }
             }
         });
         mPager.setAdapter(new FragmentAdapter(getActivity().getSupportFragmentManager()));
         mPager.setPageMargin(0);// 设置视图之间的间隔
-
         mPager.setCurrentItem(0);
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -91,33 +99,24 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
                         break;
                 }
             }
-
             @Override
             public void onPageScrolled(int arg0, float arg1, int arg2) {
-
             }
-
             @Override
             public void onPageScrollStateChanged(int arg0) {
-
             }
         });
-
     }
 
     @Override
     public void initData() {
-
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.right_button:
                 startupBindDeviceActivity();
                 break;
-
-
             default:
                 break;
         }
@@ -128,10 +127,14 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
 
     }
 
+    @Override
+    public void gotoLoginPageClearUserDate() {
+
+    }
+
     // mFragments适配器
     class FragmentAdapter extends FragmentPagerAdapter {
         public ArrayList<BaseFragment> mFragments;
-
         @SuppressWarnings("serial")
         public FragmentAdapter(FragmentManager fm) {
             super(fm);
@@ -155,9 +158,7 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
             // Auto-generated method stub
             return mFragments.size();
         }
-
     }
-
     boolean checkLogin() {
         if (!MobileApplication.getInstance().isLogined) {
             showToastUnLogin();
@@ -166,8 +167,6 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
         }
         return true;
     }
-
-
     /**
      * 绑定设备
      */
@@ -179,5 +178,10 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
         }
         Intent carIntent = new Intent(getActivity() , BindDeviceActivity.class);
         getActivity().startActivity(carIntent);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Logger.e(mContext, "onResume");
     }
 }

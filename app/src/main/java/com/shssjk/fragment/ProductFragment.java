@@ -29,6 +29,7 @@ import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.shop.GoodsComment;
 import com.shssjk.model.shop.SPProductSpec;
+import com.shssjk.utils.Logger;
 import com.shssjk.utils.SMobileLog;
 import com.shssjk.utils.SPDialogUtils;
 import com.shssjk.utils.SPShopUtils;
@@ -48,13 +49,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * 商品 -> 详情 1 详情
  */
 public class ProductFragment extends BaseFragment implements View.OnClickListener, SPPageView.PageListener, TagListView.OnTagClickListener {
-
-
     SPPageView mScroll; // MobileScrollLayout mScroll ;
     LinearLayout mGallery;
     TextView pageindexTxtv;    //图片索引提示
@@ -104,13 +102,11 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         isFirstLoad = true;
         View view = inflater.inflate(R.layout.product_details, null, false);
         super.init(view);
         return view;
     }
-
     public void loadData() {
         if (isFirstLoad) {
             isFirstLoad = false;
@@ -128,38 +124,29 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
         mGallery = (LinearLayout) view.findViewById(R.id.banner_lyaout);
         pageindexTxtv = (TextView) view.findViewById(R.id.pageindex_txtv);
         nameTxtv = (TextView) view.findViewById(R.id.details_name_txtv);
-
         orignalPriceTxtv = (TextView) view.findViewById(R.id.details_orignal_price_txtv);
         nowPriceTxtv = (TextView) view.findViewById(R.id.details_now_price_txtv);
-
         minusBtn = (Button) view.findViewById(R.id.cart_minus_btn);
         plusBtn = (Button) view.findViewById(R.id.cart_plus_btn);
         storeCountTxtv = (TextView) view.findViewById(R.id.product_spec_store_count_txtv);
         cartCounEtxtv = (EditText) view.findViewById(R.id.cart_count_dtxtv);
         specListv = (ListView) view.findViewById(R.id.product_spec_lstv);
-
     }
-
     @Override
     public void initEvent() {
         minusBtn.setOnClickListener(this);
         plusBtn.setOnClickListener(this);
         mScroll.setPageListener(this);
-
         specAdapter = new SPProductSpecListAdapter(mContext, this);
         specListv.setAdapter(specAdapter);
-
     }
 
     @Override
     public void initData() {
         selectSpecMap = new HashMap<String,String>();
-
-        getProductDetails();
+//        getProductDetails();
     }
-
     public void getProductDetails() {
-
         /** 此处参数-1 : 意味着返回的是左边分类  */
         ProductCondition condition = new ProductCondition();
         if (mGoodsID == null) {
@@ -167,7 +154,6 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
         } else {
             condition.goodsID = Integer.valueOf(mGoodsID);
         }
-
         showLoadingToast();
         ShopRequest.getProductByID(condition, new SPSuccessListener() {
             @Override
@@ -181,23 +167,31 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                         //                设置图文详情信息
                         ((ProductActivity) getActivity()).setContents(mProduct.getGoodsContent());
                     }
-
                     if (mDataJson != null && mDataJson.has("gallery")) {
                         mGalleryArray = mDataJson.getJSONArray("gallery");
                     }
-
                     if (mDataJson != null && mDataJson.has("price")) {
                         priceJson = mDataJson.getJSONObject("price");
                         MobileApplication.getInstance().json = priceJson;
                     }
-
                     if (mDataJson != null && mDataJson.has("comments")) {
                         mComments = (List<GoodsComment>) mDataJson.get("comments");
                         mCommentCount = mComments.size();
                     }
+                    if (mDataJson != null && mDataJson.has("cart_num")) {
+//                        mComments = (List<GoodsComment>) mDataJson.get("cart_num");
+//                        mCommentCount = mComments.size();
+                        String cart_num = mDataJson.getString("cart_num");
+//                        getActivity().setCartNumber
+                        ((ProductActivity) getActivity()).setCartNumber(cart_num);
+                        Logger.e(this,"cart_num"+cart_num);
+                    }
+                    if (mDataJson != null && mDataJson.has("is_collect")) {
+                        String is_collect = mDataJson.getString("is_collect");
+                        Logger.e(this, "is_collect" + is_collect);
+                        ((ProductActivity) getActivity()).refreshCollectButton(is_collect);
+                    }
                     dealModel();
-
-
                 } catch (Exception e) {
                     showToast(e.getMessage());
                 }
@@ -221,7 +215,6 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                     JSONObject jsonObject = (JSONObject) mGalleryArray.getJSONObject(i);
                     String url = jsonObject.getString("image_url");
                     gallerys.add(url);
-
                     if (mScroll != null) {
                         //mScroll.setDataSource(this , gallerys);
                         buildProductGallery(gallerys);
@@ -234,7 +227,6 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                 e.printStackTrace();
             }
         }
-
         dealProductSpec();
 
     }
@@ -251,7 +243,7 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
             ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(displayMetrics.widthPixels, productImageWidth);
             imageView.setLayoutParams(lp);
             Glide.with(this).load(url).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageView);
-            //mGallery.addView(imageView);
+//            mGallery.addView(imageView);
             mScroll.addPage(imageView);
         }
     }
@@ -273,7 +265,6 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
 
         }
     }
-
     private void refreshGalleryViewData() {
         String tIndex = (galleryIndex + 1) + "/" + gallerySize;
         this.pageindexTxtv.setText(tIndex);
@@ -296,7 +287,6 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                     //并将商品规格以specName为key进行分类
                     //specName相同为一组
                     for (SPProductSpec productSpec : mProduct.getSpecArr()) {
-
                         List<SPProductSpec> specList = null;
                         if (specJson.has(productSpec.getSpecName())) {
                             specList = (List<SPProductSpec>) specJson.get(productSpec.getSpecName());
@@ -307,7 +297,6 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                             specList = new ArrayList<SPProductSpec>();
                             specList.add(productSpec);
                         }
-
                         specJson.put(productSpec.getSpecName(), specList);
                         MobileApplication.getInstance().json1 = specJson;
                         specAdapter.setData(specJson);
@@ -315,12 +304,10 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                     }
                 }
             }
-
             //获取每组规格中的第一个规格
             if (!selectSpecMap.isEmpty()) {
                 selectSpecMap.clear();
             }
-
             Iterator<String> iterator = specJson.keys();
             while (iterator.hasNext()) {
                 String key = iterator.next();
@@ -331,7 +318,6 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
                     specAdapter.setData(selectSpecMap.values());
                     MobileApplication.getInstance().map = selectSpecMap;
                 }
-
             }
             refreshPriceView();
 
@@ -373,7 +359,6 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
             ((ProductActivity) getActivity()).setmCartCount(mCartCount);
         }
     }
-
     @Override
     public void page(int page) {
         galleryIndex = page;
@@ -383,5 +368,10 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onTagClick(TagView tagView, Tag tag) {
         ((ProductActivity) getActivity()).setSpecs(tag.getValue());
+    }
+
+    @Override
+    public void gotoLoginPageClearUserDate() {
+
     }
 }

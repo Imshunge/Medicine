@@ -1,17 +1,3 @@
-/**
- * shopmobile for tpshop
- * ============================================================================
- * 版权所有 2015-2099 深圳搜豹网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.tp-shop.cn
- * ——————————————————————————————————————
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和使用 .
- * 不允许对程序代码以任何形式任何目的的再发布。
- * ============================================================================
- * Author: 飞龙  wangqh01292@163.com
- * Date: @date 2015年11月14日 下午8:17:18
- * Description: 商品列表排序, 筛选 标题栏
- * @version V1.0
- */
 
 package com.shssjk.view;
 
@@ -50,14 +36,12 @@ public class SPProductFilterTabView extends FrameLayout implements View.OnClickL
 
     private OnSortClickListener onSortClickListener;
     int mLastSortId ;    //上一次选中的ID
-
     /**
      * @param context
      * @param attrs
      */
     public SPProductFilterTabView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         View view = LayoutInflater.from(context).inflate(R.layout.spproduct_list_tab_view, this);
         compositelyout = view.findViewById(R.id.sort_composite_lyout);
         compositeTxt = (TextView)view.findViewById(R.id.sort_composite_txt);
@@ -155,7 +139,6 @@ public class SPProductFilterTabView extends FrameLayout implements View.OnClickL
         }else {
             priceDrameev.setImageResource(R.drawable.shop_icon_price_normal);
         }
-
     }
 
 

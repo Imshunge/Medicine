@@ -29,7 +29,6 @@ import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.condition.ProductCondition;
 import com.shssjk.http.shop.ShopRequest;
-import com.shssjk.model.SPCategory;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.shop.SPShopOrder;
 import com.shssjk.utils.SPDialogUtils;
@@ -40,7 +39,8 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class ProductListActivity extends BaseActivity implements SPProductListAdapter.ItemClickListener, SPProductFilterTabView.OnSortClickListener {
+public class ProductListActivity extends BaseActivity implements SPProductListAdapter.ItemClickListener,
+        SPProductFilterTabView.OnSortClickListener {
 
     private String TAG = "ProductListActivity";
 
@@ -53,20 +53,17 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
     TextView priceTxtv ;
     EditText searchText ;//搜索文本框
     ImageView backImgv;	//返回键
-
     SPProductListAdapter mAdapter ;
 //    SPCategory mCategory ;	//分类
     String  mCategory ;	//分类id
-
     SPProductFilterTabView mFilterTabView;
 
-    DrawerLayout mDrawerLayout;
+    DrawerLayout mDrawerLayout; //右侧 筛选
 
     String mSort = "";			//排序字段
     String mOrder = "asc" ;		//asc: 升序, desc:降序
     int mPageIndex = 1 ;		//当前第几页
     boolean mIsMaxPage;			//是否最大页数
-
     String mHref ;				//请求URL
     SPShopOrder mShopOrder;		//排序实体
     List<SPProduct> mProducts ;
@@ -87,7 +84,6 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
 
     @Override
     protected void onCreate(Bundle bundle) {
-        //super.setCustomerTitle(true, true , "商品列表");
         super.onCreate(bundle);
         /** 自定义标题栏 , 执行顺序必须是一下顺序, 否则无效果.  */
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -110,7 +106,6 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
 
     @Override
     public void initSubViews() {
-
         WindowManager wm = (WindowManager)getBaseContext().getSystemService(Context.WINDOW_SERVICE);
         mFilterTabView = (SPProductFilterTabView)findViewById(R.id.filter_tabv);
         mFilterTabView.setOnSortClickListener(this);
@@ -118,38 +113,33 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
         mListView = (ListView)findViewById(R.id.pull_product_listv);
         View emptyView = findViewById(R.id.empty_lstv);
         mListView.setEmptyView(emptyView);
-
         //综合
         syntheisTxtv = (TextView)findViewById(R.id.sort_button_synthesis);
         salenumTxtv = (TextView)findViewById(R.id.sort_button_salenum);
         priceTxtv = (TextView)findViewById(R.id.sort_button_price);
-
         searchText = (EditText)findViewById(R.id.search_edtv);
-        searchText.setFocusable(false);
-        searchText.setFocusableInTouchMode(false);
+
         backImgv = (ImageView)findViewById(R.id.title_back_imgv);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
-
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         MobileApplication.getInstance().productListType = 1;
         mFilterFragment = (ProductListFilterFragment)getSupportFragmentManager().findFragmentById(R.id.right_rlayout);
-
-        mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-                super.onDrawerStateChanged(newState);
-            }
-        });
+//        mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//            }
+//
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//                super.onDrawerClosed(drawerView);
+//            }
+//
+//            @Override
+//            public void onDrawerStateChanged(int newState) {
+//                super.onDrawerStateChanged(newState);
+//            }
+//        });
     }
 
 
@@ -161,7 +151,6 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
         mListView.setAdapter(mAdapter);
 
         ptrClassicFrameLayout.postDelayed(new Runnable() {
-
             @Override
             public void run() {
                 //ptrClassicFrameLayout.autoRefresh(true);
@@ -178,7 +167,6 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
         });
 
         ptrClassicFrameLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-
             @Override
             public void loadMore() {
                 //上拉加载更多
@@ -195,16 +183,13 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
      * @throws
      */
     public void refreshData(){
-
         mPageIndex = 1;
         mIsMaxPage = false;
         ProductCondition conditioon = new ProductCondition();
-
         if(mCategory!=null){
             //获取某个分类的ID
             conditioon.categoryID = SSUtils.str2Int(mCategory);
         }
-
         conditioon.href = mHref;
         conditioon.page = mPageIndex;
         conditioon.orderby = mSort ;
@@ -221,7 +206,6 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
 
                             if (mDataJson.has("product")) {
                                 mProducts = (List<SPProduct>) mDataJson.get("product");
-                                
                             }
                             if (mDataJson.has("order")) {
                                 mShopOrder = (SPShopOrder) mDataJson.get("order");
@@ -244,7 +228,6 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
                     }
                     refreshView();
                     ptrClassicFrameLayout.refreshComplete();
-
                 }
             }, new SPFailuredListener() {
                 @Override
@@ -270,14 +253,11 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
             return;
         }
         mPageIndex++;
-
         ProductCondition conditioon = new ProductCondition();
-
         if(mCategory!=null){
             //获取某个分类的ID
             conditioon.categoryID = SSUtils.str2Int(mCategory);
         }
-
         conditioon.href = mHref;
         conditioon.page = mPageIndex;
         conditioon.orderby = mSort ;
@@ -350,7 +330,7 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
 
     //详情页面
     public void startupActivity(String goodsID){
-        Intent intent = new Intent(this , ProductActivity.class);
+        Intent intent = new Intent(this , ProductAllActivity.class);
         intent.putExtra("goodsId", goodsID);
         startActivity(intent);
     }
@@ -405,7 +385,6 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
     @Override
     protected void onResume() {
         super.onResume();
-
         searchText.setFocusable(false);
         searchText.setFocusableInTouchMode(false);
     }

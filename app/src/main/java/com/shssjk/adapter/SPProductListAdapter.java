@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shssjk.activity.R;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.model.SPProduct;
+import com.shssjk.utils.Logger;
 import com.soubao.tpshop.utils.SPCommonUtils;
 
 import java.util.List;
@@ -111,15 +112,15 @@ public class SPProductListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				if (mListener != null) {
-					mListener.onItemClickListener((SPProduct)mProductLst.get(position * 2) );
+					mListener.onItemClickListener((SPProduct) mProductLst.get(position * 2));
 				}
 			}
-		 });
-        
+		});
+		holder.view2.setVisibility(View.INVISIBLE);
         if ((position * 2 + 1) < mProductLst.size()) {
-        	
+			holder.view2.setVisibility(View.VISIBLE);
         	SPProduct product2 = (SPProduct)mProductLst.get(position * 2+1 );
-            
+
             //设置数据到View
             //格式化价格
             String price2 = String.format(mContext.getResources().getString(R.string.product_price),Float.valueOf( product2.getShopPrice()));

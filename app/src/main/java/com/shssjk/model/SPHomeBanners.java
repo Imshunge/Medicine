@@ -4,7 +4,7 @@ package com.shssjk.model;
 import java.io.Serializable;
 
 /**
- * @author 无风
+ * @author
  *
  */
 public class SPHomeBanners implements Model, Serializable{

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_activity"
+    android:orientation="vertical"
+    tools:context="com.shssjk.activity.common.shop.PublishCommentActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_view"
+            android:orientation="vertical">
+
+            <include layout="@layout/lv_order_item" />
+
+            <View style="@style/separator_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_view"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/et_image_detail_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#ffffff"
+                    android:gravity="top|left"
+                    android:hint="对您购买的商品进行评价"
+                    android:lines="5"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:textSize="@dimen/textSizeNormal"
+                    />
+                <TextView
+                    style="@style/textStyle.Normal.black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin10dp"
+                    android:layout_marginRight="@dimen/margin_space"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/product_comment_start_des" />
+
+                <com.shssjk.view.StarView
+                    android:id="@+id/comment_star_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dip"
+                    android:background="@color/green"
+                    android:orientation="horizontal"></com.shssjk.view.StarView>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_view"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textStyle.Normal.black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin10dp"
+                    android:layout_marginRight="@dimen/margin_space"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/product_comment_start_quality" />
+
+                <com.shssjk.view.StarView
+                    android:id="@+id/comment_star_quality"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dip"
+                    android:background="@color/green"
+                    android:orientation="horizontal"></com.shssjk.view.StarView>
+
+            </LinearLayout>
+
+            <View style="@style/separator_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_view"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textStyle.Normal.black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin10dp"
+                    android:layout_marginRight="@dimen/margin_space"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/product_comment_start_logistics" />
+
+                <com.shssjk.view.StarView
+                    android:id="@+id/comment_star_logistics"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dip"
+                    android:background="@color/green"
+                    android:orientation="horizontal"></com.shssjk.view.StarView>
+            </LinearLayout>
+
+            <View style="@style/separator_line" />
+
+            <LinearLayout
+                android:id="@+id/ll_image_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_view"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ivbtn_add"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/rect_dashed"
+                    android:padding="15dp"
+                    android:src="@drawable/plus" />
+                <HorizontalScrollView
+                    android:id="@+id/order_product_scrollv"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_space"
+                    android:layout_marginRight="@dimen/margin_space">
+                    <LinearLayout
+                        android:id="@+id/product_list_gallery_lyaout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"></LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_view"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/comnnent_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_button"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/margin_space"
+                    android:layout_marginLeft="@dimen/margin_space"
+                    android:layout_marginRight="@dimen/margin_space"
+                    android:background="@drawable/button_selector"
+                    android:text="@string/comment"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

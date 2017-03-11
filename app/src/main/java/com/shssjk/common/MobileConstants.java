@@ -20,6 +20,13 @@ public class MobileConstants {
 	public static final String WAP_URL = BASE_HOST +"/Mobile/Index/index.html";
 	//银联支付URL
 	public static final String PAY_Union =BASE_HOST + "/index.php/UnionPay/Buy/buy";
+//	http://shssjk.com/index.php/Alipay/Index/doalipay
+//	支付宝支付URL
+	public static final String PAY_ALIPAY =BASE_HOST + "/index.php/Alipay/Index/doalipay";
+
+	//石头支付：
+	public static final String PAY_STONE =BASE_HOST + "/index.php/UnionPay/Buy/set_status";
+
 	//支付宝支付通知URL
 	public static final String PAY_NOTIFYURL = "/index.php/Api/Payment/alipayNotify";
 	//菜单分类: 一级分类
@@ -33,9 +40,20 @@ public class MobileConstants {
 	public static final String KEY_IS_FIRST_STARTUP = "isFirstStartup";//是否第一次启动
 	public static final String KEY_SEARCH_KEY = "search_key";//搜索关键词key
 
+	public final static class Soft {
+		public static final String GETVERSION =  "http://www.shssjk.com/index.php/Api/AppUpdate/check_update";
+		public static final String DOWNLOADAPP =  "http://www.shssjk.com/index.php/Api/AppUpdate/download";
+	}
+
+
+
 
 	/****系统所使用到的广播***/
 	public static final String ACTION_SHOPCART_CHNAGE = "com.shssjk.shoprcart_change";
+	public static final String ACTION_HEALTH_LOADATA = "com.shssjk.loaddata";
+	public static final String ACTION_HEALTH_SUAGR_LOADATA = "com.shssjk.loaddata_sugar";
+	public static final String ACTION_HEALTH_CHANGE_FRAGMENT = "com.shssjk.change_health_fragment";
+
 	public static final String ACTION_LOGIN_CHNAGE = "com.shssjk.login_change";	//登录状态改变
 
 	/****系统常量*********/
@@ -136,12 +154,9 @@ public class MobileConstants {
 	 * 支付状态
 	 */
 	public enum PayStatus{
-
 		statusSccess("支付完成" , 1), statusFailed("支付失败" , 2),statusCancel("取消支付" , 3);
-
 		private String name;
 		private int value;
-
 		// 构造方法
 		private PayStatus(String name, int value) {
 			this.name = name;

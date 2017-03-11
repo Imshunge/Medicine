@@ -20,9 +20,10 @@ public class SPDialogUtils {
 
 	
 	public static void showToast(Context context , String text){
+		if(SSUtils.isEmpty(text)){
+			return ;
+		}
 		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 	}
-
-
 }
  

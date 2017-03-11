@@ -53,7 +53,7 @@ public class ChangePasswordActivity extends BaseActivity {
         titleTxtv.setTextColor(ContextCompat.getColor(this, R.color.white));
 
         //旧密码
-        pwdoldEdit = (EditText) findViewById(R.id.edit_password_old);
+        pwdoldEdit = (EditText) findViewById(R.id.edit_express_name);
 
         //新密码
         pwdnewEdit = (EditText) findViewById(R.id.edit_password);
@@ -97,7 +97,8 @@ public class ChangePasswordActivity extends BaseActivity {
                     public void onRespone(String msg, Object response) {
                         if (response != null) {
                             showToast(msg);
-                            startActivity(new Intent(ChangePasswordActivity.this, LoginActivity.class));
+//                            startActivity(new Intent(ChangePasswordActivity.this, LoginActivity.class));
+                            toLoginPage();
                             finish();
                         }
                     }
@@ -105,9 +106,6 @@ public class ChangePasswordActivity extends BaseActivity {
                     @Override
                     public void onRespone(String msg, int errorCode) {
                         showToast(msg);
-                        //txtErrorInfo.setText("注册成功");
-//                        txtErrorInfo.setText(msg);
-//                        txtErrorInfo.setVisibility(View.VISIBLE);
                     }
                 });
     }

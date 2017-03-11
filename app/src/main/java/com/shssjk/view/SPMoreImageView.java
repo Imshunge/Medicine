@@ -16,7 +16,8 @@ public class SPMoreImageView extends ImageView {
 	protected void onDraw(Canvas canvas) {
 		Path clipPath = new Path();
 		int w = this.getWidth();
-		clipPath.addCircle((float)((getRight()-getLeft()) / 2),((float)((getBottom()-getTop())) / 2), (float)(w / 2),Path.Direction.CCW); 
+		clipPath.addCircle((float)((getRight()-getLeft()) / 2),((float)((getBottom()-getTop())) / 2),
+				(float)(w / 2),Path.Direction.CCW);
 		canvas.clipPath(clipPath);
 		super.onDraw(canvas);
 	}

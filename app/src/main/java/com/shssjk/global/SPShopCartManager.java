@@ -12,6 +12,7 @@ import com.shssjk.utils.SMobileLog;
 
 /**
  * Created by admin on 2016/6/21.
+ * 购物车数量更新
  */
 public class SPShopCartManager {
 
@@ -28,7 +29,6 @@ public class SPShopCartManager {
         if (instance == null){
             instance = new SPShopCartManager();
             instance.mContent = content;
-
             if (MobileApplication.getInstance().isLogined){
                 instance.initData();
             }
@@ -37,7 +37,6 @@ public class SPShopCartManager {
     }
 
     public void initData(){
-
         shopCount = 0 ;
         //hasFirstStartup = NO;
         ShopRequest.getShopCartNumber(new SPSuccessListener() {
@@ -87,29 +86,6 @@ public class SPShopCartManager {
                 }
             }
         });
-
-
-       /* [SPShopRequestManager shopCartGoodsOperationWith:goodsID specs:specs number:number success:^(NSString *msg, id responseObject) {
-
-            if (responseObject) {
-
-                NSString* cartNum = responseObject;
-
-                weakSelf.shopCount = [cartNum integerValue];
-
-                if (success) {
-                    success(msg , responseObject);
-                }
-            }
-
-            [[NSNotificationCenter defaultCenter] postNotificationName:NotificationShoppingCartChanged object:@"操作购物车成功"];
-
-        } failure:^(NSString *msg, NSInteger errorCode) {
-            if(failure){
-                failure(msg , -1);
-            }
-
-        }];*/
     }
 
     public void reloadCart(){
@@ -117,7 +93,7 @@ public class SPShopCartManager {
     }
 
     /**
-     * 充值购物车数据
+     * 刷新购物车数据
      */
     public void resetShopCart(){
         shopCount = 0;

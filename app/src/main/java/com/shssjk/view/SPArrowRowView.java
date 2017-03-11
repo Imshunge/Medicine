@@ -1,16 +1,5 @@
 /**
- * shopmobile for tpshop
- * ============================================================================
- * 版权所有 2015-2099 深圳搜豹网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.tp-shop.cn
- * ——————————————————————————————————————
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和使用 .
- * 不允许对程序代码以任何形式任何目的的再发布。
- * ============================================================================
- * Author: 飞龙  wangqh01292@163.com
- * Date: @date 2015年11月14日 下午8:17:18 
  * Description:带箭头的自定义view
- * @version V1.0
  */
 package com.shssjk.view;
 
@@ -45,8 +34,6 @@ public class SPArrowRowView extends FrameLayout {
 	 */
 	public SPArrowRowView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		
-		 
 		/** 获取自定义属性 titleText */
 	    TypedArray typeArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ArrowView, 0, 0);
 	    
@@ -58,12 +45,9 @@ public class SPArrowRowView extends FrameLayout {
 		mSubTitleTxtv = (TextView)view.findViewById(R.id.sub_title_txtv);
 		imageImgv = (ImageView)view.findViewById(R.id.image_imgv);
 		arrowImgv = (ImageView)view.findViewById(R.id.arrow_imgv);
-
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT);
-
 		float marginLeft = 0 ;
-
 		if (drawable != null){
 			marginLeft = context.getResources().getDimension(R.dimen.margin_space)
 					+ getResources().getDimension(R.dimen.margin_space_half)
@@ -75,16 +59,14 @@ public class SPArrowRowView extends FrameLayout {
 			marginLeft = context.getResources().getDimension(R.dimen.margin_space);
 			params.setMargins(Float.valueOf(marginLeft).intValue() , 0 , 0 , 0);
 		}
-
 		if (indicatorShow){
 			arrowImgv.setVisibility(View.VISIBLE);
 		}else {
 			arrowImgv.setVisibility(View.INVISIBLE);
 		}
-
 		mTitleTxtv.setLayoutParams(params);
 		mTitleTxtv.setText(titleText);
-		
+
 	}
 
 	public void setIndicatorShow(boolean show){
@@ -100,12 +82,10 @@ public class SPArrowRowView extends FrameLayout {
 		if(mTitleTxtv == null || text == null)return;
 		mTitleTxtv.setText(text);
 	}
-
 	public void setSubText(String text){
 		if(mSubTitleTxtv == null || text == null)return;
 		mSubTitleTxtv.setText(text);
 	}
-
 }
 
 

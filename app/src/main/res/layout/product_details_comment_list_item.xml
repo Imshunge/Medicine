@@ -11,7 +11,8 @@
         android:layout_height="40dip"
         android:layout_marginTop="@dimen/margin_space_half">
 
-        <ImageView
+
+        <com.shssjk.view.SPMoreImageView
             android:id="@+id/comment_head_imgv"
             android:layout_alignParentLeft="true"
             android:layout_width="40.0dip"

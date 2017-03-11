@@ -179,8 +179,6 @@ public class CategoryActivity extends BaseActivity {
             @Override
             public void onRespone(String msg, Object response) {
                 mDataJson = (JSONObject) response;
-
-
                 try {
                     if (mDataJson.has("Categories")) {
                         List<Data> Categories = (List<Data>) mDataJson.get("Categories");

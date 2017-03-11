@@ -1,7 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="50dip"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/titlebar_layout"
     android:background="@color/shop_title">
 
@@ -13,24 +12,23 @@
             android:id="@+id/titlebar_back_btn"
             android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="@dimen/margin_space"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="@drawable/title_back_selector"/>
-
         <TextView
             android:id="@+id/titlebar_title_txtv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="商品详情"
-            style="@style/textStyle.Medium.black"
+            style="@style/textStyle.Big.black"
             android:textColor="@color/white"
             android:gravity="center"/>
         <Button
             android:id="@+id/titlebar_menu_btn"
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="@dimen/margin_space"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="@dimen/margin20dp"
+            android:layout_height="@dimen/margin20dp"
             android:visibility="visible"
             android:background="@drawable/title_menu_selector"/>
         <TextView
@@ -71,7 +69,6 @@
             android:searchIcon="@drawable/icon_search"
             android:layout_weight="1"
             style="@style/textStyle.Normal.black">
-
         </SearchView>
         <Button
             android:id="@+id/titlebar_msg_btn"

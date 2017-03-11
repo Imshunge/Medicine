@@ -12,7 +12,7 @@
         android:background="@color/bg_view">
 
         <TextView
-            android:id="@+id/address_consignee_txtv"
+            android:id="@+id/bank_icon_imv"
             android:layout_width="120dip"
             android:layout_height="30dip"
             android:gravity="center_vertical"
@@ -22,19 +22,19 @@
             style="@style/textStyle.Medium.black"/>
 
         <TextView
-            android:id="@+id/address_mobile_txtv"
+            android:id="@+id/bank_name_txtv"
             android:layout_width="match_parent"
             android:layout_height="30dip"
             android:gravity="center_vertical"
-            android:layout_toRightOf="@id/address_consignee_txtv"
+            android:layout_toRightOf="@id/bank_icon_imv"
             android:text="13800138006"
             android:textStyle="bold"
             style="@style/textStyle.Medium.black"/>
 
         <TextView
-            android:id="@+id/address_detail_txtv"
+            android:id="@+id/bank_num_txtv"
             android:layout_width="match_parent"
-            android:layout_below="@id/address_consignee_txtv"
+            android:layout_below="@id/bank_icon_imv"
             android:layout_height="40dip"
             android:gravity="center_vertical"
             android:lines="2"
@@ -48,7 +48,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="@color/bg_view"
-        android:layout_height="40dip">
+        android:layout_height="40dip"
+        android:descendantFocusability="blocksDescendants"
+        >
         <Button
             android:id="@+id/address_setdefault_btn"
             android:layout_width="20dip"
@@ -60,7 +62,7 @@
             android:focusable="false"
             />
         <TextView
-            android:id="@+id/address_default_txtv"
+            android:id="@+id/bank_default_txtv"
             android:layout_width="match_parent"
             android:layout_toRightOf="@id/address_setdefault_btn"
             android:layout_height="match_parent"
@@ -69,7 +71,7 @@
             android:text="设为默认"
             style="@style/textStyle.Normal.black"/>
         <TextView
-            android:id="@+id/address_delete_txtv"
+            android:id="@+id/bank_delete_txtv"
             android:layout_width="25dip"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -77,31 +79,30 @@
             android:layout_marginRight="@dimen/margin_space"
             android:text="删除"
             style="@style/textStyle.Normal.black"/>
-
         <Button
-            android:id="@+id/address_delete_btn"
+            android:id="@+id/bank_delete_btn"
             android:layout_width="20dip"
             android:layout_height="20dip"
             android:layout_centerVertical="true"
             android:focusable="false"
-            android:layout_toLeftOf="@id/address_delete_txtv"
+            android:layout_toLeftOf="@id/bank_delete_txtv"
             android:background="@drawable/icon_delete"/>
         <TextView
-            android:id="@+id/address_edit_txtv"
+            android:id="@+id/bank_edit_txtv"
             android:layout_width="25dip"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@id/address_delete_btn"
+            android:layout_toLeftOf="@id/bank_delete_btn"
             android:gravity="center_vertical|right"
             android:layout_marginRight="@dimen/margin_space"
             android:text="编辑"
             style="@style/textStyle.Normal.black"/>
         <Button
-            android:id="@+id/address_edit_btn"
+            android:id="@+id/bank_edit_btn"
             android:layout_width="20dip"
             android:layout_height="20dip"
             android:layout_centerVertical="true"
             android:focusable="false"
-            android:layout_toLeftOf="@id/address_edit_txtv"
+            android:layout_toLeftOf="@id/bank_edit_txtv"
             android:background="@drawable/icon_edit"/>
     </RelativeLayout>
 

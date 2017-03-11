@@ -334,6 +334,7 @@ public class ProductListSearchResultActivity extends BaseActivity implements SPP
                     intent.putExtra("searchKey", mSearchkey);
                 }
                 ProductListSearchResultActivity.this.startActivity(intent);
+                ProductListSearchResultActivity.this.finish();
             }
         });
         backImgv.setOnClickListener(new View.OnClickListener() {
@@ -346,7 +347,7 @@ public class ProductListSearchResultActivity extends BaseActivity implements SPP
 
     //详情页
     public void startupActivity(String goodsID) {
-        Intent intent = new Intent(this, ProductActivity.class);
+        Intent intent = new Intent(this, ProductAllActivity.class);
         intent.putExtra("goodsId", goodsID);
         startActivity(intent);
     }

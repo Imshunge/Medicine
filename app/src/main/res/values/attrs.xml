@@ -25,11 +25,11 @@
           <attr name="layout_verticalSpacing" format="dimension"/>
      </declare-styleable>
 
-
+     <!--0 保密， 1男 ，2 女-->
      <string-array name="sex">
+          <item>保密</item>
           <item>男</item>
           <item>女</item>
-          <item>保密</item>
      </string-array>
      <declare-styleable name="TitleViewAttrs">
           <attr name="rightImageSrc" format="reference" />
@@ -45,5 +45,56 @@
           <attr name="border_inside_color" format="color" />
           <attr name="border_outside_color" format="color"/>
      </declare-styleable>
+     <string-array name="device">
+          <item>血压计</item>
+          <item>血糖仪</item>
 
+     </string-array>
+     <string-array name="type">
+          <item>爸爸妈妈</item>
+          <item>岳父岳母</item>
+          <item>爷爷奶奶</item>
+          <item>外公外婆</item>
+          <item>我和老公</item>
+          <item>我和老婆</item>
+          <item>朋友</item>
+          <item>其他</item>
+     </string-array>
+     <string-array name="type_sugar">
+          <item>爸爸</item>
+          <item>妈妈</item>
+          <item>岳父</item>
+          <item>岳母</item>
+          <item>爷爷</item>
+          <item>奶奶</item>
+          <item>外公</item>
+          <item>外婆</item>
+          <item>我</item>
+          <item>老公</item>
+          <item>老婆</item>
+          <item>朋友</item>
+          <item>其他</item>
+     </string-array>
+     <string-array name="type_bank">
+          <item>中国工商银行 </item>
+          <item>中国建设银行</item>
+          <item>中国银行</item>
+          <item>中国农业银行</item>
+          <item>交通银行</item>
+          <item>招商银行</item>
+          <item>中信银行 </item>
+          <item>中国民生银行 </item>
+          <item>兴业银行</item>
+          <item>上海浦东发展银行</item>
+          <item>中国邮政储蓄银行</item>
+          <item>中国光大银行</item>
+          <item>平安银行</item>
+          <item>华夏银行</item>
+          <item>北京银行</item>
+          <item>广发银行</item>
+          <item>上海银行</item>
+          <item>江苏银行</item>
+          <item>恒丰银行</item>
+          <item>浙商银行</item>
+     </string-array>
 </resources>

@@ -7,993 +7,618 @@ import com.shssjk.common.MobileConstants.Response;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPMobileHttptRequest;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.model.community.ComArticle;
-import com.shssjk.model.community.ComComment;
-import com.shssjk.model.community.ComUser;
-import com.shssjk.model.community.Quack;
-import com.shssjk.model.community.QuackDetail;
-import com.shssjk.model.community.SchoolList;
+
+import com.shssjk.model.health.All;
+import com.shssjk.model.health.AllSugar;
+import com.shssjk.model.health.BloodDevice;
+import com.shssjk.model.health.BloodTongJi;
+import com.shssjk.model.health.Device;
+import com.shssjk.model.health.One;
+import com.shssjk.model.health.SuagrTongJi;
+import com.shssjk.model.health.SugarData;
+import com.shssjk.model.health.Three;
 import com.shssjk.utils.SSUtils;
 import com.soubao.tpshop.utils.SPJsonUtil;
-import com.soubao.tpshop.utils.SPStringUtils;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
 /**
- * @author
- * 健康云
+ * @author 健康云
  */
 public class HealthRequest {
 
-	private static String TAG = "HealthRequest";
-
-		/**
-	 * @Description: 江湖分类列表
-	 * 	* offset（分页起始变量）、r（分页页数）、keyword（模糊查询字段
-	 * @param ofseet
-	 * @param keyword
-	 * @param r
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void getQuackCategoryList( String ofseet,String keyword,int r,final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "category");
-
-		RequestParams params = new RequestParams();
-
-		SPMobileHttptRequest.get(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				/** 针对返回的业务数据会重新包装一遍再返回到View */
-				try {
-					String msg = (String) response.get(Response.MSG);
-
-					int status = response.getInt(Response.STATUS);
-					List<Quack> filters = new ArrayList<Quack>();
-					if (status > 0) {
-						/** 工具类json转为User实体 **/
-						JSONArray resultJson = (JSONArray) response.getJSONArray(Response.DATA);
-						filters = SPJsonUtil.fromJsonArrayToList(resultJson, Quack.class);
-						successListener.onRespone(msg, filters);
-					} else {
-						failuredListener.onRespone(msg, -1);
-					}
-
-				} catch (JSONException e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-	/**
-	 *  * @Description:门派列表
-	 * offset（分页起始变量）、r（分页页数）、keyword（模糊查询字段）、category_id所属门派类别（在取所有门派的情况下可不传）
-	 * @param ofseet
-	 * @param keyword
-	 * @param r
-	 * @param category_id
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void  getSchoolList(String ofseet,String keyword,int r ,String  category_id,final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "quack_list");
-
-		RequestParams params = new RequestParams();
-
-		if(!SSUtils.isEmpty(ofseet)) {
-			params.put("offset", ofseet);
-		}
-
-		if(!SSUtils.isEmpty(r)) {
-			params.put("r", r);
-		}
-
-		if(!SSUtils.isEmpty(category_id)) {
-			params.put("category_id", category_id);
-		}
-
-		if(!SSUtils.isEmpty(keyword)) {
-			params.put("keyword", keyword);
-		}
-
-		SPMobileHttptRequest.get(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				/** 针对返回的业务数据会重新包装一遍再返回到View */
-				try {
-					String msg = (String) response.get(Response.MSG);
-
-					int status = response.getInt(Response.STATUS);
-					List<SchoolList> filters = new ArrayList<SchoolList>();
-					if (status > 0) {
-						/** 工具类json转为User实体 **/
-						JSONArray resultJson = (JSONArray) response.getJSONArray(Response.DATA);
-						filters = SPJsonUtil.fromJsonArrayToList(resultJson, SchoolList.class);
-						successListener.onRespone(msg, filters);
-					} else {
-						failuredListener.onRespone(msg, -1);
-					}
-
-				} catch (JSONException e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-
-
-	/**
-	 *  * @Description 帖子列表
-	 *  Quack/article_list
-	 * offset（分页起始变量）、r（分页页数）、keyword（模糊查询字段）、category_id所属门派类别（在取所有门派的情况下可不传）
-	 * offset（分页起始变量）、r（分页页数）、keyword（模糊查询字段）、cid所属门派id（在取所有帖子的情况下可不传）
-	 * @param ofseet
-	 * @param keyword
-	 * @param r
-	 * @param
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void  getSchoolArticlList(String ofseet,String keyword,int r ,String  cid,final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "article_list");
-
-		RequestParams params = new RequestParams();
-
-		if(!SSUtils.isEmpty(ofseet)) {
-			params.put("offset", ofseet);
-		}
-
-		if(!SSUtils.isEmpty(r)) {
-			params.put("r", r);
-		}
-
-		if(!SSUtils.isEmpty(cid)) {
-			params.put("cid", cid);
-		}
-
-		if(!SSUtils.isEmpty(keyword)) {
-			params.put("keyword", keyword);
-		}
-
-		SPMobileHttptRequest.get(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				/** 针对返回的业务数据会重新包装一遍再返回到View */
-				try {
-					String msg = (String) response.get(Response.MSG);
-
-					int status = response.getInt(Response.STATUS);
-					List<ComArticle> filters = new ArrayList<ComArticle>();
-					if (status > 0) {
-						/** 工具类json转为User实体 **/
-						JSONArray resultJson = (JSONArray) response.getJSONArray(Response.DATA);
-						filters = SPJsonUtil.fromJsonArrayToList(resultJson, ComArticle.class);
-						successListener.onRespone(msg, filters);
-					} else {
-						failuredListener.onRespone(msg, -1);
-					}
-
-				} catch (JSONException e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-	/**江湖帖子详情
-	 *  Quack/article_detail
-	 *  article_id  文章id  article_id	帖子id
-	 * @param article_id
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void getComArticleDetailByID(String article_id ,final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "article_detail");
-
-		RequestParams params = new RequestParams();
-
-		params.put("article_id", article_id);
-
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				try {
-					/** 针对返回的业务数据会重新包装一遍再返回到View */
-					String msg = (String) response.get(Response.MSG);
-					int status = response.getInt(Response.STATUS);
-					if (status > 0) {
-						JSONObject result = (JSONObject) response.getJSONObject(Response.DATA);
-						/** 工具类json转为User实体 **/
-						ComArticle article = SPJsonUtil.fromJsonToModel(response.getJSONObject(Response.DATA), ComArticle.class);
-						successListener.onRespone(msg, article);
-
-					} else {
-						failuredListener.onRespone(msg, -1);
-					}
-				} catch (JSONException e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-
-
-	/**门派详情
-	 * article_id	帖子id          quack_id	门派id
-	 * @param quack_id
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void getComquackDetailByID(String quack_id ,final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "quack_detail");
-
-		RequestParams params = new RequestParams();
-
-		params.put("quack_id", quack_id);
-
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				try {
-					/** 针对返回的业务数据会重新包装一遍再返回到View */
-					String msg = (String) response.get(Response.MSG);
-					int status = response.getInt(Response.STATUS);
-					if (status > 0) {
-						JSONObject result = (JSONObject) response.getJSONObject(Response.DATA);
-						/** 工具类json转为User实体 **/
-						QuackDetail article = SPJsonUtil.fromJsonToModel(response.getJSONObject(Response.DATA), QuackDetail.class);
-						successListener.onRespone(msg, article);
-
-					} else {
-						failuredListener.onRespone(msg, -1);
-					}
-				} catch (JSONException e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-
-
-
-
-
-	/**
-	 * 帖子评论列表  offset、r
-	 * @param articleID
-	 * @param offset
-	 * @param r
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void getComArticleCommentWitArticleID(String articleID , String offset,String r, final SPSuccessListener successListener, final SPFailuredListener failuredListener){
-
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-//		Information/comment_list
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "comment_list");
-
-		RequestParams params = new RequestParams();
-		params.put("article_id" , articleID);
-
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				try {
-					/** 针对返回的业务数据会重新包装一遍再返回到View */
-					String msg = (String) response.getString(Response.MSG);
-					int status = response.getInt(Response.STATUS);
-					List<ComComment> comments = null;
-					if(status > 0) {
-						String orderId = null ;
-						if (response.has("data")) {
-							comments = SPJsonUtil.fromJsonArrayToList(response.getJSONArray("data"), ComComment.class);
-						}
-						successListener.onRespone(msg ,comments);
-					}else{
-						failuredListener.onRespone(msg, -1);
-					}
-				} catch (Exception e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-	/**
-	 * 江湖 帖子发表评论   Quack/comment
-	 * @param articleId
-	 * @param parentId
-	 * @param content
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void CompublishComment(String articleId,String parentId,String content, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "comment");
-
-		RequestParams params = new RequestParams();
-		params.put("article_id",articleId);
-//		params.put("parent_id",parentId);
-		params.put("content",content);
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				/** 针对返回的业务数据会重新包装一遍再返回到View */
-				try {
-					String msg = (String) response.get(Response.MSG);
-					int status = response.getInt(Response.STATUS);
-					if (status > 0){
-//						JSONArray resulJson = response.getJSONArray(Response.DATA);
-						successListener.onRespone(msg, "");
-					} else {
-						failuredListener.onRespone("not found data", -1);
-					}
-				} catch (JSONException e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-
-
-	/**
-	 * 江湖  发表帖子   Quack/add_article
-	 * cid(门派id)	  title(标题)  description（描述）    图片  多张
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void CompuPlishArticle(String cid,String title,String description  ,List<File> images , final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "add_article");
-
-		RequestParams params = new RequestParams();
-		params.put("cid",cid);
-		params.put("description",description);
-		params.put("title",title);
-//		List<File> images = commentCondition.getImages();
-		if (images !=null){
-			for (int i=0; i<images.size(); i++){
-				File file = images.get(i);
-				try {
-					params.put("img_file["+i+"]", file, "image/png");
-				} catch (FileNotFoundException e) {
-					failuredListener.onRespone("file not found", -1);
-					return;
-				}
-			}
-		}
-
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				/** 针对返回的业务数据会重新包装一遍再返回到View */
-				try {
-					String msg = (String) response.get(Response.MSG);
-					int status = response.getInt(Response.STATUS);
-					if (status > 0){
-//						JSONArray resulJson = response.getJSONArray(Response.DATA);
-						successListener.onRespone(msg, "");
-					} else {
-						failuredListener.onRespone("not found data", -1);
-					}
-				} catch (JSONException e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-	/**
-	 * 江湖  创建门派  Quack/add_quack
-	 *  cid （门派类别id）、title （门派名称）、logo（门派logo）、remark（门派描述）
-	 * @param cid
-	 * @param title
-	 * @param remark
-	 * @param file
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void CompuPlishSchool(String cid,String title,String remark  ,File file , final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "add_quack");
-
-		RequestParams params = new RequestParams();
-		params.put("cid",cid);
-		params.put("remark",remark);
-		params.put("title",title);
-
-		if (file != null) {
-			try {
-				params.put("logo", file, "image/png");
-			} catch (FileNotFoundException e) {
-				failuredListener.onRespone("file not found", -1);
-				return;
-			}
-		}
-
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				/** 针对返回的业务数据会重新包装一遍再返回到View */
-				try {
-					String msg = (String) response.get(Response.MSG);
-					int status = response.getInt(Response.STATUS);
-//					if (status == -102){
-//						successListener.onRespone(msg, "");
-//					}
-					if (status > 0){
-//						JSONArray resulJson = response.getJSONArray(Response.DATA);
-						successListener.onRespone(msg, "");
-					} else {
-						failuredListener.onRespone("not found data", -1);
-					}
-				} catch (JSONException e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-
-	/**
-	 * 收藏/取消收藏文章
-	 * @URL
-	 * @param goodsID
-	 * @param type 操作类型: 0 添加收藏 1 删除收藏 , 该值为nil也代表收藏商品
-	 * @param successListener
-	 * @param failuredListener
-	 * @throws JSONException
-	 */
-	public static void collectOrCancelArticleWithID(String goodsID, String type, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-		assert (successListener != null);
-		assert (failuredListener != null);
-		String url = SPMobileHttptRequest.getRequestUrl("Information", "collect");
-
-		RequestParams params = new RequestParams();
-		if (!SPStringUtils.isEmpty(goodsID)) {
-			params.put("goods_id", goodsID);
-		}
-		if (!SPStringUtils.isEmpty(type)) {
-			params.put("type", type);
-		}
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				try {
-					JSONObject dataJson = new JSONObject();
-					/** 针对返回的业务数据会重新包装一遍再返回到View */
-					int status = response.getInt(Response.STATUS);
-					String msg = (String) response.get(Response.MSG);
-					if (status > 0) {
-						successListener.onRespone(msg, msg);
-					} else {
-						failuredListener.handleResponse(msg, status);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-
-
-
-	/***
-	 * 江湖  评论点赞
-	 * @param commentid
-	 * @param act
-	 * @param type
-	 * 	 * @param type comment_id（评论id）、type(评论类型，ZIXUN(资讯)、BAIKE(百科)、MENPAI(门派))、act（操作类型(add 点赞、cancel取消点赞)）
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void ComcollectOrCancelPraiseWithID(String  commentid,String act,String type, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-		assert (successListener != null);
-		assert (failuredListener != null);
-		String url = SPMobileHttptRequest.getRequestUrl("Information", "parise");
-
-		RequestParams params = new RequestParams();
-		if (!SPStringUtils.isEmpty(commentid)) {
-			params.put("comment_id",commentid);
-		}
-		if (!SPStringUtils.isEmpty(act)) {
-			params.put("act", act);
-		}
-		if (!SPStringUtils.isEmpty(type)) {
-			params.put("type", type);
-		}
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				try {
-					/** 针对返回的业务数据会重新包装一遍再返回到View */
-					int status = response.getInt(Response.STATUS);
-					String msg = (String) response.get(Response.MSG);
-					if (status > 0) {
-						successListener.onRespone(msg, msg);
-					} else {
-						failuredListener.handleResponse(msg, status);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-	/**
-	 * 江湖  删除帖子  Quack/del_article    cid(门派id)	  article_id(帖子id)
-	 * @param cid
-	 * @param article_id
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void ComDeleteArticleWithID(String  cid,String article_id, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-		assert (successListener != null);
-		assert (failuredListener != null);
-		String url = SPMobileHttptRequest.getRequestUrl("Quack", "del_article");
-
-		RequestParams params = new RequestParams();
-		if (!SPStringUtils.isEmpty(article_id)) {
-			params.put("article_id",article_id);
-		}
-		if (!SPStringUtils.isEmpty(cid)) {
-			params.put("cid", cid);
-		}
-
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				try {
-					/** 针对返回的业务数据会重新包装一遍再返回到View */
-					int status = response.getInt(Response.STATUS);
-					String msg = (String) response.get(Response.MSG);
-					if (status > 0) {
-						successListener.onRespone(msg, msg);
-					} else {
-						failuredListener.handleResponse(msg, status);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-	/**
-	 * 江湖  删除帖子评论  Quack/del_comment  cid(门派id)	  comment_id(评论id)
-	 * @param cid
-	 * @param comment_id
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void ComDeleteCommnentWithID(String  cid,String comment_id, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-		assert (successListener != null);
-		assert (failuredListener != null);
-		String url = SPMobileHttptRequest.getRequestUrl("Quack", "del_comment");
-		RequestParams params = new RequestParams();
-		if (!SPStringUtils.isEmpty(comment_id)) {
-			params.put("comment_id",comment_id);
-		}
-		if (!SPStringUtils.isEmpty(cid)) {
-			params.put("cid", cid);
-		}
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				try {
-					/** 针对返回的业务数据会重新包装一遍再返回到View */
-					int status = response.getInt(Response.STATUS);
-					String msg = (String) response.get(Response.MSG);
-					if (status > 0) {
-						successListener.onRespone(msg, msg);
-					} else {
-						failuredListener.handleResponse(msg, status);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-
-	/**
-	 * 成员列表   * cid（门派id）
-	 * 地址：Quack/quack_users
-	 * @param cid
-	 * @param offset
-	 * @param r
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void getComUserListWithCID(String cid, String offset, String r, final SPSuccessListener successListener, final SPFailuredListener failuredListener){
-
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-//		Information/comment_list
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "quack_users");
-
-		RequestParams params = new RequestParams();
-		params.put("cid" , cid);
-
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				try {
-					/** 针对返回的业务数据会重新包装一遍再返回到View */
-					String msg = (String) response.getString(Response.MSG);
-					int status = response.getInt(Response.STATUS);
-					List<ComUser> comUser = null;
-					if(status > 0) {
-						String orderId = null ;
-						if (response.has("data")) {
-							comUser = SPJsonUtil.fromJsonArrayToList(response.getJSONArray("data"), ComUser.class);
-						}
-						successListener.onRespone(msg ,comUser);
-					}else{
-						failuredListener.onRespone(msg, -1);
-					}
-				} catch (Exception e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-
-
-	/**
-	 * 审核 成员列表   * cid（门派id）
-	 * 地址：Quack/quack_check
-	 * @param cid
-	 * @param offset
-	 * @param r
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void getComCheckUserWithCID(String cid , String offset,String r, final SPSuccessListener successListener, final SPFailuredListener failuredListener){
-
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-//		Information/comment_list
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "quack_check");
-
-		RequestParams params = new RequestParams();
-		params.put("cid" , cid);
-
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				try {
-					/** 针对返回的业务数据会重新包装一遍再返回到View */
-					String msg = (String) response.getString(Response.MSG);
-					int status = response.getInt(Response.STATUS);
-					List<ComUser> comUser = null;
-					if(status > 0) {
-						String orderId = null ;
-						if (response.has("data")) {
-							comUser = SPJsonUtil.fromJsonArrayToList(response.getJSONArray("data"), ComUser.class);
-						}
-						successListener.onRespone(msg ,comUser);
-					}else{
-						failuredListener.onRespone(msg, -1);
-					}
-				} catch (Exception e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
-
-	/**
-	 * 退出门派   * cid（门派id）
-	 * ：Quack/quit
-	 * 地址：Quack/quack_check
-	 * @param cid
-	 * @param offset
-	 * @param r
-	 * @param successListener
-	 * @param failuredListener
-	 */
-	public static void quitQuackWithCID(String cid , final SPSuccessListener successListener, final SPFailuredListener failuredListener){
-
-		assert(successListener!=null);
-		assert(failuredListener!=null);
-//		Information/comment_list
-		String url =  SPMobileHttptRequest.getRequestUrl("Quack", "quit");
-
-		RequestParams params = new RequestParams();
-		params.put("cid" , cid);
-
-		SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				try {
-					/** 针对返回的业务数据会重新包装一遍再返回到View */
-					String msg = (String) response.getString(Response.MSG);
-					int status = response.getInt(Response.STATUS);
-
-					if(status > 0) {
-						String orderId = null ;
-						if (response.has("data")) {
-						}
-						successListener.onRespone(msg ,msg);
-					}else{
-						failuredListener.onRespone(msg, -1);
-					}
-				} catch (Exception e) {
-					failuredListener.onRespone(e.getMessage(), -1);
-				}
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				failuredListener.onRespone(throwable.getMessage(), statusCode);
-			}
-		});
-	}
+    private static String TAG = "HealthRequest";
+    /**
+     * 获取设备列表
+     * name 、设备类型（BLOOD 血压计；XTY 血糖仪）
+     * @param name
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getDeviceList(String name, final SPSuccessListener successListener, final
+    SPFailuredListener failuredListener) {
+
+//		HealthCloud/lists
+        String url = SPMobileHttptRequest.getRequestUrl("HealthCloud", "lists");
+
+        RequestParams params = new RequestParams();
+
+        if (!SSUtils.isEmpty(name)) {
+            params.put("name", name);
+        }
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    List<Device> filters = new ArrayList<Device>();
+                    if(status>=0) {
+                        if (status == 0) {
+                            /** 工具类json转为User实体 **/
+                            JSONArray resultJson = (JSONArray) response.getJSONArray(Response.DATA);
+                            filters = SPJsonUtil.fromJsonArrayToList(resultJson, Device.class);
+                            successListener.onRespone(msg, filters);
+                        } else {
+                            failuredListener.onRespone(msg, 1);
+                        }
+                    }else{
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+
+    /**
+     * i 修改设备
+     * id;name 、设备类型（BLOOD 血压计；XTY 血糖仪）;imei 、设备号; relation、关系;
+     * default 、是否是最关心设备（1是 0 否）
+     * @param id
+     * @param name
+     * @param imei
+     * @param relation
+     * @param defaultStr
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void saveDevice(String id, String name, String imei, String relation, String defaultStr, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("HealthCloud", "save");
+        RequestParams params = new RequestParams();
+        params.put("id", id);
+        params.put("name", name);
+        params.put("imei", imei);
+        params.put("relation", relation);
+        params.put("default", defaultStr);
+
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    /** 针对返回的业务数据会重新包装一遍再返回到View */
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    if(status>=0) {
+                        if (status == 0) {
+//						JSONObject result = (JSONObject) response.getJSONObject(Response.DATA);
+//						/** 工具类json转为User实体 **/
+//						ComArticle article = SPJsonUtil.fromJsonToModel(response.getJSONObject(Response.DATA), ComArticle.class);
+                            successListener.onRespone(msg, status);
+
+                        } else {
+                            failuredListener.onRespone(msg, -1);
+                        }
+                    }else{
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+    /**
+     * 添加设备
+     * name 、设备类型（BLOOD 血压计；XTY 血糖仪）;imei 、设备号; relation、关系; default 、
+     * 是否是最关心设备（1是 0 否）
+     *
+     * @param name
+     * @param imei
+     * @param relation
+     * @param defaultStr
+     * @param successListener  状态：0 成功、1失败
+     * @param failuredListener
+     */
+    public static void addDevice(String name, String imei, String relation, String defaultStr, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("HealthCloud", "add");
+        RequestParams params = new RequestParams();
+        params.put("name", name);
+        params.put("imei", imei);
+        params.put("relation", relation);
+        params.put("default", defaultStr);
+
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    /** 针对返回的业务数据会重新包装一遍再返回到View */
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    if(status>=0) {
+                        if (status == 0) {
+                            successListener.onRespone(msg, status);
+
+                        } else {
+                            failuredListener.onRespone(msg, -1);
+                        }
+                    }else{
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+    /**
+     * 删除设备
+     *
+     * @param id
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void deleteDevice(String id, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+
+//		id、需删除设备id
+        String url = SPMobileHttptRequest.getRequestUrl("HealthCloud", "save");
+        RequestParams params = new RequestParams();
+        params.put("id", id);
+
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    /** 针对返回的业务数据会重新包装一遍再返回到View */
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    if(status>=0) {
+                        if (status == 0) {
+                            successListener.onRespone(msg, status);
+                        } else {
+                            failuredListener.onRespone(msg, -1);
+                        }
+                    }else{
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+    /***
+     * 获取血压数据列表
+     * imei、设备号 ; type 数据类型（1 爸爸，2妈妈）; order、排序
+     * （asc、desc）; start_time 、开始时间
+     * ;end_time、结束时间
+     *
+     * @param imei
+     * @param type
+     * @param order
+     * @param startTime
+     * @param endTime
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getBloodsDataList(String imei, String type, String order, String startTime, String endTime,
+                                         final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+
+//		HealthCloud/lists
+        String url = SPMobileHttptRequest.getRequestUrl("HealthCloud", "blists");
+
+        RequestParams params = new RequestParams();
+
+        if (!SSUtils.isEmpty(imei)) {
+            params.put("imei", imei);
+        }
+        if (!SSUtils.isEmpty(type)) {
+            params.put("type", type);
+        }
+        if (!SSUtils.isEmpty(order)) {
+            params.put("order", order);
+        }
+        if (!SSUtils.isEmpty(startTime)) {
+            params.put("start_time", startTime);
+        }
+        if (!SSUtils.isEmpty(endTime)) {
+            params.put("end_time", endTime);
+        }
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    List<BloodDevice> filters = new ArrayList<BloodDevice>();
+                    if(status>=0) {
+                        if (status == 0) {
+                            /** 工具类json转为User实体 **/
+                            JSONArray resultJson = (JSONArray) response.getJSONArray(Response.DATA);
+                            filters = SPJsonUtil.fromJsonArrayToList(resultJson, BloodDevice.class);
+                            successListener.onRespone(msg, filters);
+                        } else {
+                            failuredListener.onRespone(msg, 1);
+                        }
+                    }else{
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+
+    /**
+     * 血压统计
+     * HealthCloud", "btongji
+     * imei、设备号 ; type 数据类型（1 爸爸，2妈妈）
+     *
+     * @param imei
+     * @param type
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getBloodsTongji(String imei, String type,
+                                       final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+//	imei、设备号 ; type 数据类型（1 爸爸，2妈妈）
+
+//		HealthCloud/lists
+        String url = SPMobileHttptRequest.getRequestUrl("HealthCloud", "btongji");
+
+        RequestParams params = new RequestParams();
+
+        if (!SSUtils.isEmpty(imei)) {
+            params.put("imei", imei);
+        }
+        if (!SSUtils.isEmpty(type)) {
+            params.put("type", type);
+        }
+
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(Response.MSG);
+
+                    int status = response.getInt(Response.STATUS);
+
+                    if(status>=0) {
+                        if (status == 0) {
+                            /** 工具类json转为User实体 **/
+                            BloodTongJi bloodTongJi = new BloodTongJi();
+                            JSONObject resultJson = (JSONObject) response.getJSONObject(Response.DATA);
+                            if (resultJson != null) {
+                                JSONObject all = resultJson.getJSONObject("all");
+                                All alltemp = SPJsonUtil.fromJsonToModel(all, All.class);
+                                bloodTongJi.setAll(alltemp);
+                                JSONObject one = resultJson.getJSONObject("one");
+                                One onetemp = SPJsonUtil.fromJsonToModel(one, One.class);
+                                bloodTongJi.setOne(onetemp);
+                                JSONObject three = resultJson.getJSONObject("three");
+                                Three threetemp = SPJsonUtil.fromJsonToModel(one, Three.class);
+                                bloodTongJi.setThree(threetemp);
+                            }
+                            successListener.onRespone(msg, bloodTongJi);
+                        } else {
+                            failuredListener.onRespone(msg, 1);
+                        }
+                    }else{
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+//    foodstatus、测试时间段 ; devicesn、设备号 ; start 、开始时间 ; end、结束时间 ; order 、 排序（asc 、desc）
+
+    /**
+     *血糖数据列表及搜索
+     * @param foodstatus  1:空腹，2:早餐后，3:午餐前，4:午餐后，5:晚餐前，6:晚餐后，7:睡前，8:凌晨，
+     *                    9：随机，A:餐前，B:餐后
+     * @param devicesn
+     * @param order
+     * @param startTime
+     * @param endTime
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getSugarDataList(String foodstatus, String devicesn, String order, String startTime, String endTime,
+                                         final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+      //		HealthCloud/lists
+        String url = SPMobileHttptRequest.getRequestUrl("HealthCloud", "search");
+        RequestParams params = new RequestParams();
+        if (!SSUtils.isEmpty(foodstatus)) {
+            params.put("foodstatus", foodstatus);
+        }
+        if (!SSUtils.isEmpty(devicesn)) {
+            params.put("devicesn", devicesn);
+        }
+        if (!SSUtils.isEmpty(order)) {
+            params.put("order", order);
+        }
+        if (!SSUtils.isEmpty(startTime)) {
+            params.put("start", startTime);
+        }
+        if (!SSUtils.isEmpty(endTime)) {
+            params.put("end", endTime);
+        }
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(Response.MSG);
+
+                    int status = response.getInt(Response.STATUS);
+                    List<SugarData> filters = new ArrayList<SugarData>();
+                    if(status>=0) {
+                        if (status == 0) {
+                            /** 工具类json转为User实体 **/
+                            JSONArray resultJson = (JSONArray) response.getJSONArray(Response.DATA);
+                            filters = SPJsonUtil.fromJsonArrayToList(resultJson, SugarData.class);
+                            successListener.onRespone(msg, filters);
+                        } else {
+                            failuredListener.onRespone(msg, 1);
+                        }
+                    }else{
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+    /**
+     * 血糖统计
+     * HealthCloud/tongji  devicesn 设备号
+     * @param devicesn
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getSugarTongji(String devicesn,
+                                       final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+      //		HealthCloud/lists
+        String url = SPMobileHttptRequest.getRequestUrl("HealthCloud", "tongji");
+
+        RequestParams params = new RequestParams();
+
+        if (!SSUtils.isEmpty(devicesn)) {
+            params.put("devicesn", devicesn);
+        }
+
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    if(status>=0) {
+                        if (status == 0) {
+                            /** 工具类json转为User实体 **/
+                            SuagrTongJi bloodTongJi = new SuagrTongJi();
+                            JSONObject resultJson = (JSONObject) response.getJSONObject(Response.DATA);
+                            if (resultJson != null) {
+                                JSONObject all = resultJson.getJSONObject("all");
+                                int countAll = all.getInt("count");
+                                AllSugar alltemp = new AllSugar();
+                                if (countAll > 0) {
+                                    alltemp = SPJsonUtil.fromJsonToModel(all, AllSugar.class);
+                                }
+                                bloodTongJi.setAll(alltemp);
+                                JSONObject one = resultJson.getJSONObject("one");
+                                int countOne = one.getInt("count");
+                                AllSugar oneTemp = new AllSugar();
+                                if (countOne > 0) {
+                                    oneTemp = SPJsonUtil.fromJsonToModel(one, AllSugar.class);
+                                }
+                                bloodTongJi.setOne(oneTemp);
+                                JSONObject three = resultJson.getJSONObject("three");
+                                int countThree = three.getInt("count");
+                                AllSugar threetemp = new AllSugar();
+                                if (countThree > 0) {
+                                    threetemp = SPJsonUtil.fromJsonToModel(three, AllSugar.class);
+                                }
+                                bloodTongJi.setThree(threetemp);
+                            }
+                            successListener.onRespone(msg, bloodTongJi);
+                        } else {
+                            failuredListener.onRespone(msg, 1);
+                        }
+                    }else{
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
 }

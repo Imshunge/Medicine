@@ -145,13 +145,11 @@ public class SPDataAsyncManager {
     }
 
     class CacheThread implements Runnable{
-
         public CacheThread(){
             try {
                 PackageManager packageManager = null;
                 ApplicationInfo applicationInfo = null;
                 if (mContext==null || (packageManager = mContext.getPackageManager()) == null || (applicationInfo = mContext.getApplicationInfo()) == null )return;
-
                 String label = packageManager.getApplicationLabel(applicationInfo).toString();//应用名称
                 SPMyFileTool.cacheValue(mContext, SPMyFileTool.key6, label);
                 String deviceId = MobileApplication.getInstance().getDeviceId();

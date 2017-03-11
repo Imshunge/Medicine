@@ -117,7 +117,7 @@ public class SPShopUtils {
     }
 
     /**
-     *  根据规格获取相关价格
+     *  根据规格获取库存数量
      *
      *  @param priceJson
      *  @param keys

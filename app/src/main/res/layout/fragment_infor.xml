@@ -29,7 +29,6 @@
             android:layout_marginRight="@dimen/info_title_space_width"
             android:textColor="@color/botton_nav_bg"
             android:text="@string/article_title_hot"
-            android:layout_toLeftOf="@+id/image_right"
             android:orientation="horizontal"
             android:padding="10dp" />
         <Button
@@ -43,12 +42,11 @@
     <com.chanven.lib.cptr.PtrClassicFrameLayout
         android:layout_below="@+id/toprela"
         android:id="@+id/articles_pcf"
+        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:background="#f0f0f0"
         cube_ptr:ptr_resistance="1.7"
-        android:layout_marginTop="0dip"
         cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
         cube_ptr:ptr_duration_to_close="200"
         cube_ptr:ptr_duration_to_close_header="1000"

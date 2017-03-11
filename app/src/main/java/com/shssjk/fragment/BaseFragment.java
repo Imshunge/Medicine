@@ -8,16 +8,18 @@ import android.view.View;
 
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.IViewController;
+import com.shssjk.activity.common.health.BindDeviceActivity;
+import com.shssjk.activity.common.shop.ProductListActivity;
 import com.shssjk.activity.common.user.LoginActivity;
+import com.shssjk.global.MobileApplication;
 import com.shssjk.utils.SMobileLog;
-import com.shssjk.utils.SPConfirmDialog;
+import com.shssjk.utils.ConfirmDialog;
 import com.shssjk.utils.SPDialogUtils;
 import com.shssjk.utils.SPLoadingDialog;
+import com.shssjk.utils.SSUtils;
 
 
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 
 /**
@@ -27,8 +29,9 @@ import java.util.HashMap;
 public abstract class BaseFragment extends Fragment implements IViewController {
 
 	SPLoadingDialog mLoadingDialog;
-
 	JSONObject mDataJson;
+	private String categoryId="850";
+
 	/**
 	 * 跳转登录界面
 	 */
@@ -40,8 +43,6 @@ public abstract class BaseFragment extends Fragment implements IViewController {
 		initSubView(view);
 		initEvent();
 		initData();
-
-
 	}
 
 	/**
@@ -56,10 +57,12 @@ public abstract class BaseFragment extends Fragment implements IViewController {
 	}
 
 	public void showToast(String msg){
+
 		SPDialogUtils.showToast(getActivity(), msg);
 	}
 
 	public void showToastUnLogin(){
+
 		showToast(getString(R.string.toast_person_unlogin));
 	}
 	public void  toLoginPage(){
@@ -83,8 +86,8 @@ public abstract class BaseFragment extends Fragment implements IViewController {
 		}
 	}
 
-	public void showConfirmDialog(String message , String title , final SPConfirmDialog.ConfirmDialogListener confirmDialogListener , final int actionType){
-		SPConfirmDialog.Builder builder = new SPConfirmDialog.Builder(getActivity());
+	public void showConfirmDialog(String message , String title , final ConfirmDialog.ConfirmDialogListener confirmDialogListener , final int actionType){
+		ConfirmDialog.Builder builder = new ConfirmDialog.Builder(getActivity());
 		builder.setMessage(message);
 		builder.setTitle(title);
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -124,6 +127,27 @@ public abstract class BaseFragment extends Fragment implements IViewController {
 		}*/
 		SMobileLog.i("SPBaseFragment", "gotoLoginPage : " + this);
 		toLoginPage();
-
 	}
+	/**
+	 * 绑定设备
+	 */
+	public void startupBindDeviceActivity(){
+		if (!MobileApplication.getInstance().isLogined){
+			showToastUnLogin();
+			toLoginPage();
+			return;
+		}
+		Intent carIntent = new Intent(getActivity() , BindDeviceActivity.class);
+		getActivity().startActivity(carIntent);
+	}
+
+	/**
+	 * 去够购买
+	 */
+	public void getToBy(){
+		Intent intent = new Intent(getActivity() , ProductListActivity.class);
+		intent.putExtra("category", categoryId);
+		getActivity().startActivity(intent);
+	}
+
 }

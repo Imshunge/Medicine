@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 
 import com.shssjk.activity.R;
-import com.shssjk.model.info.Article;
 import com.shssjk.model.shop.SPProductSpec;
 import com.shssjk.view.tagview.Tag;
 import com.shssjk.view.tagview.TagListView;

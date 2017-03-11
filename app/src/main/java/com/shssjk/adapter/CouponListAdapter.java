@@ -9,8 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.shssjk.activity.R;
-import com.shssjk.model.shop.SPCoupon;
-import com.soubao.tpshop.utils.SPCommonUtils;
+import com.shssjk.model.shop.Coupon;
+import com.shssjk.utils.SSUtils;
 import com.soubao.tpshop.utils.SPStringUtils;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class CouponListAdapter extends BaseAdapter {
 
-	private List<SPCoupon> mCoupons ;
+	private List<Coupon> mCoupons ;
 	private Context mContext ;
 	private int mType;
 
@@ -30,14 +30,11 @@ public class CouponListAdapter extends BaseAdapter {
 		this.mContext = context;
 		this.mType = type;
 	}
-
-
 	public void setType(int type){
 		this.mType = type;
 	}
-	
 
-	public void setData(List<SPCoupon> coupons){
+	public void setData(List<Coupon> coupons){
 		if(coupons == null)return;
 		this.mCoupons = coupons;
 	}
@@ -81,7 +78,7 @@ public class CouponListAdapter extends BaseAdapter {
       	  holder = (ViewHolder) convertView.getTag();
         }
         
-        SPCoupon coupon = mCoupons.get(position);
+        Coupon coupon = mCoupons.get(position);
 
 		String money = coupon.getMoney();
 		String title = coupon.getName();
@@ -90,30 +87,40 @@ public class CouponListAdapter extends BaseAdapter {
 		int colorId = mContext.getResources().getColor(R.color.color_font_gray);
 		switch (this.mType){
 			case 0:
+//				holder.dataTxtv.setText(SSUtils.TimeStamp2Date(article.getAddTime(), "yyyy-MM-dd HH:mm:ss"));
 				colorId = mContext.getResources().getColor(R.color.color_font_blue);
 				if(!SPStringUtils.isEmpty(coupon.getUseEndTime())){
-					userTimeText = "过期时间:\n"+ SPCommonUtils.getDateFullTime(Long.valueOf(coupon.getUseEndTime()));
+//					userTimeText = "过期时间:\n"+ SPCommonUtils.getDateFullTime(Long.valueOf(coupon.getUseEndTime()));
+					userTimeText = "过期时间:\n"+	SSUtils.TimeStamp2Date(coupon.getUseEndTime(), "yyyy-MM-dd HH:mm:ss");
+
 				}
 				holder.couponRlayout.setBackgroundResource(R.drawable.icon_coupon_unuse);
 				break;
 			case 1:
 				colorId = mContext.getResources().getColor(R.color.color_font_gray);
 				if(!SPStringUtils.isEmpty(coupon.getUseTime())){
-					userTimeText = "使用时间:\n"+ SPCommonUtils.getDateFullTime(Long.valueOf(coupon.getUseTime()));
+//					userTimeText = "使用时间:\n"+ SPCommonUtils.getDateFullTime(Long.valueOf(coupon.getUseTime()));
+
+					userTimeText = "过期时间:\n"+	SSUtils.TimeStamp2Date(coupon.getUseEndTime(), "yyyy-MM-dd HH:mm:ss");
+
 				}
 				holder.couponRlayout.setBackgroundResource(R.drawable.icon_coupon_used);
 				break;
 			case 2:
 				colorId = mContext.getResources().getColor(R.color.color_font_gray);
 				if(!SPStringUtils.isEmpty(coupon.getUseTime())){
-					userTimeText = "使用时间:\n"+ SPCommonUtils.getDateFullTime(Long.valueOf(coupon.getUseTime()));
+
+//					userTimeText = "使用时间:\n"+ SPCommonUtils.getDateFullTime(Long.valueOf(coupon.getUseTime()));
+
+					userTimeText = "过期时间:\n"+	SSUtils.TimeStamp2Date(coupon.getUseEndTime(), "yyyy-MM-dd HH:mm:ss");
+
 				}
 				holder.couponRlayout.setBackgroundResource(R.drawable.icon_coupon_used);
 				break;
 		}
 
 		if (!SPStringUtils.isEmpty(money)){
-			holder.moneyTxtv.setText(Double.valueOf(money).intValue()+"");;
+			holder.moneyTxtv.setText(Double.valueOf(money).intValue()+"");
 		}
 
 		holder.titleTxtv.setText(title);

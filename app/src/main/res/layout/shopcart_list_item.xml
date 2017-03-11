@@ -50,7 +50,6 @@
             android:maxLines="2"
             android:text="@string/product_details_detail"
             style="@style/textStyle.Normal.black" />
-
         <TextView
             android:id="@+id/shop_price_txtv"
             android:layout_below="@id/name_txtv"
@@ -78,8 +77,6 @@
             android:maxLines="2"
             android:text="¥9999"
             style="@style/textStyle.Normal.black" />
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_below="@+id/shop_price_txtv"

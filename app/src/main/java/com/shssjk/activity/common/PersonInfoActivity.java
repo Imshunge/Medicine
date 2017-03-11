@@ -108,7 +108,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         couponView =findViewById(R.id.person_coupon_aview);					//优惠券
         //settingsView = view.findViewById(R.id.person_settings_aview);				//设置
 
-        balanceTxtv = (TextView)findViewById(R.id.person_balance_txtv);	//余额
+        balanceTxtv = (TextView)findViewById(R.id.person_stone_txtv);	//余额
         pointTxtv = (TextView)findViewById(R.id.person_point_txtv);		//积分
         couponCountTxtv = (TextView)findViewById(R.id.person_coupon_txtv);		//优惠券数量
         nicknameTxtv = (TextView)findViewById(R.id.nickname_txtv);		//昵称

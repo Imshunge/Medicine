@@ -8,18 +8,18 @@ android {
     defaultConfig {
         applicationId "com.shssjk.activity"
         minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 20
+        versionCode 8
+        versionName "1.0.8"
         multiDexEnabled true
-        ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
-        }
-
+//        ndk {
+//            abiFilters "armeabi", "armeabi-v7a"
+//        }
     }
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/2','src/main/assets/fonts']
         }
     }
 
@@ -30,20 +30,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    task nativeLibsToJar(type: Zip, description: "create a jar archive of the native libs") {
-        destinationDir file("$projectDir/libs")
-        baseName "libplasma"
-        extension "jar"
-        from fileTree(dir: "libs", include: "**/*.so")
-        into "lib"
-    }
+//    task nativeLibsToJar(type: Zip, description: "create a jar archive of the native libs") {
+//        destinationDir file("$projectDir/libs")
+//        baseName "libplasma"
+//        extension "jar"
+//        from fileTree(dir: "libs", include: "**/*.so")
+//        into "lib"
+//    }
 
-    tasks.withType(JavaCompile) {
-        compileTask -> compileTask.dependsOn(nativeLibsToJar)
-    }
+//    tasks.withType(JavaCompile) {
+//        compileTask -> compileTask.dependsOn(nativeLibsToJar)
+//    }
 
 }
-
+repositories {
+    maven { url "https://jitpack.io" }
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -55,6 +57,7 @@ dependencies {
     compile project(':magicindicator_library')
     //下拉刷新
     compile project(':slidingMenu_library')
+    compile project(':gallery')
     compile 'com.android.support:design:23.4.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.afollestad.material-dialogs:commons:0.9.0.1'
@@ -65,4 +68,14 @@ dependencies {
     compile 'org.sufficientlysecure:html-textview:1.3'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'co.trikita:anvil-appcompat-v7:0.4.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    compile 'com.google.zxing:core:3.2.1'
+    compile 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
+    compile 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
+
+compile ('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
+    exclude module: 'support-v4'
+}
+
 }

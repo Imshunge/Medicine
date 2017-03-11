@@ -25,9 +25,8 @@ import com.shssjk.http.community.CommunityRequest;
 import com.shssjk.http.information.InformationRequest;
 import com.shssjk.model.community.ComArticle;
 import com.shssjk.model.community.ComComment;
-import com.shssjk.model.info.Comment;
 import com.shssjk.utils.MyColor;
-import com.shssjk.utils.SPConfirmDialog;
+import com.shssjk.utils.ConfirmDialog;
 import com.shssjk.utils.SSUtils;
 import com.shssjk.view.ListViewNobar;
 
@@ -38,7 +37,8 @@ import java.util.List;
 /**
  * 江湖  帖子详情
  */
-public class ComArticleDetailActivity extends BaseActivity implements   View.OnClickListener , ComCommentAdapter.CommentClickListener,SPConfirmDialog.ConfirmDialogListener{
+public class ComArticleDetailActivity extends BaseActivity implements   View.OnClickListener ,
+        ComCommentAdapter.CommentClickListener,ConfirmDialog.ConfirmDialogListener{
     private String  articleId;    //帖子ID
     private String cid;//江湖cid
     private String uid;//江湖cid
@@ -65,7 +65,7 @@ public class ComArticleDetailActivity extends BaseActivity implements   View.OnC
     private EditText mComEdiT;//评论内容
     private ComCommentAdapter mCommentAdapter;
 
-    private List<ComComment> mComment= new ArrayList<>();
+    private List<ComComment> mComment= new ArrayList<ComComment>();
     private String type="TIEZI";
     private TextView mCommentLoadMore;
     private  String  r ="20";
@@ -113,18 +113,14 @@ public class ComArticleDetailActivity extends BaseActivity implements   View.OnC
     public void initEvent() {
         mCommentAdapter = new ComCommentAdapter(mContext,this);
         mPinlunLists.setAdapter(mCommentAdapter);
-
         mSendComTxtv.setOnClickListener(this);
         likeBtn.setOnClickListener(this);
         mComEdiT.addTextChangedListener(watcher);// 设置评论输入时的动态显示
-
     }
 
     //文章内容
     public void getComArticleDetail() {
-
         showLoadingToast("正在加载数据...");
-
         CommunityRequest.getComArticleDetailByID(articleId,
                 new SPSuccessListener() {
                     @Override

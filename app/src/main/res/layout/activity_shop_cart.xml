@@ -31,7 +31,6 @@
             android:headerDividersEnabled="false"
             android:scrollbars="none"
             android:smoothScrollbar="true" />
-
     </com.chanven.lib.cptr.PtrClassicFrameLayout>
     <RelativeLayout
         android:id="@+id/empty_lstv"
@@ -49,7 +48,6 @@
             android:layout_marginTop="50dip"
             android:scaleType="fitCenter"
             android:src="@drawable/icon_shopcart_empty" />
-
         <TextView
             android:layout_below="@id/empty_imgv"
             android:layout_width="match_parent"
@@ -60,13 +58,12 @@
             android:text="没有任何数据"
             style="@style/textStyle.Normal.black" />
     </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dip"
+        android:layout_height="50dip"
         android:layout_gravity="bottom"
-        android:background="@color/white">
-
+        android:background="@color/bg_activity_ss"
+      >
         <Button
             android:id="@+id/checkall_btn"
             android:layout_width="20dip"
@@ -76,14 +73,12 @@
             android:background="@drawable/icon_checkno"
             android:layout_alignParentLeft="true"
             />
-
         <LinearLayout
             android:layout_marginLeft="@dimen/margin_space"
             android:layout_toRightOf="@id/checkall_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <TextView
                 android:id="@+id/totalfee_txtv"
                 android:layout_width="match_parent"
@@ -92,7 +87,6 @@
                 android:gravity="left|center_vertical"
                 android:text="合计: ¥999.0"
                 style="@style/textStyle.Medium.black"/>
-
             <TextView
                 android:id="@+id/cutfee_txtv"
                 android:layout_width="match_parent"
@@ -101,11 +95,9 @@
                 android:gravity="left|top"
                 android:text="节省: ¥999.0"
                 android:textSize="@dimen/textSizeSmall"
+                android:visibility="gone"
                 style="@style/textStyle.Small.black"/>
         </LinearLayout>
-
-
-
         <Button
             android:id="@+id/buy_btn"
             android:layout_width="120dip"
@@ -116,5 +108,4 @@
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>
-
 </FrameLayout>

@@ -16,20 +16,22 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-         />
+        android:paddingRight="@dimen/margin5dp"
+
+        />
 
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:inputType="number"
-        android:id="@+id/edit_password_old"
+        android:id="@+id/edit_express_name"
         android:layout_toRightOf="@+id/txt_phone"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignBottom="@+id/txt_phone"
-        style="@style/edit_text"
-       android:text="15093187092"/>
-    <!--15888866192-13800138006-->
+        style="@style/textStyle.Medium.User.Input"
+        android:background="@drawable/edittext_default_rounded"
+        />
+
 
     <View
         android:layout_width="match_parent"
@@ -48,21 +50,21 @@
         android:layout_below="@+id/txt_phone"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="false"
+        android:paddingRight="@dimen/margin5dp"
         android:gravity="center" />
 
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle.Medium.User.Input"
+        android:background="@drawable/edittext_default_rounded"
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/edit_password"
         android:layout_toRightOf="@+id/txt_pwd"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="123456"
-        style="@style/edit_text"
         android:layout_alignBottom="@+id/txt_pwd"
-        android:layout_below="@+id/edit_password_old" />
+        android:layout_below="@+id/edit_express_name" />
     <View
         android:layout_width="match_parent"
         android:layout_height="2dip"
@@ -81,7 +83,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:onClick="onLoginClick" />
-
     <TextView
         android:id="@+id/txt_register"
         android:layout_width="wrap_content"

@@ -25,6 +25,15 @@ public class SPUser implements Model, Serializable {
     //优惠券数量
     String couponCount;
 
+    public String getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(String coupon) {
+        this.coupon = coupon;
+    }
+
+    String coupon;
     String mobile;
 
     //性别
@@ -53,8 +62,9 @@ public class SPUser implements Model, Serializable {
     String level;
 
 
-
-/************ 以下是额外增加字段, 数据库表无对应 **********/
+    /************
+     * 以下是额外增加字段, 数据库表无对应
+     **********/
     //校验码
     String checkCode;
     //确认密码
@@ -71,15 +81,53 @@ public class SPUser implements Model, Serializable {
     //    石头
     String do_earnings;
 
+    public String getDo_score() {
+        return do_score;
+    }
+
+    public void setDo_score(String do_score) {
+        this.do_score = do_score;
+    }
+
+    //    积分
+    String do_score;
+    public String getHeader_pic() {
+        return header_pic;
+    }
+
+    public void setHeader_pic(String header_pic) {
+        this.header_pic = header_pic;
+    }
+
+    String header_pic="";
+    String is_to_work="";//是否创业 （1、已创业；0未达到创业资格；2达到创业资格，但是未创
+
+    public String getExpendamount() {
+        return expendamount;
+    }
+
+    public void setExpendamount(String expendamount) {
+        this.expendamount = expendamount;
+    }
+
+    public String getIs_to_work() {
+        return is_to_work;
+    }
+
+    public void setIs_to_work(String is_to_work) {
+        this.is_to_work = is_to_work;
+    }
+
+    String expendamount;//累计消费金额
     @Override
     public String[] replaceKeyFromPropertyName() {
         return new String[]{
-            "userID","user_id",
-            "userMoney","user_money",
-            "payPoints","pay_points",
-            "headPic","head_pic",
-            "couponCount","coupon_count",
-            "levelName","level_name",
+                "userID", "user_id",
+                "userMoney", "user_money",
+                "payPoints", "pay_points",
+                "headPic", "head_pic",
+                "couponCount", "coupon_count",
+                "levelName", "level_name",
         };
     }
 

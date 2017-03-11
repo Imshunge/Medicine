@@ -1,7 +1,10 @@
 
 package com.shssjk;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +18,8 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.BaseActivity;
@@ -26,13 +31,14 @@ import com.shssjk.fragment.InforFragment;
 import com.shssjk.fragment.HealthyFragment;
 import com.shssjk.fragment.PersonFragment;
 import com.shssjk.fragment.ShopFragment;
-import com.shssjk.fragment.CommunityFragment;
-import com.shssjk.http.base.SPFailuredListener;
-import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.information.InformationRequest;
-import com.shssjk.model.info.Information;
-import com.shssjk.utils.SPDialogUtils;
 
+import com.shssjk.model.info.Information;
+import com.shssjk.utils.Logger;
+import com.shssjk.utils.SPDialogUtils;
+import com.shssjk.utils.Utils;
+
+
+import org.litepal.tablemanager.Connector;
 
 import java.net.URL;
 import java.util.List;
@@ -42,7 +48,6 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
 	
 	public static final String SELECT_INDEX = "selectIndex";
-
 //	List<SPRegionModel> mRegionModels;
 	public static final String CACHE_SELECT_INDEX = "cacheSelectIndex";
 	public static final int INDEX_INFOR = 0;
@@ -105,19 +110,19 @@ public class MainActivity extends BaseActivity {
 
 	private List<Information> informations;
 
-
+	private ChageToHealthReceiver chageToHealthReceiver;
 	public static MainActivity getmInstance(){
 		return mInstance;
 	}
-
+	private Context mContext;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.setCustomerTitle(false, false, getString(R.string.title_home));
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
 		mFragmentManager = this.getSupportFragmentManager();
+		mContext=this;
 		super.init();
 		addFragment();
 		hiddenFragment();
@@ -130,8 +135,20 @@ public class MainActivity extends BaseActivity {
 		setSelectIndex(mCurrentSelectIndex);
 
 		mInstance = this;
+		initPush();
 	}
-
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Logger.e("MainActivity","onResume");
+	}
+	private void initPush() {
+		// 启动百度push
+		PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,
+				Utils.getMetaValue(MainActivity.this, "api_key"));
+//	  数据库使用 LitePal ；项目地址是:https://github.com/LitePalFramework/LitePal
+		Connector.getDatabase();
+	}
 	@Override
 	public void initSubViews() {
 		mInforFragment = new InforFragment();
@@ -143,7 +160,6 @@ public class MainActivity extends BaseActivity {
 
 		mRadioGroup = (RadioGroup) this.findViewById(R.id.radioGroup);
 		rbtnHome = (RadioButton) this.findViewById(R.id.rbtn_home);
-//		rbtnCategory = (RadioButton) this.findViewById(R.id.rbtn_category);
 		rbtnShopcart = (RadioButton) this.findViewById(R.id.rbtn_shopcart);
 		rbtnPerson = (RadioButton) this.findViewById(R.id.rbtn_mine);
 		rbtnMy = (RadioButton) this.findViewById(R.id.rbtn_my);
@@ -175,12 +191,10 @@ public class MainActivity extends BaseActivity {
 
 			}
 		});
-//		getInfomationCategory();
 	}
 
 	@Override
 	public void initEvent() {
-		///Log.i(TAG, "initEvent...");
 		mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(RadioGroup arg0, int key) {
@@ -188,9 +202,6 @@ public class MainActivity extends BaseActivity {
 					case R.id.rbtn_home:
 						setSelectIndex(INDEX_INFOR);
 						break;
-//					case R.id.rbtn_category:
-//						setSelectIndex(INDEX_COMMUNITY);
-//						break;
 					case R.id.rbtn_shopcart:
 						setSelectIndex(INDEX_SHOP);
 						break;
@@ -205,11 +216,14 @@ public class MainActivity extends BaseActivity {
 				}
 			}
 		});
+		//        监听 消息推送信息
+		IntentFilter filter = new IntentFilter(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT);
+		chageToHealthReceiver = new ChageToHealthReceiver();
+		mContext.registerReceiver(chageToHealthReceiver, filter);
 
-
+//		startService(new Intent(MainActivity.this, MyService.class));
 
 	}
-
 	public void setSelectIndex(int index){
 		switch (index){
 			case INDEX_INFOR:
@@ -220,11 +234,7 @@ public class MainActivity extends BaseActivity {
 				mCurrentSelectIndex = INDEX_INFOR;
 				break;
 			case INDEX_COMMUNITY:
-				//setTitleType(TITLE_CATEGORY);
-//				showFragment();
-//				changeTabtextSelector(rbtnCategory);
-//				setTitle(getString(R.string.tab_item_shop));
-//				mCurrentSelectIndex = INDEX_COMMUNITY;
+
 				break;
 			case INDEX_SHOP:
 				//setTitleType(TITLE_DEFAULT);
@@ -239,6 +249,13 @@ public class MainActivity extends BaseActivity {
 				changeTabtextSelector(rbtnPerson);
 				setTitle(getString(R.string.tab_item_healthy));
 				mCurrentSelectIndex = INDEX_HEALTH;
+				//更新设备列表
+				if (mContext != null) {
+					mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_LOADATA));
+				}
+//				if (mContext != null) {
+//					mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_SUAGR_LOADATA));
+//				}
 				break;
 			case INDEX_PERSON:
 				//setTitleType(TITLE_DEFAULT);
@@ -267,13 +284,9 @@ public class MainActivity extends BaseActivity {
 
 	//add by zzx
 	public void setShowFragment(Information information){
-
-
 		showFragment(mInforFragment);
 		changeTabtextSelector(rbtnHome);
 		menu.toggle(false);
-//		setTitle(getString(R.string.tab_item_category));
-
 	}
 	
 	/**
@@ -293,7 +306,6 @@ public class MainActivity extends BaseActivity {
 		mTransaction.hide(mPersonFragment);
 		mTransaction.commitAllowingStateLoss();
 	}
-	
 	/**
 	 *
 	 * @Title: addFragment
@@ -311,20 +323,16 @@ public class MainActivity extends BaseActivity {
 		mTransaction.add(R.id.fragmentView, mShopFragment);
 		mTransaction.add(R.id.fragmentView, mHealthyFragment);
 		mTransaction.add(R.id.fragmentView, mPersonFragment);
-
 		mTransaction.commitAllowingStateLoss();
 	}
 
 	public void changeTabtextSelector(RadioButton rb){
-
 		mLastRb = mCurrRb;
 		mCurrRb = rb;
-
 		if(mLastRb != null){
 			mLastRb.setTextColor(getResources().getColor(R.color.color_tab_item_normal));
 			mLastRb.setSelected(false);
 		}
-
 		if(mCurrRb != null){
 			mCurrRb.setTextColor(getResources().getColor(R.color.color_tab_item_fous));
 			mCurrRb.setChecked(true);
@@ -347,7 +355,6 @@ public class MainActivity extends BaseActivity {
 			//Log.d(TAG, "onRestart , selectIndex : " + selectIndex );
 			if (selectIndex!= -1)setSelectIndex(selectIndex);
 		}
-
 	}
 //
 //	@Override
@@ -365,12 +372,10 @@ public class MainActivity extends BaseActivity {
 ////			}
 ////		});
 //	}
-
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putInt(CACHE_SELECT_INDEX, mCurrentSelectIndex);
 	}
-
 	@Override
 	public void onBackPressed() {
 		if(mCurrRb == rbtnHome ){
@@ -416,7 +421,7 @@ public class MainActivity extends BaseActivity {
 		menu = new SlidingMenu(this);
 		menu.setMode(SlidingMenu.LEFT);
 		// 设置触摸屏幕的模式
-		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 		menu.setShadowWidthRes(R.dimen.shadow_width);
 		// 设置滑动菜单视图的宽度
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
@@ -437,48 +442,26 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Information collect = (Information) mCategoryAdapter.getItem(position);
-
 				setShowFragment(collect);
-
 //				Intent intent = new Intent(CollectListActivity.this, ProductActivity.class);
 //				intent.putExtra("goodsId", collect.getGoodsID());
 //				CollectListActivity.this.startActivity(intent);
 			}
 		});
-
-
 	}
-
-	/**
-	 * 获取资讯列表
-	 */
-	public void getInfomationCategory() {
-
-		showLoadingToast("正在加载数据...");
-
-		InformationRequest.getCategoryList(
-				new SPSuccessListener() {
-					@Override
-					public void onRespone(String msg, Object response) {
-						hideLoadingToast();
-						if (response != null) {
-							informations = (List<Information>) response;
-
-							setInformations(informations);
-
-//							MobileApplication.getInstance().setLoginUser(user);
-							mCategoryAdapter.setData(informations);
-						}
-					}
-				}, new SPFailuredListener() {
-					@Override
-					public void onRespone(String msg, int errorCode) {
-						hideLoadingToast();
-						showToast(msg);
-					}
-				});
-
+	//广播接收器  设备列表变化
+	class ChageToHealthReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (intent.getAction().equals(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT)) {
+				Logger.e("FragmentBlood", "ShowDataReceiver");
+				setSelectIndex(INDEX_HEALTH);
+			}
+		}
 	}
-
-
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(chageToHealthReceiver);
+	}
 }

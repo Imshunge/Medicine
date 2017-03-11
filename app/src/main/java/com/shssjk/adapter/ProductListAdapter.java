@@ -13,14 +13,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shssjk.activity.R;
 import com.shssjk.common.MobileConstants;
-import com.shssjk.model.SPProduct;
-import com.shssjk.model.shop.Data;
 import com.shssjk.model.shop.Tmenu;
-import com.soubao.tpshop.utils.SPCommonUtils;
 
 import java.util.List;
-
-
 /**
  * @author
  *
@@ -49,10 +44,10 @@ public class ProductListAdapter extends BaseAdapter {
 		if (mProductLst == null) return 0;
 
 		// 每列两项
-		if (mProductLst.size() % 2 == 0) {
-			return mProductLst.size() / 2;
+		if (mProductLst.size() % 4 == 0) {
+			return mProductLst.size() / 4;
 		}
-		return mProductLst.size() / 2 + 1;
+		return mProductLst.size() / 4 + 1;
 
 	}
 
@@ -98,7 +93,7 @@ public class ProductListAdapter extends BaseAdapter {
 		}
 
 		//获取该行数据
-		Tmenu product1 = (Tmenu) mProductLst.get(position * 2 );
+		Tmenu product1 = (Tmenu) mProductLst.get(position * 4 );
 
 		//设置数据到View
 		//格式化价格
@@ -115,12 +110,12 @@ public class ProductListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				if (mListener != null) {
-					mListener.onItemClickListener((Tmenu)mProductLst.get(position * 2) );
+					mListener.onItemClickListener((Tmenu)mProductLst.get(position * 4) );
 				}
 			}
 		 });
-        if ((position * 2 + 1) < mProductLst.size()) {
-			Tmenu product2 = (Tmenu) mProductLst.get(position * 2 + 1);
+        if ((position * 4 + 1) < mProductLst.size()) {
+			Tmenu product2 = (Tmenu) mProductLst.get(position * 4 + 1);
 
 			//设置数据到View
 

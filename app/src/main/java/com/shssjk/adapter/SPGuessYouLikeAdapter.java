@@ -22,12 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 猜你喜欢
  * @author
  *
  */
 public class SPGuessYouLikeAdapter extends BaseAdapter{
 
-	private String TAG = "CategoryRightAdapter";
+	private String TAG = "SPGuessYouLikeAdapter";
 	private List<SPProduct> mProducts ;
 	private Context mContext ;
 

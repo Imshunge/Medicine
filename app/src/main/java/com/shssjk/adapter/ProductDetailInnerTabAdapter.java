@@ -14,7 +14,6 @@ import com.shssjk.fragment.ProductPictureTextDetaiFragment;
  */
 
 public class ProductDetailInnerTabAdapter extends FragmentPagerAdapter {
-
 	//Titles的标识
 	public static  String[] productDetailInnerTitles = new String[]{"商品","详情", "评价"};
 	private ProductPictureTextDetaiFragment pictureTextDetaiFragment;
@@ -34,10 +33,8 @@ public class ProductDetailInnerTabAdapter extends FragmentPagerAdapter {
 		commentListFragment = new ProductCommentListFragment();
 		commentListFragment.setGoodsId(this.goodsId);
 	}
-
 	@Override
 	public Fragment getItem(int position) {
-
 		if (position == 0){
 			productFragment.loadData();
 			return productFragment;

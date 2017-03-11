@@ -54,7 +54,6 @@ public class SPSearchView extends LinearLayout {
 			@Override
 			public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
 					notifyStartSearching(textView.getText().toString());
 				}
 				return true;

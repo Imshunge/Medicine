@@ -5,18 +5,15 @@
     android:layout_height="match_parent"
     android:background="@color/bg_activity"
     android:orientation="vertical" >
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="none">
-
         <LinearLayout
             android:orientation="vertical"
             android:id="@+id/person_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <!-- 头像, 用户名称等信息 -->
             <include layout="@layout/person_head_slice"
                 android:id="@+id/ll_user"
@@ -83,18 +80,36 @@
                 android:focusable="true"
                 custom:titleText="@string/setting_team" />
             <View  style="@style/separator_line"/>
+
+            <!-- 我的摄像机 -->
+            <com.shssjk.view.SPArrowRowView
+                android:id="@+id/person_camera_aview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_row"
+                android:clickable="true"
+                android:focusable="true"
+                custom:titleText="@string/setting_mycamera" />
+            <View  style="@style/separator_line"/>
+            <!-- 我的银行卡 -->
+            <com.shssjk.view.SPArrowRowView
+                android:id="@+id/person_bank_aview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_row"
+                android:clickable="true"
+                android:focusable="true"
+                custom:titleText="@string/person_bank_aview" />
+            <View  style="@style/separator_line"/>
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dip"
                 android:orientation="vertical"
                 >
-
                 <View style="@style/separator_line"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dip"
                     android:layout_marginRight="20dip"/>
-
                 <RelativeLayout
+                    android:id="@+id/rl_guess"
                     android:layout_width="120dip"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
@@ -108,7 +123,6 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/icon_up_small"
                         android:scaleType="fitCenter" />
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -120,19 +134,17 @@
                         style="@style/textStyle.Small.black" />
                 </RelativeLayout>
             </FrameLayout>
-
-            <GridView
-                android:id="@+id/product_gdv"
+            <com.shssjk.view.SPHomeListView
+                android:id="@+id/sphome_listview"
+                android:layout_below="@+id/linerlayout"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:numColumns="2"
+                android:layout_height="match_parent"
                 android:horizontalSpacing="5dip"
                 android:verticalSpacing="5dip"
-                android:layout_marginLeft="@dimen/margin_space"
-                android:layout_marginRight="@dimen/margin_space"
                 android:background="@color/bg_activity"
                 android:listSelector="@android:color/transparent"
-                android:scrollbars="none"/>
+                android:scrollbars="none"
+                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

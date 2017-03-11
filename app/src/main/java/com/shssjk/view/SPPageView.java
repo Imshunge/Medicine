@@ -32,14 +32,11 @@ public class SPPageView extends HorizontalScrollView {
 
     public SPPageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         DisplayMetrics dm = context.getApplicationContext().getResources()
                 .getDisplayMetrics();
         mScreenWidth = dm.widthPixels;
-        mScreenHeight = Float.valueOf(context.getResources().getDimension(R.dimen.dp_300)).intValue();;
-
+        mScreenHeight = Float.valueOf(context.getResources().getDimension(R.dimen.dp_300)).intValue();
     }
-
     /**
      * 添加一个页面到最后。
      * @param page
@@ -47,7 +44,6 @@ public class SPPageView extends HorizontalScrollView {
     public void addPage(View page) {
         addPage(page, -1);
     }
-
     /**
      * 添加一个页面。
      * @param page

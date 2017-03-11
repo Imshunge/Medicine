@@ -13,6 +13,7 @@ import com.shssjk.model.info.Comment;
 import com.shssjk.model.info.Information;
 
 
+import com.shssjk.utils.Logger;
 import com.shssjk.utils.SSUtils;
 import com.soubao.tpshop.utils.SPJsonUtil;
 import com.soubao.tpshop.utils.SPStringUtils;
@@ -42,8 +43,8 @@ public class InformationRequest {
      */
     public static void getCategoryList(final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
 
-        assert (successListener != null);
-        assert (failuredListener != null);
+//        assert (successListener != null);
+//        assert (failuredListener != null);
         String url = SPMobileHttptRequest.getRequestUrl("Information", "category");
 
         RequestParams params = new RequestParams();
@@ -103,19 +104,23 @@ public class InformationRequest {
      * @param failuredListener
      * @Description: 资讯（百科）列表
      */
-    public static void getArticleList(Information information, String ofseet, String keyword, int r, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+    public static void getArticleList(Information information, String ofseet, String keyword, String r, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
 
-        assert (successListener != null);
-        assert (failuredListener != null);
+
         String url = SPMobileHttptRequest.getRequestUrl("Information", "article_list");
-
         RequestParams params = new RequestParams();
-//		offset（分页起始变量）、r（）、keyword（模糊查询字段）
+//   offset（分页起始变量）、r（）、keyword（模糊查询字段）
 
-        if (!SSUtils.isEmpty(information)) {
+        if (!SSUtils.isEmpty(ofseet)) {
             params.put("offset", ofseet);
+
+        }
+
+        if (!SSUtils.isEmpty(r)) {
+
             params.put("r", r);
         }
+
         if (!SSUtils.isEmpty(information) && !SSUtils.isEmpty(information.getCatId())) {
             params.put("category_id", information.getCatId());
         }
@@ -126,7 +131,7 @@ public class InformationRequest {
             params.put("keyword", keyword);
         }
 
-        SPMobileHttptRequest.get(url, params, new JsonHttpResponseHandler() {
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 /** 针对返回的业务数据会重新包装一遍再返回到View */
@@ -135,10 +140,8 @@ public class InformationRequest {
 
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     List<Article> filters = new ArrayList<Article>();
-                    if (status > 0) {
+                    if (status >= 0) {
                         /** 工具类json转为User实体 **/
-//						SPUser user = SPJsonUtil.fromJsonToModel(response.getJSONObject(MobileConstants.Response.RESULT), SPUser.class);
-
                         JSONArray resultJson = (JSONArray) response.getJSONArray(Response.DATA);
                         filters = SPJsonUtil.fromJsonArrayToList(resultJson, Article.class);
                         successListener.onRespone(msg, filters);
@@ -182,8 +185,8 @@ public class InformationRequest {
      */
 
     public static void getArticleDetailByID(String id, String article_id, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-        assert (successListener != null);
-        assert (failuredListener != null);
+//        assert (successListener != null);
+//        assert (failuredListener != null);
         String url = SPMobileHttptRequest.getRequestUrl("Information", "article_detail");
 
         RequestParams params = new RequestParams();
@@ -245,8 +248,8 @@ public class InformationRequest {
      */
     public static void getArticleCommentWitArticleID(String articleID, String offset, String r, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
 
-        assert (successListener != null);
-        assert (failuredListener != null);
+//        assert (successListener != null);
+//        assert (failuredListener != null);
 //		Information/comment_list
         String url = SPMobileHttptRequest.getRequestUrl("Information", "comment_list");
 
@@ -262,14 +265,13 @@ public class InformationRequest {
                     String msg = (String) response.getString(Response.MSG);
                     int status = response.getInt(Response.STATUS);
                     List<Comment> comments = null;
-                    if (status >=0) {
+                    if (status >= 0) {
                         String orderId = null;
                         if (response.has("data")) {
                             comments = SPJsonUtil.fromJsonArrayToList(response.getJSONArray("data"), Comment.class);
                         }
                         successListener.onRespone(msg, comments);
-                    }
-                    else {
+                    } else {
                         failuredListener.onRespone(msg, -1);
                     }
                 } catch (Exception e) {
@@ -305,10 +307,12 @@ public class InformationRequest {
      * @param successListener
      * @param failuredListener
      */
-    public static void publishComment(String goodsId, String parentId, String content, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+    public static void publishComment(String goodsId, String parentId, String content,
+                                      final SPSuccessListener successListener, final SPFailuredListener
+                                              failuredListener) {
 
-        assert (successListener != null);
-        assert (failuredListener != null);
+//        assert (successListener != null);
+//        assert (failuredListener != null);
         String url = SPMobileHttptRequest.getRequestUrl("Information", "comment");
 
         RequestParams params = new RequestParams();
@@ -322,11 +326,15 @@ public class InformationRequest {
                 try {
                     String msg = (String) response.get(Response.MSG);
                     int status = response.getInt(Response.STATUS);
-                    if (status > 0) {
-//						JSONArray resulJson = response.getJSONArray(Response.DATA);
-                        successListener.onRespone(msg, "");
-                    } else {
-                        failuredListener.onRespone("not found data", -1);
+                    if(status>=0) {
+                        if (status > 0) {
+                            String resulJson = response.getString(Response.DATA);
+                            successListener.onRespone(msg, resulJson);
+                        } else {
+                            failuredListener.onRespone("not found data", -1);
+                        }
+                    }else{
+                        failuredListener.handleResponse(msg, status);
                     }
                 } catch (JSONException e) {
                     failuredListener.onRespone(e.getMessage(), -1);
@@ -358,15 +366,15 @@ public class InformationRequest {
      * 收藏/取消收藏文章
      *
      * @param goodsID
-     * @param type             操作类型: 0 添加收藏 1 删除收藏 , 该值为nil也代表收藏商品   act 操作类型（add 添加收藏、cancel 取消收藏）
+     * @param type        操作类型: 0 添加收藏 1 删除收藏 , 该值为nil也代表收藏商品   act 操作类型（add 添加收藏、cancel 取消收藏）
      * @param successListener
      * @param failuredListener
      * @throws JSONException
      * @URL
      */
     public static void collectOrCancelArticleWithID(String goodsID, String type, String act, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-        assert (successListener != null);
-        assert (failuredListener != null);
+//        assert (successListener != null);
+//        assert (failuredListener != null);
         String url = SPMobileHttptRequest.getRequestUrl("Information", "collect");
 
         RequestParams params = new RequestParams();
@@ -387,9 +395,13 @@ public class InformationRequest {
                     /** 针对返回的业务数据会重新包装一遍再返回到View */
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     String msg = (String) response.get(MobileConstants.Response.MSG);
-                    if (status > 0) {
-                        successListener.onRespone(msg, msg);
-                    } else {
+                    if(status>=0) {
+                        if (status > 0) {
+                            successListener.onRespone(msg, msg);
+                        } else {
+                            failuredListener.handleResponse(msg, status);
+                        }
+                    }else{
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (Exception e) {
@@ -422,9 +434,11 @@ public class InformationRequest {
      * @param successListener
      * @param failuredListener
      */
-    public static void collectOrCancelPraiseWithID(String commentid, String act, String type, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-        assert (successListener != null);
-        assert (failuredListener != null);
+    public static void collectOrCancelPraiseWithID(String commentid, String act, String type,
+                                                   final SPSuccessListener successListener,
+                                                   final SPFailuredListener failuredListener) {
+//        assert (successListener != null);
+//        assert (failuredListener != null);
         String url = SPMobileHttptRequest.getRequestUrl("Information", "parise");
 
         RequestParams params = new RequestParams();
@@ -443,6 +457,7 @@ public class InformationRequest {
                 try {
                     /** 针对返回的业务数据会重新包装一遍再返回到View */
                     int status = response.getInt(MobileConstants.Response.STATUS);
+                    Logger.e(" status",status+"");
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     if (status > 0) {
                         successListener.onRespone(msg, msg);
@@ -461,5 +476,81 @@ public class InformationRequest {
             }
         });
     }
+
+
+    /**
+     * 收藏列表(资讯、百科)
+     * // type（收藏类别,ZIXUN、BAIKE、GOODS）、offset、r、
+     *
+     * @param ofseet
+     * @param type
+     * @param r
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getCollectArticleList(String type, String ofseet, String r, final SPSuccessListener
+            successListener, final SPFailuredListener failuredListener) {
+//        Information/collect
+//        assert (successListener != null);
+//        assert (failuredListener != null);
+        String url = SPMobileHttptRequest.getRequestUrl("Information", "collect_list");
+
+        RequestParams params = new RequestParams();
+
+        if (!SSUtils.isEmpty(ofseet)) {
+            params.put("offset", ofseet);
+        }
+        if (!SSUtils.isEmpty(r)) {
+            params.put("r", r);
+        }
+        if (!SSUtils.isEmpty(type)) {
+            params.put("type", type);
+        }
+
+        SPMobileHttptRequest.get(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(MobileConstants.Response.STATUS);
+                    List<Article> filters = new ArrayList<Article>();
+                    if (status >=0) {
+                        /** 工具类json转为User实体 **/
+//						SPUser user = SPJsonUtil.fromJsonToModel(response.getJSONObject(MobileConstants.Response.RESULT), SPUser.class);
+
+                        JSONArray resultJson = (JSONArray) response.getJSONArray(Response.DATA);
+                        filters = SPJsonUtil.fromJsonArrayToList(resultJson, Article.class);
+                        successListener.onRespone(msg, filters);
+                    } else {
+//                        failuredListener.onRespone(msg, 1);
+                        failuredListener.handleResponse(msg, status);
+                    }
+
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
 
 }

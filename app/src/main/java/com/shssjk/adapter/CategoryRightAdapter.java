@@ -22,7 +22,7 @@ import java.util.List;
  *
  */
 public class CategoryRightAdapter extends BaseAdapter implements StickyGridHeadersSimpleAdapter {
-	
+
 	private String TAG = "CategoryRightAdapter";
 	private List<SPCategory> mCategoryLst ;
 	private Context mContext ;
@@ -39,10 +39,10 @@ public class CategoryRightAdapter extends BaseAdapter implements StickyGridHeade
 		if(mCategoryLst == null)return 0;
 		return totalCount;
 	}
-	
+
 	public void setData(List<SPCategory> categorys){
 		if (categorys != null){
-			this.mCategoryLst = new ArrayList<>();
+			this.mCategoryLst = new ArrayList<SPCategory>();
 
 			for (SPCategory category : categorys){
 				List<SPCategory> subCategorys = category.getSubCategory();
@@ -55,7 +55,6 @@ public class CategoryRightAdapter extends BaseAdapter implements StickyGridHeade
 						}
 					}
 					//每一行不足3个的填充3个, 以下代码没有任何业务逻辑意义, 只是为了适配页面显示效果 @{
-
 					int sy = size % anInt;
 					int count = (sy == 0 ) ? 0 : (4 - sy);
 					if (count >= 0){
@@ -73,7 +72,7 @@ public class CategoryRightAdapter extends BaseAdapter implements StickyGridHeade
 			this.notifyDataSetChanged();
 		}
 	}
-	
+
 
 	@Override
 	public Object getItem(int position) {
@@ -89,7 +88,7 @@ public class CategoryRightAdapter extends BaseAdapter implements StickyGridHeade
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		
+
 		final ViewHolder holder;
         if(convertView == null){
 	          //使用自定义的list_items作为Layout
@@ -99,20 +98,20 @@ public class CategoryRightAdapter extends BaseAdapter implements StickyGridHeade
 			  holder.r1View = (View) convertView.findViewById(R.id.category_item_r1_layout);
 			  holder.r1Imgv = (ImageView) convertView.findViewById(R.id.category_item_r1_imgv);
 			  holder.r1Txtv = (TextView) convertView.findViewById(R.id.category_item_r1_txtv);
-			  
+
 			  //设置标记
 			  convertView.setTag(holder);
         }else{
       	  holder = (ViewHolder) convertView.getTag();
         }
-        
+
         if(mCategoryLst== null){
         	Log.w(TAG, "getView mCategoryLst is null .");
         	return null;
         }
-        
+
         SPCategory category = null;
-        
+
         if (position < mCategoryLst.size()) {
         	 category = (SPCategory)mCategoryLst.get(position);
 			 if (category.isBlank()){

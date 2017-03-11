@@ -55,7 +55,7 @@ public class ArticleAdapter extends BaseAdapter {
 	@Override
 	public long getItemId(int position) {
 		if(mArticle == null) return -1;
-		return Long.valueOf(mArticle.get(position).getCatId());
+		return position;
 		
 	}
 
@@ -92,8 +92,8 @@ public class ArticleAdapter extends BaseAdapter {
 		if (!SPStringUtils.isEmpty(article.getClick())){
 			holder.readTxtv.setText(article.getClick());
 		}
-		if (!SPStringUtils.isEmpty(article.getContent())){
-			holder.contentTxtv.setText(article.getContent());
+		if (!SPStringUtils.isEmpty(article.getDescription())){
+			holder.contentTxtv.setText(article.getDescription());
 		}
 //		描述
 //		if (!SPStringUtils.isEmpty(article.get)){

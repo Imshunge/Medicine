@@ -34,6 +34,8 @@ public class ProductAttribute implements Model, Serializable {
      */
     String attrName;
 
+
+
     @Override
     public String[] replaceKeyFromPropertyName() {
         return new String[]{

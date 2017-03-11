@@ -65,12 +65,18 @@ public class SPAddressListAdapter extends BaseAdapter implements View.OnClickLis
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.person_address_list_item, parent, false);
 	        //使用减少findView的次数
 			holder = new ViewHolder();
-			holder.consigneeTxtv = ((TextView) convertView.findViewById(R.id.address_consignee_txtv)) ;
-			holder.mobileTxtv = ((TextView) convertView.findViewById(R.id.address_mobile_txtv)) ;
-			holder.addressTxtv = ((TextView) convertView.findViewById(R.id.address_detail_txtv)) ;
+			holder.consigneeTxtv = ((TextView) convertView.findViewById(R.id.bank_icon_imv)) ;
+			holder.mobileTxtv = ((TextView) convertView.findViewById(R.id.bank_name_txtv)) ;
+			holder.addressTxtv = ((TextView) convertView.findViewById(R.id.bank_num_txtv)) ;
 			holder.setDefaultBtn= ((Button) convertView.findViewById(R.id.address_setdefault_btn)) ;
-			holder.editBtn= ((Button) convertView.findViewById(R.id.address_edit_btn)) ;
-			holder.deleteBtn = ((Button) convertView.findViewById(R.id.address_delete_btn)) ;
+			holder.setDefaultTxtv= ((TextView) convertView.findViewById(R.id.bank_default_txtv)) ;
+
+			holder.editBtn= ((Button) convertView.findViewById(R.id.bank_edit_btn)) ;
+			holder.editTxtv= ((TextView) convertView.findViewById(R.id.bank_edit_txtv)) ;
+
+			holder.deleteBtn = ((Button) convertView.findViewById(R.id.bank_delete_btn)) ;
+			holder.deleteTxtv= ((TextView) convertView.findViewById(R.id.bank_delete_txtv)) ;
+
 			//设置标记
 			convertView.setTag(holder);
         }else{
@@ -79,12 +85,29 @@ public class SPAddressListAdapter extends BaseAdapter implements View.OnClickLis
 
 		holder.editBtn.setOnClickListener(this);
 		holder.editBtn.setTag(position);
+		holder.editBtn.setOnClickListener(this);
+		holder.editBtn.setTag(position);
+
+
 
 		holder.deleteBtn.setOnClickListener(this);
 		holder.deleteBtn.setTag(position);
+		holder.deleteTxtv.setOnClickListener(this);
+		holder.deleteTxtv.setTag(position);
+
 
 		holder.setDefaultBtn.setOnClickListener(this);
 		holder.setDefaultBtn.setTag(position);
+
+
+		holder.setDefaultBtn.setOnClickListener(this);
+		holder.setDefaultBtn.setTag(position);
+
+
+		holder.setDefaultTxtv.setOnClickListener(this);
+		holder.setDefaultTxtv.setTag(position);
+
+
 
         //获取该行数据
         SPConsigneeAddress consignee = (SPConsigneeAddress)mConsignees.get(position);
@@ -109,13 +132,16 @@ public class SPAddressListAdapter extends BaseAdapter implements View.OnClickLis
 		SPConsigneeAddress consignee = mConsignees.get(position);
 
 		switch (v.getId()){
-			case R.id.address_delete_btn:
+			case R.id.bank_delete_btn:
+			case R.id.bank_delete_txtv:
 				if (mAddressListListener!= null)mAddressListListener.onItemDelete(consignee);
 				break;
-			case R.id.address_edit_btn:
+			case R.id.bank_edit_btn:
+			case R.id.bank_edit_txtv:
 				if (mAddressListListener!=null)mAddressListListener.onItemEdit(consignee);
 				break;
 			case R.id.address_setdefault_btn:
+			case R.id.bank_default_txtv:
 				if (mAddressListListener!=null)mAddressListListener.onItemSetDefault(consignee);
 				break;
 		}
@@ -124,7 +150,9 @@ public class SPAddressListAdapter extends BaseAdapter implements View.OnClickLis
 	class ViewHolder{
 		TextView consigneeTxtv;
 		TextView mobileTxtv;
+		TextView editTxtv;
 		TextView addressTxtv;
+		TextView deleteTxtv;
 		Button  setDefaultBtn;
 		Button  editBtn;
 		Button  deleteBtn;

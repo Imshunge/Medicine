@@ -9,11 +9,13 @@ import com.shssjk.common.MobileConstants.Response;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPMobileHttptRequest;
 import com.shssjk.http.base.SPSuccessListener;
+import com.shssjk.model.AppUpdate;
 import com.shssjk.model.SPHomeBanners;
 import com.shssjk.model.SPHomeCategory;
 import com.shssjk.model.SPPlugin;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.SPServiceConfig;
+import com.shssjk.model.health.AllSugar;
 import com.shssjk.model.shop.Five;
 import com.shssjk.model.shop.HomeResult;
 import com.shssjk.model.shop.Product;
@@ -35,9 +37,7 @@ import cz.msebera.android.httpclient.Header;
  *
  */
 public class SPHomeRequest {
-
 	private static String TAG = "SPHomeRequest";
-
 	/**
 	 *  查询系统配置信息
 	 *  使用万能SQL: index.php?m=Api&c=Index&a=getConfig
@@ -48,13 +48,11 @@ public class SPHomeRequest {
 		assert(successListener!=null);
 		assert(failuredListener!=null);
 		String url =  SPMobileHttptRequest.getRequestUrl("Index", "getConfig");
-
 		try{
 			SPMobileHttptRequest.post(url, null, new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 					try {
-
 						String msg = (String) response.getString(MobileConstants.Response.MSG);
 						int status = response.getInt(MobileConstants.Response.STATUS);
 						if (status > 0) {
@@ -124,7 +122,6 @@ public class SPHomeRequest {
 									}
 								}
 							}
-
 							successListener.onRespone("success", pluginMap);
 						} else {
 							failuredListener.onRespone(msg, -1);
@@ -162,6 +159,7 @@ public class SPHomeRequest {
 			SPMobileHttptRequest.post(url, null, new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
 					try {
 						String msg = (String) response.getString(Response.MSG);
 						JSONObject resultJson = (JSONObject) response.getJSONObject(Response.RESULT);
@@ -289,6 +287,99 @@ public class SPHomeRequest {
 		}
 	}
 
+//	获取软件版本
+	public static void getSoftVersion(final SPSuccessListener successListener,  final SPFailuredListener failuredListener) {
+		assert (successListener != null);
+		assert (failuredListener != null);
+		String url =  MobileConstants.Soft.GETVERSION;
+		try{
+			SPMobileHttptRequest.get(url, new JsonHttpResponseHandler() {
+				@Override
+				public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+					try {
+						AppUpdate appUpdate = null;
+						String msg = (String) response.getString(Response.MSG);
+						int status = response.getInt(Response.STATUS);
+						JSONObject resultJson = (JSONObject) response.getJSONObject(Response.DATA);
+						if (status == 0) {
+							appUpdate = SPJsonUtil.fromJsonToModel(resultJson, AppUpdate.class);
+							successListener.onRespone("success", appUpdate);
+						} else {
+							failuredListener.onRespone(msg, -1);
+						}
+					} catch (Exception e) {
+						failuredListener.onRespone(e.getMessage(), -1);
+						e.printStackTrace();
+					}
+				}
+
+				@Override
+				public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+					failuredListener.onRespone(throwable.getMessage(), statusCode);
+				}
+
+				@Override
+				public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+					failuredListener.onRespone(throwable.getMessage(), statusCode);
+				}
+
+				@Override
+				public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+					failuredListener.onRespone(throwable.getMessage(), statusCode);
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 下载APP
+	 * path 安装包所在路径
+	 * @param path
+	 * @param successListener
+	 * @param failuredListener
+	 */
+public static void downloadSoft(String path,final SPSuccessListener successListener,  final SPFailuredListener failuredListener) {
+
+	String url =  MobileConstants.Soft.GETVERSION;
+	try{
+		SPMobileHttptRequest.get(url,new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+				try {
+					AppUpdate appUpdate=null;
+					String msg = (String) response.getString(Response.MSG);
+					int status = response.getInt(Response.STATUS);
+					JSONObject resultJson=  (JSONObject) response.getJSONObject(Response.DATA);
+					if(status==0){
+						appUpdate=SPJsonUtil.fromJsonToModel(resultJson, AppUpdate.class);
+						successListener.onRespone("success", appUpdate);
+					}else {
+						failuredListener.onRespone(msg , -1);
+					}
+				} catch (Exception e) {
+					failuredListener.onRespone(e.getMessage(), -1);
+					e.printStackTrace();
+				}
+			}
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+				failuredListener.onRespone(throwable.getMessage(), statusCode);
+			}
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+				failuredListener.onRespone(throwable.getMessage(), statusCode);
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+				failuredListener.onRespone(throwable.getMessage(), statusCode);
+			}
+		});
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
 
 
 

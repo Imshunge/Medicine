@@ -1,6 +1,5 @@
 package com.shssjk.activity.common.user;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
@@ -181,36 +180,25 @@ public class ForgetPwdActivity extends BaseActivity {
 
     public void onBtnNextThreeClick(View view){
         String pwd = editPwd.getText().toString();
-//        String repwd = editRePwd.getText().toString();
         if (isEditEmpty(editPwd)) {
             editPwd.setError(Html.fromHtml("<font color='red'>"+getString(R.string.register_password_null)+"</font>"));
             return;
         }
-//        if ( isEditEmpty(editRePwd)){
-//            editRePwd.setError(Html.fromHtml("<font color='red'>"+getString(R.string.register_password_null)+"</font>"));
-//            return;
-//        }
-//        if (!pwd.equals(repwd)){
-//            txtErrorInfo.setVisibility(View.VISIBLE);
-//            txtErrorInfo.setText(getString(R.string.register_error_info_re));
-//            return;
-//        }
         if (pwd.length()< 6 || pwd.length() > 20) {
             txtErrorInfo.setText(getString(R.string.register_error_forgetpwd_info));
             txtErrorInfo.setVisibility(View.VISIBLE);
             return;
         }
-
-        //Register
+        //找回密码
         SPUserRequest.doRetrievePassword(phoneNumber, pwd, editCode.getText().toString(),
                 new SPSuccessListener() {
                     @Override
                     public void onRespone(String msg, Object response) {
                         if (response != null) {
-
                             showToast(msg);
-
-                            startActivity(new Intent(ForgetPwdActivity.this, LoginActivity.class));
+//                            startActivity(new Intent(ForgetPwdActivity.this, LoginActivity.class));
+                            ForgetPwdActivity.this.setResult(RESULT_OK);
+                            finish();
                         }
                     }
                 }, new SPFailuredListener() {
@@ -223,25 +211,18 @@ public class ForgetPwdActivity extends BaseActivity {
                     }
                 });
     }
-
     private  boolean isEditEmpty(EditText text){
         return  text == null || "".equals(text.getText().toString());
     }
-
     public CountDownTimer countDownTimer = new CountDownTimer(60*1000,1000) {
-
         @Override
         public void onTick(long millisUntilFinished) {
             btnSendSMS.setText(getString(R.string.register_btn_re_code,millisUntilFinished / 1000));
         };
-
         @Override
         public void onFinish() {
             btnSendSMS.setText(getString(R.string.register_btn_re_code_done));
             btnSendSMS.setEnabled(true);
         };
     };
-
-
-
 }

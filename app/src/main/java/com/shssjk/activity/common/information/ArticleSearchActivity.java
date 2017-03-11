@@ -17,9 +17,7 @@ import android.widget.TextView;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
-import com.chanven.lib.cptr.PtrHandler;
 import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
-import com.loopj.android.http.RequestParams;
 import com.shssjk.activity.R;
 import com.shssjk.activity.common.BaseActivity;
 import com.shssjk.adapter.ArticleAdapter;
@@ -54,16 +52,14 @@ public class ArticleSearchActivity extends BaseActivity  {
     EditText searchText ;//搜索文本框
     ImageView backImgv;	//返回键
 
-    int pageIndex=20;   //取几条数据
+    String pageIndex="20";   //取几条数据
     /**
      * 最大页数
      */
     boolean maxIndex;
     private String ofseet="0"; //起始位置
-
     private ImageView iamgeSearch;
     private String searchStr;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +68,6 @@ public class ArticleSearchActivity extends BaseActivity  {
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_article_search);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.product_list_header);
-
         mContext=this;
         super.init();
     }
@@ -90,8 +85,6 @@ public class ArticleSearchActivity extends BaseActivity  {
         searchText = (EditText)findViewById(R.id.search_edtv);
         searchText.setHint(R.string.hint_search_information);
         searchText.setFocusable(true);
-
-
 
         searchText.setFocusableInTouchMode(true);
 

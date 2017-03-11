@@ -9,7 +9,6 @@
         android:background="@color/bg_activity"
         android:layout_height="8dip"
         android:layout_width="match_parent"/>
-
     <TextView
         android:id="@+id/search_tittle_txtv"
         android:layout_width="match_parent"

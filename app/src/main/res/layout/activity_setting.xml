@@ -26,8 +26,17 @@
         android:focusable="true"
         custom:titleText="@string/setting_changpwd" />
     <View  style="@style/separator_line"
-        android:layout_height="@dimen/gapSize"
         />
+    <!--  尚尚服务 -->
+    <com.shssjk.view.SPArrowRowView
+        android:visibility="visible"
+        android:id="@+id/person_setting_service_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/setting_service" />
+    <View  style="@style/separator_line"/>
     <!-- 帮助 -->
     <com.shssjk.view.SPArrowRowView
         android:id="@+id/person_setting_help_aview"
@@ -42,7 +51,9 @@
         android:id="@+id/rl_tel"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_row"
-        android:background="@drawable/view_bg_clickable_selector">
+        android:background="@drawable/view_bg_clickable_selector"
+        android:visibility="gone"
+        >
 
         <ImageView
             android:id="@+id/image_imgv"
@@ -70,7 +81,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/personal_arrow_right"/>
-
         <TextView
             android:id="@+id/sub_phonenum_txtv"
             android:gravity="center_vertical|right"
@@ -84,15 +94,7 @@
     </RelativeLayout>
     <View  style="@style/separator_line"/>
 
-    <!-- 关于 -->
-    <com.shssjk.view.SPArrowRowView
-        android:id="@+id/person_setting_about_aview"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_row"
-        android:clickable="true"
-        android:focusable="true"
-        custom:titleText="@string/setting_about" />
-    <View  style="@style/separator_line"/>
+
 
     <View  style="@style/separator_line"
         android:layout_height="@dimen/gapSize"

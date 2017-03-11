@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shssjk.activity.common.shop.OrderReturnGoodsActivity">
+
+    <!---->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    <include layout="@layout/lv_order_item" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/article_marginTop"
+        android:background="@color/bg_view"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginTop="@dimen/article_marginTop"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/activity_product_des"
+            />
+        <View style="@style/separator_line" />
+
+        <EditText
+            android:id="@+id/et_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:gravity="top|left"
+            android:lines="5"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:textSize="@dimen/textSizeNormal"
+            />
+    </LinearLayout>
+    <View style="@style/separator_line" />
+
+    <LinearLayout
+        android:id="@+id/ll_image_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_view"
+
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivbtn_add"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:background="@drawable/rect_dashed"
+            android:padding="15dp"
+            android:src="@drawable/plus" />
+
+        <HorizontalScrollView
+            android:id="@+id/order_product_scrollv"
+            android:layout_width="match_parent"
+            android:layout_height="80dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginRight="@dimen/margin_space">
+
+            <LinearLayout
+                android:id="@+id/product_list_gallery_lyaout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal"></LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/article_marginTop"
+        android:background="@color/bg_view"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginTop="@dimen/article_marginTop"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="客服电话:400-001-1253"
+            />
+        <Button
+            android:id="@+id/add_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_button"
+            android:text="@string/activity_product_btn_add"
+            android:textColor="@color/white"
+            android:background="@drawable/button_selector"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/article_marginTop"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:layout_marginRight="@dimen/margin_space"
+            android:layout_marginBottom="@dimen/margin_space"
+            />
+    </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

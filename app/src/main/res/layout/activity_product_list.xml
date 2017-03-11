@@ -11,7 +11,6 @@
         android:orientation="vertical" >
 
         <com.shssjk.view.SPProductFilterTabView
-            android:background="@color/bg_activity_ss"
             android:id="@+id/filter_tabv"
             android:layout_width="fill_parent"
             android:layout_height="50dip"/>
@@ -28,7 +27,6 @@
             cube_ptr:ptr_duration_to_close_header="1000"
             cube_ptr:ptr_keep_header_when_refresh="true"
             cube_ptr:ptr_pull_to_fresh="false">
-
             <ListView
                 android:id="@+id/pull_product_listv"
                 android:layout_width="match_parent"

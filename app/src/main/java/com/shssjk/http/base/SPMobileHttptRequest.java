@@ -75,7 +75,18 @@ public class SPMobileHttptRequest {
 		}
 
 	}
-	
+
+	public static void get(String url ,JsonHttpResponseHandler responseHandler) {
+		try {
+			AsyncHttpClient client = new AsyncHttpClient();
+			client.get(url, responseHandler);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseHandler.onFailure(-1 , new Header[]{},new Throwable(e.getMessage()) , new JSONObject());
+		}
+
+	}
+
 	/**
 	* @Description: POST回调 
 	* @param url	请求URL
@@ -89,12 +100,13 @@ public class SPMobileHttptRequest {
 		if (params == null){
 			params = new RequestParams();
 		}
-
 		if (MobileApplication.getInstance().isLogined){
 			SPUser user = MobileApplication.getInstance().getLoginUser();
 			params.put("user_id" , user.getUserID());
 			params.put("token" , user.getToken());//
+			Logger.e("post  getToken", "token " + user.getToken());
 		}else{
+
 			}
 //			if (MobileConstants.DevTest){
 //				params.put("user_id" , 1);
@@ -106,12 +118,52 @@ public class SPMobileHttptRequest {
 		try {
 			configSign(params, url);
 			client.post(url, params, responseHandler);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			responseHandler.onFailure(-1 , new Header[]{},new Throwable(e.getMessage()) , new JSONObject());
 		}
 	}
+
+
+
+
+	/**
+	 * 获取商品详情时信息
+	 * @Description: POST回调
+	 * @param url	请求URL
+	 * @param params请求参数
+	 * @return void    返回类型
+	 * @throws
+	 */
+	public static void post2(String url , RequestParams params , JsonHttpResponseHandler responseHandler){
+		AsyncHttpClient client = new AsyncHttpClient();
+		Logger.e("POST回调", url);
+		if (params == null){
+			params = new RequestParams();
+		}
+		if (MobileApplication.getInstance().isLogined){
+			SPUser user = MobileApplication.getInstance().getLoginUser();
+			params.put("uid" , user.getUserID());
+			params.put("token" , user.getToken());//
+		}else{
+
+		}
+//			if (MobileConstants.DevTest){
+//				params.put("user_id" , 1);
+//		}
+		if (MobileApplication.getInstance().getDeviceId() !=null){
+			String imei = MobileApplication.getInstance().getDeviceId();
+			params.put("unique_id" , imei);
+		}
+		try {
+			configSign(params, url);
+			client.post(url, params, responseHandler);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseHandler.onFailure(-1 , new Header[]{},new Throwable(e.getMessage()) , new JSONObject());
+		}
+	}
+
 
 	/**
 	 * 根据控制器和action组装请求URL

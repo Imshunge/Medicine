@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#fafafa"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp" >
+
+    <TextView
+        android:id="@+id/user_txtv"
+        style="@style/text_15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
+        android:singleLine="false"
+        android:gravity="left"
+        android:text="爸爸妈妈" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:background="#fafafa"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/devicenum_txtv"
+            style="@style/text_13"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="P10255555" />
+        <Button
+            android:id="@+id/delete_btn"
+            style="@style/text_13"
+            android:layout_height="@dimen/margin20dp"
+            android:layout_width="@dimen/margin40dp"
+            android:layout_marginRight="@dimen/margin5dp"
+            android:background="@drawable/button_round_red_selector"
+            android:gravity="center"
+            android:focusable = "false"
+            android:text="删除"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
+</LinearLayout>

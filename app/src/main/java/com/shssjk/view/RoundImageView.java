@@ -28,19 +28,16 @@ public class RoundImageView extends ImageView {
     // 控件默认长、宽  
     private int defaultWidth = 0;  
     private int defaultHeight = 0;  
-  
-    public RoundImageView(Context context) {  
+      public RoundImageView(Context context) {
         super(context);  
         mContext = context;  
     }  
-  
-    public RoundImageView(Context context, AttributeSet attrs) {  
+    public RoundImageView(Context context, AttributeSet attrs) {
         super(context, attrs);  
         mContext = context;  
         setCustomAttributes(attrs);  
     }  
-  
-    public RoundImageView(Context context, AttributeSet attrs, int defStyle) {  
+      public RoundImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);  
         mContext = context;  
         setCustomAttributes(attrs);  
@@ -75,8 +72,7 @@ public class RoundImageView extends ImageView {
         Bitmap bitmap = b.copy(Config.ARGB_8888, true);
         if (defaultWidth == 0) {  
             defaultWidth = getWidth();  
-  
-        }  
+          }
         if (defaultHeight == 0) {  
             defaultHeight = getHeight();  
         }  

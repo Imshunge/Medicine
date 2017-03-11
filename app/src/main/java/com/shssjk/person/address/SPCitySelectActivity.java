@@ -60,7 +60,7 @@ public class SPCitySelectActivity extends BaseActivity implements View.OnClickLi
                 case SPPersonDao.LEVEL_CITY:
                 case SPPersonDao.LEVEL_DISTRICT:
                 case SPPersonDao.LEVEL_TOWN:
-                    System.out.println("镇/街道列表what======" + msg.what);
+//                    System.out.println("镇/街道列表what======" + msg.what);
                     regions = (List<SPRegionModel>) msg.obj;
                     adapter.clear();
                     adapter.addAll(regions);

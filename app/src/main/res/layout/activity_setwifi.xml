@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fafafa"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:layout_marginTop="@dimen/margin_space"
+        android:background="@color/bg_view"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/bankcard_user_txtv"
+            style="@style/textStyle.Normal.black"
+            android:layout_width="80dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical|left"
+            android:padding="@dimen/margin_space"
+            android:text="@string/camera_wifi_name" />
+
+        <EditText
+            android:id="@+id/wifi_name"
+            style="@style/textStyle.Medium.User.Input"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_text"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_space"
+            android:layout_toRightOf="@id/bankcard_user_txtv"
+            android:background="@drawable/edittext_default_rounded"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/tag_common_margin"
+            android:text="" />
+    </RelativeLayout>
+
+    <View style="@style/separator_line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:layout_marginTop="@dimen/margin_space"
+        android:background="@color/bg_view"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/device_name_txtv"
+            style="@style/textStyle.Normal.black"
+            android:layout_width="80dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical|left"
+            android:padding="@dimen/margin_space"
+            android:text="@string/camera_wifi_paw" />
+
+        <EditText
+            android:id="@+id/wifi_pwd"
+            style="@style/textStyle.Medium.User.Input"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_text"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_space"
+            android:layout_toRightOf="@id/device_name_txtv"
+            android:background="@drawable/edittext_default_rounded"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/tag_common_margin"
+            android:inputType="textPassword"
+            android:text="" />
+    </RelativeLayout>
+
+    <View style="@style/separator_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:layout_marginTop="5dip"
+        android:background="@drawable/background_white_corner"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <Button
+            android:id="@+id/btn_link"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/margin20dp"
+            android:text="@string/addcameraactivity_btn_link"
+             android:background="@drawable/button_pop_selector"
+            />
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:background="@drawable/button_pop_selector"
+            android:text="@string/addcameraactivity_btn_cancel" />
+    </LinearLayout>
+</LinearLayout>

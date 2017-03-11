@@ -24,13 +24,13 @@
                 android:background="@drawable/spinner_selector" >
 
                 <Spinner
+                    android:layout_marginLeft="@dimen/margin10dp"
                     android:id="@+id/bind_text"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
                     android:background="@null"
-                    android:spinnerMode="dialog" />
-
+                    android:entries="@array/device" />
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -46,15 +46,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/spinner_selector" >
-
                 <Spinner
                     android:id="@+id/bind_spin"
+                    android:layout_marginLeft="@dimen/margin10dp"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
                     android:background="@null"
+                    android:entries="@array/type"
                     android:spinnerMode="dialog" />
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,17 +64,16 @@
                     android:contentDescription="@null"
                     android:src="@drawable/spinner_down" />
             </RelativeLayout>
-
             <EditText
                 android:id="@+id/bind_num"
+                style="@style/textStyle.Medium.User.Input"
+                android:background="@drawable/edittext_default_rounded"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:ems="10"
                 android:hint="@string/bind_number"
-                android:inputType="text"
+                android:inputType="textVisiblePassword"
                 android:textSize="15sp" >
-
                 <requestFocus />
             </EditText>
 
@@ -85,8 +84,8 @@
                 android:layout_marginTop="15dp"
                 android:text="@string/bind_set"
                 android:textColor="@color/black_64"
-                android:textSize="15sp" />
-
+                android:textSize="15sp"
+                android:checked="false" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,13 +120,13 @@
             <LinearLayout
                 android:id="@+id/layout_bind"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:descendantFocusability= "blocksDescendants"
                 android:layout_marginTop="20dp" >
-
                 <com.shssjk.view.ListViewNobar
                     android:id="@+id/list_bind"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:listSelector="@null"
                     android:numColumns="1"

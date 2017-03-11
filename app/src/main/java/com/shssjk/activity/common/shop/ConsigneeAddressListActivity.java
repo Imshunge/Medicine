@@ -23,8 +23,9 @@ import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.person.SPPersonRequest;
 import com.shssjk.model.person.SPConsigneeAddress;
-import com.shssjk.person.address.SPConsigneeAddressEditActivity;
-import com.shssjk.utils.SPConfirmDialog;
+import com.shssjk.person.address.ConsigneeAddressEditActivity;
+import com.shssjk.utils.Logger;
+import com.shssjk.utils.ConfirmDialog;
 
 import java.util.List;
 
@@ -32,14 +33,10 @@ import java.util.List;
  * 收货地址 列表
  */
 public class ConsigneeAddressListActivity extends BaseActivity implements SPAddressListAdapter
-        .AddressListListener, SPConfirmDialog.ConfirmDialogListener{
-
+        .AddressListListener, ConfirmDialog.ConfirmDialogListener{
     private String TAG = "ConsigneeAddressListActivity";
-
-//    @ViewById(R.id.address_listv)
     ListView addressLstv;
 
-//    @ViewById(R.id.address_list_pcl)
     PtrClassicFrameLayout ptrClassicFrameLayout;
     Button addAddressBtn;
     SPAddressListAdapter mAdapter;
@@ -58,14 +55,8 @@ public class ConsigneeAddressListActivity extends BaseActivity implements SPAddr
         mContext=this;
         super.init();
     }
-
     @Override
     public void initSubViews() {
-        //    @ViewById(R.id.address_listv)
-//        ListView addressLstv;
-
-//    @ViewById(R.id.address_list_pcl)
-//        PtrClassicFrameLayout ptrClassicFrameLayout;
 //       标题
         titlbarFl= (FrameLayout) findViewById(R.id.titlebar_layout);
         titlbarFl.setBackgroundColor(ContextCompat.getColor(mContext, R.color.shop_title)); //or which ever color do you want
@@ -91,13 +82,11 @@ public class ConsigneeAddressListActivity extends BaseActivity implements SPAddr
         View emptyView = findViewById(R.id.empty_lstv);
         addressLstv.setEmptyView(emptyView);
     }
-
     @Override
     public void initData() {
         mAdapter = new SPAddressListAdapter(this , this);
         addressLstv.setAdapter(mAdapter);
         ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
-
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 //下拉刷新
@@ -106,35 +95,33 @@ public class ConsigneeAddressListActivity extends BaseActivity implements SPAddr
         });
         refreshData();
     }
-
     @Override
     public void initEvent() {
         addAddressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, SPConsigneeAddressEditActivity.class);
+                Intent intent = new Intent(mContext, ConsigneeAddressEditActivity.class);
                 startActivityForResult(intent, MobileConstants.Result_Code_Refresh);
             }
         });
     }
-
     @Override
     public void onItemDelete(SPConsigneeAddress consigneeAddress) {
         selectConsignee = consigneeAddress;
-        showConfirmDialog("确定删除该地址吗", "删除提醒", this, 1);
+        showConfirmDialog("确定删除该地址吗?", "删除提醒", this, 1);
     }
 
 
     @Override
     public void onItemEdit(SPConsigneeAddress consigneeAddress) {
-        Intent intent = new Intent(this, SPConsigneeAddressEditActivity.class);
+        Intent intent = new Intent(this, ConsigneeAddressEditActivity.class);
         intent.putExtra("consignee" , consigneeAddress);
         startActivityForResult(intent, MobileConstants.Result_Code_Refresh);
     }
 
     @Override
     public void onItemSetDefault(SPConsigneeAddress consigneeAddress) {
-        Intent intent = new Intent(this, SPConsigneeAddressEditActivity.class);
+        Intent intent = new Intent(this, ConsigneeAddressEditActivity.class);
         intent.putExtra("consignee" , consigneeAddress);
         startActivityForResult(intent, MobileConstants.Result_Code_Refresh);
     }
@@ -144,7 +131,8 @@ public class ConsigneeAddressListActivity extends BaseActivity implements SPAddr
         SPPersonRequest.getConsigneeAddressList(new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
-                if (response != null) {consignees = (List<SPConsigneeAddress>) response;
+                if (response != null) {
+                    consignees = (List<SPConsigneeAddress>) response;
                     dealModels();
                     mAdapter.setData(consignees);
                 }
@@ -161,13 +149,16 @@ public class ConsigneeAddressListActivity extends BaseActivity implements SPAddr
         });
     }
     public void dealModels(){
-
         if (consignees == null)return;
         for (SPConsigneeAddress consigneeAddress : consignees) {
-
-            String firstAddress = SPPersonDao.getInstance(this).queryFirstRegion(consigneeAddress.getProvince() , consigneeAddress.getCity() ,consigneeAddress.getDistrict(), consigneeAddress.getTown());
+            String firstAddress = SPPersonDao.getInstance(this).
+                    queryFirstRegion(consigneeAddress.getProvince(),
+                            consigneeAddress.getCity(), consigneeAddress.getDistrict(),
+                            consigneeAddress.getTown());
             if (firstAddress != null){
                 consigneeAddress.setFullAddress(firstAddress+consigneeAddress.getAddress());
+                Logger.e("firstAddress", firstAddress);
+                Logger.e("consigneeAddress.getAddress()",consigneeAddress.getAddress());
             }else{
                 consigneeAddress.setFullAddress(consigneeAddress.getAddress());
             }

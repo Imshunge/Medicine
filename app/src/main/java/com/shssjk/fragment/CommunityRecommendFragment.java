@@ -100,6 +100,9 @@ public class CommunityRecommendFragment extends BaseFragment {
     public void initSubView(View view) {
         articlesListv = (ListView)view.findViewById(R.id.school_listv);
         articlesPcf = (PtrClassicFrameLayout)view. findViewById(R.id.quack_list_view_ptr);
+
+
+
     }
 
     @Override
@@ -141,6 +144,11 @@ public class CommunityRecommendFragment extends BaseFragment {
 
     @Override
     public void initData() {
+    }
+
+    @Override
+    public void gotoLoginPageClearUserDate() {
+
     }
 
 

@@ -10,21 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/view_bg_clickable_selector">
-
         <ImageView
+            android:padding="@dimen/margin5dp"
             android:id="@+id/product_pic_imgv"
-            android:layout_width="60.0dip"
-            android:layout_height="60.0dip"
+            android:layout_marginLeft="@dimen/item_icon_marginLeft"
+            android:layout_width="@dimen/item_icon_width"
+            android:layout_height="@dimen/item_icon_height"
             android:src="@drawable/product_default"
             android:background="@color/white"
             android:layout_gravity="center"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/margin_space"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:scaleType="fitCenter" />
-
         <TextView
             android:id="@+id/product_name_txtv"
             android:layout_toRightOf="@id/product_pic_imgv"

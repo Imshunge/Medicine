@@ -17,7 +17,7 @@ public class Article implements Model, Serializable {
     private String author;
     private String author_email;
     private String cat_id;
-    private String click;
+    private String click;//阅读量
     private String content;
     private String file_url;
     private String is_open;
@@ -29,6 +29,15 @@ public class Article implements Model, Serializable {
     private String title;
     private String type;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private String description;
     public String getCcount() {
         return ccount;
     }

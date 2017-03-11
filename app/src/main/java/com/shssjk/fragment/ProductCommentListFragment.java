@@ -79,7 +79,8 @@ public class ProductCommentListFragment extends BaseFragment {
 	public void initSubView(View view) {
 		ptrClassicFrameLayout = (PtrClassicFrameLayout)view.findViewById(R.id.product_comment_list_view_frame);
 		commentListv  = (ListView)view.findViewById(R.id.product_comment_listv);
-
+		View  emptyView  =  view.findViewById(R.id.empty_lstv);
+		commentListv.setEmptyView(emptyView);
 		ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
 
 			@Override
@@ -88,7 +89,6 @@ public class ProductCommentListFragment extends BaseFragment {
 				refreshData();
 			}
 		});
-
 		ptrClassicFrameLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
 			@Override
 			public void loadMore() {
@@ -96,10 +96,10 @@ public class ProductCommentListFragment extends BaseFragment {
 				loadMoreData();
 			}
 		});
-
 		mAdapter = new ProductDetailCommentAdapter(getActivity());
 		commentListv.setAdapter(mAdapter);
 		loadData();
+
 	}
 
 	@Override
@@ -182,5 +182,9 @@ public class ProductCommentListFragment extends BaseFragment {
 			isFirstLoad = false;
 		}
 	}
-	
+
+	@Override
+	public void gotoLoginPageClearUserDate() {
+
+	}
 }

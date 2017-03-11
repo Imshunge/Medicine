@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+	android:descendantFocusability="blocksDescendants"
+    android:background="@color/bg_activity">
+
+	<View  style="@style/separator_line"/>
+	<ListView
+		android:id="@+id/lv_goods"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"/>
+	<View  style="@style/separator_line"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="40dip"
+		android:background="@color/bg_view"
+		android:orientation="horizontal">
+		<TextView
+			android:id="@+id/order_product_detail_txtv"
+			android:layout_width="0dp"
+			android:layout_weight="1"
+			android:layout_height="match_parent"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="@dimen/margin_space_half"
+			android:gravity="center_vertical"
+			android:text="共1件商品 实付金额¥699"
+			style="@style/textStyle.Normal.black"/>
+		<Button
+			android:id="@+id/btn_1"
+			android:layout_width="60dp"
+			android:layout_height="30dp"
+			style="@style/textStyle.Small.black"
+			android:background="@drawable/tag_button_bg_unchecked"
+			android:text="@string/btn_order_list_nopay"
+			android:layout_gravity="left|center_vertical"
+			android:layout_margin="@dimen/margin20dp"
+			/>
+		<Button
+            android:id="@+id/btn_2"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            style="@style/textStyle.Small.black"
+            android:text="@string/btn_order_list_gopay"
+            android:background="@drawable/tag_button_bg_unchecked"
+			android:layout_alignParentTop="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="@dimen/margin20dp"
+            />
+	</LinearLayout>
+
+	<View  style="@style/separator_line"/>
+
+
+</LinearLayout>

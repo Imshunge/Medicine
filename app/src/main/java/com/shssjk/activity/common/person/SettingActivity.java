@@ -1,8 +1,12 @@
 package com.shssjk.activity.common.person;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
@@ -20,10 +24,12 @@ import com.shssjk.activity.common.user.ChangePasswordActivity;
 import com.shssjk.activity.common.user.MyMessageActivity;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
+import com.shssjk.global.SPSaveData;
 import com.shssjk.utils.ExitDialog;
 import com.shssjk.view.SPArrowRowView;
 
 import android.view.WindowManager.LayoutParams;
+import android.widget.Toast;
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
@@ -41,11 +47,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     RelativeLayout telephoneRelat; //尚尚热线
 
-    SPArrowRowView aboutAview;  //关于尚尚
+    SPArrowRowView serviceAview;  //尚尚服务
 
     SPArrowRowView exitAview;  //退出
     private TextView telNumTex;
-
+    private Context mContext;
     //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         super.init();
+        mContext=this;
     }
 
     @Override
@@ -63,17 +70,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         titleTxtv = (TextView) findViewById(R.id.titlebar_title_txtv);
         titleTxtv.setTextColor(ContextCompat.getColor(this, R.color.white));
         telephoneRelat = (RelativeLayout) findViewById(R.id.rl_tel);
-
 //        myteamAview = (SPArrowRowView) findViewById(R.id.person_setting_myteam_aview);
         messageAview = (SPArrowRowView) findViewById(R.id.person_setting_message_aview);
         changepwdAview = (SPArrowRowView) findViewById(R.id.person_setting_changepwd_aview);
         helpAview = (SPArrowRowView) findViewById(R.id.person_setting_help_aview);
-        aboutAview = (SPArrowRowView) findViewById(R.id.person_setting_about_aview);
+        serviceAview = (SPArrowRowView) findViewById(R.id.person_setting_service_aview);
         exitAview = (SPArrowRowView) findViewById(R.id.person_setting_exit_aview);
-
         telNumTex = (TextView) findViewById(R.id.sub_phonenum_txtv);
-
-
     }
 
     @Override
@@ -83,15 +86,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initEvent() {
-
         telephoneRelat.setOnClickListener(this);
-//        myteamAview.setOnClickListener(this);
         messageAview.setOnClickListener(this);
         changepwdAview.setOnClickListener(this);
         helpAview.setOnClickListener(this);
-        aboutAview.setOnClickListener(this);
+        serviceAview.setOnClickListener(this);
         exitAview.setOnClickListener(this);
-
     }
 
     //退出
@@ -110,6 +110,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             public void onClick(View v) {
                 MobileApplication.getInstance().exitLogin();
                 sendBroadcast(new Intent(MobileConstants.ACTION_LOGIN_CHNAGE));
+                clearUserData();
                 showToast("安全退出");
                 finish();
             }
@@ -120,10 +121,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 ActivityCollector.finishAll();                //后台运行
             }
         });
-
     }
-
-
+//    清除用户名 密码
+    private void clearUserData() {
+        SPSaveData.clearLoginData(mContext);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -140,15 +142,22 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 startActivity(helpIntent);
                 break;
             case R.id.rl_tel:  //拨号
-                String number = telNumTex.getText().toString();
-                Intent intent = new Intent();
-                intent.setAction("android.intent.action.CALL");
-                intent.setData(Uri.parse("tel:" + number));
-                startActivity(intent);
+                try {
+                    if (ActivityCompat.checkSelfPermission(SettingActivity.this,
+                            Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(SettingActivity.this,
+                                new String[]{Manifest.permission.CALL_PHONE}, 1);
+                        return;
+                    } else {
+                        call();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
-            case R.id.person_setting_about_aview:
+            case R.id.person_setting_service_aview:
                 //	帮助
-                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                Intent aboutIntent = new Intent(this, ServiceActivity.class);
                 startActivity(aboutIntent);
                 break;
             case R.id.person_setting_exit_aview:
@@ -157,8 +166,23 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    private void call() {
+        try {
+            String number = telNumTex.getText().toString();
+            Intent intent = new Intent();
+            intent.setAction("android.intent.action.CALL");
+            intent.setData(Uri.parse("tel:" + number));
+            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(SettingActivity.this,
+                        new String[]{Manifest.permission.CALL_PHONE}, 1);
+                return;
+            }
+            startActivity(intent);
+        } catch (Exception e) {
 
-
+        }
+    }
     /**
      * 修改密码
      */
@@ -171,8 +195,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         Intent changePwdIntent = new Intent(this, ChangePasswordActivity.class);
         startActivity(changePwdIntent);
     }
-
-
     /**
      * 消息通知
      */
@@ -185,5 +207,17 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         Intent changePwdIntent = new Intent(this, MyMessageActivity.class);
         startActivity(changePwdIntent);
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    call();
+                } else {
+                    Toast.makeText(this, "拨打电话功能被禁止，将导联系客服功能异常", Toast.LENGTH_SHORT).show();
+//                    showToast("拨打电话功能被禁止，将导功能联系客服异常");
+                }
+        }
+    }
 }

@@ -86,9 +86,9 @@ public class OrderListAdapter extends BaseAdapter implements View.OnClickListene
 			holder.orderButtonScrollv = ((HorizontalScrollView) convertView.findViewById(R.id.order_button_scrollv)) ;
 			holder.orderButtonGalleryLyaout = (LinearLayout) convertView.findViewById(R.id.order_button_gallery_lyaout);
 
-			holder.orderProductRlayout = ((RelativeLayout) convertView.findViewById(R.id.order_product_rlayout)) ;
-			holder.orderPicImgv = (ImageView) convertView.findViewById(R.id.order_pic_imgv);
-			holder.orderProductNameTxtv = (TextView) convertView.findViewById(R.id.order_product_name_txtv);
+//			holder.orderProductRlayout = ((RelativeLayout) convertView.findViewById(R.id.order_product_rlayout)) ;
+//			holder.orderPicImgv = (ImageView) convertView.findViewById(R.id.order_pic_imgv);
+//			holder.orderProductNameTxtv = (TextView) convertView.findViewById(R.id.order_product_name_txtv);
 			holder.orderProductDetailTxtv = (TextView) convertView.findViewById(R.id.order_product_detail_txtv);
 			holder.orderButtonLayout = (LinearLayout) convertView.findViewById(R.id.order_button_layout);
 			//设置标记
@@ -115,7 +115,6 @@ public class OrderListAdapter extends BaseAdapter implements View.OnClickListene
 				holder.orderProductNameTxtv.setText(product.getGoodsName());
 				String url = product.getImageThumlUrl();
 				Glide.with(mContext).load(url).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.orderPicImgv);
-
 				count = 1 ;
 			}
 			holder.orderProductScrollv.setVisibility(View.GONE);
@@ -178,8 +177,6 @@ public class OrderListAdapter extends BaseAdapter implements View.OnClickListene
 			view.setTag(position);
 			ImageView img = (ImageView) view.findViewById(R.id.id_index_gallery_item_image);
 			Glide.with(mContext).load(url).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(img);
-
-
 			gallery.addView(view);
 		}
 	}
@@ -254,8 +251,6 @@ public class OrderListAdapter extends BaseAdapter implements View.OnClickListene
 				msg.obj = order;
 				mHandler.sendMessage(msg);
 			}
-
-
 		}
 	};
 }

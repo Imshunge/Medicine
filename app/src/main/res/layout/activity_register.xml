@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.soubao.tpshop.activity.person.user.SPRegisterActivity">
+    tools:context="com.shssjk.activity.common.user.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,19 +23,19 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:paddingRight="@dimen/margin5dp"
             android:gravity="center" />
-
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/textStyle.Medium.User.Input"
+            android:background="@drawable/edittext_default_rounded"
             android:inputType="phone"
             android:ems="10"
             android:id="@+id/editPhoneNum"
             android:layout_alignBottom="@+id/textView"
             android:layout_toRightOf="@+id/textView"
             android:layout_toEndOf="@+id/textView"
-            style="@style/edit_text"/>
-
+            />
         <Button
             android:layout_width="match_parent"
             style="@style/button_style"
@@ -45,7 +45,6 @@
             android:layout_centerHorizontal="true"
             android:onClick="onBtnNextOneClick"
             android:layout_marginTop="20dp"/>
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -76,16 +75,19 @@
             android:layout_below="@+id/txt_register_phone"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:paddingRight="@dimen/margin5dp"
             android:gravity="center" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            style="@style/textStyle.Medium.User.Input"
+            android:background="@drawable/edittext_default_rounded"
+
             android:id="@+id/edit_code"
             android:ems="6"
             android:layout_alignBottom="@+id/txt_code"
             android:inputType="number"
-            style="@style/edit_text"
             android:layout_toLeftOf="@+id/btn_send_sms"
             android:layout_toRightOf="@+id/txt_code"
             android:layout_toEndOf="@+id/txt_code" />
@@ -121,39 +123,39 @@
         android:visibility="gone">
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="@dimen/margin70dp"
             style="@style/textStyle.Medium.User"
             android:text="@string/register_inviter"
             android:id="@+id/txt_inviter"
             android:gravity="left|center" />
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/textStyle.Medium.User.Input"
+            android:background="@drawable/edittext_default_rounded"
             android:id="@+id/edit_inviter"
             android:inputType="number"
             android:layout_alignBottom="@+id/txt_inviter"
             android:layout_toRightOf="@+id/txt_inviter"
             android:maxLength="20"
-            style="@style/edit_text"
             android:digits="@string/register_edit_digits"/>
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="@dimen/margin70dp"
             style="@style/textStyle.Medium.User"
             android:text="@string/register_password"
             android:layout_below="@+id/txt_inviter"
             android:id="@+id/txt_pwd"
             android:gravity="left|center" />
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/textStyle.Medium.User.Input"
+            android:background="@drawable/edittext_default_rounded"
             android:id="@+id/edit_password"
             android:inputType="textPassword"
             android:layout_below="@+id/txt_inviter"
             android:layout_alignBottom="@+id/txt_pwd"
             android:layout_toRightOf="@+id/txt_pwd"
             android:maxLength="20"
-            style="@style/edit_text"
             android:digits="@string/register_edit_digits"/>
 
         <TextView
@@ -170,6 +172,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/textStyle.Medium.User.Input"
+            android:background="@drawable/edittext_default_rounded"
             android:id="@+id/edit_re_password"
             android:layout_below="@+id/txt_pwd"
             android:layout_alignParentRight="true"
@@ -177,7 +181,6 @@
             android:inputType="textPassword"
             android:digits="@string/register_edit_digits"
             android:layout_alignLeft="@+id/edit_password"
-            style="@style/edit_text"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="10dp"
             android:layout_alignBottom="@+id/txt_confirm_pwd"

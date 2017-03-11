@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 
 import com.shssjk.activity.R;
-import com.shssjk.model.shop.SPCoupon;
-import com.soubao.tpshop.utils.SPCommonUtils;
+import com.shssjk.model.shop.Coupon;
+import com.shssjk.utils.SSUtils;
 
 import java.util.List;
 
@@ -21,11 +21,11 @@ import java.util.List;
  */
 public class SPOrderCouponAdapter extends BaseAdapter{
 
-	private List<SPCoupon> mCoupons;
-	private SPCoupon selectCoupon;
+	private List<Coupon> mCoupons;
+	private Coupon selectCoupon;
 	private Context mContext ;
 
-	public SPOrderCouponAdapter(Context context, List<SPCoupon> coupons, SPCoupon selectCoupon){
+	public SPOrderCouponAdapter(Context context, List<Coupon> coupons, Coupon selectCoupon){
 		this.mContext = context;
 		if(coupons == null)return;
 		this.mCoupons = coupons;
@@ -33,7 +33,7 @@ public class SPOrderCouponAdapter extends BaseAdapter{
 		notifyDataSetChanged();
 	 }
 
-	public void setSelectCoupon(SPCoupon selectCoupon){
+	public void setSelectCoupon(Coupon selectCoupon){
 		this.selectCoupon = selectCoupon;
 		notifyDataSetChanged();
 	}
@@ -77,7 +77,7 @@ public class SPOrderCouponAdapter extends BaseAdapter{
         }
 
 		//获取该行数据
-		final SPCoupon coupon = mCoupons.get(position);
+		final Coupon coupon = mCoupons.get(position);
 		if ( selectCoupon != null && selectCoupon.getCouponType() == 1 && selectCoupon.getCouponID().equals(coupon.getCouponID())){
 			holder.checkImgv.setBackgroundResource(R.drawable.icon_checked);
 		}else {
@@ -85,10 +85,9 @@ public class SPOrderCouponAdapter extends BaseAdapter{
 		}
 
 		holder.titleTxtv.setText(coupon.getName());
-		holder.subTitleTxtv.setText(coupon.getUseEndTime());
-		if (coupon.getSendTime()!=null){
-			String sendTime = SPCommonUtils.getDateShortTime(Long.valueOf(coupon.getSendTime().trim()));
-			holder.subTitleTxtv.setText("发放时间:"+sendTime);
+		if (coupon.getUseEndTime()!=null){
+			String sendTime=	SSUtils.TimeStamp2Date(coupon.getUseEndTime().trim(), "yyyy-MM-dd HH:mm:ss");
+			holder.subTitleTxtv.setText("截止时间:"+sendTime);
 		}
 
         return convertView;

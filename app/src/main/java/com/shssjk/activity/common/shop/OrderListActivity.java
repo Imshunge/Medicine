@@ -24,7 +24,7 @@ import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.person.SPPersonRequest;
 import com.shssjk.model.order.SPOrder;
-import com.shssjk.utils.SPConfirmDialog;
+import com.shssjk.utils.ConfirmDialog;
 import com.shssjk.utils.SPOrderUtils;
 import com.soubao.tpshop.utils.SPStringUtils;
 
@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * 订单列表 （全部订单）
  */
-public class OrderListActivity extends OrderBaseActivity implements SPConfirmDialog.ConfirmDialogListener{
+public class OrderListActivity extends OrderBaseActivity implements ConfirmDialog.ConfirmDialogListener{
     private String TAG = "OrderListActivity";
 
     ListView orderListv;
@@ -148,26 +148,18 @@ public class OrderListActivity extends OrderBaseActivity implements SPConfirmDia
         titlbarFl.setBackgroundColor(ContextCompat.getColor(this, R.color.shop_title)); //or which ever color do you want
         titleTxtv = (TextView) findViewById(R.id.titlebar_title_txtv);
         titleTxtv.setTextColor(ContextCompat.getColor(this, R.color.white));
-
         orderListv = (ListView) findViewById(R.id.order_listv);
-
         ptrClassicFrameLayout = (PtrClassicFrameLayout) findViewById(R.id.test_list_view_frame);
-
-
-
         View emptyView = findViewById(R.id.empty_lstv);
         orderListv.setEmptyView(emptyView);
-
     }
 
     @Override
     public void initData() {
-
         if (getIntent()!=null){
             int value = getIntent().getIntExtra("orderStatus" , 0);
             orderStatus = SPOrderUtils.getOrderStatusByValue(value);
         }
-
         String title = SPOrderUtils.getOrderTitlteWithOrderStatus(orderStatus);
         setTitle(title);
 
@@ -208,9 +200,6 @@ public class OrderListActivity extends OrderBaseActivity implements SPConfirmDia
                 startActivity(detailIntent);
             }
         });
-
-
-
     }
 
     /**
@@ -242,7 +231,7 @@ public class OrderListActivity extends OrderBaseActivity implements SPConfirmDia
 
                 hideLoadingToast();
             }
-        }, new SPFailuredListener() {
+        }, new SPFailuredListener(OrderListActivity.this) {
             @Override
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
@@ -286,7 +275,7 @@ public class OrderListActivity extends OrderBaseActivity implements SPConfirmDia
                 ptrClassicFrameLayout.refreshComplete();
                 hideLoadingToast();
             }
-        }, new SPFailuredListener() {
+        }, new SPFailuredListener(OrderListActivity.this) {
             @Override
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
