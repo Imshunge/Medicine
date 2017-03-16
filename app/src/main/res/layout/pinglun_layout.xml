@@ -29,6 +29,7 @@
             android:layout_weight="1"
             android:ems="128"
             android:background="@drawable/text_input"
+            android:maxLength="128"
             android:hint="@string/information_comment_hit"
             android:inputType="textMultiLine"
             android:textSize="12sp" >

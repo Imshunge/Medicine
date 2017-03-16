@@ -86,8 +86,6 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1.0px</item>
     </style>
-
-
     <style name="separator_line_vertical">
         <item name="android:background">#ffe0e0e0</item>
         <item name="android:layout_width">1.0px</item>

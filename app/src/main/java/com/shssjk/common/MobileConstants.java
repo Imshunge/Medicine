@@ -34,6 +34,10 @@ public class MobileConstants {
 	public static final String URL_PRODUCT_LIST = BASE_URL + "/goodsList?1=1";
 	public static final String URL_PRODUCT_DETAILS = BASE_URL + "/goodsInfo?1=1";
 
+//	推送
+	public static final String API_KEY="REFrXPcaTeHzooL58tCdZaUp";
+
+
 	public static final String APP_NAME = "ssjk";
 	public static final String DB_NAME = "tpshop.db";
 	public static final String DB2_NAME = "tpshop2.db";//内置数据库名称, 不可更改, 该名称对于asset目录下的tpshop2.db文件名

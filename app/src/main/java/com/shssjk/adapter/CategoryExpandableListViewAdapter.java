@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.shop.ProductListActivity;
+import com.shssjk.activity.shop.ProductListActivity;
 import com.shssjk.model.shop.Data;
 import com.shssjk.model.shop.Tmenu;
 import com.shssjk.utils.Logger;

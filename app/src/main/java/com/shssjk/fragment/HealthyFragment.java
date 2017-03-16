@@ -14,7 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.health.BindDeviceActivity;
+import com.shssjk.activity.health.BindDeviceActivity;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.utils.Logger;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class HealthyFragment extends BaseFragment implements MobileScrollLayout.PageListener,
         View.OnClickListener {
     private Context mContext;
-    private ViewPager mPager;
+    public ViewPager mPager;
     private RadioGroup group_radio;
     @Override
     public void onAttach(Context context) {
@@ -69,6 +69,8 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
                 switch (checkedId) {
                     case R.id.radio_1:
                         mPager.setCurrentItem(0);// 选择某一页
+//                        mPager.getCurrentItem()
+//                        mPager.getCurrentItem()
                         //更新设备列表 血糖仪
                         if (mContext != null) {
                             mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_LOADATA));

@@ -7,7 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-
 import com.shssjk.activity.R;
 import com.shssjk.utils.SMobileLog;
 

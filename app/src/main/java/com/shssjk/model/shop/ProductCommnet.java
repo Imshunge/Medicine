@@ -1,6 +1,6 @@
 package com.shssjk.model.shop;
 
-import com.shssjk.activity.common.shop.CommentList;
+import com.shssjk.activity.shop.CommentList;
 import com.shssjk.model.Model;
 
 import java.io.Serializable;

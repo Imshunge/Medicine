@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.BaseActivity;
+import com.shssjk.activity.BaseActivity;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.dao.SPPersonDao;
 import com.shssjk.http.base.SPFailuredListener;

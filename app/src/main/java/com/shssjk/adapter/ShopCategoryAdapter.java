@@ -11,10 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.shop.ProductActivity;
-import com.shssjk.activity.common.shop.ProductListActivity;
-import com.shssjk.model.SPHomeCategory;
-import com.shssjk.model.SPProduct;
+import com.shssjk.activity.shop.ProductListActivity;
 import com.shssjk.model.shop.Data;
 import com.shssjk.model.shop.Tmenu;
 

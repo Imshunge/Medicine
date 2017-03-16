@@ -9,14 +9,12 @@ import android.util.Log;
 public class Logger {
 
 	/** Log输出的控制开关 */
-	public static boolean isShowLog = true;
-
+	public static boolean isShowLog = false;
 	public static void e(Object objTag, String msg) {
 		if (!isShowLog) {
 			return;
 		}
 		String tag;
-
 		// 如果objTag是String，则直接使用
 		// 如果objTag不是String，则使用它的类名
 		if (objTag instanceof String) {

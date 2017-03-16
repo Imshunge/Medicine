@@ -4,7 +4,7 @@ import android.os.Environment;
 import android.util.Log;
 
 
-import com.shssjk.activity.common.person.PlayActivity;
+import com.shssjk.activity.person.PlayActivity;
 import com.shssjk.model.bean.VideoRecordBean;
 
 import java.io.File;

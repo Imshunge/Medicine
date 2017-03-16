@@ -7,13 +7,12 @@ import android.util.Log;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import com.shssjk.activity.common.shop.CommentList;
+import com.shssjk.activity.shop.CommentList;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPMobileHttptRequest;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.model.SPProduct;
-import com.shssjk.model.health.BloodDevice;
 import com.shssjk.model.order.SPExchange;
 import com.shssjk.model.order.SPOrder;
 import com.shssjk.model.person.Bank;

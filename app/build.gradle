@@ -22,8 +22,6 @@ android {
             assets.srcDirs = ['src/main/assets', 'src/main/assets/2','src/main/assets/fonts']
         }
     }
-
-
     buildTypes {
         release {
             minifyEnabled false

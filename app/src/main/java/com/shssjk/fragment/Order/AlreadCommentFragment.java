@@ -17,9 +17,9 @@ import android.widget.TextView;
 
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.IViewController;
-import com.shssjk.activity.common.shop.CommentOrderDetailActivity;
-import com.shssjk.activity.common.shop.OrderReturnGoodsActivity;
+import com.shssjk.activity.IViewController;
+import com.shssjk.activity.shop.CommentOrderDetailActivity;
+import com.shssjk.activity.shop.OrderReturnGoodsActivity;
 import com.shssjk.adapter.OrderComentAdapter;
 import com.shssjk.fragment.BaseFragment;
 import com.shssjk.http.base.SPFailuredListener;

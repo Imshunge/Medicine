@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.BaseActivity;
+import com.shssjk.activity.BaseActivity;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.dao.SPPersonDao;
 import com.shssjk.model.person.SPConsigneeAddress;

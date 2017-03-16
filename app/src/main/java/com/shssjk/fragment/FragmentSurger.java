@@ -28,9 +28,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.shssjk.MainActivity;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.IViewController;
+import com.shssjk.activity.IViewController;
 import com.shssjk.adapter.SugarAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
@@ -55,7 +54,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.NameValuePair;
-
 /**
  * 血糖
  */
@@ -162,6 +160,7 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
     private List<SugarData> sugarData = new ArrayList<SugarData>();
     private SugarAdapter sugarAdapter;
     private boolean isFast = true;
+    private boolean isGoToLogin = false; //没登陆时去登录 记录状态
     private DeviceListSugarChangeReceiver mDeviceListSugarChangeReceiver;
 
     private final Handler mHandler = new Handler() {
@@ -175,16 +174,38 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
             }
         }
     };
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mContext = context;
+        Logger.e("FragmentSurger", "onAttach");
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+        isFast=false;
+//        HealthyFragment healthyFragment = new HealthyFragment();
+//        int index=  healthyFragment.mPager.getCurrentItem();
+        Logger.e("FragmentSurger", "onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Logger.e("FragmentSurger", "onResume");
+        if (isGoToLogin) {
+//            getProductDetails();
+            if (MobileApplication.getInstance().isLogined) {
+                getDeviceList();
+            }
+        }
+    }
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Logger.e(this,"onCreate");
     }
 
     @Override
@@ -193,8 +214,16 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_healthy_sugger, null, false);
         super.init(view);
         ButterKnife.bind(this, view);
+        Logger.e(this, "onCreateView");
         return view;
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Logger.e(this, "onViewCreated");
+    }
+
     @Override
     public void initSubView(View v) {
         tv_date1 = (TextView) v.findViewById(R.id.sugar_date1);
@@ -225,13 +254,11 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 psotion = position;
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
 
             }
         });
-
 
     }
 
@@ -252,9 +279,8 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
         if (!MobileApplication.getInstance().isLogined) {
             clearData();
         } else {
-            getDeviceList();
+//            getDeviceList();
         }
-
     }
 
     //   清除数据
@@ -275,6 +301,7 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if (!MobileApplication.getInstance().isLogined) {
+            isGoToLogin = true;
             showToastUnLogin();
             toLoginPage();
             return;
@@ -399,9 +426,12 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
 //                }else{
 //                    showToast(msg);
 //                }
-                //未绑定血糖仪设备
-                showToast(msg);
-
+                //可见时才显示提示
+                if(!isFast){
+                    showToast(msg);
+                }
+//                showToast(msg);
+                Logger.e(this, "getDeviceList " + msg + "");
             }
         });
     }
@@ -464,7 +494,11 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
                 if (clickId == 2) {
                     setChart();
                 }
-                showToast(msg);
+                //可见时才显示提示
+                if(!isFast){
+                    showToast(msg);
+                }
+                Logger.e(this, "getSugarDataList " + msg + "");
             }
         });
     }
@@ -538,15 +572,12 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
 
         ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
         dataSets.add(set1); // add the datasets
-
-
         // create a data object with the datasets
         LineData data = new LineData(xVals, dataSets);
         data.setValueTextColor(MyColor.TOUMING);
         data.setValueTextSize(9f);
         return data;
     }
-
     public void setupChart(LineChart mChart, LineData data, int color) {
         // no description text
         mChart.setDescription("");
@@ -626,7 +657,11 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
             @Override
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
-                showToast(msg);
+                //可见时才显示提示
+                if(!isFast){
+                    showToast(msg);
+                }
+                Logger.e(this, "getSugarTongJi " + msg + "");
             }
         });
     }
@@ -718,19 +753,16 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
         }
 
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
         mContext.unregisterReceiver(mDeviceListSugarChangeReceiver);
     }
-
     @Override
     public void gotoLoginPageClearUserDate() {
 
     }
-
     //广播接收器  血压数据  变化
     class DeviceListSugarChangeReceiver extends BroadcastReceiver {
         @Override

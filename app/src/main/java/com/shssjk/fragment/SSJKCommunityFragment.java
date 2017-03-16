@@ -9,15 +9,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.community.ComMyArticleListActivity;
-import com.shssjk.activity.common.community.MyQuackListActivity;
-import com.shssjk.activity.common.community.QuackListActivity;
+import com.shssjk.activity.community.ComMyArticleListActivity;
+import com.shssjk.activity.community.MyQuackListActivity;
+import com.shssjk.activity.community.QuackListActivity;
 import com.shssjk.adapter.SchollListAdapter;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.community.CommunityRequest;
 import com.shssjk.model.community.ComCategory;
-import com.shssjk.model.community.SchoolList;
 import com.shssjk.view.MyGridView;
 
 import java.util.List;

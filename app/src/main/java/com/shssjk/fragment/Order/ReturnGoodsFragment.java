@@ -17,7 +17,7 @@ import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
 import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.shop.ReturnOrderDetailActivity;
+import com.shssjk.activity.shop.ReturnOrderDetailActivity;
 import com.shssjk.adapter.OrderReturnGoodsAdapter;
 import com.shssjk.fragment.BaseFragment;
 import com.shssjk.http.base.SPFailuredListener;

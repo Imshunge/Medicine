@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.community.QuackListActivity;
+import com.shssjk.activity.community.QuackListActivity;
 import com.shssjk.adapter.CommunityTabAdapter;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;

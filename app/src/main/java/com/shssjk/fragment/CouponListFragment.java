@@ -13,7 +13,7 @@ import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
 import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.user.CouponList2Activity;
+import com.shssjk.activity.user.CouponList2Activity;
 import com.shssjk.adapter.CouponListAdapter;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;

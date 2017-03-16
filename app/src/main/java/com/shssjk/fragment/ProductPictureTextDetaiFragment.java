@@ -12,8 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.shop.ProductActivity;
-import com.shssjk.activity.common.shop.ProductAllActivity;
+import com.shssjk.activity.shop.ProductAllActivity;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.condition.ProductCondition;

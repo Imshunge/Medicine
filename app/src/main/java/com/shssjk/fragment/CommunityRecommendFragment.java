@@ -16,7 +16,7 @@ import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
 import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.community.ComArticleListActivity;
+import com.shssjk.activity.community.ComArticleListActivity;
 import com.shssjk.adapter.SchollAdapter;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;

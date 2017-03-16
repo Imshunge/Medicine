@@ -9,10 +9,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.baidu.android.pushservice.PushMessageReceiver;
-import com.shssjk.activity.common.information.ArticleDetailActivity;
-import com.shssjk.activity.common.shop.ProductActivity;
-import com.shssjk.activity.common.shop.ProductAllActivity;
-import com.shssjk.activity.common.user.PushMessageDetailActivity;
+import com.shssjk.activity.information.ArticleDetailActivity;
+import com.shssjk.activity.shop.ProductAllActivity;
+import com.shssjk.activity.user.PushMessageDetailActivity;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.model.Push;
@@ -22,7 +21,6 @@ import com.shssjk.utils.Logger;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -55,7 +53,6 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
     public static final String TAG = MyPushMessageReceiver.class
             .getSimpleName();
     public final int MODE_PRIVATE = 0x0000;
-
     /**
      * 调用PushManager.startWork后，sdk将对push
      * server发起绑定请求，这个过程是异步的。绑定请求的结果通过onBind返回。 如果您需要用单播推送，需要把这里获取的channel
@@ -82,7 +79,6 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
                 + appid + " userId=" + userId + " channelId=" + channelId
                 + " requestId=" + requestId;
         Logger.e(TAG, responseString);
-
         if (errorCode == 0) {
             // 绑定成功
             Log.d(TAG, "绑定成功");
@@ -93,12 +89,10 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
             editor.putString("userId", userId);
             editor.putString("appId", appid);
             editor.commit();
-
         }
         // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
 //        updateContent(context, responseString);
     }
-
     /**
      * 接收透传消息的函数。
      *
@@ -115,7 +109,6 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
         String messageString = "透传消息 onMessage=\"" + message
                 + "\" customContentString=" + customContentString;
         Log.d(TAG, messageString);
-
         // 自定义内容获取方式，mykey和myvalue对应透传消息推送时自定义内容中设置的键和值
         if (!TextUtils.isEmpty(customContentString)) {
             JSONObject customJson = null;
@@ -130,14 +123,12 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
                 e.printStackTrace();
             }
         }
-
         // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
 //        updateContent(context, messageString);
     }
 
     /**
      * 接收通知到达的函数。
-     *
      * @param context
      *            上下文
      * @param title
@@ -147,16 +138,13 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
      * @param customContentString
      *            自定义内容，为空或者json字符串
      */
-
     @Override
     public void onNotificationArrived(Context context, String title,
             String description, String customContentString) {
-
         String notifyString = "通知到达 onNotificationArrived  title=\"" + title
                 + "\" description=\"" + description + "\" customContent="
                 + customContentString;
-        Log.d(TAG, notifyString);
-
+         Log.d(TAG, notifyString);
         // 自定义内容获取方式，mykey和myvalue对应通知推送时自定义内容中设置的键和值
         if (!TextUtils.isEmpty(customContentString)) {
             JSONObject customJson = null;
@@ -174,7 +162,6 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
         // 你可以參考 onNotificationClicked中的提示从自定义内容获取具体值
 //        updateContent(context, notifyString);
         saveData(title, description, customContentString);
-
     }
 
     private void saveData(String title, String description, String customContentString) {
@@ -184,7 +171,6 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
         }
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         String date = df.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
-
 //        System.out.println(date);
         Push push = new Push();
         push.setCustomContentString(customContentString);
@@ -213,7 +199,6 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
         String notifyString = "通知点击 onNotificationClicked title=\"" + title + "\" description=\""
                 + description + "\" customContent=" + customContentString;
         Log.d(TAG, notifyString);
-
         // 自定义内容获取方式，mykey和myvalue对应通知推送时自定义内容中设置的键和值
         if (!TextUtils.isEmpty(customContentString)) {
             JSONObject customJson = null;
@@ -232,7 +217,6 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
             Intent intent = new Intent();
            // 资讯
             if (mytype.equals("ZIXUN")) {// 资讯
-
                 intent = new Intent(context.getApplicationContext(), ArticleDetailActivity.class);
                 intent.putExtra("article_id", myvalue);
                 intent.putExtra("article_title", "热门资讯");
@@ -302,7 +286,6 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
                 + " sucessTags=" + sucessTags + " failTags=" + failTags
                 + " requestId=" + requestId;
         Log.d(TAG, responseString);
-
         // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
         updateContent(context, responseString);
     }
@@ -377,15 +360,13 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
             Log.d(TAG, "解绑成功");
         }
         // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-//        updateContent(context, responseString);
+//        (context, responseString);
 
     }
 
     private void updateContent(Context context, String content) {
         this.updateContent(context,content,"","");
     }
-
-
 
     //消息查看详情
 
@@ -396,12 +377,12 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
         push.setDescription(content);
         push.setCustomContentString(customsString);
         Intent intent = new Intent();
-        intent.setClass(context.getApplicationContext(), PushMessageDetailActivity.class);
+        intent.setClass(context, PushMessageDetailActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
         bundle.putSerializable("push", push);
         intent.putExtras(bundle);
-        context.getApplicationContext().startActivity(intent);
+        context.startActivity(intent);
     }
 
 

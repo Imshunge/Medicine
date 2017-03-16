@@ -7,16 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.IViewController;
-import com.shssjk.activity.common.health.BindDeviceActivity;
-import com.shssjk.activity.common.shop.ProductListActivity;
-import com.shssjk.activity.common.user.LoginActivity;
+import com.shssjk.activity.IViewController;
+import com.shssjk.activity.health.BindDeviceActivity;
+import com.shssjk.activity.shop.ProductListActivity;
+import com.shssjk.activity.user.LoginActivity;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.utils.SMobileLog;
 import com.shssjk.utils.ConfirmDialog;
 import com.shssjk.utils.SPDialogUtils;
 import com.shssjk.utils.SPLoadingDialog;
-import com.shssjk.utils.SSUtils;
 
 
 import org.json.JSONObject;

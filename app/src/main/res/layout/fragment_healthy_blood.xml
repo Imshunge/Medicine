@@ -91,7 +91,6 @@
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:checked="false" />
-
         </RadioGroup>
         <View android:layout_width="0dp"
             android:layout_height="match_parent"

@@ -32,9 +32,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.IViewController;
-import com.shssjk.activity.common.health.BindDeviceActivity;
-import com.shssjk.activity.common.shop.ProductListActivity;
+import com.shssjk.activity.IViewController;
+import com.shssjk.activity.health.BindDeviceActivity;
+import com.shssjk.activity.shop.ProductListActivity;
 import com.shssjk.adapter.BloodAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
@@ -57,6 +57,7 @@ import com.shssjk.view.RoundImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -132,13 +133,13 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     private String startTime = "";
     private String endTime = "";
     private String orderTypr = "desc";   //; order、排序（asc、desc）
-    private List<BloodDevice> bloodDatalist=new ArrayList<BloodDevice>();
+    private List<BloodDevice> bloodDatalist = new ArrayList<BloodDevice>();
     private BloodAdapter bloodAdapter;
     private String deviceId = "";
     private int psotion = 0;
     private DeviceListChangeReceiver mDeviceListChangeReceiver;
-    private boolean isFast=true;
-    private boolean isGoToLogin=false; //没登陆时去登录 记录状态
+    private boolean isFast = true;
+    private boolean isGoToLogin = false; //没登陆时去登录 记录状态
 
     private final Handler mHandler = new Handler() {
         @Override
@@ -151,8 +152,8 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
             }
         }
     };
-//   购买商品的分类id
-    private String categoryId="850";
+    //   购买商品的分类id
+    private String categoryId = "850";
 
     @Override
     public void onAttach(Context context) {
@@ -173,6 +174,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         ButterKnife.bind(this, view);
         return view;
     }
+
     @Override
     public void initSubView(View v) {
         chart_title1 = (TextView) v.findViewById(R.id.chart_title1);
@@ -220,6 +222,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 psotion = position;
                 chanageName(addr);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
 
@@ -281,8 +284,8 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     @Override
     public void initData() {
         if (!MobileApplication.getInstance().isLogined) {
-                clearData();
-        }else{
+            clearData();
+        } else {
             getDeviceList();
         }
     }
@@ -291,7 +294,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     public void onClick(View v) {
         if (!MobileApplication.getInstance().isLogined) {
             showToastUnLogin();
-            isGoToLogin=true;
+            isGoToLogin = true;
             toLoginPage();
             return;
         }
@@ -306,7 +309,12 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 layout_list_chart.setVisibility(View.VISIBLE);
                 layout_tongji.setVisibility(View.GONE);
                 orderTypr = "desc";   //; order、排序（asc、desc）
-                getBloodsList(deviceId, type_sex, orderTypr, startTime, endTime);
+                if (bloodDatalist != null && bloodDatalist.size() > 1) {
+//                    setChart();
+                } else {
+                    getBloodsList(deviceId, type_sex, orderTypr, startTime, endTime);
+                }
+//                getBloodsList(deviceId, type_sex, orderTypr, startTime, endTime);
                 break;
             case R.id.chart_title2:
 //       曲线图
@@ -319,7 +327,11 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 layout_tongji.setVisibility(View.GONE);
 //                getListData(code, type_sex);
                 orderTypr = "asc";
-                getBloodsList(deviceId, type_sex, orderTypr, startTime, endTime);
+                if (bloodDatalist != null && bloodDatalist.size() > 1) {
+                    setChart();
+                } else {
+                    getBloodsList(deviceId, type_sex, orderTypr, startTime, endTime);
+                }
                 break;
             case R.id.chart_title3:
 //   统计
@@ -338,8 +350,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
             case R.id.btn_find:
 //                startTime = tv_date1.getText().toString().trim();
 //                endTime = tv_date2.getText().toString().trim();
-
-
                 startTime = tv_date1.getText().toString().trim();
                 if (startTime.equals("开始日期")) {
                     startTime = "";
@@ -354,7 +364,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 }
                 if (devices != null) {
                     deviceId = devices.get(psotion).getValue().toString().trim();
-                }else{
+                } else {
                     return;
                 }
 
@@ -384,6 +394,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 break;
         }
     }
+
     private void getDeviceList() {
         showLoadingToast("正在加载数据");
         HealthRequest.getDeviceList(deviceType, new SPSuccessListener() {
@@ -402,7 +413,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
             @Override
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
-                if(msg.equals("未绑定血压计设备")){
+                if (msg.equals("未绑定血压计设备")) {
                     ConfirmDialog.Builder builder = new ConfirmDialog.Builder(mContext);
                     builder.setMessage("未绑定血压计设备");
                     builder.setTitle("系统提示");
@@ -421,9 +432,10 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                                 }
                             });
                     builder.create().show();
-                }else{
+                } else {
                     showToast(msg);
                 }
+                Logger.e(this,"getDeviceList "+msg+"");
             }
         });
     }
@@ -438,7 +450,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         getBloodsList(deviceId, type_sex, orderTypr, startTime, endTime);
         showTypes(devices, psotion);
     }
-
     private void showTypes(List<Device> devices, int psotion) {
         String[] types = getTyValue(devices);
         //            改变内容
@@ -447,8 +458,8 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         spiner.setAdapter(adapter);
         spiner.setSelection(psotion, true);
         adapter.setDropDownViewResource(R.layout.dropdown_stytle);
-
     }
+
     //    获取结果数组
     private String[] getTyValue(List<Device> devices) {
         int size = devices.size();
@@ -471,7 +482,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 return i;
             }
         }
-
         return 0;
     }
 
@@ -494,20 +504,14 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
             @Override
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
-//                if (msg.equals("未绑定血糖仪设备")) {
-//                    bloodDatalist = new ArrayList<BloodDevice>();
-//                    bloodAdapter.setData(bloodDatalist);
-//                }
-//                if (msg.equals("空数据")) {
-//                    bloodDatalist = new ArrayList<BloodDevice>();
-//                    bloodAdapter.setData(bloodDatalist);
-//                }
                 bloodDatalist = new ArrayList<BloodDevice>();
                 bloodAdapter.setData(bloodDatalist);
                 showToast(msg);
+                Logger.e(this, "getBloodsList " + msg + "");
             }
         });
     }
+
     public void setupChart(LineChart mChart, LineData data, int color) {
         // no description text
         mChart.setDescription("");
@@ -596,6 +600,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     LineData getData(int count) {
         ArrayList<String> xVals = new ArrayList<String>();
         for (int i = 0; i <= count; i++) {
+//        for (int i = count; i >=0; i--) {
             // x轴显示的数据，这里默认使用数字下标显示
             xVals.add(i + "");
         }
@@ -606,6 +611,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         // y轴的数据  收缩压
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();
         for (int i = 0; i <= count; i++) {
+//        for (int i = count; i >=0; i--) {
 //            int i = count; i >=0; i--
 //            int Min = strChart.path("data").path(i).path("sys").asInt();
             int Min = Integer.parseInt(bloodDatalist.get(i).getSys().trim());
@@ -628,6 +634,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         // y轴的数据
         ArrayList<Entry> yVals2 = new ArrayList<Entry>();
         for (int i = 0; i <= count; i++) {
+//        for (int i = count; i >=0; i--) {
 //            int Max = strChart.path("data").path(i).path("dia").asInt();
             int Max = Integer.parseInt(bloodDatalist.get(i).getDia().trim());
             yVals2.add(new Entry(Max, i));
@@ -650,6 +657,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         // y轴的数据
         ArrayList<Entry> yVals3 = new ArrayList<Entry>();
         for (int i = 0; i <= count; i++) {
+//        for (int i = count; i >=0; i--) {
 //            int Heart = strChart.path("data").path(i).path("pul").asInt();
             int Heart = Integer.parseInt(bloodDatalist.get(i).getPul().trim());
             yVals3.add(new Entry(Heart, i));
@@ -677,19 +685,23 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         LineData data = new LineData(xVals, dataSets);
         data.setValueTextColor(MyColor.TOUMING);
         data.setValueTextSize(9f);
+//        逆序排列 在把数据顺序范过来
+        Collections.reverse(bloodDatalist);
         return data;
     }
 
     public void setChart() {
         // data0 = getData(36, 100);
+
         int size = 0;
         if (bloodDatalist != null && !bloodDatalist.isEmpty()) {
             size = bloodDatalist.size();
         }
+//      逆序排列
+        Collections.reverse(bloodDatalist);
         LineData data0 = getData(size - 1);
         setupChart(mChart, data0, COL_BACK);
     }
-
     private void getBloodsTongJi(String imei, String type) {
         showLoadingToast("正在加载数据");
         HealthRequest.getBloodsTongji(imei, type, new SPSuccessListener() {
@@ -706,59 +718,59 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
             @Override
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
-
                 showToast(msg);
+                Logger.e(this, "getBloodsTongJi " + msg + "");
             }
         });
     }
 
     private void showTongJi(BloodTongJi bloodTongJi) {
-        if(SSUtils.isEmpty(bloodTongJi)){
+        if (SSUtils.isEmpty(bloodTongJi)) {
             return;
         }
 //       近一个月
-        One one   = bloodTongJi.getOne();
-        if(!SSUtils.isEmpty(one)) {
+        One one = bloodTongJi.getOne();
+        if (!SSUtils.isEmpty(one)) {
             int sum = one.getCount();
-            int normal =one.getNcount();
-            tvAll1.setText("共测试"+sum + "次");
+            int normal = one.getNcount();
+            tvAll1.setText("共测试" + sum + "次");
             tongjiNum1.setText(one.getLcount() + "");
             tongjiNum2.setText(normal + "");
             tongjiNum3.setText(one.getHcount() + "");
-            if (SSUtils.calculateReate(sum, normal)){
+            if (SSUtils.calculateReate(sum, normal)) {
                 allImage1.setImageResource(R.drawable.tongji1);
-            }else{
+            } else {
                 allImage1.setImageResource(R.drawable.abnormal);
             }
         }
 
 //       近3个月
-        Three three   = bloodTongJi.getThree();
-        if(!SSUtils.isEmpty(three)) {
+        Three three = bloodTongJi.getThree();
+        if (!SSUtils.isEmpty(three)) {
             int sum = three.getCount();
             int normal = three.getNcount();
-            tvAll2.setText("共测试"+sum + "次");
+            tvAll2.setText("共测试" + sum + "次");
             tongjiNum11.setText(three.getLcount() + "");
             tongjiNum12.setText(three.getNcount() + "");
             tongjiNum13.setText(three.getHcount() + "");
-            if (SSUtils.calculateReate(sum, normal)){
+            if (SSUtils.calculateReate(sum, normal)) {
                 allImage2.setImageResource(R.drawable.tongji1);
-             }else{
+            } else {
                 allImage2.setImageResource(R.drawable.abnormal);
             }
         }
         //      全部
-        All all   = bloodTongJi.getAll();
-        if(!SSUtils.isEmpty(all)) {
+        All all = bloodTongJi.getAll();
+        if (!SSUtils.isEmpty(all)) {
             int sum = all.getCount();
             int normal = all.getNcount();
-            tvAll3.setText("共测试"+sum + "次");
+            tvAll3.setText("共测试" + sum + "次");
             tongjiAll1.setText(all.getLcount() + "");
             tongjiAll2.setText(all.getNcount() + "");
             tongjiAll3.setText(all.getHcount() + "");
-            if (SSUtils.calculateReate(sum, normal)){
+            if (SSUtils.calculateReate(sum, normal)) {
                 allImage3.setImageResource(R.drawable.tongji1);
-            }else{
+            } else {
                 allImage3.setImageResource(R.drawable.abnormal);
             }
         }
@@ -777,9 +789,9 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     public void onResume() {
         super.onResume();
         Logger.e("FragmentBlood", "onResume");
-        if(isGoToLogin){
+        if (isGoToLogin) {
 //            getProductDetails();
-            if(MobileApplication.getInstance().isLogined){
+            if (MobileApplication.getInstance().isLogined) {
                 getDeviceList();
             }
         }
@@ -798,38 +810,40 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 Logger.e("FragmentBlood", "DeviceListChangeReceiver");
                 if (!MobileApplication.getInstance().isLogined) {
                     clearData();
-                }else{
+                } else {
                     getDeviceList();
                 }
             }
         }
     }
+
     /**
      * 绑定设备
      */
-    public void startupBindDeviceActivity(){
-        if (!MobileApplication.getInstance().isLogined){
+    public void startupBindDeviceActivity() {
+        if (!MobileApplication.getInstance().isLogined) {
             showToastUnLogin();
-            isGoToLogin=true;
+            isGoToLogin = true;
             toLoginPage();
             return;
         }
-        Intent carIntent = new Intent(getActivity() , BindDeviceActivity.class);
+        Intent carIntent = new Intent(getActivity(), BindDeviceActivity.class);
         getActivity().startActivity(carIntent);
     }
 
     /**
      * 去够购买
      */
-    public void getToBy(){
-        Intent intent = new Intent(mContext , ProductListActivity.class);
+    public void getToBy() {
+        Intent intent = new Intent(mContext, ProductListActivity.class);
         intent.putExtra("category", categoryId);
         mContext.startActivity(intent);
     }
+
     //   清除数据
     private void clearData() {
 //        数据列表
-        bloodDatalist=  new ArrayList<BloodDevice>();
+        bloodDatalist = new ArrayList<BloodDevice>();
         bloodAdapter.setData(bloodDatalist);
 //       亲属关系
 //        showTypes

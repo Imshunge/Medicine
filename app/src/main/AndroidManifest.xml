@@ -68,7 +68,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".common.AppstartActivity"
+            android:name=".AppstartActivity"
             android:launchMode="standard"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
@@ -94,76 +94,78 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".common.user.LoginActivity" />
+        <activity android:name=".user.LoginActivity" />
         <activity
-            android:name=".common.PersonInfoActivity"
+            android:name=".PersonInfoActivity"
             android:label="@string/title_activity_person_info" />
         <activity
-            android:name=".common.shop.CategoryActivity"
+            android:name=".shop.CategoryActivity"
             android:label="@string/title_activity_category" />
         <activity
-            android:name=".common.shop.ShopCartActivity"
+            android:name=".shop.ShopCartActivity"
             android:label="@string/title_activity_shop_cart" />
         <activity
-            android:name=".common.shop.ProductListActivity"
+            android:name=".shop.ProductListActivity"
             android:label="@string/title_activity_product_list" />
-        <activity android:name=".common.shop.SearchCommonActivity" />
-        <activity android:name=".common.shop.ProductListSearchResultActivity" />
-        <activity android:name=".common.shop.ProductActivity" />
-        <activity android:name=".common.shop.ConfirmOrderActivity" />
-        <activity android:name=".common.shop.ConsigneeAddressListActivity" />
+        <activity android:name=".shop.SearchCommonActivity" />
+        <activity android:name=".shop.ProductListSearchResultActivity" />
+        <activity android:name=".shop.ProductActivity" />
+        <activity android:name=".shop.ConfirmOrderActivity" />
+        <activity android:name=".shop.ConsigneeAddressListActivity" />
         <activity android:name="com.shssjk.person.address.ConsigneeAddressEditActivity" />
         <activity android:name="com.shssjk.person.address.SPCitySelectActivity" />
-        <activity android:name=".common.shop.AvailableCouponActivity" />
-        <activity android:name=".common.shop.PayListActivity" />
-        <activity android:name=".common.shop.CollectListActivity" />
-        <activity android:name=".common.person.SettingActivity" />
-        <activity android:name=".common.person.HelpActivity" />
-        <activity android:name=".common.person.ServiceActivity" />
-        <activity android:name=".common.person.UserDetailsActivity" />
-        <activity android:name=".common.shop.OrderListActivity" />
+        <activity android:name=".shop.AvailableCouponActivity" />
+        <activity android:name=".shop.PayListActivity" />
+        <activity android:name=".shop.CollectListActivity" />
+        <activity android:name=".person.SettingActivity" />
+        <activity android:name=".person.HelpActivity" />
+        <activity android:name=".person.ServiceActivity" />
+        <activity android:name=".person.UserDetailsActivity" />
+        <activity android:name=".shop.OrderListActivity" />
         <activity
-            android:name=".common.shop.OrderBaseActivity"
+            android:name=".shop.OrderBaseActivity"
             android:label="@string/title_activity_order_base" />
-        <activity android:name=".common.user.RegisterActivity" />
-        <activity android:name=".common.user.ForgetPwdActivity" />
-        <activity android:name=".common.user.ChangePasswordActivity" />
-        <activity android:name=".common.user.MyMessageActivity" />
-        <activity android:name=".common.shop.OrderDetailActivity" />
+        <activity android:name=".user.RegisterActivity" />
+        <activity android:name=".user.ForgetPwdActivity" />
+        <activity android:name=".user.ChangePasswordActivity" />
+        <activity android:name=".user.MyMessageActivity" />
+        <activity android:name=".shop.OrderDetailActivity" />
         <activity
-            android:name=".common.information.ArticleDetailActivity"
+            android:name=".information.ArticleDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:exported="true"
+            />
+        <activity android:name=".information.ArticleSearchActivity" />
+        <activity android:name=".community.QuackListActivity" />
+        <activity android:name=".community.ComArticleListActivity" />
+        <activity android:name=".community.ComMyArticleListActivity" />
+        <activity
+            android:name=".community.ComArticleDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".common.information.ArticleSearchActivity" />
-        <activity android:name=".common.community.QuackListActivity" />
-        <activity android:name=".common.community.ComArticleListActivity" />
-        <activity android:name=".common.community.ComMyArticleListActivity" />
-        <activity
-            android:name=".common.community.ComArticleDetailActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".common.community.SchoolDetailActivity" />
-        <activity android:name=".common.community.MySchoolActivity" />
-        <activity android:name=".common.community.MyQuackListActivity" />
-        <activity android:name=".common.community.AddComArticleActivity" />
-        <activity android:name=".common.community.AddSchoolActivity" />
-        <activity android:name=".common.community.ComUserListActivity" />
-        <activity android:name=".common.community.ComCheckUserListActivity" />
-        <activity android:name=".common.health.BindDeviceActivity" />
-        <activity android:name=".common.shop.OrderWaitcommentActivity" />
-        <activity android:name=".common.shop.OrderReturnedActivity" />
-        <activity android:name=".common.user.MyTeamActivity" />
-        <activity android:name=".common.user.CouponListActivity" />
-        <activity android:name=".common.user.CouponList2Activity" />
-        <activity android:name=".common.shop.CaptureActivity" />
-        <activity android:name=".common.shop.BeforPayActivity" />
-        <activity android:name=".common.shop.OrderActivity" />
-        <activity android:name=".common.shop.ReturnOrderDetailActivity" />
-        <activity android:name=".common.shop.PublishCommentActivity" />
-        <activity android:name=".common.shop.OrderReturnGoodsActivity" />
-        <activity android:name=".common.shop.CommentOrderDetailActivity" />
-        <activity android:name=".common.person.AllCollectActivity" />
-        <activity android:name=".common.shop.Category2Activity" />
+        <activity android:name=".community.SchoolDetailActivity" />
+        <activity android:name=".community.MySchoolActivity" />
+        <activity android:name=".community.MyQuackListActivity" />
+        <activity android:name=".community.AddComArticleActivity" />
+        <activity android:name=".community.AddSchoolActivity" />
+        <activity android:name=".community.ComUserListActivity" />
+        <activity android:name=".community.ComCheckUserListActivity" />
+        <activity android:name=".health.BindDeviceActivity" />
+        <activity android:name=".shop.OrderWaitcommentActivity" />
+        <activity android:name=".shop.OrderReturnedActivity" />
+        <activity android:name=".user.MyTeamActivity" />
+        <activity android:name=".user.CouponListActivity" />
+        <activity android:name=".user.CouponList2Activity" />
+        <activity android:name=".shop.CaptureActivity" />
+        <activity android:name=".shop.BeforPayActivity" />
+        <activity android:name=".shop.OrderActivity" />
+        <activity android:name=".shop.ReturnOrderDetailActivity" />
+        <activity android:name=".shop.PublishCommentActivity" />
+        <activity android:name=".shop.OrderReturnGoodsActivity" />
+        <activity android:name=".shop.CommentOrderDetailActivity" />
+        <activity android:name=".person.AllCollectActivity" />
+        <activity android:name=".shop.Category2Activity" />
 
         <!-- push富媒体，使用富媒体推送必须声明 -->
         <activity
@@ -175,7 +177,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:label="MediaListActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".common.person.CameraListActivity" />
+        <activity android:name=".person.CameraListActivity" />
         <!-- push富媒体结束 -->
 
 
@@ -242,14 +244,15 @@
             android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.shssjk.activity" />
         <!--
          在百度开发者中心查询应用的API Key
-         yYcn0KjvpIte4HVs7qYczEQMbvGYkE98
-         yYcn0KjvpIte4HVs7qYczEQMbvGYkE98
+
         -->
         <meta-data
             android:name="api_key"
-            android:value="yYcn0KjvpIte4HVs7qYczEQMbvGYkE98" />
+            android:value="REFrXPcaTeHzooL58tCdZaUp" />
 
-        <activity android:name=".common.user.PushMessageDetailActivity" />
+        <activity android:name=".user.PushMessageDetailActivity"
+            android:exported="true"
+            />
         <activity
             android:name="com.shssjk.MainActivity"
             android:label="@string/title_activity_main2"
@@ -261,20 +264,21 @@
             android:exported="true" />
         <!-- 摄像机 -->
         <service android:name="com.ipcamera.demo.BridgeService" />
-
         <activity
-            android:name=".common.person.AddCameraActivity"
+            android:name=".person.AddCameraActivity"
             android:label="@string/title_activity_add_camera" />
-        <activity android:name=".common.person.SetwifiActivity" />
+        <activity android:name=".person.SetwifiActivity" />
         <activity
-            android:name=".common.shop.ProductAllActivity"
-            android:label="@string/title_activity_product_all" />
+            android:name=".shop.ProductAllActivity"
+            android:label="@string/title_activity_product_all"
+            android:exported="true"
+            />
         <activity
-            android:name=".common.person.BankListActivity"
+            android:name=".person.BankListActivity"
             android:label="@string/title_activity_bank_list" />
-        <activity android:name=".common.person.BanAddOrkEditActivity" />
-        <activity android:name=".common.person.PlayActivity" />
-        <activity android:name=".common.person.StartBusinessActivity" />
+        <activity android:name=".person.BanAddOrkEditActivity" />
+        <activity android:name=".person.PlayActivity" />
+        <activity android:name=".person.StartBusinessActivity" />
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -285,7 +289,7 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"></activity>
-        <activity android:name=".common.user.TestCameraActivity"></activity>
+        <activity android:name=".user.TestCameraActivity"></activity>
     </application>
 
 </manifest>

@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.IViewController;
-import com.shssjk.activity.common.shop.ProductAllActivity;
+import com.shssjk.activity.IViewController;
+import com.shssjk.activity.shop.ProductAllActivity;
 import com.shssjk.adapter.CollectListAdapter;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;

@@ -1272,15 +1272,12 @@ public class ShopRequest {
      * @param failuredListener
      */
     public static void ordeAddReturnAddress(String shipping_name, String shipping_code, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-
         assert (successListener != null);
         assert (failuredListener != null);
         String url = SPMobileHttptRequest.getRequestUrl("User", "set_return_info");
-
         RequestParams params = new RequestParams();
         params.put("shipping_name", shipping_name);
         params.put("shipping_code", shipping_code);
-
         SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

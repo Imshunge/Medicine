@@ -14,12 +14,8 @@ import android.widget.TextView;
 
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.BaseActivity;
-import com.shssjk.common.MobileConstants;
 import com.shssjk.model.SPProduct;
 import com.shssjk.utils.SSUtils;
-import com.shssjk.view.PopupMenu;
-import com.soubao.tpshop.utils.SPStringUtils;
 
 import java.util.List;
 import com.shssjk.model.order.SPOrder;

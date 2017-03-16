@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -22,7 +23,7 @@ import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.BaseActivity;
+import com.shssjk.activity.BaseActivity;
 import com.shssjk.adapter.CategoryAdapter;
 import com.shssjk.common.SPDataAsyncManager;
 import com.shssjk.common.MobileConstants;
@@ -109,6 +110,8 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private List<Information> informations;
+	//退出时的时间
+	private long mExitTime;
 
 	private ChageToHealthReceiver chageToHealthReceiver;
 	public static MainActivity getmInstance(){
@@ -163,8 +166,6 @@ public class MainActivity extends BaseActivity {
 		rbtnShopcart = (RadioButton) this.findViewById(R.id.rbtn_shopcart);
 		rbtnPerson = (RadioButton) this.findViewById(R.id.rbtn_mine);
 		rbtnMy = (RadioButton) this.findViewById(R.id.rbtn_my);
-
-
 	}
 
 	@Override
@@ -464,4 +465,22 @@ public class MainActivity extends BaseActivity {
 		super.onDestroy();
 		unregisterReceiver(chageToHealthReceiver);
 	}
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			exit();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	public void exit() {
+		if ((System.currentTimeMillis() - mExitTime) > 2000) {
+			showToast("再按一次退出尚尚健康");
+			mExitTime = System.currentTimeMillis();
+		} else {
+			finish();
+		}
+	}
+
+
 }

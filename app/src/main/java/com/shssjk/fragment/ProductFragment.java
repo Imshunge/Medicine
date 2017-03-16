@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.shop.ProductActivity;
+import com.shssjk.activity.shop.ProductActivity;
 import com.shssjk.adapter.ProductAttrListAdapter;
 import com.shssjk.adapter.SPProductSpecListAdapter;
 import com.shssjk.global.MobileApplication;

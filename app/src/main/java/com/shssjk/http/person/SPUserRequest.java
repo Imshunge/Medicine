@@ -225,8 +225,8 @@ public class SPUserRequest {
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     if (status >= 0) {
                         if (status ==1) {
-                            String result = response.getString(MobileConstants.Response.DATA);
-                            successListener.onRespone(msg, result);
+                            String result = response.getString(MobileConstants.Response.RESULT);
+                            successListener.onRespone(msg, status);
                         } else {
                             failuredListener.onRespone(msg, -1);
                         }

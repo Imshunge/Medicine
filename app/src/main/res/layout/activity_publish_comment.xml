@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_activity"
     android:orientation="vertical"
-    tools:context="com.shssjk.activity.common.shop.PublishCommentActivity">
+    tools:context=".shop.PublishCommentActivity">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -30,7 +30,6 @@ import cz.msebera.android.httpclient.Header;
  *
  */
 public class SPMobileHttptRequest {
-
 	private static String TAG = "SouLeopardHttptRequest";
 	public static void init(Context context){
 
@@ -49,7 +48,6 @@ public class SPMobileHttptRequest {
 	* @throws
 	 */
 	public static void get(String url , RequestParams params ,JsonHttpResponseHandler responseHandler) {
-
 //		if (params == null){
 //			params = new RequestParams();
 //		}
@@ -64,7 +62,6 @@ public class SPMobileHttptRequest {
 //			String imei = MobileApplication.getInstance().getDeviceId();
 //			params.put("unique_id" , imei);
 //		}
-
 		try {
 //			configSign(params , url);
 			AsyncHttpClient client = new AsyncHttpClient();
@@ -187,7 +184,7 @@ public class SPMobileHttptRequest {
 
 
 	 *  每一个访问接口都要调用改函数进行签名
-	 *  具体签名方法, 参考: tpshop 开发手册 -> 手机api接口 -> 公共接口
+	 *  具体签名方法,开发手册 -> 手机api接口 -> 公共接口
 	 *
 	 *  @param params
 	 */

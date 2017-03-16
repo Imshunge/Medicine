@@ -11,8 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shssjk.activity.R;
-import com.shssjk.activity.common.shop.ProductActivity;
-import com.shssjk.activity.common.shop.ProductAllActivity;
+import com.shssjk.activity.shop.ProductAllActivity;
 import com.shssjk.model.SPHomeCategory;
 import com.shssjk.model.shop.Product;
 

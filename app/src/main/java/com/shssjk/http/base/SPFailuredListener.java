@@ -1,6 +1,6 @@
 package com.shssjk.http.base;
 
-import com.shssjk.activity.common.IViewController;
+import com.shssjk.activity.IViewController;
 import com.shssjk.common.MobileConstants;
 
 
