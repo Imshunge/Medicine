@@ -184,7 +184,6 @@ public class SPMobileHttptRequest {
 
 
 	 *  每一个访问接口都要调用改函数进行签名
-	 *  具体签名方法,开发手册 -> 手机api接口 -> 公共接口
 	 *
 	 *  @param params
 	 */

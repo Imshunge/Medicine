@@ -28,7 +28,7 @@ import com.shssjk.activity.BaseActivity;
 import com.shssjk.adapter.CameraAdapter;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.person.Camera;
 import com.shssjk.utils.ContentCommon;
 import com.shssjk.utils.SystemValue;
@@ -109,7 +109,6 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
             CameraListActivity.this.finish();
             Log.d("ip", "AddCameraActivity.this.finish()");
         }
-
     }
     @Override
     protected void onResume() {
@@ -195,7 +194,7 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
     //   删除摄像机
     private void deleteCamera(final Camera camera) {
         showLoadingToast();
-        SPPersonRequest.deleteCameraByDid(camera.getDid(), new SPSuccessListener() {
+        PersonRequest.deleteCameraByDid(camera.getDid(), new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -248,7 +247,7 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
 
     private void getDeviceListData() {
         showLoadingToast();
-        SPPersonRequest.getCameraList(new SPSuccessListener() {
+        PersonRequest.getCameraList(new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {

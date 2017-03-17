@@ -39,6 +39,7 @@ import com.shssjk.activity.R;
 import com.shssjk.activity.person.AllCollectActivity;
 import com.shssjk.activity.person.BankListActivity;
 import com.shssjk.activity.person.CameraListActivity;
+import com.shssjk.activity.person.MyStoneActivity;
 import com.shssjk.activity.person.StartBusinessActivity;
 import com.shssjk.activity.shop.OrderActivity;
 import com.shssjk.activity.shop.OrderReturnedActivity;
@@ -56,7 +57,7 @@ import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.SPUser;
@@ -94,6 +95,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     View myteamView;			//我的团队
     View mycameraView;			//我的摄像机
     View mybankView;			//我的银行卡
+    View mystoneView;			//我的石头
 
     TextView stoneTxtv;            //石头
     TextView pointTxtv;                //积分
@@ -141,7 +143,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.person_fragment, null, false);
         super.init(view);
         return view;
-
     }
 
     @Override
@@ -164,6 +165,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         mycameraView = view.findViewById(R.id.person_camera_aview);				//我的摄像机
         mybankView = view.findViewById(R.id.person_bank_aview);				//我的银行卡
         stoneTxtv = (TextView) view.findViewById(R.id.person_stone_txtv);    //石头
+        mystoneView=view.findViewById(R.id.person_mystone_aview);				//我的石头
         pointTxtv = (TextView) view.findViewById(R.id.person_point_txtv);        //积分
         couponCountTxtv = (TextView) view.findViewById(R.id.person_coupon_txtv);        //优惠券数量
         nickNameTxtv = (TextView) view.findViewById(R.id.nickname_txtv);        //昵称
@@ -223,15 +225,14 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         nickNameTxtv.setOnClickListener(this);
         settingBtn.setOnClickListener(this);
         accountView.setOnClickListener(this);
-
+        mystoneView.setOnClickListener(this);
 
         int delayTime=2000;
         mycameraView.setOnClickListener(new OnClickEvent(delayTime) {
             @Override
             public void singleClick(View v) {
-//           我的摄像机
+//           我的摄像机 避免2次点击
                 if (!checkLogin()) return;
-
                 startCameraListActivity();
             }
         });
@@ -294,11 +295,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         }
         else if(v.getId()==R.id.person_camera_aview){
 ////           我的摄像机
-//            if (!checkLogin()) return;
-//
-//            startCameraListActivity();
-
-
        }
         else if(v.getId()==R.id.person_bank_aview){
 //           我的银行卡
@@ -306,11 +302,13 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             checkIsToWork();
         }
 
-
         switch (v.getId()) {
             case R.id.footer_hint_textview:
 //                showLoadingToast("正在加载数据");
                 loadMoreData();
+                break;
+            case R.id.person_mystone_aview:
+                startMyStoneActivity();
                 break;
         }
     }
@@ -330,9 +328,14 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
     //    我的银行卡
     private void startBankListActivity() {
-//
         Intent intent = new Intent();
         intent.setClass(getActivity(), BankListActivity.class);
+        startActivity(intent);
+    }
+    //    我的石头
+    private void startMyStoneActivity() {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), MyStoneActivity.class);
         startActivity(intent);
     }
 
@@ -553,7 +556,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     }
 //    判断是否创业
     public void checkIsToWork() {
-        SPPersonRequest.isWork(new SPSuccessListener() {
+        PersonRequest.isWork(new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {

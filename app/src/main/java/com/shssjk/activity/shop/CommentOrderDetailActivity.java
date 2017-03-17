@@ -22,7 +22,7 @@ import com.shssjk.activity.R;
 import com.shssjk.dao.SPPersonDao;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.order.SPOrder;
@@ -206,32 +206,6 @@ public class CommentOrderDetailActivity extends OrderBaseActivity implements Con
 
     }
 
-//    public void refreshData(){
-//
-//        showLoadingToast();
-//        SPPersonRequest.getOrderDetailByID(mOrderId, new SPSuccessListener() {
-//            @Override
-//            public void onRespone(String msg, Object response) {
-//                mOrder = (SPOrder) response;
-//                try {
-//                    if (mOrder != null) {
-//                        dealModel();
-////                        refreshView();
-//                        //load 商品金额信息
-//                    }
-//                } catch (Exception e) {
-//                    showToast(e.getMessage());
-//                }
-//                hideLoadingToast();
-//            }
-//        }, new SPFailuredListener(OrderDetailActivity.this) {
-//            @Override
-//            public void onRespone(String msg, int errorCode) {
-//                hideLoadingToast();
-//                showToast(msg);
-//            }
-//        });
-//    }
 
     /**
      * 处理数据
@@ -270,7 +244,6 @@ public class CommentOrderDetailActivity extends OrderBaseActivity implements Con
                 if ("待支付".equals(status)) {
                     cancelOrder(mOrder);
                 }
-
                 break;
             case R.id.btn2:
                 if ("待支付".equals(status)) {
@@ -309,7 +282,7 @@ public class CommentOrderDetailActivity extends OrderBaseActivity implements Con
      * @param orderId
      */
     public void cancelOrder(String orderId, SPSuccessListener successListener, SPFailuredListener failuredListener) {
-        SPPersonRequest.cancelOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.cancelOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
 
@@ -384,7 +357,7 @@ public class CommentOrderDetailActivity extends OrderBaseActivity implements Con
      * @param failuredListener
      */
     public void queryOrderLogistics(String orderId, SPSuccessListener successListener, SPFailuredListener failuredListener) {
-        SPPersonRequest.queryOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.queryOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
     //   查看物流
@@ -422,7 +395,7 @@ public class CommentOrderDetailActivity extends OrderBaseActivity implements Con
      * @param orderId
      */
     public void confirmOrder(String orderId, SPSuccessListener successListener, SPFailuredListener failuredListener) {
-        SPPersonRequest.confirmOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.confirmOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
     //   确认收货
@@ -476,7 +449,7 @@ public class CommentOrderDetailActivity extends OrderBaseActivity implements Con
         showLoadingToast("正在操作");
 
         //进入支付页面支付
-        SPPersonRequest.getOrderDetail(orderID, new SPSuccessListener() {
+        PersonRequest.getOrderDetail(orderID, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {

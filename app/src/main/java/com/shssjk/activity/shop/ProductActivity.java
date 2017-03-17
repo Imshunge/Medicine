@@ -24,7 +24,7 @@ import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.shop.SPProductSpec;
@@ -263,43 +263,7 @@ public class ProductActivity extends BaseActivity implements View.OnClickListene
             likeTxtv.setText(getString(R.string.product_details_unlike));
         }
     }
-    /**
-     * 刷新收藏数据
-     */
-    public void refreshCollectDatta() {
 
-//        if (MobileApplication.getInstance().isLogined) {
-//            SPPersonRequest.getGoodsCollectWithSuccess(new SPSuccessListener() {
-//                @Override
-//                public void onRespone(String msg, Object response) {
-//                    MobileApplication.getInstance().collects = (List<SPCollect>) response;
-//                    refreshCollectButton();
-//                }
-//            }, new SPFailuredListener() {
-//                @Override
-//                public void onRespone(String msg, int errorCode) {
-//                    showToast(msg);
-//                }
-//            });
-//        } else {
-//            MobileApplication.getInstance().collects = null;
-//        }
-    }
-
-//    /**
-//     * 刷新购物车数据
-//     */
-//    public void loadCartCount() {
-//        SPShopCartManager shopCartManager = SPShopCartManager.getInstance(this);
-//        int shopCount = shopCartManager.getShopCount();
-//        if (shopCount <= 0) {
-//            SPShopCartManager.getInstance(this).reloadCart();
-//            cartCountTxtv.setVisibility(View.INVISIBLE);
-//        } else {
-//            cartCountTxtv.setVisibility(View.VISIBLE);
-//            cartCountTxtv.setText(String.valueOf(shopCount));
-//        }
-//    }
     @Override
     public void onClick(final View v) {
         if (!MobileApplication.getInstance().isLogined) {
@@ -318,14 +282,14 @@ public class ProductActivity extends BaseActivity implements View.OnClickListene
                     type = "0";
                 }
                 final String finalType = type;
-                SPPersonRequest.collectOrCancelGoodsWithID(goodsId, type, new SPSuccessListener() {
+                PersonRequest.collectOrCancelGoodsWithID(goodsId, type, new SPSuccessListener() {
                     @Override
                     public void onRespone(String msg, Object response) {
 
                         hideLoadingToast();
-                        if(finalType.equals("1")){
+                        if (finalType.equals("1")) {
                             setIs_collect("0");
-                        }else{
+                        } else {
                             setIs_collect("1");
                         }
                         refreshCollectButton(getIs_collect());

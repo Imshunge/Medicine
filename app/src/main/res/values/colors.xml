@@ -144,5 +144,8 @@
     <color name="color_white">#ffffffff</color>
     <color name="color_blue">#ff0000ff</color>
     <color name="color_line">#ff444444</color>
-
+    <!-- 浅灰色 -->
+    <color name="grays">#bdc0c1</color>
+    <!-- 极浅灰色 -->
+    <color name="gray_max">#ececec</color>
 </resources>

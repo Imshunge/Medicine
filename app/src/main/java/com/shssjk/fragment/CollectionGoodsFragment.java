@@ -19,7 +19,7 @@ import com.shssjk.activity.shop.ProductAllActivity;
 import com.shssjk.adapter.CollectListAdapter;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.shop.SPCollect;
 
 import java.util.List;
@@ -116,7 +116,7 @@ public class CollectionGoodsFragment extends BaseFragment {
 
     private void getListData() {
         showLoadingToast();
-        SPPersonRequest.getGoodsCollectWithSuccess(new SPSuccessListener() {
+        PersonRequest.getGoodsCollectWithSuccess(new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
 
@@ -134,7 +134,6 @@ public class CollectionGoodsFragment extends BaseFragment {
                     llListview.setVisibility(View.VISIBLE);
                     emptyLstv.setVisibility(View.GONE);
                 }
-
 
 
                 hideLoadingToast();

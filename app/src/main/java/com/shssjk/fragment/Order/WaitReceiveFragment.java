@@ -25,7 +25,7 @@ import com.shssjk.adapter.OrderAdapter;
 import com.shssjk.fragment.BaseFragment;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.order.SPOrder;
 import com.shssjk.utils.SPOrderUtils;
 import com.soubao.tpshop.utils.SPStringUtils;
@@ -179,7 +179,7 @@ public class WaitReceiveFragment extends BaseFragment implements
         params.put("type", type);
         params.put("p", pageIndex);
         showLoadingToast();
-        SPPersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
+        PersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -228,7 +228,7 @@ public class WaitReceiveFragment extends BaseFragment implements
             params.put("p", pageIndex);
         }
         showLoadingToast();
-        SPPersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
+        PersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -325,7 +325,7 @@ public class WaitReceiveFragment extends BaseFragment implements
      * @param orderId
      */
     public void confirmOrder(String orderId, SPSuccessListener successListener, SPFailuredListener failuredListener) {
-        SPPersonRequest.confirmOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.confirmOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
     /**
@@ -336,7 +336,7 @@ public class WaitReceiveFragment extends BaseFragment implements
      * @param failuredListener
      */
     public void queryOrderLogistics(String orderId, SPSuccessListener successListener, SPFailuredListener failuredListener) {
-        SPPersonRequest.queryOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.queryOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
     @Override

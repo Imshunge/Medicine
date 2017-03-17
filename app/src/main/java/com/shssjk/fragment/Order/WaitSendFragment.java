@@ -24,7 +24,7 @@ import com.shssjk.adapter.OrderAdapter;
 import com.shssjk.fragment.BaseFragment;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.order.SPOrder;
 import com.shssjk.utils.SPOrderUtils;
 import com.soubao.tpshop.utils.SPStringUtils;
@@ -167,7 +167,7 @@ public class WaitSendFragment extends BaseFragment implements
         params.put("p", pageIndex);
 
         showLoadingToast();
-        SPPersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
+        PersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -237,7 +237,7 @@ public class WaitSendFragment extends BaseFragment implements
 //            hideLoadingToast();
 //        }
         showLoadingToast();
-        SPPersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
+        PersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {

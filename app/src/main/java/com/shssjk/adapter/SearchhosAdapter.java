@@ -53,8 +53,7 @@ public class SearchhosAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		if(mSearchhistory == null) return -1;
 		return position;
-		
-	}
+			}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {

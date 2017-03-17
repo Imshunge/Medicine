@@ -452,6 +452,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                     formJson.put("goods_id", product.getGoodsID());
                     formJson.put("price", product.getMemberGoodsPrice());
                     formJson.put("number", product.getGoodsNum());
+                    formJson.put("spec_key", product.getSpecKey());
                     formDataArray.put(formJson);
                 }
             } catch (Exception e) {
@@ -461,13 +462,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 //表单数据: POST提交
                 params.put("goods_info" ,formDataArray);
             }
-
               } catch (Exception e) {
             e.printStackTrace();
         }
         return params;
     }
-
     /**
      *  更新底部商品总金额数据
      */

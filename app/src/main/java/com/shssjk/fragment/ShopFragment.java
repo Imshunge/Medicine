@@ -167,8 +167,6 @@ public class ShopFragment extends BaseFragment implements View.OnClickListener,
 //		mScrolllayout = (MobileScrollLayout)mHeaderView.findViewById(R.id.banner_slayout);
 //		mScrolllayout = (MobileScrollLayout)mHeaderView.findViewById(R.id.banner_slayout);
 		viewPager= (AutoScrollViewPager)mHeaderView.findViewById(R.id.view_pager);
-
-
 //		viewPager = (viewPager) findViewById(R.id.test_top);
 		// 获取屏幕像素
 		DisplayMetrics display = new DisplayMetrics();

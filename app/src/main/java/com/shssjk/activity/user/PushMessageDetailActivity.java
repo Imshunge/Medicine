@@ -14,9 +14,9 @@ import butterknife.ButterKnife;
 
 public class PushMessageDetailActivity extends BaseActivity {
 
-    @Bind(R.id.tv_item_article_title)
+    @Bind(R.id.tv_source)
     TextView tvItemArticleTitle;
-    @Bind(R.id.tv_item_hot_content)
+    @Bind(R.id.tv_date)
     TextView tvItemHotContent;
     @Bind(R.id.tv_data)
     TextView tvData;

@@ -16,7 +16,7 @@ import com.shssjk.adapter.CollectListAdapter;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.shop.SPCollect;
 
 import java.util.List;
@@ -64,7 +64,7 @@ public class CollectListActivity extends BaseActivity {
         mAdapter = new CollectListAdapter(this);
         productListv.setAdapter(mAdapter);
         showLoadingToast();
-        SPPersonRequest.getGoodsCollectWithSuccess(new SPSuccessListener() {
+        PersonRequest.getGoodsCollectWithSuccess(new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
 

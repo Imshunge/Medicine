@@ -80,6 +80,18 @@
     <string name="person_order_returned">退货</string>
     <string name="person_order_canceled">已取消</string>
     <string name="person_goods_collect">我的收藏</string>
+    <!-- 我的石头-->
+    <string name="person_mystone">我的石头</string>
+    <string name="person_mystone_recharge">充值</string>
+    <string name="person_mystone_withdraw">提现</string>
+    <string name="person_mystone_detail">明细</string>
+    <string name="person_mystone_source">石头支付</string>
+    <string name="person_mystone_date">2017-03-13 15:09:28</string>
+
+    <string name="stonerechargeactivity_rechargestone">石头充值</string>
+
+
+
     <string name="person_receive_address">收货地址</string>
     <string name="person_user_info">个人资料</string>
     <string name="person_integrate_detail">积分明细</string>
@@ -135,6 +147,8 @@
     <string name="to_login">去登录</string>
 
     <string name="update">更新</string>
+
+    <string name="close">关闭本页</string>
 
     <string name="buy">去购买</string>
     <string name="settings">设置</string>
@@ -594,5 +608,14 @@
     <string name="ptz_default_vedio_params">视频参数恢复默认值</string>
     <string name="ptz_control">请按菜单键,进行云台控制</string>
     <string name="login_stuta_camer">相机状态</string>
+    <string name="title_activity_my_stone">MyStoneActivity</string>
+    <string name="title_activity_stone_recharge">StoneRechargeActivity</string>
+    <string name="title_activity_stone_withdraw">StoneWithdrawActivity</string>
+    <string name="title_activity_stone_detail">StoneDetailActivity</string>
+    <!-- 石头提现-->
+    <string name="bank">银行卡</string>
+    <string name="cash">提现金额</string>
+    <string name="code">验证码</string>
+    <string name="apply">提现</string>
 
 </resources>

@@ -15,7 +15,7 @@ import com.shssjk.adapter.BankListAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.person.Bank;
 import com.shssjk.utils.ConfirmDialog;
 import com.soubao.tpshop.utils.SPStringUtils;
@@ -97,7 +97,7 @@ public class BankListActivity extends BaseActivity implements BankListAdapter.Ba
 
     private void getBankList() {
         showLoadingToast();
-        SPPersonRequest.getBankList(new SPSuccessListener() {
+        PersonRequest.getBankList(new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -147,7 +147,7 @@ public class BankListActivity extends BaseActivity implements BankListAdapter.Ba
             params.put("address_id", bank.getIs_default());
         }
         showLoadingToast("正在保存数据");
-        SPPersonRequest.saveBank(params, new SPSuccessListener() {
+        PersonRequest.saveBank(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 hideLoadingToast();
@@ -160,7 +160,7 @@ public class BankListActivity extends BaseActivity implements BankListAdapter.Ba
                 hideLoadingToast();
                 showToast(msg);
             }
-    });
+        });
     }
 
     @Override
@@ -178,7 +178,7 @@ public class BankListActivity extends BaseActivity implements BankListAdapter.Ba
     @Override
     public void clickOk(int actionType) {
         showLoadingToast("正在删除");
-        SPPersonRequest.deleteBank(deletebank.getId(), new SPSuccessListener() {
+        PersonRequest.deleteBank(deletebank.getId(), new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 hideLoadingToast();

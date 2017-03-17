@@ -21,7 +21,7 @@ import com.shssjk.common.MobileConstants;
 import com.shssjk.dao.SPPersonDao;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.person.SPConsigneeAddress;
 import com.shssjk.person.address.ConsigneeAddressEditActivity;
 import com.shssjk.utils.Logger;
@@ -128,7 +128,7 @@ public class ConsigneeAddressListActivity extends BaseActivity implements SPAddr
     public void refreshData(){
 
         showLoadingToast();
-        SPPersonRequest.getConsigneeAddressList(new SPSuccessListener() {
+        PersonRequest.getConsigneeAddressList(new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -168,7 +168,7 @@ public class ConsigneeAddressListActivity extends BaseActivity implements SPAddr
     @Override
     public void clickOk(int actionType) {
         showLoadingToast("正在删除");
-        SPPersonRequest.delConsigneeAddressByID(selectConsignee.getAddressID(), new SPSuccessListener() {
+        PersonRequest.delConsigneeAddressByID(selectConsignee.getAddressID(), new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 hideLoadingToast();

@@ -1,5 +1,9 @@
 [
     {
+        "merged": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\vpi__tab_indicator.xml",
+        "source": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable\\vpi__tab_indicator.xml"
+    },
+    {
         "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\vpi__tab_indicator.xml",
         "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable\\vpi__tab_indicator.xml"
     }

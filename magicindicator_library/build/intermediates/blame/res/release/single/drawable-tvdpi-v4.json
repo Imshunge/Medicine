@@ -6,5 +6,13 @@
     {
         "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\magicindicator_library\\build\\intermediates\\res\\merged\\release\\drawable-tvdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png",
         "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\magicindicator_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\22.1.1\\res\\drawable-tvdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png"
+    },
+    {
+        "merged": "E:\\android\\MedicineVersion3\\Medicine\\magicindicator_library\\build\\intermediates\\res\\merged\\release\\drawable-tvdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png",
+        "source": "E:\\android\\MedicineVersion3\\Medicine\\magicindicator_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\22.1.1\\res\\drawable-tvdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png"
+    },
+    {
+        "merged": "E:\\android\\MedicineVersion3\\Medicine\\magicindicator_library\\build\\intermediates\\res\\merged\\release\\drawable-tvdpi-v4\\abc_btn_switch_to_on_mtrl_00012.9.png",
+        "source": "E:\\android\\MedicineVersion3\\Medicine\\magicindicator_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\22.1.1\\res\\drawable-tvdpi-v4\\abc_btn_switch_to_on_mtrl_00012.9.png"
     }
 ]

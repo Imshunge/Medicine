@@ -685,18 +685,13 @@ public class ShopRequest {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
             }
-
         });
-
     }
-
-
     /**
      * @URL index.php/Api/Cart/cart2
      * 获取确认订单数据(购物车订单填写页)
      */
     public static void getConfirmOrderData(final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-
         assert (successListener != null);
         assert (failuredListener != null);
         String url = SPMobileHttptRequest.getRequestUrl("Cart", "cart2");

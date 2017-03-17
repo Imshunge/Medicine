@@ -14,7 +14,7 @@ import com.shssjk.activity.R;
 import com.shssjk.activity.BaseActivity;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.person.Bank;
 import com.shssjk.view.SwitchButton;
 import com.soubao.tpshop.utils.SPStringUtils;
@@ -176,7 +176,7 @@ public class BanAddOrkEditActivity extends BaseActivity {
 //            params.put("address_id" , bank.getIs_default());
 //        }
         showLoadingToast("正在保存数据");
-        SPPersonRequest.addBank(params, new SPSuccessListener() {
+        PersonRequest.addBank(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 hideLoadingToast();
@@ -209,7 +209,7 @@ public class BanAddOrkEditActivity extends BaseActivity {
             params.put("address_id", bank.getIs_default());
         }
         showLoadingToast("正在保存数据");
-        SPPersonRequest.saveBank(params, new SPSuccessListener() {
+        PersonRequest.saveBank(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 hideLoadingToast();

@@ -42,6 +42,16 @@
                 android:clickable="true"
                 android:focusable="true"
                 custom:titleText="@string/person_goods_collect" />
+            <View  style="@style/separator_line"/>
+            <!-- 我的石头 -->
+            <com.shssjk.view.SPArrowRowView
+                android:id="@+id/person_mystone_aview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_row"
+                android:clickable="true"
+                android:focusable="true"
+                custom:titleText="@string/person_mystone" />
+
             <include layout="@layout/separator_line_margin_slice"/>
 
             <!-- 余额, 积分 -->

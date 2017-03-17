@@ -36,8 +36,7 @@ public class SPArrowRowView extends FrameLayout {
 		super(context, attrs);
 		/** 获取自定义属性 titleText */
 	    TypedArray typeArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ArrowView, 0, 0);
-	    
-	    String titleText = typeArray.getString(R.styleable.ArrowView_titleText);
+		String titleText = typeArray.getString(R.styleable.ArrowView_titleText);
 		Drawable drawable = typeArray.getDrawable(R.styleable.ArrowView_arrowSrc);
 		indicatorShow = typeArray.getBoolean(R.styleable.ArrowView_indicatorShow, true);
 	    View view = LayoutInflater.from(context).inflate(R.layout.right_arrow_row_view, this);

@@ -10,8 +10,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -25,8 +23,6 @@
     <uses-feature android:name=" android.permission.ACCESS_WIFI_STATE " />
     <uses-feature android:name="android.permission.CHANGE_WIFI_STATE " />
     <uses-feature android:name="android.permission.WAKE_LOCK" />
-
-
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -133,9 +129,8 @@
         <activity
             android:name=".information.ArticleDetailActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:exported="true"
-            />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".information.ArticleSearchActivity" />
         <activity android:name=".community.QuackListActivity" />
         <activity android:name=".community.ComArticleListActivity" />
@@ -242,17 +237,14 @@
             android:exported="true"
             android:protectionLevel="signature"
             android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.shssjk.activity" />
-        <!--
-         在百度开发者中心查询应用的API Key
-
-        -->
+        <!-- 在百度开发者中心查询应用的API Key -->
         <meta-data
             android:name="api_key"
             android:value="REFrXPcaTeHzooL58tCdZaUp" />
 
-        <activity android:name=".user.PushMessageDetailActivity"
-            android:exported="true"
-            />
+        <activity
+            android:name=".user.PushMessageDetailActivity"
+            android:exported="true" />
         <activity
             android:name="com.shssjk.MainActivity"
             android:label="@string/title_activity_main2"
@@ -264,15 +256,15 @@
             android:exported="true" />
         <!-- 摄像机 -->
         <service android:name="com.ipcamera.demo.BridgeService" />
+
         <activity
             android:name=".person.AddCameraActivity"
             android:label="@string/title_activity_add_camera" />
         <activity android:name=".person.SetwifiActivity" />
         <activity
             android:name=".shop.ProductAllActivity"
-            android:label="@string/title_activity_product_all"
             android:exported="true"
-            />
+            android:label="@string/title_activity_product_all" />
         <activity
             android:name=".person.BankListActivity"
             android:label="@string/title_activity_bank_list" />
@@ -283,13 +275,25 @@
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
-        <activity android:name=".user.TestCameraActivity"></activity>
+            android:screenOrientation="behind" />
+        <activity android:name=".user.TestCameraActivity" />
+        <activity
+            android:name=".person.MyStoneActivity"
+            android:label="@string/title_activity_my_stone" />
+        <activity
+            android:name=".person.StoneRechargeActivity"
+            android:label="@string/title_activity_stone_recharge" />
+        <activity
+            android:name=".person.StoneWithdrawActivity"
+            android:label="@string/title_activity_stone_withdraw" />
+        <activity
+            android:name=".person.StoneDetailActivity"
+            android:label="@string/title_activity_stone_detail"></activity>
     </application>
 
 </manifest>

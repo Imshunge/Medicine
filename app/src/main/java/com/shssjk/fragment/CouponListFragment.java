@@ -17,7 +17,7 @@ import com.shssjk.activity.user.CouponList2Activity;
 import com.shssjk.adapter.CouponListAdapter;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.shop.Coupon;
 
 import java.util.ArrayList;
@@ -134,7 +134,7 @@ public class CouponListFragment extends BaseFragment {
         mPageIndex = 1;
         mIsMaxPage = false;
         CouponList2Activity couponListActivity = (CouponList2Activity) getActivity();
-        SPPersonRequest.getCouponListWithType(mType, mPageIndex, new SPSuccessListener() {
+        PersonRequest.getCouponListWithType(mType, mPageIndex, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -152,7 +152,6 @@ public class CouponListFragment extends BaseFragment {
                 } else {
                     llListview.setVisibility(View.VISIBLE);
                     emptyView.setVisibility(View.GONE);
-
 
 
                 }
@@ -174,7 +173,7 @@ public class CouponListFragment extends BaseFragment {
             return;
         }
         mPageIndex++;
-        SPPersonRequest.getCouponListWithType(mType, mPageIndex, new SPSuccessListener() {
+        PersonRequest.getCouponListWithType(mType, mPageIndex, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {

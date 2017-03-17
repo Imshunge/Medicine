@@ -22,7 +22,7 @@ import com.shssjk.adapter.OrderReturnGoodsAdapter;
 import com.shssjk.fragment.BaseFragment;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.order.SPExchange;
 import com.shssjk.utils.SPOrderUtils;
 
@@ -148,7 +148,7 @@ public class ReturnGoodsFragment extends BaseFragment {
     public void refreshData() {
         pageIndex = 1;
         showLoadingToast();
-        SPPersonRequest.getExchangeListWithPage(pageIndex, new SPSuccessListener() {
+        PersonRequest.getExchangeListWithPage(pageIndex, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -193,7 +193,7 @@ public class ReturnGoodsFragment extends BaseFragment {
         }
         pageIndex++;
         showLoadingToast();
-        SPPersonRequest.getExchangeListWithPage(pageIndex, new SPSuccessListener() {
+        PersonRequest.getExchangeListWithPage(pageIndex, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {

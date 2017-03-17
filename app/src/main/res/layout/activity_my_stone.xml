@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/temperatureBackground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_title2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin150dp"
+        android:background="@color/shop_title"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/shop_title"
+            android:gravity="center_vertical|bottom"
+            android:layout_marginBottom="@dimen/margi30dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textStyle.Hug.black"
+                android:textColor="@color/color_white"
+                android:gravity="center"
+                android:text="石头" />
+            <TextView
+                android:id="@+id/tv_stone_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textStyle.Hug.black"
+                android:textColor="@color/color_white"
+                android:gravity="center"
+                android:text="1111" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/margin50dp"
+            android:background="@color/color_white"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="@dimen/margi30dp"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/shop_title"
+            android:gravity="center_vertical|bottom"
+            android:layout_marginBottom="@dimen/margi30dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textStyle.Hug.black"
+                android:textColor="@color/color_white"
+                android:gravity="center"
+                android:text="积分" />
+            <TextView
+                android:id="@+id/tv_point"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textStyle.Hug.black"
+                android:textColor="@color/color_white"
+                android:gravity="center"
+                android:text="1111" />
+        </LinearLayout>
+    </LinearLayout>
+    <com.shssjk.view.SPArrowRowView
+        android:id="@+id/mystone_recharge_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/person_mystone_recharge" />
+    <View style="@style/separator_line" />
+
+    <com.shssjk.view.SPArrowRowView
+        android:id="@+id/mystone_withdraw_aview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_row"
+        android:clickable="true"
+        android:focusable="true"
+        custom:titleText="@string/person_mystone_withdraw" />
+
+    <View style="@style/separator_line" />
+
+
+</LinearLayout>

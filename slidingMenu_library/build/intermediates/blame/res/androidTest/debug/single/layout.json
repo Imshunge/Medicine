@@ -2,5 +2,9 @@
     {
         "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\slidingMenu_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\slidingmenumain.xml",
         "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\slidingMenu_library\\build\\intermediates\\bundles\\debug\\res\\layout\\slidingmenumain.xml"
+    },
+    {
+        "merged": "E:\\android\\MedicineVersion3\\Medicine\\slidingMenu_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\slidingmenumain.xml",
+        "source": "E:\\android\\MedicineVersion3\\Medicine\\slidingMenu_library\\build\\intermediates\\bundles\\debug\\res\\layout\\slidingmenumain.xml"
     }
 ]

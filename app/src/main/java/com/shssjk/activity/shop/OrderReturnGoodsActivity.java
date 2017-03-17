@@ -22,7 +22,7 @@ import com.shssjk.activity.BaseActivity;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.shop.CommentCondition;
 import com.shssjk.model.shop.Image;
 import com.shssjk.model.shop.ProductCommnet;
@@ -150,12 +150,12 @@ public class OrderReturnGoodsActivity extends BaseActivity {
 
         commentCondition.setContent(content);
         commentCondition.setType("0");
-        SPPersonRequest.exchangeApplyWithParameter(commentCondition, new SPSuccessListener() {
+        PersonRequest.exchangeApplyWithParameter(commentCondition, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
-                int result =(int) response;
+                int result = (int) response;
 
-                if (1==result) {
+                if (1 == result) {
                     OrderReturnGoodsActivity.this.setResult(RESULT_OK);
                     finish();
                 }

@@ -71,10 +71,10 @@ public class ArticleAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 
 			holder.picIngv = ((ImageView) convertView.findViewById(R.id.iv_item_article));
-			holder.nameTxtv = ((TextView) convertView.findViewById(R.id.tv_item_article_title));
-			holder.contentTxtv = ((TextView) convertView.findViewById(R.id.tv_item_hot_content));
-			holder.readTxtv = ((TextView) convertView.findViewById(R.id.tv_item_read));
-			holder.commentTxtv = ((TextView) convertView.findViewById(R.id.tv_item_comment));
+			holder.nameTxtv = ((TextView) convertView.findViewById(R.id.tv_source));
+			holder.contentTxtv = ((TextView) convertView.findViewById(R.id.tv_date));
+			holder.readTxtv = ((TextView) convertView.findViewById(R.id.tv_num));
+			holder.commentTxtv = ((TextView) convertView.findViewById(R.id.tv_sign));
 
 			//设置标记
 			  convertView.setTag(holder);

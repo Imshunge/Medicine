@@ -11,7 +11,7 @@
         android:src="@drawable/product_default" />
 
     <TextView
-        android:id="@+id/tv_item_article_title"
+        android:id="@+id/tv_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -23,11 +23,11 @@
         android:textSize="@dimen/article_title_size" />
 
     <TextView
-        android:id="@+id/tv_item_hot_content"
+        android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tv_item_article_title"
-        android:layout_below="@+id/tv_item_article_title"
+        android:layout_alignLeft="@+id/tv_source"
+        android:layout_below="@+id/tv_source"
         android:layout_marginTop="@dimen/article_marginTop"
         android:ellipsize="end"
         android:singleLine="true"
@@ -38,8 +38,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_alignLeft="@+id/tv_item_hot_content"
-        android:layout_below="@+id/tv_item_hot_content">
+        android:layout_alignLeft="@+id/tv_date"
+        android:layout_below="@+id/tv_date">
         <TextView
             android:layout_width="180dp"
             android:layout_height="match_parent"
@@ -57,7 +57,7 @@
             android:src="@drawable/product_default" />
 
         <TextView
-            android:id="@+id/tv_item_comment"
+            android:id="@+id/tv_sign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/article_marginTop"
@@ -78,12 +78,12 @@
 
         <TextView
 
-            android:id="@+id/tv_item_read"
+            android:id="@+id/tv_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_item_comment"
+            android:layout_alignLeft="@+id/tv_sign"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/tv_item_hot_content"
+            android:layout_below="@+id/tv_date"
             android:layout_marginTop="@dimen/article_marginTop"
             android:ellipsize="end"
             android:singleLine="true"

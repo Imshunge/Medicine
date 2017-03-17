@@ -28,7 +28,7 @@ import com.shssjk.activity.BaseActivity;
 import com.shssjk.adapter.SearchListAdapter;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.utils.ContentCommon;
 import com.shssjk.utils.SSUtils;
 import com.shssjk.utils.SystemValue;
@@ -549,7 +549,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
         String name = consigneeNameEdtv.getText().toString();
         String id = deviceIdEdtv.getText().toString();
         showLoadingToast();
-        SPPersonRequest.addCamera(name, id, new SPSuccessListener() {
+        PersonRequest.addCamera(name, id, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {

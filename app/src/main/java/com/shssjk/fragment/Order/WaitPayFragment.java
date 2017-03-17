@@ -28,7 +28,7 @@ import com.shssjk.adapter.OrderAdapter;
 import com.shssjk.fragment.BaseFragment;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.order.SPOrder;
 import com.shssjk.utils.SPOrderUtils;
@@ -164,7 +164,7 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
         params.put("type", type);
         params.put("p", pageIndex);
         showLoadingToast();
-        SPPersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
+        PersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -215,7 +215,7 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
             params.put("p", pageIndex);
         }
         showLoadingToast();
-        SPPersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
+        PersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 List<SPOrder> results = (List<SPOrder>) response;
@@ -293,7 +293,7 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
      * @param orderId
      */
     public void cancelOrder(String orderId, SPSuccessListener successListener, SPFailuredListener failuredListener) {
-        SPPersonRequest.cancelOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.cancelOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
     /**

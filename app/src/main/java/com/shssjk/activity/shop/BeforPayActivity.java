@@ -19,7 +19,7 @@ import com.shssjk.activity.BaseActivity;
 import com.shssjk.activity.person.BankListActivity;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.order.PayOrder;
 import com.shssjk.model.order.SPOrder;
@@ -146,9 +146,9 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
         mContext = this;
         super.init();
     }
-
     @Override
     public void initSubViews() {
+
     }
 
     @Override
@@ -278,7 +278,7 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
     }
 
     /**
-     * 支付
+     *银联支付支付
      *
      * @param data
      */
@@ -312,7 +312,7 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
 
     //    判断是否创业
     public void checkIsToWork() {
-        SPPersonRequest.isWork(new SPSuccessListener() {
+        PersonRequest.isWork(new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -341,7 +341,7 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
                                     }
                                 });
                         builder.create().show();
-                    }else{
+                    } else {
                         startupOrderList(1);
                     }
                 } else {

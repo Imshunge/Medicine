@@ -22,7 +22,7 @@ import com.shssjk.activity.R;
 import com.shssjk.dao.SPPersonDao;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.order.SPOrder;
 import com.shssjk.utils.ConfirmDialog;
@@ -296,7 +296,7 @@ public class OrderDetailActivity extends OrderBaseActivity implements ConfirmDia
      * @param orderId
      */
     public void cancelOrder(String orderId, SPSuccessListener successListener, SPFailuredListener failuredListener) {
-        SPPersonRequest.cancelOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.cancelOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
 
@@ -344,7 +344,7 @@ public class OrderDetailActivity extends OrderBaseActivity implements ConfirmDia
      * @param failuredListener
      */
     public void queryOrderLogistics(String orderId, SPSuccessListener successListener, SPFailuredListener failuredListener) {
-        SPPersonRequest.queryOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.queryOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
     //   查看物流
@@ -385,7 +385,7 @@ public class OrderDetailActivity extends OrderBaseActivity implements ConfirmDia
      * @param orderId
      */
     public void confirmOrder(String orderId, SPSuccessListener successListener, SPFailuredListener failuredListener) {
-        SPPersonRequest.confirmOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.confirmOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
     //   确认收货

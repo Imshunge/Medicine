@@ -24,7 +24,7 @@ import com.shssjk.adapter.OrderComentAdapter;
 import com.shssjk.fragment.BaseFragment;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.order.SPOrder;
 import com.shssjk.model.shop.ProductCommnet;
@@ -144,7 +144,7 @@ public class AlreadCommentFragment extends BaseFragment implements OrderComentAd
         maxIndex = false;
 
         showLoadingToast();
-        SPPersonRequest.getCommentListWithType(status, new SPSuccessListener() {
+        PersonRequest.getCommentListWithType(status, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -168,7 +168,7 @@ public class AlreadCommentFragment extends BaseFragment implements OrderComentAd
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
 
-                if("空数据".equals(msg)){
+                if ("空数据".equals(msg)) {
                     if (orders.size() == 0) {
                         orderListv.setVisibility(View.GONE);
                         emptyLstv.setVisibility(View.VISIBLE);
@@ -176,7 +176,7 @@ public class AlreadCommentFragment extends BaseFragment implements OrderComentAd
                         orderListv.setVisibility(View.VISIBLE);
                         emptyLstv.setVisibility(View.GONE);
                     }
-                }else{
+                } else {
                     showToast(msg);
                 }
             }
@@ -217,7 +217,7 @@ public class AlreadCommentFragment extends BaseFragment implements OrderComentAd
      * @param orderId
      */
     public void cancelOrder(String orderId , SPSuccessListener successListener , SPFailuredListener failuredListener) {
-        SPPersonRequest.cancelOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.cancelOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
 

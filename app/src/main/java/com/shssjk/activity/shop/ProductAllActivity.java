@@ -35,7 +35,7 @@ import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.condition.ProductCondition;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.shop.GoodsComment;
@@ -227,7 +227,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
     @Override
     protected void onPause() {
         super.onPause();
-        Logger.e(this,"ProductAllActivity");
+        Logger.e(this, "ProductAllActivity");
     }
 
     @Override
@@ -236,11 +236,10 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
         if (isGoToLogin) {
             getProductDetails();
         }
-        if (checkLogin()) {
+        if (!MobileApplication.getInstance().isLogined) {
             getShopCarNum();
         }
     }
-
     @Override
     public void initData() {
         selectSpecMap = new HashMap<String, String>();
@@ -356,7 +355,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             case R.id.buy_btn:
                 //购买 加入购物车
                 storeCount = SPShopUtils.getShopStoreCount(priceJson, selectSpecMap.values());
-                if (mCartCount >= storeCount) {
+                if (mCartCount >storeCount) {
                     showToast(getString(R.string.toast_low_stocks));
                     return;
                 }
@@ -372,7 +371,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                     type = "0";
                 }
                 final String finalType = type;
-                SPPersonRequest.collectOrCancelGoodsWithID(mGoodsID, type, new SPSuccessListener() {
+                PersonRequest.collectOrCancelGoodsWithID(mGoodsID, type, new SPSuccessListener() {
                     @Override
                     public void onRespone(String msg, Object response) {
                         hideLoadingToast();

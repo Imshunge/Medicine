@@ -23,7 +23,7 @@ import com.shssjk.activity.BaseActivity;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.shop.CommentCondition;
 import com.shssjk.model.shop.Image;
 import com.shssjk.model.shop.ProductCommnet;
@@ -216,10 +216,10 @@ public class PublishCommentActivity extends BaseActivity {
         commentCondition.setService_rank(quality+"");
         commentCondition.setDeliver_rank(starLogistics+"");
         commentCondition.setGoods_rank(commentDes+"");
-        SPPersonRequest.commentGoodsWithGoodsID(commentCondition, new SPSuccessListener() {
+        PersonRequest.commentGoodsWithGoodsID(commentCondition, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
-                if("评论成功".equals(msg)){
+                if ("评论成功".equals(msg)) {
                     PublishCommentActivity.this.setResult(RESULT_OK);
                     finish();
 

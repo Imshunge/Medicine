@@ -22,7 +22,7 @@ import com.shssjk.adapter.OrderListAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.order.SPOrder;
 import com.shssjk.utils.ConfirmDialog;
 import com.shssjk.utils.SPOrderUtils;
@@ -215,7 +215,7 @@ public class OrderListActivity extends OrderBaseActivity implements ConfirmDialo
         params.put("p", pageIndex);
 
         showLoadingToast();
-        SPPersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
+        PersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
@@ -259,7 +259,7 @@ public class OrderListActivity extends OrderBaseActivity implements ConfirmDialo
         }
 
         showLoadingToast();
-        SPPersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
+        PersonRequest.getOrderListWithParams(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null && ((List<SPOrder>) response).size() > 0) {

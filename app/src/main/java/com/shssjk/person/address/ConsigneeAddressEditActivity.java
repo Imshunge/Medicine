@@ -17,7 +17,7 @@ import com.shssjk.common.MobileConstants;
 import com.shssjk.dao.SPPersonDao;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.person.SPConsigneeAddress;
 import com.shssjk.utils.SMobileLog;
 import com.shssjk.view.SwitchButton;
@@ -140,7 +140,7 @@ public class ConsigneeAddressEditActivity extends BaseActivity implements View.O
                     params.put("address_id" , consignee.getAddressID());
                 }
                 showLoadingToast("正在保存数据");
-                SPPersonRequest.saveUserAddressWithParameter(params, new SPSuccessListener() {
+                PersonRequest.saveUserAddressWithParameter(params, new SPSuccessListener() {
                     @Override
                     public void onRespone(String msg, Object response) {
                         hideLoadingToast();

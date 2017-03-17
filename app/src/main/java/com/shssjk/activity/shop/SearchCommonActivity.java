@@ -211,7 +211,6 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
             searchhistory.setTitle(key);
             searchhistory.save();
         }
-
         List<Searchhistory> searchhistorie = DataSupport.findAll(Searchhistory.class);
         for (Searchhistory push : searchhistorie) {
             Log.e("MainActivity 搜索记录", push.getTitle());

@@ -7,7 +7,7 @@ import com.shssjk.activity.BaseActivity;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
-import com.shssjk.http.person.SPPersonRequest;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.order.SPOrder;
 
 
@@ -36,7 +36,7 @@ public abstract class OrderBaseActivity extends BaseActivity {
      * @param orderId
      */
     public void cancelOrder(String orderId , SPSuccessListener successListener , SPFailuredListener failuredListener){
-        SPPersonRequest.cancelOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.cancelOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
     /**
@@ -44,7 +44,7 @@ public abstract class OrderBaseActivity extends BaseActivity {
      * @param
      */
     public void confirmOrderWithOrderID(String orderId , SPSuccessListener successListener , SPFailuredListener failuredListener){
-        SPPersonRequest.confirmOrderWithOrderID(orderId, successListener, failuredListener);
+        PersonRequest.confirmOrderWithOrderID(orderId, successListener, failuredListener);
     }
 
 
