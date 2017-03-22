@@ -76,8 +76,8 @@
 			android:gravity="right"
 			android:text="¥0"
 			style="@style/textStyle.Normal.lightRed"/>
-
 		<TextView
+			android:visibility="gone"
 			android:id="@+id/title_point_txtv"
 			android:layout_below="@id/fee_coupon_txtv"
 			android:layout_width="match_parent"
@@ -87,8 +87,8 @@
 			android:gravity="left"
 			android:text="石头抵扣"
 			style="@style/textStyle.Normal.black"/>
-
 		<TextView
+			android:visibility="gone"
 			android:id="@+id/fee_point_txtv"
 			android:layout_below="@id/fee_coupon_txtv"
 			android:layout_width="match_parent"
@@ -98,7 +98,6 @@
 			android:gravity="right"
 			android:text="¥0"
 			style="@style/textStyle.Normal.lightRed"/>
-
 	</RelativeLayout>
 	<View style="@style/separator_line" />
 	<TextView

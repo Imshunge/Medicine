@@ -30,7 +30,6 @@ public abstract class OrderBaseActivity extends BaseActivity {
         payIntent.putExtra("order", order);
         startActivity(payIntent);
     }
-
     /**
      * 取消订单
      * @param orderId
@@ -46,9 +45,6 @@ public abstract class OrderBaseActivity extends BaseActivity {
     public void confirmOrderWithOrderID(String orderId , SPSuccessListener successListener , SPFailuredListener failuredListener){
         PersonRequest.confirmOrderWithOrderID(orderId, successListener, failuredListener);
     }
-
-
-
     /**
      * 联系客服
      */

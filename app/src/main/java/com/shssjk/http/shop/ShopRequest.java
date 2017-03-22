@@ -23,6 +23,7 @@ import com.shssjk.model.shop.GoodsComment;
 import com.shssjk.model.shop.ProductAttribute;
 import com.shssjk.model.shop.SPProductSpec;
 import com.shssjk.model.shop.SPShopOrder;
+import com.shssjk.model.shop.StoneOrderInfo;
 import com.shssjk.model.shop.Tmenu;
 import com.shssjk.model.shop.Totalprice;
 import com.shssjk.utils.Logger;
@@ -715,10 +716,6 @@ public class ShopRequest {
                                     }
                                 }
                                 //物流信息
-//							if (!resultJson.isNull("shippingList")&&resultJson.has("shippingList")){
-//								JSONArray delivers = resultJson.getJSONArray("shippingList");
-//								jsonObject.put("delivers" , delivers);//总金额(需要支付的金额
-//							}
                                 //商品列表
                                 if (!resultJson.isNull("cartList") && resultJson.has("cartList")) {
                                     List<SPProduct> products = SPJsonUtil.fromJsonArrayToList(resultJson.getJSONArray("cartList"), SPProduct.class);
@@ -769,6 +766,93 @@ public class ShopRequest {
         });
 
     }
+
+
+
+    /**
+     * @URL index.php/Api/Cart/cart2
+     * 获取确积分兑换商品   认订单数据(购物车订单填写页)
+     * 接口更改为Cart/cart22 （参数unique_id      user_id       token      goods_id      spec_key
+     */
+    public static void getPointsConfirmOrderData(String goods_id,String spec_key,final SPSuccessListener
+            successListener, final SPFailuredListener failuredListener) {
+        assert (successListener != null);
+        assert (failuredListener != null);
+        String url = SPMobileHttptRequest.getRequestUrl("Cart", "cart22");
+        RequestParams params = new RequestParams();
+        params.put("goods_id", goods_id);
+        params.put("spec_key", spec_key);
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    /** 针对返回的业务数据会重新包装一遍再返回到View */
+                    String msg = (String) response.getString(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    if (status >=0) {
+                        if(status==1) {
+                            JSONObject jsonObject = new JSONObject();
+                            if (response.has("result")) {
+                                JSONObject resultJson = response.getJSONObject("result");
+//							地址信息
+                                if (!resultJson.isNull("addressList") && resultJson.has("addressList")) {
+                                    if (resultJson.getJSONObject("addressList") != null) {  //判断是否为空
+                                        SPConsigneeAddress consignees = SPJsonUtil.fromJsonToModel(resultJson.getJSONObject("addressList"), SPConsigneeAddress.class);
+                                        jsonObject.put("consigneeAddress", consignees);
+                                    }
+                                }
+                                //物流信息
+                                //商品列表
+                                if (!resultJson.isNull("cartList") && resultJson.has("cartList")) {
+                                    List<SPProduct> products = SPJsonUtil.fromJsonArrayToList(resultJson.getJSONArray("cartList"), SPProduct.class);
+                                    jsonObject.put("products", products);//总金额(需要支付的金额
+                                }
+                                //优惠券, 代金券
+                                if (!resultJson.isNull("cartList") && resultJson.has("cartList")) {
+                                    List<Coupon> coupons = SPJsonUtil.fromJsonArrayToList(resultJson.getJSONArray("couponList"), Coupon.class);
+                                    jsonObject.put("coupons", coupons);
+                                }
+                                if (!resultJson.isNull("userInfo") && resultJson.has("userInfo")) {
+                                    JSONObject userJson = resultJson.getJSONObject("userInfo");
+                                    jsonObject.put("userInfo", userJson);
+                                }
+                                if (!resultJson.isNull("totalPrice") && resultJson.has("totalPrice")) {
+                                    JSONObject totalPriceJson = resultJson.getJSONObject("totalPrice");
+                                    Totalprice totalprice = SPJsonUtil.fromJsonToModel(totalPriceJson, Totalprice.class);
+                                    jsonObject.put("totalPrice", totalprice);
+                                }
+                            }
+                            successListener.onRespone(msg, jsonObject);
+                        }else{
+                            failuredListener.onRespone(msg, -1);
+                        }
+                    } else {
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (Exception e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+        });
+
+    }
+
 
 
     /**
@@ -1259,6 +1343,68 @@ public class ShopRequest {
         });
     }
 
+
+
+
+
+
+    /**
+     * 2期接口
+     * 使用石头支付
+     * 接口地址：http://shssjk.com/index.php/UnionPay/Buy/stone_pay
+     参数：order_id（订单id）
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void orderPayWithStone(String order_id, final SPSuccessListener successListener,
+                                        final SPFailuredListener failuredListener) {
+
+        assert (successListener != null);
+        assert (failuredListener != null);
+        String url = MobileConstants.PAY_STONE_2;
+        RequestParams params = new RequestParams();
+        params.put("order_id", order_id);
+
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    if (status == 0) {
+//						String id = response.getString(Response.DATA);
+                        successListener.onRespone(msg, status);
+                    } else {
+                        failuredListener.onRespone(msg, -1);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+
     /**
      *
      * @param shipping_name
@@ -1311,5 +1457,66 @@ public class ShopRequest {
             }
         });
     }
+
+    /**
+     * index.php/UnionPay/Buy/order_info
+       order_id
+     * @param shipping_name
+     * @param shipping_code
+     * @param successListener
+     * @param failuredListener
+     */
+    /**
+     * @param order_id
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getOrderInfoPayWithStone(String order_id, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        assert (successListener != null);
+        assert (failuredListener != null);
+        String url = MobileConstants.PAY_STONE_INFO;
+
+        RequestParams params = new RequestParams();
+        params.put("order_id", order_id);
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    if (status == 0) {
+                        StoneOrderInfo    orderInfo = SPJsonUtil.fromJsonToModel(response.getJSONObject(Response.DATA), StoneOrderInfo.class);
+                        successListener.onRespone(msg, orderInfo);
+                    } else {
+                        failuredListener.onRespone(msg, -1);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+
 
 }

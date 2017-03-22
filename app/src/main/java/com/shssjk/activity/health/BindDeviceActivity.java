@@ -68,6 +68,7 @@ public class BindDeviceActivity extends BaseActivity implements DeviceAdapter.In
     private int state=1;   // 1 绑定设备   2 更新设备
     private String[] types;
     Button explainBtn;
+    private Boolean isFromBlood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,9 @@ public class BindDeviceActivity extends BaseActivity implements DeviceAdapter.In
 
     @Override
     public void initData() {
-
+        if (getIntent() != null) {
+            isFromBlood = getIntent().getBooleanExtra("isFromBlood", true);
+                   }
     }
 
     @Override
@@ -384,8 +387,14 @@ public class BindDeviceActivity extends BaseActivity implements DeviceAdapter.In
         super.onDestroy();
         Logger.e("BindDeviceActivity","onDestroy");
         //更新设备列表
+
         if (mContext != null) {
-            mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_LOADATA));
+
+            if(isFromBlood){
+                mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_LOADATA));
+            }else{
+                mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_SUAGR_LOADATA));
+            }
         }
     }
 }

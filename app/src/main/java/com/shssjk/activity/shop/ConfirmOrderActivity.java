@@ -113,44 +113,13 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private Double mFee=0.0; // 运费
     private TextView coupontimeTxtv;
     private TextView couponsumTxtv;
-    private TextWatcher watcherStoneEit = new TextWatcher() {
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            sum = SSUtils.string2double(mSumpricsse.toString().trim());
-//            if(sum<0){
-//                showToast("石头支付数量不能超过订单总额");
-//                stoneEit.setText("");
-//            }
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-
-        }
-        @Override
-        public void afterTextChanged(Editable s) {
-//         石头   变化 判断数量变化
-            mUsingEarning = SSUtils.string2double(stoneEit.getText().toString().trim());
-
-            if(mUsingEarning>mEarning){
-                showToast("您没有那么多石头");
-                stoneEit.setText(mEarning+"");
-//                points= p;
-            }
-            else{
-                nowUseStone.setText("¥"+mUsingEarning);
-                feePointTxtv.setText("¥" + mUsingEarning);
-            }
-            mUsingEarning = SSUtils.string2double(stoneEit.getText().toString().trim());
-            refreshView();
-        }
-    };
     private String mSumpricsse;
     private Button btnStone;
     private double sum;
     private Totalprice totalPrice1;
+//   积分兑换传的参数
+    private String goodsId="";
+    private String spec_key="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,11 +129,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_spconfirm_order);
         super.init();
     }
-
     @Override
     public void initSubViews() {
         Intent intent = getIntent();
         priceSum = intent.getDoubleExtra("sumFee", 10000.0);
+        if(intent.getStringExtra("goodsId")!=null &&intent.getStringExtra("spec_key")!=null ){
+            goodsId = intent.getStringExtra("goodsId");
+            spec_key = intent.getStringExtra("spec_key");
+        }
         consigneeTxtv =(TextView) findViewById(R.id.order_consignee_txtv);
         addressTxtv =(TextView) findViewById(R.id.order_address_txtv);
         mGallery =(LinearLayout) findViewById(R.id.product_list_gallery_lyaout);
@@ -207,7 +179,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void initData() {
-        refreshData();
+
+         if(SSUtils.isEmpty(goodsId))  {
+             refreshData();
+         }else{
+             getPointsConfirmOrderData();
+         }
         ShowFee();
     }
     @Override
@@ -216,10 +193,57 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         couponAview.setOnClickListener(this);
         payBtn.setOnClickListener(this);
         btnStone.setOnClickListener(this);
-        stoneEit.addTextChangedListener(watcherStoneEit);
     }
     public void refreshData(){
         ShopRequest.getConfirmOrderData(new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                hideLoadingToast();
+                mDataJson = (JSONObject) response;
+                try {
+                    if (mDataJson != null) {
+                        if (mDataJson.has("consigneeAddress")) {
+                            if (mDataJson.get("consigneeAddress") != null) {
+                                consigneeAddress = (SPConsigneeAddress) mDataJson.get("consigneeAddress");
+                            }
+                        }
+                        if (mDataJson.has("products")) {
+                            products = (List<SPProduct>) mDataJson.get("products");
+                        }
+                        //coupon 网络电子优惠券
+                        if (mDataJson.has("coupons")) {
+                            coupons = (List<Coupon>) mDataJson.get("coupons");
+                        }
+                        if (mDataJson.has("userInfo")) {
+                            userinfoJson = mDataJson.getJSONObject("userInfo");
+                        }
+                        if (mDataJson.has("totalPrice")) {
+                            totalPrice1 = (Totalprice) mDataJson.get("totalPrice");
+                        }
+                        dealModel();
+                        refreshView();
+                        //load 商品金额信息
+                        loadTotalFee();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showToast(e.getMessage());
+                }
+            }
+        }, new SPFailuredListener(ConfirmOrderActivity.this) {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+                hideLoadingToast();
+                showToast(msg);
+            }
+        });
+//        initEvent();
+    }
+
+
+
+    public void getPointsConfirmOrderData( ){
+        ShopRequest.getPointsConfirmOrderData(goodsId,spec_key,new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 hideLoadingToast();
@@ -261,7 +285,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 showToast(msg);
             }
         });
-        initEvent();
     }
     /**
      *  处理服务器获取的数据
@@ -320,15 +343,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             if(!SSUtils.isEmpty(consigneeAddress.getConsignee())) {
                 consigneeTxtv.setText(consigneeAddress.getConsignee() +"  "+consigneeAddress.getMobile());
             }
-//                consigneeTxtv.setText(consigneeAddress.getConsignee() +"  "+consigneeAddress.getMobile());
             if(!SSUtils.isEmpty(consigneeAddress.getConsignee())&&!SSUtils.isEmpty(consigneeAddress.getFullAddress())){
                 addressTxtv.setText(consigneeAddress.getFullAddress());
             }
-//            if (totalPrice1 != null){
-//                if(!SSUtils.isEmpty(totalPrice1.getNum())){
-//                    productCountTxtv.setText("共" + totalPrice1.getNum() + "件商品");
-//                }
-//            }
             //优惠券
             if (selectedCoupon.getCouponType() == 1){
                 rl_coupon.setVisibility(View.VISIBLE);
@@ -349,7 +366,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             }else{
                 couponAview.setSubText(selectedCoupon.getCode());
             }
-
             if(userinfoJson == null)return;
             //石头
             if( userinfoJson.has("do_earnings")){
@@ -359,12 +375,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                     stonesumTxtv.setText(""+mEarning+"");
                 }
             }
-//            private Double mEarning;  //可用石头
-//            private Double priceSum=0.0;
-//            private Double mUsingEarning=0.0; // 使用石头
-//            private Double mCoupon=0.0; // 优惠券
-//            private Double mFee=0.0; // 运费
-//      String sumprice=      calculativeCost(priceSum,mFee,mUsingEarning,mCoupon);
             String sumpricsse=      calculativeCost(priceSum,mFee,mUsingEarning,mCoupon);
             payfeeTxtv.setText(sumpricsse + "");
 
@@ -387,9 +397,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
      *  @return
      */
 
-
     public RequestParams getRequestParameter(int type){
-
         RequestParams params = new RequestParams();
         int Coupon=0; //优惠券
         int postage=0;//邮费
@@ -399,7 +407,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 //                params.put("act" , "order_price");
             }else{
                 //提交订单
-
 //                发票 保留数据 目前 传空
                 params.put("invoice_title", "111");
 
@@ -414,8 +421,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
                 params.put("coupon_price" ,mCoupon);
             }else{
-//                params.put("coupon_id","");
-//                params.put("coupon_price" ,"");
+
             }
 //            private Double priceSum=0.0;
 //            private Double mUsingEarning=0.0; // 使用石头
@@ -437,20 +443,17 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 //              }
             //邮费
             params.put("shipping_price" , mFee);
-
             //应付款金额  最后（价格 ） order_amout
             params.put("order_amount" ,mSumpricsse);
-
             //订单总价  邮费+ 商品
             params.put("total_amount" ,mFee +priceSum);
-
             formDataArray = new JSONArray();
             //添加商品明细
             try {
                 for (SPProduct  product : products) {
                     JSONObject formJson = new JSONObject();
                     formJson.put("goods_id", product.getGoodsID());
-                    formJson.put("price", product.getMemberGoodsPrice());
+                    formJson.put("price", product.getGoodsPrice());
                     formJson.put("number", product.getGoodsNum());
                     formJson.put("spec_key", product.getSpecKey());
                     formDataArray.put(formJson);
@@ -496,9 +499,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             showToast("请选择收货地址!");
             return;
         }
-//        com.shssjk.utils.Logger.e("consigneeAddress",consigneeAddress+"");
-//        com.shssjk.utils.Logger.e("address_id",consigneeAddress.getAddressID());
-//        "" , consigneeAddress.getAddressID()
         //提交订单
         RequestParams params = getRequestParameter(2);
         //提交订单
@@ -542,7 +542,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             case R.id.order_coupon_aview:
 //                没有优惠券不跳转
                 if(coupons.size()==0){
-                    showToast("您没有优惠券");
+                    showToast("您没有可用的优惠券");
                     return;
                 }
 //            跳转    优惠券 列表
@@ -556,7 +556,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 orderCommint();
                 break;
             case R.id.btn_stone:
-                showConfirmDialog(getFromAssets(("guid_stone.txt"), mContext),"使用说明");
+//                showConfirmDialog(getFromAssets(("guid_stone.txt"), mContext),"使用说明");
                 break;
         }
     }
@@ -578,12 +578,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         loadTotalFee();
     }
     private void ShowFee() {
-        feeGoodsFeeTxtv.setText("¥"+priceSum);
+        feeGoodsFeeTxtv.setText("¥ "+priceSum);
         mSumpricsse = calculativeCost(priceSum,mFee,mUsingEarning,mCoupon);
-        payfeeTxtv.setText("应付金额: ¥" +mSumpricsse + "");
+        payfeeTxtv.setText("应付金额: ¥ " +mSumpricsse + "");
         feeCouponTxtv.setText("¥" + mCoupon);
-        feeAmountTxtv.setText("实付款: ¥" +mSumpricsse + "");
-        feeShoppingTxtv.setText(mFee+"");
+        feeAmountTxtv.setText("实付款: ¥ " +mSumpricsse + "");
+        feeShoppingTxtv.setText("¥ "+mFee+"");
     }
 //    所有用户订单，单笔订单总金额小于199元，则需每单承担10元基础运费；满199元则免基础运费。
     public String calculativeCost(Double goods,Double postfee,Double stone,Double coupon ){

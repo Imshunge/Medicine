@@ -99,6 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_row"
                 android:background="@color/bg_view"
+                android:visibility="gone"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/tv_stone"
@@ -154,6 +155,7 @@
             </RelativeLayout>
             <View style="@style/separator_line" />
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_row"
                 android:background="@color/bg_view"
@@ -243,7 +245,7 @@
                 layout="@layout/order_confirm_order_overview_slice"
                 android:layout_width="match_parent"
                 android:layout_height="180dip"
-                android:layout_marginBottom="45dip" />
+                />
         </LinearLayout>
 
     </ScrollView>
@@ -253,7 +255,6 @@
         android:layout_height="50dip"
         android:layout_gravity="bottom"
         android:background="@color/bg_activity_ss">
-
         <TextView
             android:id="@+id/payfee_txtv"
             style="@style/textStyle.Medium.black"

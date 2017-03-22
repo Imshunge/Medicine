@@ -51,16 +51,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 custom:titleText="@string/person_mystone" />
-
             <include layout="@layout/separator_line_margin_slice"/>
-
-            <!-- 余额, 积分 -->
-            <include
-                android:id="@+id/person_integrate_rlayout"
-                layout="@layout/person_integrate_row_slice"
-                android:layout_width="match_parent"
-                android:layout_height="60dip"/>
-            <View  style="@style/separator_line"/>
 
             <!-- 收货地址 -->
             <com.shssjk.view.SPArrowRowView

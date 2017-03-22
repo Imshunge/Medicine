@@ -89,7 +89,7 @@
     <string name="person_mystone_date">2017-03-13 15:09:28</string>
 
     <string name="stonerechargeactivity_rechargestone">石头充值</string>
-
+    <string name="stone_pay">石头支付</string>
 
 
     <string name="person_receive_address">收货地址</string>
@@ -134,6 +134,8 @@
     <string name="bankcard_settingdefault">设置为默认银行卡</string>
     <!-- 公共字符串 -->
     <string name="count">购买数量</string>
+    <string name="stock">库存情况</string>
+
     <string name="comment">评论</string>
     <string name="image_text_detail">图文详情</string>
     <string name="order_pay">去结算</string>
@@ -451,8 +453,10 @@
 
     <string name="activity_title_pay_alipay">支付宝</string>
     <string name="activity_title_pay_union">银联支付</string>
+    <string name="activity_title_pay_stone">石头支付</string>
 
     <string name="activity_title_pay_befor_btn_pay">支付</string>
+
     <!-- 订单列表-->
     <string name="btn_order_list_gopay">支付</string>
     <string name="btn_order_list_nopay">取消订单</string>
@@ -617,5 +621,6 @@
     <string name="cash">提现金额</string>
     <string name="code">验证码</string>
     <string name="apply">提现</string>
+    <string name="title_activity_stone_pay_actuvuty">StonePayActuvuty</string>
 
 </resources>

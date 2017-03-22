@@ -12,7 +12,9 @@ public class MobileConstants {
 	//URL
 	//www服务器临时屏蔽方法:
 //	public static final String BASE_HOST = "http://192.168.0.169:8080";
-	public static final String BASE_HOST = "http://www.shssjk.com";
+	public static final String BASE_HOST = "http://test.shssjk.com";
+//	public static final String BASE_HOST_TEST = "http://test.shssjk.com";
+//http://www.shssjk.com"
 	public static final String BASE_URL = BASE_HOST + "/index.php?m=api";
 	public static final String FLEXIBLE_THUMBNAIL = BASE_HOST + "/index.php?m=Api&c=Goods&a=goodsThumImages&width=%d&height=%d&goods_id=%s";
 	public static final String SHIPPING_URL = BASE_HOST +"/Mobile/User/express/order_id/%s/display/1.html";
@@ -27,6 +29,10 @@ public class MobileConstants {
 	//石头支付：
 	public static final String PAY_STONE =BASE_HOST + "/index.php/UnionPay/Buy/set_status";
 
+	public static final String PAY_STONE_2 =BASE_HOST + "/index.php/UnionPay/Buy/stone_pay";
+
+//	石头支付订单信息
+	public static final String PAY_STONE_INFO =BASE_HOST + "/index.php/UnionPay/Buy/order_info";
 	//支付宝支付通知URL
 	public static final String PAY_NOTIFYURL = "/index.php/Api/Payment/alipayNotify";
 	//菜单分类: 一级分类
@@ -106,6 +112,10 @@ public class MobileConstants {
 	public static final int tagReturn 	= 702; 	//退换货
 	public static final int tagBuyAgain = 703; 	//再次购买
 	public static final int tagDelete 	= 704; 	//删除
+
+
+	public static final String  POINT_ID 	= "862"; 	//  积分换接口
+
 
 	//数据返回常量key
 	public class Response{

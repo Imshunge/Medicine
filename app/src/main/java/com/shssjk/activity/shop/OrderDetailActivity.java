@@ -1,5 +1,6 @@
 package com.shssjk.activity.shop;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shssjk.activity.R;
+import com.shssjk.common.MobileConstants;
 import com.shssjk.dao.SPPersonDao;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
@@ -136,6 +138,8 @@ public class OrderDetailActivity extends OrderBaseActivity implements ConfirmDia
 //        不显示箭头
 //        orderDeliverAview.setIndicatorShow(false);
         orderAddressArrowImgv.setVisibility(View.INVISIBLE);
+        titlePointTxtv.setVisibility(View.INVISIBLE);
+        feePointTxtv.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -286,7 +290,7 @@ public class OrderDetailActivity extends OrderBaseActivity implements ConfirmDia
         Bundle bundle = new Bundle();
         bundle.putSerializable("fromOrderList", order);
         payIntent.putExtras(bundle);
-        startActivity(payIntent);
+        startActivityForResult(payIntent, MobileConstants.Result_Code_Refresh);
     }
 
 
@@ -426,6 +430,12 @@ public class OrderDetailActivity extends OrderBaseActivity implements ConfirmDia
             } else if (str.equals("cancel")) {
                 showToast(" 你已取消了本次订单的支付！ ");
             }
+        }
+        switch (requestCode) {
+            case MobileConstants.Result_Code_Refresh:
+                OrderDetailActivity.this.setResult(RESULT_OK);
+                finish();
+                break;
         }
     }
 

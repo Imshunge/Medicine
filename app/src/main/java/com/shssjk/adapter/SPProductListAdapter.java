@@ -78,7 +78,6 @@ public class SPProductListAdapter extends BaseAdapter {
 	          convertView = LayoutInflater.from(mContext).inflate(R.layout.product_list_item, parent, false);
 	          //使用减少findView的次数
 			  holder = new ViewHolder();
-			  
 			  holder.view1 = ((View) convertView.findViewById(R.id.product_cell_layout1)) ;
 			  holder.nameTxtv1 = ((TextView) convertView.findViewById(R.id.product_name_txtv1)) ;
 			  holder.priceTxtv1 = ((TextView) convertView.findViewById(R.id.product_price_txtv1)) ;
@@ -88,22 +87,23 @@ public class SPProductListAdapter extends BaseAdapter {
 			  holder.priceTxtv2 = ((TextView) convertView.findViewById(R.id.product_price_txtv2)) ;
 			  holder.picImgv2 = ((ImageView) convertView.findViewById(R.id.product_pic_imgv2)) ;
 			  holder.bottonLineView = ((View) convertView.findViewById(R.id.product_bottom_line_view)) ;
-
 			  //设置标记
 			  convertView.setTag(holder);
         }else{
       	  holder = (ViewHolder) convertView.getTag();
         }
-
         //获取该行数据
         SPProduct product1 = (SPProduct)mProductLst.get(position * 2 );
-        
-        //设置数据到View
+		//设置数据到View
         //格式化价格
         String price1 = String.format(mContext.getResources().getString(R.string.product_price), Float.valueOf(product1.getShopPrice()));
-        
+		if(MobileConstants.POINT_ID.equals(product1.getCategoryID())){
+			holder.priceTxtv1.setText(product1.getShopPrice()+" 积分");
+		}else{
+			holder.priceTxtv1.setText(""+String.valueOf(price1));
+		}
         holder.nameTxtv1.setText(product1.getGoodsName());
-        holder.priceTxtv1.setText(""+String.valueOf(price1));
+//        holder.priceTxtv1.setText(""+String.valueOf(price1));
         holder.nameTxtv1.setText(product1.getGoodsName());
 
 		String imgUrl1 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, 400, 400, product1.getGoodsID());
@@ -120,12 +120,15 @@ public class SPProductListAdapter extends BaseAdapter {
         if ((position * 2 + 1) < mProductLst.size()) {
 			holder.view2.setVisibility(View.VISIBLE);
         	SPProduct product2 = (SPProduct)mProductLst.get(position * 2+1 );
-
             //设置数据到View
             //格式化价格
             String price2 = String.format(mContext.getResources().getString(R.string.product_price),Float.valueOf( product2.getShopPrice()));
             holder.nameTxtv2.setText(product2.getGoodsName());
-            holder.priceTxtv2.setText(""+String.valueOf(price2));
+			if(MobileConstants.POINT_ID.equals(product2.getCategoryID())){
+				holder.priceTxtv2.setText(product2.getShopPrice()+" 积分");
+			}else{
+				holder.priceTxtv2.setText(""+String.valueOf(price2));
+			}
             holder.nameTxtv2.setText(product2.getGoodsName());
 			String imgUrl2 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, product2.getGoodsID());
 			Glide.with(mContext).load(imgUrl2).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.picImgv2);
@@ -138,9 +141,7 @@ public class SPProductListAdapter extends BaseAdapter {
 				}
 			 });
         }
-        
-        
-        return convertView;
+		return convertView;
 	}
 	
 	class ViewHolder{

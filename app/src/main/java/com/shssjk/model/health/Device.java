@@ -6,17 +6,17 @@ import com.shssjk.model.Model;
 import java.io.Serializable;
 
 public class Device implements Model,Serializable{
-    private String defaultStr;  //default 、是否是最关心设备（1是 0 否）
-    private String create_time;
+    private String defaultStr="";  //default 、是否是最关心设备（1是 0 否）
+    private String create_time="";
 
-    private String group_name;
-    private String id;
-    private String name;
-    private String relation;
-    private String status;
-    private String title;
-    private String uid;
-    private String value;
+    private String group_name="";
+    private String id="";
+    private String name="";
+    private String relation="";
+    private String status="";
+    private String title="";
+    private String uid="";
+    private String value="";
     public void setCreateTime(String create_time) {
          this.create_time = create_time;
      }
@@ -92,5 +92,9 @@ public class Device implements Model,Serializable{
         return new String[]{
                 "defaultStr","default"
         };
+    }
+    @Override
+    public String toString() {
+        return ""+relation;
     }
 }

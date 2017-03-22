@@ -112,8 +112,6 @@ public class ArticleDetailActivity extends BaseActivity implements View.OnClickL
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         mWebView.getSettings().setLoadWithOverviewMode(true);
 
-
-
     }
 
     @Override
@@ -255,6 +253,7 @@ public class ArticleDetailActivity extends BaseActivity implements View.OnClickL
                     toLoginPage();
                     return;
                 }
+//                if(mArti)
                 String type = mArticle.getType();
                 String act = "";
                 if (mArticle.getIs_collect().equals("1")) {//收藏 -> 取消收藏

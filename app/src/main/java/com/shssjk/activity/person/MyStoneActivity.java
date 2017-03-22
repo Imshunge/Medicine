@@ -3,6 +3,7 @@ package com.shssjk.activity.person;
  * 我的石头
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.shssjk.activity.BaseActivity;
 import com.shssjk.activity.IViewController;
 import com.shssjk.activity.R;
+import com.shssjk.common.MobileConstants;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.person.PersonRequest;
@@ -90,7 +92,7 @@ public class MyStoneActivity extends BaseActivity {
         mystoneWithdrawAview.setOnClickListener(new OnClickEvent(delayTime) {
             @Override
             public void singleClick(View v) {
-//           我的摄像机 避免2次点击
+//            避免2次点击
                 checkIsToWork();
             }
         });
@@ -140,7 +142,7 @@ public class MyStoneActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.mystone_recharge_aview:
                 Intent rechargeIntent = new Intent(MyStoneActivity.this, StoneRechargeActivity.class);
-                startActivity(rechargeIntent);
+                startActivityForResult(rechargeIntent, MobileConstants.Result_Code_Refresh);
                 break;
             default:
                 break;
@@ -205,5 +207,15 @@ public class MyStoneActivity extends BaseActivity {
         intent.setClass(mContext, BankListActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case MobileConstants.Result_Code_Refresh:
+                getStoneInfo();
+                break;
+        }
     }
 }

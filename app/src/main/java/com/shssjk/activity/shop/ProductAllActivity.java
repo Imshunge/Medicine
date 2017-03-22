@@ -25,12 +25,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.shssjk.activity.R;
 import com.shssjk.activity.BaseActivity;
 import com.shssjk.activity.IViewController;
+import com.shssjk.activity.R;
 import com.shssjk.adapter.ProductDetailCommentAdapter;
 import com.shssjk.adapter.ProductTabAdapter;
 import com.shssjk.adapter.SPProductSpecListAdapter;
+import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
@@ -109,8 +110,6 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
 //    ScrollView detailScrollv;
     @Bind(R.id.product_home_txtv)
     TextView productHomeTxtv;
-    @Bind(R.id.home_lyaout)
-    LinearLayout homeLyaout;
     @Bind(R.id.product_cart_imgv)
     ImageView productCartImgv;
     @Bind(R.id.productcart_count)
@@ -152,6 +151,15 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
     @Bind(R.id.product_isinventories)
     TextView productIsinventories;
 
+    @Bind(R.id.ll_buy_bottom)
+    LinearLayout ll_buy_bottom;
+    @Bind(R.id.buy_points_btn)
+    Button buyPointsBtn;
+
+    @Bind(R.id.rl_number_change)
+    RelativeLayout rl_number_change;
+
+
     private String mGoodsID;
     private int gallerySize;//预览图数量
     private int galleryIndex;//预览图大小
@@ -174,6 +182,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
     public void setSelectSpecMap(Map<String, String> selectSpecMap) {
         this.selectSpecMap = selectSpecMap;
     }
+
     private Map<String, String> selectSpecMap;//保存选择的规格ID
     private String currShopPrice;//当前商品价格
     private Context mContext;
@@ -246,7 +255,6 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
         getProductDetails();
         refreshData();
     }
-
     @Override
     public void initEvent() {
         commentListv.setVisibility(View.GONE);
@@ -310,7 +318,6 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
     public void changeTabtextSelector(RadioButton rb) {
         mLastRb = mCurrRb;
         mCurrRb = rb;
-
         if (mLastRb != null) {
             mLastRb.setTextColor(getResources().getColor(R.color.color_tab_item_normal));
 //            mLastRb.setSelected(false);
@@ -322,7 +329,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
     }
 
     @OnClick({R.id.add_cart_btn, R.id.buy_btn, R.id.cart_minus_btn, R.id.cart_plus_btn,
-            R.id.product_cart_rlayout, R.id.like_lyaout})
+            R.id.product_cart_rlayout, R.id.like_lyaout,R.id.buy_points_btn})
     public void onClick(final View view) {
         if (!checkLogin()) {
             isGoToLogin = true;
@@ -355,12 +362,21 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             case R.id.buy_btn:
                 //购买 加入购物车
                 storeCount = SPShopUtils.getShopStoreCount(priceJson, selectSpecMap.values());
-                if (mCartCount >storeCount) {
+                if (mCartCount > storeCount) {
                     showToast(getString(R.string.toast_low_stocks));
                     return;
                 }
                 addShopCar(view);
                 break;
+            case   R.id.buy_points_btn:
+//                String spec_key = mProduct.get
+                Intent intent = new Intent(mContext, ConfirmOrderActivity.class);
+                intent.putExtra("goodsId", mProduct.getGoodsID());
+                intent.putExtra("sumFee", 10.00);
+                intent.putExtra("spec_key",mProduct.getSpecKey());
+                startActivity(intent);
+                break;
+
             case R.id.like_lyaout:
                 String type = "1";
                 if (is_collect.equals("1")) {//收藏 -> 取消收藏
@@ -465,9 +481,10 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                     mDataJson = (JSONObject) response;
                     if (mDataJson != null && mDataJson.has("product")) {
                         mProduct = (SPProduct) mDataJson.get("product");
-                        //                设置图文详情信息
+                        //          设置图文详情信息
                         setContents(mProduct.getGoodsContent());
                         loadData(mProduct.getGoodsContent());
+                        showBottomeLayout(mProduct);
                     }
                     if (mDataJson != null && mDataJson.has("gallery")) {
                         mGalleryArray = mDataJson.getJSONArray("gallery");
@@ -506,21 +523,40 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             }
         });
     }
-
+// 积分商品 和普通商品
+    private void showBottomeLayout(SPProduct mProduct) {
+        if(MobileConstants.POINT_ID.equals(mProduct.getCategoryID())){
+            ll_buy_bottom.setVisibility(View.GONE);
+            buyPointsBtn.setVisibility(View.VISIBLE);
+            rl_number_change.setVisibility(View.GONE);
+            productSpecStoreCountTxtv.setText(getString(R.string.stock));
+            detailsNowPriceTxtv.setText(mProduct.getMarketPrice() + "  积分");
+            detailsOrignalPriceTxtv.setVisibility(View.INVISIBLE);
+        }else{
+            ll_buy_bottom.setVisibility(View.VISIBLE);
+            buyPointsBtn.setVisibility(View.GONE);
+            rl_number_change.setVisibility(View.VISIBLE);
+            productSpecStoreCountTxtv.setText(getString(R.string.count));
+            detailsOrignalPriceTxtv.setVisibility(View.VISIBLE);
+            detailsNowPriceTxtv.setVisibility(View.VISIBLE);
+            detailsOrignalPriceTxtv.setText("原价：￥" + mProduct.getMarketPrice());
+            detailsNowPriceTxtv.setText("现价：¥" + mProduct.getShopPrice());
+            detailsOrignalPriceTxtv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+    }
     public void onDataLoadFinish() {
         refreshGalleryViewData();
         if (mProduct != null) {
             detailsNameTxtv.setText(mProduct.getGoodsName());
-            detailsOrignalPriceTxtv.setText("原价：￥" + mProduct.getMarketPrice());
-            detailsNowPriceTxtv.setText("现价：¥" + mProduct.getShopPrice());
-            detailsOrignalPriceTxtv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//            detailsOrignalPriceTxtv.setText("原价：￥" + mProduct.getMarketPrice());
+//            detailsNowPriceTxtv.setText("现价：¥" + mProduct.getShopPrice());
+//            detailsOrignalPriceTxtv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
         int storeCount = SPShopUtils.getShopStoreCount(priceJson, selectSpecMap.values());
         if (storeCount == 0) {
             productIsinventories.setText("无货");
         }
     }
-
     private void refreshGalleryViewData() {
         String tIndex = (galleryIndex + 1) + "/" + gallerySize;
         this.pageindexTxtv.setText(tIndex);
@@ -628,7 +664,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             if (SPStringUtils.isEmpty(currShopPrice)) {
                 currShopPrice = mProduct.getShopPrice();
             }
-            this.detailsNowPriceTxtv.setText("现价: ¥" + currShopPrice);
+//            this.detailsNowPriceTxtv.setText("现价: ¥" + currShopPrice);
         }
     }
 
@@ -644,7 +680,6 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
         startActivity(shopcartIntetn);
         finish();
     }
-
     //  产品图片点击事件
     @Override
     public void page(int page) {
@@ -753,12 +788,9 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                     mComments = (List<GoodsComment>) response;
                     //更新收藏数据
                     mAdapter.setData(mComments);
-//                    ptrClassicFrameLayout.setLoadMoreEnable(true);
                 } else {
                     maxIndex = true;
-//                    ptrClassicFrameLayout.setLoadMoreEnable(false);
                 }
-//                ptrClassicFrameLayout.refreshComplete();
                 hideLoadingToast();
             }
         }, new SPFailuredListener() {
@@ -785,4 +817,6 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             }
         });
     }
+
+
 }

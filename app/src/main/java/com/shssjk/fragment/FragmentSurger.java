@@ -30,6 +30,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.shssjk.activity.R;
 import com.shssjk.activity.IViewController;
+import com.shssjk.adapter.DeviceRelationAdapter;
 import com.shssjk.adapter.SugarAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
@@ -145,7 +146,7 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
     private String[] binds;
     private View view;
     private String deviceType = "XTY";   //（BLOOD 血压计；XTY 血糖仪）
-    List<Device> devices;
+    List<Device> devices=new ArrayList<>();
     private String deviceId = "";
     private String orderTypr = "desc";   //; order、排序（asc、desc）
     private String startTime = "";
@@ -162,6 +163,7 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
     private boolean isFast = true;
     private boolean isGoToLogin = false; //没登陆时去登录 记录状态
     private DeviceListSugarChangeReceiver mDeviceListSugarChangeReceiver;
+    private DeviceRelationAdapter resultAdapter;
 
     private final Handler mHandler = new Handler() {
         @Override
@@ -266,23 +268,20 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
     public void initEvent() {
         sugarAdapter = new SugarAdapter(mContext);
         list_sugar.setAdapter(sugarAdapter);
-
         //        监听 刷新 设备列表
         IntentFilter filter = new IntentFilter(MobileConstants.ACTION_HEALTH_SUAGR_LOADATA);
         mDeviceListSugarChangeReceiver = new DeviceListSugarChangeReceiver();
         mContext.registerReceiver(mDeviceListSugarChangeReceiver, filter);
-
     }
 
     @Override
     public void initData() {
         if (!MobileApplication.getInstance().isLogined) {
-            clearData();
+//            clearData();
         } else {
 //            getDeviceList();
         }
     }
-
     //   清除数据
     private void clearData() {
 //        数据列表
@@ -290,14 +289,14 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
         sugarAdapter.setData(sugarData);
 //       亲属关系
 //        showTypes
-        String[] types = new String[]{""};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
-                android.R.layout.simple_spinner_item, types);
-        spiner.setAdapter(adapter);
-        adapter.setDropDownViewResource(R.layout.dropdown_stytle);
-
+//        String[] types = new String[]{""};
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+//                android.R.layout.simple_spinner_item, types);
+//        spiner.setAdapter(adapter);
+//        adapter.setDropDownViewResource(R.layout.dropdown_stytle);
+        devices = new ArrayList<>();
+        resultAdapter.notifyDataSetChanged();
     }
-
     @Override
     public void onClick(View v) {
         if (!MobileApplication.getInstance().isLogined) {
@@ -334,7 +333,7 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
                 } else {
                     endTime = tv_date2.getText().toString().trim();
                 }
-                if (devices != null) {
+                if (devices != null&&devices.size()>0) {
                     deviceId = devices.get(psotion).getValue().toString().trim();
                 }
                 if (SSUtils.isEmpty(deviceId)) {
@@ -401,34 +400,15 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
             @Override
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
-//                if(msg.equals("未绑定血糖仪设备")){
-//                    new AlertDialog.Builder(mContext)
-//                            .setMessage("未绑定血糖仪设备").setTitle("系统提示")
-//                            .setNegativeButton(R.string.cancel,  new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                }
-//                            })
-//                            .setNeutralButton(R.string.bind,  new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    startupBindDeviceActivity();
-//                                }
-//                            })
-//                            .setPositiveButton(R.string.buy , new DialogInterface.OnClickListener() {
-//
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    getToBy();
-//                                }
-//                            }).show();
-//
-//                }else{
-//                    showToast(msg);
-//                }
                 //可见时才显示提示
                 if(!isFast){
                     showToast(msg);
+                    if ("未绑定血糖仪设备".equals(msg)) {
+                        //清除信息 ：
+                        if (devices.size() > 0) {
+                            clearData();
+                        }
+                    }
                 }
 //                showToast(msg);
                 Logger.e(this, "getDeviceList " + msg + "");
@@ -504,13 +484,18 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
     }
 
     private void showTypes(List<Device> devices, int psotion) {
-        String[] types = getTyValue(devices);
-        //            改变内容
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
-                android.R.layout.simple_spinner_item, types);
-        spiner.setAdapter(adapter);
+//        String[] types = getTyValue(devices);
+//        //            改变内容
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+//                android.R.layout.simple_spinner_item, types);
+//        spiner.setAdapter(adapter);
+//        spiner.setSelection(psotion, true);
+//        adapter.setDropDownViewResource(R.layout.dropdown_stytle);
+
+        resultAdapter = new DeviceRelationAdapter(getActivity(), R.layout.devicetype_item,devices);
+        spiner.setAdapter(resultAdapter);
         spiner.setSelection(psotion, true);
-        adapter.setDropDownViewResource(R.layout.dropdown_stytle);
+        resultAdapter.setDropDownViewResource(R.layout.dropdown_stytle);
 
     }
 
@@ -722,8 +707,6 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
             } else {
                 allImage2.setImageResource(R.drawable.abnormal);
             }
-
-
         }
         AllSugar all = suagrTongJi.getAll();
         if (!SSUtils.isEmpty(all)) {
@@ -740,8 +723,6 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
             if (!SSUtils.isEmpty(all.getHcount() + "")) {
                 tongjiAll3.setText(all.getHcount() + "");
             }
-
-
             average2Tv.setText(all.getAvg() + "");
             low2Tv.setText(all.getMin() + "");
             hight3Tv.setText(all.getMax() + "");

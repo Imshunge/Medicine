@@ -36,6 +36,8 @@ import com.shssjk.activity.IViewController;
 import com.shssjk.activity.health.BindDeviceActivity;
 import com.shssjk.activity.shop.ProductListActivity;
 import com.shssjk.adapter.BloodAdapter;
+import com.shssjk.adapter.DeviceTypeAdapter;
+import com.shssjk.adapter.DeviceRelationAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
@@ -126,7 +128,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     private String[] binds;
     private int addId = 0;
     private String deviceType = "BLOOD";   //（BLOOD 血压计；XTY 血糖仪）
-    List<Device> devices;
+    List<Device> devices=new ArrayList<>();
     private Context mContext;
     private String dateTime = "";
     private DatePickerUtil datePickDialog;
@@ -154,6 +156,8 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     };
     //   购买商品的分类id
     private String categoryId = "850";
+    private DeviceTypeAdapter mDeviceTypeAdapter;
+    private DeviceRelationAdapter resultAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -273,23 +277,20 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 break;
         }
     }
-
     @Override
     public void initEvent() {
 //        监听 刷新 设备列表
         IntentFilter filter = new IntentFilter(MobileConstants.ACTION_HEALTH_LOADATA);
         mContext.registerReceiver(mDeviceListChangeReceiver = new DeviceListChangeReceiver(), filter);
     }
-
     @Override
     public void initData() {
         if (!MobileApplication.getInstance().isLogined) {
-            clearData();
+//            clearData();
         } else {
             getDeviceList();
         }
     }
-
     @Override
     public void onClick(View v) {
         if (!MobileApplication.getInstance().isLogined) {
@@ -362,7 +363,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 } else {
                     endTime = tv_date2.getText().toString().trim();
                 }
-                if (devices != null) {
+                if (devices != null&&devices.size()>0) {
                     deviceId = devices.get(psotion).getValue().toString().trim();
                 } else {
                     return;
@@ -394,7 +395,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 break;
         }
     }
-
     private void getDeviceList() {
         showLoadingToast("正在加载数据");
         HealthRequest.getDeviceList(deviceType, new SPSuccessListener() {
@@ -414,6 +414,10 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
                 if (msg.equals("未绑定血压计设备")) {
+                    //清除信息 ：
+                    if(devices.size()>0){
+                        clearData();
+                    }
                     ConfirmDialog.Builder builder = new ConfirmDialog.Builder(mContext);
                     builder.setMessage("未绑定血压计设备");
                     builder.setTitle("系统提示");
@@ -421,7 +425,7 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                     builder.setPositiveButton(R.string.bind, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            startupBindDeviceActivity();
+                         startupBindDeviceActivity();
                         }
                     });
                     builder.setNegativeButton(R.string.buy,
@@ -440,6 +444,20 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         });
     }
 
+    /**
+     * 绑定设备
+     */
+    public  void startupBindDeviceActivity(){
+        if (!MobileApplication.getInstance().isLogined){
+            showToastUnLogin();
+            toLoginPage();
+            return;
+        }
+        Intent carIntent = new Intent(getActivity() , BindDeviceActivity.class);
+        carIntent.putExtra("isFromBlood",true);
+        getActivity().startActivity(carIntent);
+    }
+
     private void getBloodData(List<Device> devices) {
         try {
             psotion = getBloodDeviceId(devices);
@@ -455,9 +473,10 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         //            改变内容
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
                 android.R.layout.simple_spinner_item, types);
-        spiner.setAdapter(adapter);
+        resultAdapter = new DeviceRelationAdapter(getActivity(), R.layout.devicetype_item,devices);
+        spiner.setAdapter(resultAdapter);
         spiner.setSelection(psotion, true);
-        adapter.setDropDownViewResource(R.layout.dropdown_stytle);
+        resultAdapter.setDropDownViewResource(R.layout.dropdown_stytle);
     }
 
     //    获取结果数组
@@ -784,7 +803,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         ButterKnife.unbind(this);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -818,20 +836,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     }
 
     /**
-     * 绑定设备
-     */
-    public void startupBindDeviceActivity() {
-        if (!MobileApplication.getInstance().isLogined) {
-            showToastUnLogin();
-            isGoToLogin = true;
-            toLoginPage();
-            return;
-        }
-        Intent carIntent = new Intent(getActivity(), BindDeviceActivity.class);
-        getActivity().startActivity(carIntent);
-    }
-
-    /**
      * 去够购买
      */
     public void getToBy() {
@@ -847,11 +851,10 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         bloodAdapter.setData(bloodDatalist);
 //       亲属关系
 //        showTypes
-        String[] types = new String[]{""};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
-                android.R.layout.simple_spinner_item, types);
-        spiner.setAdapter(adapter);
-        adapter.setDropDownViewResource(R.layout.dropdown_stytle);
+         devices = new ArrayList<>();
+        if(resultAdapter!=null){
+            resultAdapter.notifyDataSetChanged();
+        }
     }
     @Override
     public void onDestroy() {

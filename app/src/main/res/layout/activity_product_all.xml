@@ -133,6 +133,7 @@
                 <View style="@style/separator_line" />
                 <!-- 数量加减-->
                 <RelativeLayout
+                    android:id="@+id/rl_number_change"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginLeft="@dimen/margin_space"

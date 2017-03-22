@@ -2,6 +2,7 @@ package com.shssjk.utils;
 
 /**
  * Created by Administrator on 2017-03-10.
+ * 避免2次连续单击
  */
 import android.view.View;
 

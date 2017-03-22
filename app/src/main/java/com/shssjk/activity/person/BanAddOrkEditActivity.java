@@ -101,6 +101,7 @@ public class BanAddOrkEditActivity extends BaseActivity {
     }
     @Override
     public void initEvent() {
+//        mContext
         banSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -162,7 +163,6 @@ public class BanAddOrkEditActivity extends BaseActivity {
                 break;
         }
     }
-
     private void addBand() {
         if (!checkData()) {
             return;

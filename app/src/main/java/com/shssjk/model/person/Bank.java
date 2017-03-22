@@ -81,5 +81,8 @@ public class Bank implements Serializable{
     public String getCreate_time(){
         return this.create_time;
     }
-
+    @Override
+    public String toString(){
+        return bank+" "+code;
+    }
 }

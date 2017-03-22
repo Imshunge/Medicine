@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -35,10 +36,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shssjk.MainActivity;
+import com.shssjk.activity.IViewController;
 import com.shssjk.activity.R;
 import com.shssjk.activity.person.AllCollectActivity;
 import com.shssjk.activity.person.BankListActivity;
 import com.shssjk.activity.person.CameraListActivity;
+import com.shssjk.activity.person.Level;
 import com.shssjk.activity.person.MyStoneActivity;
 import com.shssjk.activity.person.StartBusinessActivity;
 import com.shssjk.activity.shop.OrderActivity;
@@ -65,6 +68,8 @@ import com.ipcamera.demo.BridgeService;
 import com.shssjk.utils.OnClickEvent;
 import com.shssjk.utils.SPStringUtils;
 import com.shssjk.utils.SSUtils;
+import com.shssjk.view.CustomProgressBar;
+import com.shssjk.view.GlideCircleTransform;
 import com.shssjk.view.SPHomeListView;
 import com.shssjk.view.SPMoreImageView;
 import vstc2.nativecaller.NativeCaller;
@@ -89,7 +94,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     View waitReturnLayout;        //退换货
     View collectLayout;            //收藏
 
-    View integrateView;            //积分,余额
+//    View integrateView;            //积分,余额
     View receiveAddressView;    //收货地址
     View couponView;            //优惠券
     View myteamView;			//我的团队
@@ -102,7 +107,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     TextView couponCountTxtv;        //优惠券数量
     //SPGuessYouLikeView  recommendProductView;
     RelativeLayout header_relayout;
-    SPMoreImageView nickImage;
+    ImageView nickImage;
 //    TextView nicknameTxtv;            //昵称
     TextView nickNameTxtv;
     //setting_btn
@@ -121,6 +126,8 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     SPHomeListView mHomeListView;
     SPGuessYouLikeAdapter mAdapter;
     List<SPProduct> mProducts=new ArrayList<>();
+    CustomProgressBar  customProgressBar;//等级进度条
+
     private GuessYouLiketListAdapter homeProductListAdapter;
     private static final int MY_PERMISSIONS_REQUEST_TAKE_PHOTO = 6;
     private static final int MY_PERMISSIONS_REQUEST_CHOSE_PHOTO = 7;
@@ -158,19 +165,19 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         waitCommentLayout = view.findViewById(R.id.personal_order_waitcomment_layout);
         waitReturnLayout = view.findViewById(R.id.personal_order_returned);
         collectLayout = view.findViewById(R.id.person_collect_aview);
-        integrateView = view.findViewById(R.id.person_integrate_rlayout);            //积分，石头，优惠券
+//        integrateView = view.findViewById(R.id.person_integrate_rlayout);            //积分，石头，优惠券
         receiveAddressView = view.findViewById(R.id.person_receive_address_aview);    //收货地址
         couponView = view.findViewById(R.id.person_coupon_aview);                    //优惠券
         myteamView = view.findViewById(R.id.person_myteam_aview);				//我的团队
         mycameraView = view.findViewById(R.id.person_camera_aview);				//我的摄像机
         mybankView = view.findViewById(R.id.person_bank_aview);				//我的银行卡
-        stoneTxtv = (TextView) view.findViewById(R.id.person_stone_txtv);    //石头
+//        stoneTxtv = (TextView) view.findViewById(R.id.person_stone_txtv);    //石头
         mystoneView=view.findViewById(R.id.person_mystone_aview);				//我的石头
-        pointTxtv = (TextView) view.findViewById(R.id.person_point_txtv);        //积分
-        couponCountTxtv = (TextView) view.findViewById(R.id.person_coupon_txtv);        //优惠券数量
+//        pointTxtv = (TextView) view.findViewById(R.id.person_point_txtv);        //积分
+//        couponCountTxtv = (TextView) view.findViewById(R.id.person_coupon_txtv);        //优惠券数量
         nickNameTxtv = (TextView) view.findViewById(R.id.nickname_txtv);        //昵称
         header_relayout = (RelativeLayout) view.findViewById(R.id.header_relayout);
-        nickImage = (SPMoreImageView) view.findViewById(R.id.head_mimgv);
+        nickImage = (ImageView) view.findViewById(R.id.head_mimgv);
 //        mGridView = (GridView) view.findViewById(R.id.product_gdv);
 
         mHomeListView= (SPHomeListView) view.findViewById(R.id.sphome_listview);
@@ -187,23 +194,17 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         levelImgv = (ImageView) view.findViewById(R.id.level_img);
         //level_name_txtv
         levelName = (TextView) view.findViewById(R.id.level_name_txtv);
+        customProgressBar= (CustomProgressBar) view.findViewById(R.id.cpb_progresbar);
 
-        String path = Environment.getExternalStorageDirectory().getPath();
-        //showToast(path);
-        Bitmap mBitmap = BitmapFactory.decodeFile(path + "/head.jpg");// 从sdcard中获取本地图片,通过BitmapFactory解码,转成bitmap
-        if (mBitmap != null) {
-            @SuppressWarnings("deprecation")
-            Drawable drawable = new BitmapDrawable(mBitmap);
-            nickImage.setImageDrawable(drawable);
-        } else {
-            /** 从服务器取,同时保存在本地 ,后续的工作 */
-        }
         if (MobileApplication.getInstance().isLogined){
             SPUser    spUser=   MobileApplication.getInstance().getLoginUser();
             String url = MobileConstants.BASE_HOST+ MobileApplication.getInstance().getLoginUser().getHeader_pic();
-            Glide.with(mContext).load(url).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
+//            Glide.with(mContext).load(url).placeholder(R.drawable.product_default).
+//                    diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage).transform(new GlideCircleTransform(this);
+            Glide.with(this)
+                    .load(url).transform(new GlideCircleTransform(mContext)).
+                    into(nickImage);
         }
-//        nickNameTxtv = (TextView) view.findViewById(R.id.nickname_txtv);
     }
 
     @Override
@@ -214,11 +215,10 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         waitCommentLayout.setOnClickListener(this);
         waitReturnLayout.setOnClickListener(this);
         collectLayout.setOnClickListener(this);
-        integrateView.setOnClickListener(this);
+//        integrateView.setOnClickListener(this);
         receiveAddressView.setOnClickListener(this);
         couponView.setOnClickListener(this);
         myteamView.setOnClickListener(this);
-//        mycameraView.setOnClickListener(this);
         mybankView.setOnClickListener(this);
         header_relayout.setOnClickListener(this);
         nickImage.setOnClickListener(this);
@@ -268,9 +268,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 			Intent collectIntent = new Intent(getActivity() , AllCollectActivity.class);
 			startActivity(collectIntent);
         } else if (v.getId() == R.id.person_integrate_rlayout) {
-            //积分,余额
-//			if (!checkLogin())return;
-//			getActivity().startActivity(new Intent(getActivity() , SPWalletLogtListActivity_.class));
         } else if (v.getId() == R.id.person_receive_address_aview) {
             //收货地址
             if (!checkLogin()) return;
@@ -282,9 +279,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         } else if (v.getId() == R.id.setting_btn) {
             //设置
             getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
-        } /*else if(v.getId() == R.id.header_relayout){
-            loginOrDetail(MobileApplication.getInstance().isLogined);
-		}*/ else if (v.getId() == R.id.nickname_txtv) {
+        }  else if (v.getId() == R.id.nickname_txtv) {
             loginOrDetail(MobileApplication.getInstance().isLogined);
         } else if (v.getId() == R.id.head_mimgv || v.getId() == R.id.account_rlayout) {
             loginOrDetail(MobileApplication.getInstance().isLogined);
@@ -301,13 +296,12 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             if (!checkLogin()) return;
             checkIsToWork();
         }
-
         switch (v.getId()) {
             case R.id.footer_hint_textview:
-//                showLoadingToast("正在加载数据");
                 loadMoreData();
                 break;
             case R.id.person_mystone_aview:
+                if (!checkLogin()) return;
                 startMyStoneActivity();
                 break;
         }
@@ -441,17 +435,17 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     public void refreshView() {
         if (MobileApplication.getInstance().isLogined) {
             SPUser user = MobileApplication.getInstance().getLoginUser();
-            if(!SSUtils.isEmpty(user.getDo_earnings())) {
-                stoneTxtv.setText(user.getDo_earnings());
-            }
-            if(!SSUtils.isEmpty(user.getDo_score())){
-                pointTxtv.setText(user.getDo_score());
-            }
-            if (SPStringUtils.isEmpty(user.getCoupon())) {
-                couponCountTxtv.setText("0");
-            } else {
-                couponCountTxtv.setText(user.getCoupon());
-            }
+//            if(!SSUtils.isEmpty(user.getDo_earnings())) {
+//                stoneTxtv.setText(user.getDo_earnings());
+//            }
+//            if(!SSUtils.isEmpty(user.getDo_score())){
+//                pointTxtv.setText(user.getDo_score());
+//            }
+//            if (SPStringUtils.isEmpty(user.getCoupon())) {
+//                couponCountTxtv.setText("0");
+//            } else {
+//                couponCountTxtv.setText(user.getCoupon());
+//            }
             if (!SPStringUtils.isEmpty(user.getNickname())) {
                 nickNameTxtv.setText(user.getNickname());
             }
@@ -485,52 +479,60 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             }
             if (MobileApplication.getInstance().isLogined){
                 String url = MobileConstants.BASE_HOST+ MobileApplication.getInstance().getLoginUser().getHeader_pic();
-                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
+//                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
+                Glide.with(this)
+                        .load(url).transform(new GlideCircleTransform(mContext)).
+                        into(nickImage);
+
             }
             accountView.setVisibility(View.VISIBLE);
             settingBtn.setVisibility(View.VISIBLE);
+            customProgressBar.setVisibility(View.VISIBLE);
+            getInfoLevel();
         } else {
-            stoneTxtv.setText("0");
-            pointTxtv.setText("0");
-            couponCountTxtv.setText("0");
+//            stoneTxtv.setText("0");
+//            pointTxtv.setText("0");
+//            couponCountTxtv.setText("0");
             nickNameTxtv.setText("点击登录");
             levelImgv.setVisibility(View.INVISIBLE);
             levelName.setVisibility(View.INVISIBLE);
 //            新增
             accountView.setVisibility(View.INVISIBLE);
             settingBtn.setVisibility(View.INVISIBLE);
-//            RoundedBitmapDrawable roundedBitmap = getCycleBitmpa(true);
-//            if (roundedBitmap != null) {
-//                nickImage.setImageDrawable(roundedBitmap);
-//            } else {
-//                /** 从服务器取,同时保存在本地 ,后续的工作 */
-//            }
+            customProgressBar.setVisibility(View.INVISIBLE);
             if (MobileApplication.getInstance().isLogined){
                 String url = MobileConstants.BASE_HOST+ MobileApplication.getInstance().getLoginUser().getHeadPic();
-                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
+                Glide.with(this)
+                        .load(url).transform(new GlideCircleTransform(mContext)).
+                        into(nickImage);
             }else{
-                Glide.with(mContext).load("").placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
+                Glide.with(this)
+                        .load(R.drawable.person_default_head).transform(new GlideCircleTransform(mContext)).
+                        into(nickImage);
             }
-
         }
     }
-    public RoundedBitmapDrawable getCycleBitmpa(boolean isDefault) {
-        RoundedBitmapDrawable circularBitmapDrawable = null;
-        String path = Environment.getExternalStorageDirectory().getPath();
-        Bitmap mBitmap = BitmapFactory.decodeFile(path + "/head.jpg");
-        if (isDefault) {
-            Drawable defaultDrawable = getResources().getDrawable(R.drawable.person_default_head);
-            BitmapDrawable bd = (BitmapDrawable) defaultDrawable;
-            mBitmap = bd.getBitmap();
-        } else {
-            mBitmap = BitmapFactory.decodeFile(path + "/head.jpg");
-        }
-        if (mBitmap != null) {
-            circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getActivity().getResources(), mBitmap);
-            circularBitmapDrawable.setCornerRadius(getActivity().getResources().getDimension(R.dimen.head_corner_35));
-            //nickImage.setImageDrawable(circularBitmapDrawable);
-        }
-        return circularBitmapDrawable;
+
+    public void getInfoLevel() {
+        PersonRequest.getLevelInfo(new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+                    Level level = (Level) response;
+                    customProgressBar.setProgressDesc("");
+                    customProgressBar.setMaxProgress(SSUtils.str2Int(level.getAll_score()));
+                    customProgressBar.setProgressColor(Color.parseColor("#79aa6b"));
+                    customProgressBar.setCurProgress(SSUtils.str2Int(level.getNow_score()));
+                } else {
+                    showToast(msg);
+                }
+            }
+        }, new SPFailuredListener((IViewController) mContext) {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+                showToast(msg);
+            }
+        });
     }
 
     public void refreshData(int page) {
@@ -540,9 +542,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 if (response != null) {
                     mProducts = (List<SPProduct>) response;
                     homeProductListAdapter.setData(mProducts);
-//                    recommendProductView.refreshProducts(products, false);
                 } else {
-                    //recommendProductView.refreshProducts(null, true);
                     showToast(msg);
                 }
 
@@ -573,7 +573,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     showToast(msg);
                 }
             }
-        }, new SPFailuredListener() {
+        }, new SPFailuredListener((IViewController) mContext) {
             @Override
             public void onRespone(String msg, int errorCode) {
                 showToast(msg);
@@ -601,7 +601,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 FILL_PARENT, Float.valueOf(count * itemheight).intValue());
         mHomeListView.setLayoutParams(params);
     }
-
     public void startupActivity(String goodsID) {
         Intent intent = new Intent(getActivity(), ProductAllActivity.class);
         intent.putExtra("goodsId", goodsID);

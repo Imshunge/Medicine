@@ -64,7 +64,7 @@ public class SPSaveData {
         String coupon = getShared(context).getString("coupon", "0");
         String birthday = getShared(context).getString("birthday","");
         String sex = getShared(context).getString("sex","0");
-
+        String phone = getShared(context).getString("mobile","");
 
 
         user.setCouponCount(couponCount);
@@ -79,6 +79,7 @@ public class SPSaveData {
         user.setDo_earnings(do_earnings);
         user.setSex(sex);
         user.setBirthday(birthday);
+        user.setMobile(phone);
         return user;
     }
 

@@ -66,7 +66,14 @@
         android:text="@string/activity_paybefor_btn_sum"
         android:textStyle="bold"
         />
+    <LinearLayout
+        android:id="@+id/ll_payway"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
     <TextView
+        android:id="@+id/hini_txtv"
         android:paddingTop="@dimen/margin5dp"
         android:layout_below="@+id/line1"
         android:layout_width="match_parent"
@@ -151,4 +158,42 @@
         android:layout_width="wrap_content"
         android:layout_height="1px"
         android:background="@color/broder"  />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin50dp"
+        android:id="@+id/ll_stone_pay"
+        android:layout_below="@+id/btn_gopay"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="@dimen/item_usericon_pinglun_width"
+            android:layout_height="@dimen/item_usericon_pinglun_width"
+            android:background="@drawable/stonepay"
+            android:layout_gravity="center_vertical"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/item_icon_height"
+            android:text="@string/activity_title_pay_stone"
+            android:paddingLeft="@dimen/margin5dp"
+            android:gravity="left|center_vertical"
+            android:layout_gravity="center_vertical"
+            />
+        <ImageView
+            android:layout_marginLeft="@dimen/margin5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/margin_space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/personal_arrow_right"/>
+    </LinearLayout>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        android:background="@color/broder"  />
+    </LinearLayout>
+
+
+
 </LinearLayout>

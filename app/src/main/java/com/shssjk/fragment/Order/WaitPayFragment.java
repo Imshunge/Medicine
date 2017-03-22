@@ -25,6 +25,7 @@ import com.shssjk.activity.IViewController;
 import com.shssjk.activity.shop.BeforPayActivity;
 import com.shssjk.activity.shop.OrderDetailActivity;
 import com.shssjk.adapter.OrderAdapter;
+import com.shssjk.common.MobileConstants;
 import com.shssjk.fragment.BaseFragment;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
@@ -142,12 +143,7 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
                     return;
                 }
                 SPOrder order = (SPOrder) orders.get(position);
-                Intent detailIntent = new Intent(mContext, OrderDetailActivity.class);
-                detailIntent.putExtra("type", "待支付");
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("order", order);
-                detailIntent.putExtras(bundle);
-                startActivityForResult(detailIntent, 888);
+                startDetailActivity(order);
             }
         });
     }
@@ -182,8 +178,6 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
                     llListview.setVisibility(View.VISIBLE);
                     emptyLstv.setVisibility(View.GONE);
                 }
-
-
                 testListViewFrame.refreshComplete();
                 hideLoadingToast();
             }
@@ -202,7 +196,6 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
             isFirstLoad = false;
         }
     }
-
     public void loadMoreData() {
         if (maxIndex) {
             return;
@@ -306,26 +299,11 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
         Bundle bundle = new Bundle();
         bundle.putSerializable("fromOrderList", order);
         payIntent.putExtras(bundle);
-        startActivity(payIntent);
+        startActivityForResult(payIntent, MobileConstants.Result_Code_Refresh);
+
     }
 
 
-    /**
-     * 支付
-     *
-     * @param data
-     */
-    private void dealWithPay(String data) {
-//        hud.dismiss();
-        int ret = UPPayAssistEx.startPay(mContext, null, null, data.trim(), mMode);
-        if (ret == PLUGIN_NEED_UPGRADE || ret == PLUGIN_NOT_INSTALLED) {
-            installPluns();
-        }
-//        hud.dismiss();
-//            else {
-//                UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, data.trim(), mMode);
-//            }
-    }
 
     //    调用控件
     public void installPluns() {
@@ -337,7 +315,6 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
             public void onClick(DialogInterface dialog, int which) {
                 UPPayAssistEx.installUPPayPlugin(mContext);
                 dialog.dismiss();
-//                hud.dismiss();
             }
         });
         builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
@@ -351,36 +328,10 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
     }
 
 
-    private void payOrder(SPOrder payOrder) {
-        showLoadingToast("正在支付");
-
-        Float sum1 = SSUtils.string2float(payOrder.getOrderAmount());
-        String sum = SSUtils.float2String(sum1 * 100);
-        ShopRequest.orderUnionPay(payOrder.getOrderID(), sum, new SPSuccessListener() {
-            @Override
-            public void onRespone(String msg, Object response) {
-                if (response != null) {
-                    String id = (String) response;
-                    dealWithPay(id);
-
-                } else {
-
-                }
-                hideLoadingToast();
-            }
-        }, new SPFailuredListener() {
-            @Override
-            public void onRespone(String msg, int errorCode) {
-                hideLoadingToast();
-                showToast(msg);
-            }
-        });
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        hud.show();
         if (requestCode == 10) {
 
             if (data == null) {
@@ -404,43 +355,21 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
                 refreshData();
             }
         }
+        switch (requestCode) {
+            case MobileConstants.Result_Code_Refresh:
+                refreshData();
+                break;
+        }
     }
 
 
-    //    使用石头支付
-    private void payWithStone(SPOrder order) {
-        showLoadingToast("正在支付");
-//        sum1 = SSUtils.string2float(payOrder.getOrderAmount());
-//        String sum = SSUtils.float2String(sum1 *100);
-        ShopRequest.orderPayUseStone(order.getOrderSN(), new SPSuccessListener() {
-            @Override
-            public void onRespone(String msg, Object response) {
-                hideLoadingToast();
-                if (response != null) {
-                    int id = (int) response;
-                    if (id == 0) {
-
-                        showToast(" 支付成功！ ");
-                        refreshData();
-                    } else {
-                        showToast(msg);
-                    }
-                } else {
-                    showToast(msg);
-                }
-            }
-        }, new SPFailuredListener() {
-            @Override
-            public void onRespone(String msg, int errorCode) {
-                hideLoadingToast();
-                showToast(msg);
-
-            }
-        });
-    }
 
     @Override
     public void ItemClick(SPOrder order) {
+        startDetailActivity(order);
+    }
+
+    private void startDetailActivity(SPOrder order) {
         Intent detailIntent = new Intent(mContext, OrderDetailActivity.class);
         detailIntent.putExtra("type", "待支付");
         Bundle bundle = new Bundle();
@@ -453,4 +382,7 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
     public void gotoLoginPageClearUserDate() {
 
     }
+
+
+
 }

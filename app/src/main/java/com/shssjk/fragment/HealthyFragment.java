@@ -31,6 +31,7 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
     private Context mContext;
     public ViewPager mPager;
     private RadioGroup group_radio;
+    private  boolean isFromBlood=false;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -71,12 +72,14 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
                         mPager.setCurrentItem(0);// 选择某一页
 //                        mPager.getCurrentItem()
 //                        mPager.getCurrentItem()
-                        //更新设备列表 血糖仪
+                        isFromBlood=true;
+                        //更新设备列表 血压计
                         if (mContext != null) {
                             mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_LOADATA));
                         }
                         break;
                     case R.id.radio_2:
+                        isFromBlood=false;
                         mPager.setCurrentItem(1);
                         //更新设备列表 血糖仪
                         if (mContext != null) {
@@ -172,13 +175,14 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
     /**
      * 绑定设备
      */
-        public void startupBindDeviceActivity(){
+        public  void startupBindDeviceActivity(){
         if (!MobileApplication.getInstance().isLogined){
             showToastUnLogin();
             toLoginPage();
             return;
         }
         Intent carIntent = new Intent(getActivity() , BindDeviceActivity.class);
+            carIntent.putExtra("isFromBlood",isFromBlood);
         getActivity().startActivity(carIntent);
     }
     @Override

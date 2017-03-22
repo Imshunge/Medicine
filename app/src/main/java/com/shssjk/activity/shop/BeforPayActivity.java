@@ -1,5 +1,6 @@
 package com.shssjk.activity.shop;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,9 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
-import com.shssjk.activity.R;
 import com.shssjk.activity.BaseActivity;
+import com.shssjk.activity.R;
 import com.shssjk.activity.person.BankListActivity;
+import com.shssjk.common.MobileConstants;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.person.PersonRequest;
@@ -25,8 +27,8 @@ import com.shssjk.model.order.PayOrder;
 import com.shssjk.model.order.SPOrder;
 import com.shssjk.model.person.Alipay;
 import com.shssjk.utils.AuthResult;
-import com.shssjk.utils.PayResult;
 import com.shssjk.utils.ConfirmDialog;
+import com.shssjk.utils.PayResult;
 import com.shssjk.utils.SSUtils;
 import com.unionpay.UPPayAssistEx;
 
@@ -62,6 +64,12 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
     ImageView arrowImgv;
     @Bind(R.id.ll_union_pay)
     LinearLayout llUnionPay;
+    @Bind(R.id.ll_stone_pay)
+    LinearLayout llStonePay;
+    @Bind(R.id.hini_txtv)
+    TextView hiniTxtv;
+    @Bind(R.id.ll_payway)
+    LinearLayout llPayway;
     private PayOrder payOrder;//确认订单跳转
     private SPOrder payOrderFromOrderList;
     private Context mContext;
@@ -126,10 +134,18 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
         }
 
     };
+
     private void dealWithPayAfter() {
 //        是否创业
         tvState.setText("支付成功");
         tvHiti.setText("订单已支付!");
+
+//        hiniTxtv.setVisibility(View.INVISIBLE);
+//        llAlipayPay.setVisibility(View.INVISIBLE);
+//        llUnionPay.setVisibility(View.INVISIBLE);
+//        llStonePay.setVisibility(View.INVISIBLE);
+
+        llPayway.setVisibility(View.GONE);
         checkIsToWork();
     }
 
@@ -146,6 +162,7 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
         mContext = this;
         super.init();
     }
+
     @Override
     public void initSubViews() {
 
@@ -184,15 +201,17 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
             tvPaysum.setText("金额:" + orderAmount + " 元");
         }
     }
+
     @Override
     public void initEvent() {
 
     }
+
     //   银联支付
     private void payOrderWithUnionPay(String orderId, String orderAmount) {
         showLoadingToast("正在支付");
-        String sum= SSUtils.stringMul100(orderAmount)+"";
-        String sum2=SSUtils.RemoveStrPointAftet0(sum);
+        String sum = SSUtils.stringMul100(orderAmount) + "";
+        String sum2 = SSUtils.RemoveStrPointAftet0(sum);
         ShopRequest.orderUnionPay(orderId, sum2, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
@@ -211,6 +230,7 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
             }
         });
     }
+
     // 支付宝  支付
     private void payWithAlipay(String orderId) {
         showLoadingToast("正在支付");
@@ -278,7 +298,7 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
     }
 
     /**
-     *银联支付支付
+     * 银联支付支付
      *
      * @param data
      */
@@ -321,7 +341,6 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
                     if ("0".equals(str.trim())) {
 //                        showConfirmDialog("您已达到创业资格，但还未开启创业，是否开启创业",
 //                                "系统提示", BeforPayActivity.this, 1);
-
                         ConfirmDialog.Builder builder = new ConfirmDialog.Builder(mContext);
                         builder.setMessage("您已达到创业资格，但还未开启创业，是否开启创业");
                         builder.setTitle("系统提示");
@@ -332,17 +351,16 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
                                 startBankListActivity();
                             }
                         });
-
                         builder.setNegativeButton("取消",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
-                                        startupOrderList(1);
+//                                        startupOrderList(1);
                                     }
                                 });
                         builder.create().show();
                     } else {
-                        startupOrderList(1);
+//                        startupOrderList(1);
                     }
                 } else {
                     showToast(msg);
@@ -363,13 +381,15 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
         startActivity(intent);
         finish();
     }
+
     public void startupOrderList(int orderStatus) {
         //订单列表
-        Intent allOrderList = new Intent(mContext , OrderActivity.class);
+        Intent allOrderList = new Intent(mContext, OrderActivity.class);
         allOrderList.putExtra("index", orderStatus);
         startActivity(allOrderList);
         finish();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -389,6 +409,12 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
                 showToast(" 你已取消了本次订单的支付！ ");
             }
         }
+        if (requestCode == MobileConstants.Result_Code_Refresh) {
+            if (resultCode == Activity.RESULT_OK) {
+                dealWithPayAfter();
+            }
+        }
+
     }
 
     //    dialog  确认框 确认按钮
@@ -402,7 +428,7 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
      *
      * @param view
      */
-    @OnClick({R.id.ll_alipay_pay, R.id.ll_union_pay})
+    @OnClick({R.id.ll_alipay_pay, R.id.ll_union_pay, R.id.ll_stone_pay})
     public void onClick(View view) {
         Float sum1 = SSUtils.string2float(orderAmount);
         if (sum1 == 0) {
@@ -415,7 +441,18 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
                 case R.id.ll_union_pay:
                     payOrderWithUnionPay(orderId, orderAmount);
                     break;
+                case R.id.ll_stone_pay:
+//                    payOrderWithUnionPay(orderId, orderAmount);
+                    startStonePayActuvuty();
+                    break;
             }
         }
     }
+
+    private void startStonePayActuvuty() {
+        Intent intent = new Intent(this, StonePayActivity.class);
+        intent.putExtra("orderId", orderId);
+        startActivityForResult(intent, MobileConstants.Result_Code_Refresh);
+    }
+
 }

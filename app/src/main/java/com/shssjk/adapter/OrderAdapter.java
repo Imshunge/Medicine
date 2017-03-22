@@ -98,9 +98,6 @@ public class OrderAdapter extends BaseAdapter {
 	@Override
 	public Object getItem(int position) {
 		if(mArticle == null) return null;
-//		if(mArticle.size()==0){
-//			return null;
-//		}
 		return mArticle.get(position);
 	}
 

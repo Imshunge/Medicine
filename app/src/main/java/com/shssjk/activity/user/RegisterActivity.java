@@ -55,8 +55,6 @@ public class RegisterActivity extends BaseActivity {
     FrameLayout titlbarFl;
     Button backBtn;       //返回按钮
     TextView titleTxtv; //标题
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setCustomerTitle(true, true, getString(R.string.login_register));
@@ -64,10 +62,8 @@ public class RegisterActivity extends BaseActivity {
         setContentView(R.layout.activity_register);
         super.init();
     }
-
     @Override
     public void initSubViews() {
-
         //标题
         titlbarFl= (FrameLayout) findViewById(R.id.titlebar_layout);
         titlbarFl.setBackgroundColor(ContextCompat.getColor(this, R.color.shop_title)); //or which ever color do you want
@@ -99,8 +95,6 @@ public class RegisterActivity extends BaseActivity {
         btnSendSMS = (Button) findViewById(R.id.btn_send_sms);
 
         txtErrorInfo = (TextView) findViewById(R.id.txt_error_info);
-
-
 
     }
 

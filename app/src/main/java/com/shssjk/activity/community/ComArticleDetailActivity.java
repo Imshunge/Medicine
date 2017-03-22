@@ -33,7 +33,6 @@ import com.shssjk.view.ListViewNobar;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * 江湖  帖子详情
  */
@@ -54,8 +53,6 @@ public class ComArticleDetailActivity extends BaseActivity implements   View.OnC
     private Button backBtn;//返回按钮
     private  Button  likeBtn;//收藏按钮
     private ListViewNobar mPinlunLists;
-
-
     private TextView mInfoTextView;
     private TextView mTitleTextView;
 
@@ -84,15 +81,12 @@ public class ComArticleDetailActivity extends BaseActivity implements   View.OnC
         this.articleId =   getIntent().getStringExtra("article_id");
         this.cid =   getIntent().getStringExtra("cid");
         this.uid =   getIntent().getStringExtra("uid");
-
-
         likeBtn= (Button) findViewById(R.id.titlebar_menu_btn);
         likeBtn.setBackgroundResource(R.drawable.product_unlike);
         mTitleTextView= (TextView)findViewById(R.id.infor_title);
         mInfoTextView = (TextView)findViewById(R.id.infor_text);
         likeBtn = (Button) findViewById(R.id.titlebar_menu_btn);
         backBtn= (Button) findViewById(R.id.titlebar_back_btn);
-
 
         mPinlunLists = (ListViewNobar) findViewById(R.id.list_pinglun);
         View footerView =  ((LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.listview_footer, null, false);
@@ -103,7 +97,6 @@ public class ComArticleDetailActivity extends BaseActivity implements   View.OnC
         mSendComTxtv = (TextView)findViewById(R.id.send_pinglun);
         mComEdiT = (EditText)findViewById(R.id.edit_pinglun);
     }
-
     @Override
     public void initData() {
         getComArticleDetail();

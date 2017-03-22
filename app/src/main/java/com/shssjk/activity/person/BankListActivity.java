@@ -20,6 +20,7 @@ import com.shssjk.model.person.Bank;
 import com.shssjk.utils.ConfirmDialog;
 import com.soubao.tpshop.utils.SPStringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -35,7 +36,7 @@ public class BankListActivity extends BaseActivity implements BankListAdapter.Ba
     ListView addressListv;
     @Bind(R.id.add_bank_btn)
     Button addBankBtn;
-    List<Bank> bankList;
+    List<Bank> bankList=new ArrayList<>();
     BankListAdapter bankListAdapter;
     Bank deletebank;
     Button explainBtn;
@@ -80,7 +81,6 @@ public class BankListActivity extends BaseActivity implements BankListAdapter.Ba
             }
         });
     }
-
     @OnClick(R.id.add_bank_btn)
     public void onClick() {
         Intent intent = new Intent(this, BanAddOrkEditActivity.class);

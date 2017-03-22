@@ -58,6 +58,7 @@ public class ShopCartActivity extends BaseActivity implements View.OnClickListen
     boolean isAllCheck;
     FrameLayout titlbarFl;
     private TextView titleTxtv;
+    private boolean isFrist = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +68,10 @@ public class ShopCartActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_shop_cart);
         super.init();// 此方法可以 调用父类的
     }
+
     @Override
     public void initSubViews() {
+
         shopcartListv = (ListView) findViewById(R.id.shopcart_listv);
         shopcartPcf = (PtrClassicFrameLayout) findViewById(R.id.shopcart_pcf);
         totalfeeTxtv = (TextView) findViewById(R.id.totalfee_txtv);
@@ -78,8 +81,20 @@ public class ShopCartActivity extends BaseActivity implements View.OnClickListen
         View emptyView = findViewById(R.id.empty_lstv);
         shopcartListv.setEmptyView(emptyView);
     }
+
     @Override
     public void initData() {
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (MobileApplication.getInstance().isLogined) {
+            if (isFrist) {
+                refreshData();
+            }
+        }
+        isFrist = true;
     }
 
     @Override
@@ -244,7 +259,7 @@ public class ShopCartActivity extends BaseActivity implements View.OnClickListen
             Intent confirmIntent = new Intent(mContext, ConfirmOrderActivity.class);
             confirmIntent.putExtra("sumFee", totalFee);
             startActivity(confirmIntent);
-            finish();
+//            finish();
         }
     }
 
@@ -329,11 +344,13 @@ public class ShopCartActivity extends BaseActivity implements View.OnClickListen
             showToast(e.getMessage());
         }
     }
+
     @Override
     public void deleteProductFromCart(SPProduct product) {
         currentProduct = product;
         showConfirmDialog("确定删除该商品", "删除提醒", this, 1);
     }
+
     public void checkAllOrNo() {
         boolean needCheckAll = false;//是否需要全选
         try {
@@ -384,6 +401,7 @@ public class ShopCartActivity extends BaseActivity implements View.OnClickListen
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

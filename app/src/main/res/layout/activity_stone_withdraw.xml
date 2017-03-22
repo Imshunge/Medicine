@@ -72,10 +72,9 @@
             android:layout_height="@dimen/height_text"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_space"
+            android:maxLength="10"
             android:gravity="center_vertical|right"
-            android:inputType="numberDecimal"
-            android:text=""
-            />
+            android:inputType="numberDecimal" />
     </RelativeLayout>
     <View  style="@style/separator_line"/>
     <RelativeLayout
@@ -102,29 +101,30 @@
             android:layout_height="@dimen/height_text"
             android:layout_centerVertical="true"
             android:gravity="center_vertical|right"
-            android:layout_marginRight="@dimen/margin150dp"
+            android:layout_marginRight="@dimen/margin100dp"
             android:inputType="numberDecimal" />
         <Button
-            android:layout_width="@dimen/margin150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/register_btn_re_code"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/margin100dp"
+            android:layout_height="40dp"
+            android:text="@string/register_btn_re_code_done"
             android:id="@+id/btn_send_sms"
             android:layout_alignBottom="@+id/edit_code"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:enabled="false"
-            android:onClick="onBtnReCodeClick" />
+            android:enabled="true"
+          />
 
     </RelativeLayout>
     <Button
         android:layout_width="match_parent"
         style="@style/button_style"
         android:text="@string/apply"
-        android:id="@+id/btn_next_2"
+        android:id="@+id/btn_withdraw"
         android:layout_below="@+id/code_txtv"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
-        android:onClick="onBtnNextTowClick" />
+      />
 
 </LinearLayout>

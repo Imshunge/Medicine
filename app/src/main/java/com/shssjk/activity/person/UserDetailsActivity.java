@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +40,7 @@ import com.shssjk.model.SPUser;
 import com.shssjk.model.person.UploadPic;
 import com.shssjk.utils.DatePickerUtil;
 import com.shssjk.utils.SSUtils;
+import com.shssjk.view.GlideCircleTransform;
 import com.shssjk.view.SPMoreImageView;
 
 
@@ -62,7 +64,7 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
     EditText nickName;
     TextView sexSpi;
     TextView ageTxt;
-    SPMoreImageView headImage;
+    ImageView headImage;
     Button btnSave;
     SPUser mUser = null;
     private String[] sexA = null;
@@ -96,7 +98,7 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
         nickName = (EditText) findViewById(R.id.nickname_editx);
         sexSpi = (TextView) findViewById(R.id.sex_spinner);
         ageTxt = (TextView) findViewById(R.id.age_txtv);
-        headImage = (SPMoreImageView) findViewById(R.id.head_mimgv);
+        headImage = (ImageView) findViewById(R.id.head_mimgv);
         btnSave = (Button) findViewById(R.id.btn_save);
     }
     @Override
@@ -121,17 +123,34 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
                  }
              }
 
-            path = Environment.getExternalStorageDirectory().getPath();
-            //showToast(path);
-            mBitmap = BitmapFactory.decodeFile(path + "/head.jpg");// 从sdcard中获取本地图片,通过BitmapFactory解码,转成bitmap
+//            path = Environment.getExternalStorageDirectory().getPath();
+//            //showToast(path);
+//            mBitmap = BitmapFactory.decodeFile(path + "/head.jpg");// 从sdcard中获取本地图片,通过BitmapFactory解码,转成bitmap
 
             /** 从服务器取,同时保存在本地 ,后续的工作 */
-            if (MobileApplication.getInstance().isLogined) {
-                String url = MobileConstants.BASE_HOST + MobileApplication.getInstance().
-                        getLoginUser().getHeader_pic();
-                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).
-                        diskCacheStrategy(DiskCacheStrategy.SOURCE).into(headImage);
+//            if (MobileApplication.getInstance().isLogined) {
+//                String url = MobileConstants.BASE_HOST + MobileApplication.getInstance().
+//                        getLoginUser().getHeader_pic();
+//                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).
+//                        diskCacheStrategy(DiskCacheStrategy.SOURCE).into(headImage);
+//            }else{
+//
+//            }
+            if (MobileApplication.getInstance().isLogined){
+                String url = MobileConstants.BASE_HOST+ mUser.getHeader_pic();
+                Glide.with(this)
+                        .load(url).transform(new GlideCircleTransform(mContext)).
+                        into(headImage);
+//                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(headImage);
+            }else{
+//                Glide.with(mContext).load("").placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
+                Glide.with(this)
+                        .load(R.drawable.person_default_head).transform(new GlideCircleTransform(mContext)).
+                        into(headImage);
             }
+
+
+
         }
     }
 
@@ -321,7 +340,9 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
                     if (mBitmap != null) {
                         /** 上传到服务器 待--- */
                         setPictureToSD(mBitmap);// 保存本地
-                        headImage.setImageBitmap(mBitmap);// 显示
+//                        headImage.setImageBitmap(mBitmap);// 显示
+
+
                         updateUserHeader(mBitmap);
                     }
                 }
@@ -358,10 +379,12 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
                 if (!SSUtils.isEmpty(user.getHeader_pic())) {
                     user.setHeader_pic(uploadPic.getPath());
                     SPSaveData.putValue(mContext, "header_pic", uploadPic.getPath());
+                    String url = MobileConstants.BASE_HOST+ uploadPic.getPath();
+                    Glide.with(mContext)
+                            .load(url).transform(new GlideCircleTransform(mContext)).
+                            into(headImage);
                 }
                 showToast(msg);
-//                setResult(RESULT_OK);
-//                finish();
             }
         }, new SPFailuredListener(UserDetailsActivity.this) {
             @Override

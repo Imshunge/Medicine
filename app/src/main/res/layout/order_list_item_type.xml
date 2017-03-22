@@ -51,7 +51,9 @@
             />
 	</LinearLayout>
 
-	<View  style="@style/separator_line"/>
+	<View  style="@style/separator_line"
+		android:layout_marginBottom="1dp"
+		/>
 
 
 </LinearLayout>

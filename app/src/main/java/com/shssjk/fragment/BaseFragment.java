@@ -8,15 +8,12 @@ import android.view.View;
 
 import com.shssjk.activity.R;
 import com.shssjk.activity.IViewController;
-import com.shssjk.activity.health.BindDeviceActivity;
 import com.shssjk.activity.shop.ProductListActivity;
 import com.shssjk.activity.user.LoginActivity;
-import com.shssjk.global.MobileApplication;
 import com.shssjk.utils.SMobileLog;
 import com.shssjk.utils.ConfirmDialog;
 import com.shssjk.utils.SPDialogUtils;
 import com.shssjk.utils.SPLoadingDialog;
-
 
 import org.json.JSONObject;
 
@@ -30,20 +27,17 @@ public abstract class BaseFragment extends Fragment implements IViewController {
 	SPLoadingDialog mLoadingDialog;
 	JSONObject mDataJson;
 	private String categoryId="850";
-
 	/**
 	 * 跳转登录界面
 	 */
 	public void gotoLogin(){
 
 	}
-
 	public void init(View view){
 		initSubView(view);
 		initEvent();
 		initData();
 	}
-
 	/**
 	 * 取消网络请求
 	* @Description: TODO(这里用一句话描述这个方法的作用)
@@ -105,7 +99,6 @@ public abstract class BaseFragment extends Fragment implements IViewController {
 				});
 		builder.create().show();
 	}
-	
 	/**
 	 * 
 	* @Description: 初始化子类视图 
@@ -130,15 +123,15 @@ public abstract class BaseFragment extends Fragment implements IViewController {
 	/**
 	 * 绑定设备
 	 */
-	public void startupBindDeviceActivity(){
-		if (!MobileApplication.getInstance().isLogined){
-			showToastUnLogin();
-			toLoginPage();
-			return;
-		}
-		Intent carIntent = new Intent(getActivity() , BindDeviceActivity.class);
-		getActivity().startActivity(carIntent);
-	}
+//	public void startupBindDeviceActivity(){
+//		if (!MobileApplication.getInstance().isLogined){
+//			showToastUnLogin();
+//			toLoginPage();
+//			return;
+//		}
+//		Intent carIntent = new Intent(getActivity() , BindDeviceActivity.class);
+//		getActivity().startActivity(carIntent);
+//	}
 
 	/**
 	 * 去够购买

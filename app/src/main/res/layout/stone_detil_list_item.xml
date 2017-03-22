@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:background="@color/bg_view"
     android:padding="5dp">
-
     <TextView
         android:id="@+id/tv_source"
         style="@style/textStyle.Hug.black"
@@ -65,4 +64,5 @@
             android:singleLine="true"
             android:text="100" />
     </LinearLayout>
+
 </RelativeLayout>

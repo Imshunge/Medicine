@@ -116,7 +116,9 @@
         <activity android:name=".person.SettingActivity" />
         <activity android:name=".person.HelpActivity" />
         <activity android:name=".person.ServiceActivity" />
-        <activity android:name=".person.UserDetailsActivity" />
+        <activity android:name=".person.UserDetailsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            />
         <activity android:name=".shop.OrderListActivity" />
         <activity
             android:name=".shop.OrderBaseActivity"
@@ -293,7 +295,10 @@
             android:label="@string/title_activity_stone_withdraw" />
         <activity
             android:name=".person.StoneDetailActivity"
-            android:label="@string/title_activity_stone_detail"></activity>
+            android:label="@string/title_activity_stone_detail" />
+        <activity
+            android:name=".shop.StonePayActivity"
+            android:label="@string/title_activity_stone_pay_actuvuty"></activity>
     </application>
 
 </manifest>
