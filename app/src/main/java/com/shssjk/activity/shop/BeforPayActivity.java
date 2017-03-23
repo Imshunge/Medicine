@@ -144,15 +144,12 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
 //        llAlipayPay.setVisibility(View.INVISIBLE);
 //        llUnionPay.setVisibility(View.INVISIBLE);
 //        llStonePay.setVisibility(View.INVISIBLE);
-
         llPayway.setVisibility(View.GONE);
         checkIsToWork();
     }
-
     private String orderAmount;
     private String orderId;
     private String orderSn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setCustomerTitle(true, true, getString(R.string.activity_title_pay_befor));
@@ -183,16 +180,13 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
             orderAmount = payOrder.getOrderAmount();
             orderId = payOrder.getOrderId();
             orderSn = payOrder.getOrderSn();
-
         } else {
             orderAmount = payOrderFromOrderList.getOrderAmount();
             orderId = payOrderFromOrderList.getOrderID();
             orderSn = payOrderFromOrderList.getOrderSN();
         }
-
         showData(orderSn, orderAmount);
     }
-
     private void showData(String orderId, String orderAmount) {
         if (!SSUtils.isEmpty(orderId)) {
             tvOrderid.setText("订单号:" + orderId);
@@ -201,12 +195,9 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
             tvPaysum.setText("金额:" + orderAmount + " 元");
         }
     }
-
     @Override
     public void initEvent() {
-
     }
-
     //   银联支付
     private void payOrderWithUnionPay(String orderId, String orderAmount) {
         showLoadingToast("正在支付");

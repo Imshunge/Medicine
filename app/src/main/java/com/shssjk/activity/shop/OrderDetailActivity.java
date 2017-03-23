@@ -183,7 +183,15 @@ public class OrderDetailActivity extends OrderBaseActivity implements ConfirmDia
         }
 //        商品总额
         if (!SSUtils.isEmpty(mOrder.getGoodsPrice())) {
-            feeGoodsfeeTxtv.setText("¥ " + mOrder.getGoodsPrice());
+            if("3".equals(mOrder.getType())){
+                feeGoodsfeeTxtv.setText(mOrder.getGoodsPrice()+" 积分");
+                titleCouponTxtv.setVisibility(View.INVISIBLE);
+                feeCouponTxtv.setVisibility(View.INVISIBLE);
+            }else{
+                feeGoodsfeeTxtv.setText("¥ " + mOrder.getGoodsPrice());
+                titleCouponTxtv.setVisibility(View.VISIBLE);
+                feeCouponTxtv.setVisibility(View.VISIBLE);
+            }
         }
 //        运费
         if (!SSUtils.isEmpty(mOrder.getCouponPrice())) {

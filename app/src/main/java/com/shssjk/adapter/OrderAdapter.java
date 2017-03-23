@@ -140,7 +140,7 @@ public class OrderAdapter extends BaseAdapter {
 		String goodsInfo = "共"+num+"件商品 实付款:¥"+orderAmout;
 		GoodsAdapter goodsAdapter = new GoodsAdapter(mContext);
 		holder.listView.setAdapter(goodsAdapter);
-		goodsAdapter.setData(SPOrder.getProducts());
+		goodsAdapter.setData(SPOrder.getProducts(),SPOrder.getType());
 		SSUtils.setListViewHeightBasedOnChildren(holder.listView); //解决listview 嵌套，嵌套列表列表项只有一个的问题
 		holder.btnCancel.setOnClickListener(new View.OnClickListener() {
 			@Override

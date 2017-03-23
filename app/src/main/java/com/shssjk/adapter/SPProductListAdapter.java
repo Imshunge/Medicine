@@ -149,12 +149,11 @@ public class SPProductListAdapter extends BaseAdapter {
 		ImageView picImgv1 ;
 		TextView nameTxtv1;	//商品名称 
 		TextView priceTxtv1; //商品价格
-		
+
 		View view2;
 		ImageView picImgv2 ;
 		TextView nameTxtv2;	//商品名称 
 		TextView priceTxtv2; //商品价格
-
 		View bottonLineView;
 	}
 	

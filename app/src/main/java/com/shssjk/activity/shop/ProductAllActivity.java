@@ -51,6 +51,7 @@ import com.shssjk.view.ScrollBottomScrollView;
 import com.shssjk.view.tagview.Tag;
 import com.shssjk.view.tagview.TagListView;
 import com.shssjk.view.tagview.TagView;
+import com.soubao.tpshop.utils.SPJsonUtil;
 import com.soubao.tpshop.utils.SPStringUtils;
 
 import org.json.JSONArray;
@@ -174,6 +175,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
     private JSONObject specJson;//Map<String , List<SPProductSpec>>
     private String is_collect = "";
     private int shopCount;
+//    private List<SPProductSpec> productSpecArr=new ArrayList<>();
 
     public Map<String, String> getSelectSpecMap() {
         return selectSpecMap;
@@ -369,11 +371,14 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                 addShopCar(view);
                 break;
             case   R.id.buy_points_btn:
-//                String spec_key = mProduct.get
+                String spec_key = "";
+                if(mProduct.getSpecArr().size()>0){
+                    spec_key=mProduct.getSpecArr().get(0).getItemID();
+                }
                 Intent intent = new Intent(mContext, ConfirmOrderActivity.class);
                 intent.putExtra("goodsId", mProduct.getGoodsID());
-                intent.putExtra("sumFee", 10.00);
-                intent.putExtra("spec_key",mProduct.getSpecKey());
+                intent.putExtra("sumFee", 0.00);
+                intent.putExtra("spec_key",spec_key);
                 startActivity(intent);
                 break;
 
@@ -485,6 +490,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                         setContents(mProduct.getGoodsContent());
                         loadData(mProduct.getGoodsContent());
                         showBottomeLayout(mProduct);
+//                        productSpecArr = SPJsonUtil.fromJsonArrayToList(mProduct.getSpecArr(), SPProductSpec.class);
                     }
                     if (mDataJson != null && mDataJson.has("gallery")) {
                         mGalleryArray = mDataJson.getJSONArray("gallery");
@@ -509,7 +515,12 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                         Logger.e(this, "is_collect" + is_collect);
                         refreshCollectButton(is_collect);
                     }
-                    dealModel();
+                    if (mDataJson != null && mDataJson.has("cart_num")) {
+                        String cart_num = mDataJson.getString("cart_num");
+                        productcartCount.setText(cart_num);
+                        Logger.e(this, "cart_num" + cart_num);
+                    }
+                   dealModel();
                 } catch (Exception e) {
                     showToast(e.getMessage());
                 }

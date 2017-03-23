@@ -804,11 +804,13 @@ public class ShopRequest {
                                 //物流信息
                                 //商品列表
                                 if (!resultJson.isNull("cartList") && resultJson.has("cartList")) {
-                                    List<SPProduct> products = SPJsonUtil.fromJsonArrayToList(resultJson.getJSONArray("cartList"), SPProduct.class);
+                                    List<SPProduct> products = new ArrayList<SPProduct>();
+                                    SPProduct temp = SPJsonUtil.fromJsonToModel(resultJson.getJSONObject("cartList"), SPProduct.class);
+                                    products.add(temp);
                                     jsonObject.put("products", products);//总金额(需要支付的金额
                                 }
                                 //优惠券, 代金券
-                                if (!resultJson.isNull("cartList") && resultJson.has("cartList")) {
+                                if (!resultJson.isNull("couponList") && resultJson.has("couponList")) {
                                     List<Coupon> coupons = SPJsonUtil.fromJsonArrayToList(resultJson.getJSONArray("couponList"), Coupon.class);
                                     jsonObject.put("coupons", coupons);
                                 }
@@ -817,8 +819,9 @@ public class ShopRequest {
                                     jsonObject.put("userInfo", userJson);
                                 }
                                 if (!resultJson.isNull("totalPrice") && resultJson.has("totalPrice")) {
-                                    JSONObject totalPriceJson = resultJson.getJSONObject("totalPrice");
-                                    Totalprice totalprice = SPJsonUtil.fromJsonToModel(totalPriceJson, Totalprice.class);
+                                    Double totalPriceJson = resultJson.getDouble("totalPrice");
+                                    Totalprice totalprice =new Totalprice();
+                                    totalprice.setTotalFee(totalPriceJson);
                                     jsonObject.put("totalPrice", totalprice);
                                 }
                             }

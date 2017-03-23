@@ -42,6 +42,7 @@ import com.shssjk.view.SwitchButton;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.shssjk.utils.SSUtils.getFromAssets;
@@ -63,6 +64,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     TextView feeShoppingTxtv;
 //    优惠券
     TextView feeCouponTxtv;
+
+    TextView  title_coupon_txtv;
 //    石头
     TextView feePointTxtv;
 
@@ -94,8 +97,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private Context mContext;
     /********* 服务器拉取的数据源集合 *****************/
     SPConsigneeAddress consigneeAddress ;   //当前收货人信息
-    List<SPProduct> products;               //商品列表
-    List<Coupon> coupons;                  //优惠券列表
+    List<SPProduct> products=new ArrayList<>();               //商品列表
+    List<Coupon> coupons=new ArrayList<>();                  //优惠券列表
     JSONObject userinfoJson;                //用户信息(积分,余额)
     JSONObject amountDict;                   //结算金额汇总
     JSONObject totalPrice;                      //总价
@@ -120,7 +123,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 //   积分兑换传的参数
     private String goodsId="";
     private String spec_key="";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setCustomerTitle(true, true, getString(R.string.title_confirm_order));
@@ -173,17 +175,23 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         couponsumTxtv=(TextView) findViewById(R.id.coupon_sum_use_txtv);
 
         btnStone = (Button) findViewById(R.id.btn_stone);
-
         rl_coupon= (RelativeLayout) findViewById(R.id.rl_coupon);
+        title_coupon_txtv=(TextView) findViewById(R.id.title_coupon_txtv);
+
     }
 
     @Override
     public void initData() {
-
          if(SSUtils.isEmpty(goodsId))  {
              refreshData();
+             couponAview.setVisibility(View.VISIBLE);
+             feeCouponTxtv.setVisibility(View.VISIBLE);
+             title_coupon_txtv.setVisibility(View.VISIBLE);
          }else{
              getPointsConfirmOrderData();
+             couponAview.setVisibility(View.GONE);
+             feeCouponTxtv.setVisibility(View.INVISIBLE);
+             title_coupon_txtv.setVisibility(View.INVISIBLE);
          }
         ShowFee();
     }
@@ -239,8 +247,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         });
 //        initEvent();
     }
-
-
 
     public void getPointsConfirmOrderData( ){
         ShopRequest.getPointsConfirmOrderData(goodsId,spec_key,new SPSuccessListener() {
@@ -447,6 +453,13 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             params.put("order_amount" ,mSumpricsse);
             //订单总价  邮费+ 商品
             params.put("total_amount" ,mFee +priceSum);
+
+//            积分商品
+            if(!SSUtils.isEmpty(goodsId)){
+                params.put("type" ,"3");
+            }
+
+
             formDataArray = new JSONArray();
             //添加商品明细
             try {

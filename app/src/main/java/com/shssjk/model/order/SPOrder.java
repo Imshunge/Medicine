@@ -63,6 +63,16 @@ public class SPOrder implements Model, Serializable{
     //物流名称(shipping_name)
     String shippingName;
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    String type;
+
 //支付code(pay_code)
     String payCode;
 

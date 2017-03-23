@@ -35,10 +35,8 @@ import java.util.List;
 /**
  * 购物车
  */
-
 public class ShopCartActivity extends BaseActivity implements View.OnClickListener,
         ShopcartListAdapter.ShopCarClickListener, ConfirmDialog.ConfirmDialogListener {
-
     private String TAG = "ShopCartActivity";
     private Context mContext;
 
@@ -214,7 +212,6 @@ public class ShopCartActivity extends BaseActivity implements View.OnClickListen
         int endIndex = totalFeeFmt.length();
         SpannableString totalFeeSpanStr = new SpannableString(totalFeeFmt);
         totalFeeSpanStr.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.light_red)), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色为洋红色
-
         totalfeeTxtv.setText(totalFeeSpanStr);
         cutfeeTxtv.setText(cutFeeFmt);
         if (isAllCheck) {
@@ -344,7 +341,6 @@ public class ShopCartActivity extends BaseActivity implements View.OnClickListen
             showToast(e.getMessage());
         }
     }
-
     @Override
     public void deleteProductFromCart(SPProduct product) {
         currentProduct = product;

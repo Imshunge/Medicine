@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/HeaderAndFooterRecyclerView_library" />
+            <option value="$PROJECT_DIR$/LayoutCastlibrary" />
             <option value="$PROJECT_DIR$/StickyGridHeaders_library" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/gallery" />

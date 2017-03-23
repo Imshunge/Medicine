@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HeaderAndFooterRecyclerView_library/HeaderAndFooterRecyclerView_library.iml" filepath="$PROJECT_DIR$/HeaderAndFooterRecyclerView_library/HeaderAndFooterRecyclerView_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LayoutCastlibrary/LayoutCastlibrary.iml" filepath="$PROJECT_DIR$/LayoutCastlibrary/LayoutCastlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/Medicine.iml" filepath="$PROJECT_DIR$/Medicine.iml" />
       <module fileurl="file://$PROJECT_DIR$/StickyGridHeaders_library/StickyGridHeaders_library.iml" filepath="$PROJECT_DIR$/StickyGridHeaders_library/StickyGridHeaders_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />

@@ -88,12 +88,10 @@ public class HealthRequest {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);

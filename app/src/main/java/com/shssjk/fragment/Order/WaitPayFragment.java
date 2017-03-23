@@ -92,7 +92,6 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
         super.init(view);
         return view;
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -114,10 +113,8 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
     public void initSubView(View view) {
         orderAdapter = new OrderAdapter(mContext, this, this, this);
         orderListv.setAdapter(orderAdapter);
-
         View emptyView = view.findViewById(R.id.empty_lstv);
         orderListv.setEmptyView(emptyView);
-
     }
 
     @Override
@@ -152,7 +149,6 @@ public class WaitPayFragment extends BaseFragment implements OrderAdapter.OkBtnC
     public void initData() {
         refreshData();
     }
-
     public void refreshData() {
         pageIndex = 1;
         maxIndex = false;

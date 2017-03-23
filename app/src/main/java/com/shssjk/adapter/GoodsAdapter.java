@@ -28,7 +28,7 @@ import java.util.List;
 public class GoodsAdapter extends BaseAdapter {
 
 	private String TAG = "GoodsAdapter";
-
+	private String type="0";
 	private List<SPProduct> mArticle;
 	private Context mContext ;
 
@@ -37,10 +37,11 @@ public class GoodsAdapter extends BaseAdapter {
 
 	}
 	
-	public void setData(List<SPProduct> articles){
+	public void setData(List<SPProduct> articles, String type){
 		if(articles == null)return;
 		this.mArticle = articles;
 		this.notifyDataSetChanged();
+		this.type=type;
 	}
 
 	@Override
@@ -76,7 +77,6 @@ public class GoodsAdapter extends BaseAdapter {
 			holder.nameTxtv = ((TextView) convertView.findViewById(R.id.name_txtv));
 			holder.numTxtv = ((TextView) convertView.findViewById(R.id.num_txtv));
 			holder.priceTxtv = ((TextView) convertView.findViewById(R.id.shop_price_txtv));
-
 			//设置标记
 			  convertView.setTag(holder);
         }else{
@@ -94,8 +94,13 @@ public class GoodsAdapter extends BaseAdapter {
 		if (!SPStringUtils.isEmpty(article.getGoodsNum())){
 			holder.numTxtv.setText("数量:"+article.getGoodsNum());
 		}
+
 		if (!SPStringUtils.isEmpty(article.getGoodsPrice())){
-			holder.priceTxtv.setText("¥ "+article.getGoodsPrice());
+			if("3".equals(type)){
+				holder.priceTxtv.setText(article.getGoodsPrice()+" 积分");
+			}else{
+				holder.priceTxtv.setText("¥ "+article.getGoodsPrice());
+			}
 		}
 		return convertView;
 	}
