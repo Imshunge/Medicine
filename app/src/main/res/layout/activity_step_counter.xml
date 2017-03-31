@@ -3,10 +3,108 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".health.StepCounterActivity">
+    <com.shssjk.view.CircleBar
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:id="@+id/circlestep"
+        android:layout_width="300dp"
+        android:layout_height="380dp" >
+    </com.shssjk.view.CircleBar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/circlestep"
+        android:orientation="horizontal"
+        android:gravity="center" >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/margin20dp"
+            android:text=""
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/margin50dp"
+            android:background="@color/color_white"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="@dimen/margi30dp"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/margin20dp"
+            android:text=""
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_title2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:layout_below="@+id/circlestep"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/color_white"
+            android:gravity="center_vertical|bottom"
+            android:layout_marginBottom="@dimen/margi30dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_calories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textStyle.Hug.black"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textStyle.Hug.black"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="消耗(千卡)" />
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/margin50dp"
+            android:background="@color/color_line"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="@dimen/margi30dp"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/color_white"
+            android:gravity="center_vertical|bottom"
+            android:layout_marginBottom="@dimen/margi30dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_mileage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textStyle.Hug.black"
+                android:textColor="@color/black"
+
+                android:gravity="center"
+                android:text="" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textStyle.Hug.black"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="里程(米)" />
+        </LinearLayout>
+    </LinearLayout>
+
+
 
 </RelativeLayout>

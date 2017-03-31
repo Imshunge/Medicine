@@ -6,23 +6,22 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
-import com.cn.stepcounter.R;
+import com.shssjk.utils.DisplayUtil;
 
 /**
  * 这是继承view的一个重新绘图的圆圈的一个类 Author: liyachao email:296777513@qq.com Date: 2015-1-5
  * Time: 下午2:39
  */
 public class CircleBar extends View {
-
 	private RectF mColorWheelRectangle = new RectF();// 圆圈的矩形范围
 	private Paint mDefaultWheelPaint;// 绘制底部灰色圆圈的画笔
 	private Paint mColorWheelPaint;// 绘制蓝色扇形的画笔
@@ -32,7 +31,11 @@ public class CircleBar extends View {
 	private float circleStrokeWidth;// 圆圈的线条粗细
 	private float pressExtraStrokeWidth;// 按下状态下增加的圆圈线条增加的粗细
 	private int mText;// 中间文字内容
-	private int mCount;// 为了达到数字增加效果而添加的变量，他和mText其实代表一个意思
+
+	public int getmCount() {
+		return mCount;
+	}
+	private int mCount=0;// 为了达到数字增加效果而添加的变量，他和mText其实代表一个意思
 	private float mProgressAni;// 为了达到蓝色扇形增加效果而添加的变量，他和mProgress其实代表一个意思
 	private float mProgress;// 扇形弧度
 	private int mTextSize;// 中间文字大小
@@ -42,31 +45,22 @@ public class CircleBar extends View {
 	private int mDistance1;//圆形离父布局的距离
 	BarAnimation anim;// 动画类
 	private int mType;// 根据传入的数值判断应该显示的页面
-	private Weather weather;
-	private int max = 100;// 圆形所代表最大的数值
+//	private Weather weather;
+	private int max = 5000;// 圆形所代表最大的数值
 	private String title2Text;
-
 	public CircleBar(Context context) {
 		super(context);
 		init();
 	}
-
 	public CircleBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
-//		TypedArray ta = context.obtainStyledAttributes(attrs,
-//				R.styleable.CircleBar);
-//		// 从TypedArray中取出对应的值来为要设置的属性赋值
-//		title2Text = ta.getString(R.styleable.title2Text);
 		init();
 	}
 
 	public CircleBar(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-//		TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CircleBar, defStyle, 0);
-
 		init();
 	}
-
 	private void init() {
 		circleStrokeWidth = DisplayUtil.dip2px(getContext(), 20);// 圆圈的线条粗细
 		mTextSize = DisplayUtil.sp2px(getContext(), 80);// 中间文字大小
@@ -144,16 +138,16 @@ public class CircleBar extends View {
 
 		if (this.mType == 1) {// 第一个页面
 			upText = "步数";
-			downText = "目标:10000";
+			downText = "目标:"+max+" 步";
 			middleText = String.valueOf(mCount);
 		} else if (this.mType == 2) {// 第二个页面
 			upText = "卡路里";
-			downText = "目标:10000";
+			downText = "目标:"+max+" 步";
 			middleText = String.valueOf(mCount);
 		} else if (this.mType == 3) {// 第三个页面
-			upText = weather.getPtime();
-			downText = weather.getTemp1() + "~" + weather.getTemp2();
-			middleText = weather.getWeather();
+//			upText = weather.getPtime();
+//			downText = weather.getTemp1() + "~" + weather.getTemp2();
+//			middleText = weather.getWeather();
 			textPaint.setTextSize(mTextSize2);
 			// textPaint1.setTextSize(mTextSize);
 		}
@@ -193,8 +187,6 @@ public class CircleBar extends View {
 		mColorWheelRectangle.set(circleStrokeWidth + pressExtraStrokeWidth,
 				circleStrokeWidth + pressExtraStrokeWidth, mColorWheelRadius,
 				mColorWheelRadius);
-
-
 	}
 
 	// 对外的一个接口，用来开启动画
@@ -203,13 +195,13 @@ public class CircleBar extends View {
 	}
 
 	// 第三个页面用于显示天气
-	public void setWeather(Weather weather) {
-		this.weather = weather;
-		this.mType = 3;
-		this.mProgress = 360;
-	//	this.startCustomAnimation();
-		this.postInvalidate();
-	}
+//	public void setWeather(Weather weather) {
+//		this.weather = weather;
+//		this.mType = 3;
+//		this.mProgress = 360;
+//	//	this.startCustomAnimation();
+//		this.postInvalidate();
+//	}
 
 	// 设置最大数值
 	public void setMax(int max) {
@@ -296,8 +288,4 @@ public class CircleBar extends View {
 		}
 		return result;
 	}
-
-
-
-
 }

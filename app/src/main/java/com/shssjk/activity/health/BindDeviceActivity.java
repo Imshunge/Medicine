@@ -2,7 +2,6 @@ package com.shssjk.activity.health;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +16,6 @@ import android.widget.Spinner;
 import com.shssjk.activity.R;
 import com.shssjk.activity.BaseActivity;
 import com.shssjk.adapter.DeviceAdapter;
-import com.shssjk.common.MobileConstants;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.health.HealthRequest;
@@ -79,7 +77,6 @@ public class BindDeviceActivity extends BaseActivity implements DeviceAdapter.In
         mContext=this;
         super.init();
     }
-
     @Override
     public void initSubViews() {
         explainBtn = (Button) findViewById(R.id.titlebar_menu_btn);
@@ -91,14 +88,12 @@ public class BindDeviceActivity extends BaseActivity implements DeviceAdapter.In
             }
         });
     }
-
     @Override
     public void initData() {
         if (getIntent() != null) {
             isFromBlood = getIntent().getBooleanExtra("isFromBlood", true);
                    }
     }
-
     @Override
     public void initEvent() {
         mDeviceAdapter= new DeviceAdapter(mContext,this);
@@ -388,13 +383,12 @@ public class BindDeviceActivity extends BaseActivity implements DeviceAdapter.In
         Logger.e("BindDeviceActivity","onDestroy");
         //更新设备列表
 
-        if (mContext != null) {
-
-            if(isFromBlood){
-                mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_LOADATA));
-            }else{
-                mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_SUAGR_LOADATA));
-            }
-        }
+//        if (mContext != null) {
+//            if(isFromBlood){
+//                mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_LOADATA));
+//            }else{
+//                mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_SUAGR_LOADATA));
+//            }
+//        }
     }
 }

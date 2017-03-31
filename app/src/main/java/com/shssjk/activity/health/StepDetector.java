@@ -8,18 +8,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.util.Log;
-//�߲�����������ڼ���߲�������
-
+//�߲�����������߲�������
 /**
 * 计步器 
  */
 @TargetApi(Build.VERSION_CODES.CUPCAKE)
 public class StepDetector implements SensorEventListener {
-
-	public static int CURRENT_SETP = 0;
-
-	public static float SENSITIVITY = 0;   //SENSITIVITY� 灵敏度���
-
+	public static int CURRENT_SETP = 0;//步数
+	public static float SENSITIVITY = 10;   //SENSITIVITY� 灵敏度���
 	private float mLastValues[] = new float[3 * 2];
 	private float mScale[] = new float[2];
 	private float mYOffset;
@@ -43,13 +39,6 @@ public class StepDetector implements SensorEventListener {
 //		STANDARD_GRAVITY  重力感应器
 		mScale[0] = -(h * 0.5f * (1.0f / (SensorManager.STANDARD_GRAVITY * 2)));
 		mScale[1] = -(h * 0.5f * (1.0f / (SensorManager.MAGNETIC_FIELD_EARTH_MAX)));
-		if (SettingsActivity.sharedPreferences == null) {
-			SettingsActivity.sharedPreferences = context.getSharedPreferences(
-					SettingsActivity.SETP_SHARED_PREFERENCES,
-					Context.MODE_PRIVATE);
-		}
-		SENSITIVITY = SettingsActivity.sharedPreferences.getInt(
-				SettingsActivity.SENSITIVITY_VALUE, 3);
 	}
 	@Override
 	public void onSensorChanged(SensorEvent event) {
@@ -98,10 +87,8 @@ public class StepDetector implements SensorEventListener {
 			}
 		}
 	}
-
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
 	}
-
 }

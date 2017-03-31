@@ -9,7 +9,10 @@
         backward-compatibility can go here.
         -->
     </style>
-
+    <style name="Anim_style2" parent="android:Theme.NoTitleBar">
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 
     <!-- 自定义标题栏样式 -->
     <style name="CustomTitlebarstyle" parent="AppBaseTheme">
@@ -19,7 +22,7 @@
         <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>
     </style>
 
-    <!-- Application theme. -->
+     <!--Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="vpiTabPageIndicatorStyle">@style/MyWidget.TabPageIndicator</item>
         <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>
@@ -28,7 +31,6 @@
         <!-- 设置activity切换动画 -->
         <item name="android:windowAnimationStyle">@style/activityAnimation</item>
     </style>
-
 
     <style name="activityAnimation" parent="@android:style/Animation">
         <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
@@ -59,8 +61,6 @@
     <style name="CustomWindowTitleBackground">
         <item name="android:background">@drawable/titlebar_background</item>
     </style>
-
-
 
     <style name="tab_bottom">
         <item name="android:ellipsize">marquee</item>
@@ -409,4 +409,10 @@
         <item name="android:windowEnterAnimation">@anim/zoomin</item>
         <item name="android:windowExitAnimation">@anim/zoomout</item>
     </style>
+
+
+
+
+
+
 </resources>

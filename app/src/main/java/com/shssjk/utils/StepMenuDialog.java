@@ -19,6 +19,6 @@ public class StepMenuDialog extends AlertDialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.my_dialog);
+		setContentView(R.layout.step_menu_dialog);
 	}
 }

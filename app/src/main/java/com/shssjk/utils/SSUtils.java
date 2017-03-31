@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -159,6 +160,7 @@ public class SSUtils {
 
         return "";
     }
+
     public static String RemoveStrPointAftet0(String content) {
         if (!SSUtils.isEmpty(content)) {
             return content.split("\\.")[0];
@@ -167,10 +169,9 @@ public class SSUtils {
     }
 
 
-//    string   转 float
+    //    string   转 float
     public static Float string2float(String content) {
 //        BigDecimal b2 = new BigDecimal(content);
-
 
 
         if (!SSUtils.isEmpty(content)) {
@@ -178,8 +179,10 @@ public class SSUtils {
         }
         return 0.00f;
     }
+
     /**
-     *银联支付乘以100
+     * 银联支付乘以100
+     *
      * @param content
      * @return
      */
@@ -188,10 +191,11 @@ public class SSUtils {
             return new BigDecimal("0");
         }
         BigDecimal b2 = new BigDecimal(content);
-        BigDecimal b =new BigDecimal("100");
+        BigDecimal b = new BigDecimal("100");
         b2.multiply(b);
         return b2.multiply(b);
     }
+
     /*
      * 将时间戳转换为时间
      */
@@ -259,18 +263,20 @@ public class SSUtils {
         }
         return true;
     }
-//    判断是否为数字
-    public  static boolean isNumber(String str){
-        if(isEmpty(str)){
+
+    //    判断是否为数字
+    public static boolean isNumber(String str) {
+        if (isEmpty(str)) {
             return false;
         }
         Pattern pattern = Pattern.compile("[0-9]*");
         Matcher isNum = pattern.matcher(str);
-        if( !isNum.matches() ){
+        if (!isNum.matches()) {
             return false;
         }
         return true;
     }
+
     /**
      * 实际替换动作
      *
@@ -281,15 +287,17 @@ public class SSUtils {
     private static String replaceAction(String username, String regular) {
         return username.replaceAll(regular, "*");
     }
+
     /**
      * 根据用户名的不同长度，来进行替换 ，达到保密效果
+     *
      * @param userName 用户名
      * @return 替换后的用户名
      */
     public static String userNameReplaceWithStar(String userName) {
         String userNameAfterReplaced = "";
 
-        if (userName == null){
+        if (userName == null) {
             userName = "";
         }
 
@@ -316,14 +324,16 @@ public class SSUtils {
     }
 
 
-    public static String getTwoPointFloatStr(float value){
+    public static String getTwoPointFloatStr(float value) {
         DecimalFormat df = new DecimalFormat("0.00000000000");
         return df.format(value);
     }
+
     /**
      * 银行卡后4位显示
      * 使用 "**** **** **** "+repalceAndHideBankNum(str)
      * 输出样式**** **** **** 5454
+     *
      * @param str
      * @return
      */
@@ -332,12 +342,13 @@ public class SSUtils {
         if (str.length() > 4) {
             stringBuilder.replace(0, str.length() - 4, "");
         }
-        return "**** **** **** "+stringBuilder;
+        return "**** **** **** " + stringBuilder;
     }
 
     /**
      * 计算两个时间戳的时间差
-     * @param hqtime  为原时间戳
+     *
+     * @param hqtime 为原时间戳
      * @return 时间差 单位为小时
      */
     public static Long getTimeLag(long hqtime) {
@@ -349,5 +360,73 @@ public class SSUtils {
         }
     }
 
+    /**
+     * 根据出生日期获取年龄
+     *
+     * @param str
+     * @return age
+     * @throws Exception
+     */
+    public static String getAgeByStr(String str) {
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            java.util.Date date = sdf.parse(str);
+            str = getAge(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+
+    public static String getAge(java.util.Date date) throws Exception {
+
+        Calendar cal = Calendar.getInstance();
+        if (cal.before(date)) {
+            throw new IllegalArgumentException(
+                    "The birthDay is before Now.It's unbelievable!");
+        }
+        int yearNow = cal.get(Calendar.YEAR);
+        int monthNow = cal.get(Calendar.MONTH);
+        int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH);
+        cal.setTime(date);
+        int yearBirth = cal.get(Calendar.YEAR);
+        int monthBirth = cal.get(Calendar.MONTH);
+        int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
+        int age = yearNow - yearBirth;
+        if (monthNow <= monthBirth) {
+            if (monthNow == monthBirth) {
+                //monthNow==monthBirth
+                if (dayOfMonthNow < dayOfMonthBirth) {
+                    age--;
+                } else {
+                }
+            } else {
+                age--;
+            }
+        } else {
+            //monthNow<monthBirth
+            //donothing
+        }
+        return age + "";
+    }
+
+    /**
+     * 根据身高 获取步长
+     * @param i
+     * @return
+     */
+    public  static int getStepLenth(int i) {
+        int step=0;
+        int footLength=i/7;
+        if(i>=147&&i<=166){
+            step=i-footLength/2;
+        }else if(i>166){
+            step=i-footLength/3;
+        }else if(i<146){
+            step=i-footLength*2/3;
+        }
+        return step/2;
+    }
 }

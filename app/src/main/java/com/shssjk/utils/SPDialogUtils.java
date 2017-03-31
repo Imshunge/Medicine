@@ -17,6 +17,9 @@ public class SPDialogUtils {
 		if(SSUtils.isEmpty(text)){
 			return ;
 		}
+		if(context==null){
+			return ;
+		}
 		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 	}
 }

@@ -28,6 +28,7 @@ import com.shssjk.adapter.CategoryAdapter;
 import com.shssjk.common.SPDataAsyncManager;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.fragment.BaseFragment;
+import com.shssjk.fragment.HealthyFragment2;
 import com.shssjk.fragment.InforFragment;
 import com.shssjk.fragment.HealthyFragment;
 import com.shssjk.fragment.PersonFragment;
@@ -86,7 +87,8 @@ public class MainActivity extends BaseActivity {
 	};
 	FragmentManager mFragmentManager ;
 	InforFragment mInforFragment;
-	HealthyFragment mHealthyFragment;
+//	HealthyFragment mHealthyFragment;
+    HealthyFragment2 mHealthyFragment;
 //	CommunityFragment mCommunityFragment;
 	ShopFragment mShopFragment;
 	PersonFragment mPersonFragment ;
@@ -155,7 +157,8 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public void initSubViews() {
 		mInforFragment = new InforFragment();
-		mHealthyFragment = new HealthyFragment();
+//		mHealthyFragment = new HealthyFragment();
+		mHealthyFragment = new HealthyFragment2();
 //		mCommunityFragment = new CommunityFragment();
 		mShopFragment = new ShopFragment();
 //		mInforFragment.setMainActivity(this);
@@ -320,7 +323,6 @@ public class MainActivity extends BaseActivity {
 
 		FragmentTransaction mTransaction = mFragmentManager.beginTransaction();
 		mTransaction.add(R.id.fragmentView, mInforFragment);
-//		mTransaction.add(R.id.fragmentView, mCommunityFragment);
 		mTransaction.add(R.id.fragmentView, mShopFragment);
 		mTransaction.add(R.id.fragmentView, mHealthyFragment);
 		mTransaction.add(R.id.fragmentView, mPersonFragment);

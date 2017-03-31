@@ -39,6 +39,7 @@ import com.shssjk.http.person.SPUserRequest;
 import com.shssjk.model.SPUser;
 import com.shssjk.model.person.UploadPic;
 import com.shssjk.utils.DatePickerUtil;
+import com.shssjk.utils.Logger;
 import com.shssjk.utils.SSUtils;
 import com.shssjk.view.GlideCircleTransform;
 import com.shssjk.view.SPMoreImageView;
@@ -109,6 +110,8 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
             phoneNum.setText(mUser.getUserID());
             ageTxt.setText(mUser.getBirthday());
             strSex = mUser.getSex();
+            String str =mUser.getBirthday();
+            Logger.e("str ",str);
             if (!SSUtils.isEmpty(strSex)) {
                 int index = SSUtils.str2Int(strSex);
                 sexSpi.setText(sexArry[index]);
@@ -122,35 +125,16 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
                      nickName.setText("");
                  }
              }
-
-//            path = Environment.getExternalStorageDirectory().getPath();
-//            //showToast(path);
-//            mBitmap = BitmapFactory.decodeFile(path + "/head.jpg");// 从sdcard中获取本地图片,通过BitmapFactory解码,转成bitmap
-
-            /** 从服务器取,同时保存在本地 ,后续的工作 */
-//            if (MobileApplication.getInstance().isLogined) {
-//                String url = MobileConstants.BASE_HOST + MobileApplication.getInstance().
-//                        getLoginUser().getHeader_pic();
-//                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).
-//                        diskCacheStrategy(DiskCacheStrategy.SOURCE).into(headImage);
-//            }else{
-//
-//            }
             if (MobileApplication.getInstance().isLogined){
                 String url = MobileConstants.BASE_HOST+ mUser.getHeader_pic();
                 Glide.with(this)
                         .load(url).transform(new GlideCircleTransform(mContext)).
                         into(headImage);
-//                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(headImage);
             }else{
-//                Glide.with(mContext).load("").placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
                 Glide.with(this)
                         .load(R.drawable.person_default_head).transform(new GlideCircleTransform(mContext)).
                         into(headImage);
             }
-
-
-
         }
     }
 

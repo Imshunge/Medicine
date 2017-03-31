@@ -3,81 +3,83 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/shop_title">
+
         <Button
             android:id="@+id/titlebar_back_btn"
-            android:layout_gravity="left|center_vertical"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:background="@drawable/title_back_selector"/>
+            android:layout_centerVertical="true"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/margin_space"
+            android:background="@drawable/title_back_selector"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/right_button"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="6dp"
             android:gravity="center"
             android:text="设备"
             android:textSize="14sp" />
-        <RadioGroup
+
+        <TextView
             android:id="@+id/bottom_tools4"
+            style="@style/textStyle.Big.black"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radio_1"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:background="@drawable/top_left_selector"
-                android:button="@null"
-                android:checked="true"
-                android:gravity="center"
-                android:text="@string/rab_xueya"
-                android:textColor="@drawable/color_radiobutton"
-                android:textSize="15sp" />
-
-            <RadioButton
-                android:id="@+id/radio_2"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:background="@drawable/top_right_selector"
-                android:button="@null"
-                android:gravity="center"
-                android:text="@string/rab_xuetang"
-                android:textColor="@drawable/color_radiobutton"
-                android:textSize="15sp"
-                android:checked="false" />
-        </RadioGroup>
+            android:text="@string/tab_item_healthy"
+            android:textColor="@color/white" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_blood"
+        style="@style/textStyle.Big.black"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/rab_xueya" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="8px"
         android:background="@drawable/line_01" />
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <android.support.v4.view.ViewPager
-            android:id="@+id/jky_viewpager"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_sugar"
+        style="@style/textStyle.Big.black"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/rab_xuetang" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/rl_bg_color" />
+        android:layout_height="8px"
+        android:background="@drawable/line_01" />
 
+    <TextView
+        android:id="@+id/tv_stepcounter"
+        style="@style/textStyle.Big.black"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/rab_stepcount" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8px"
+        android:background="@drawable/line_01" />
 </LinearLayout>

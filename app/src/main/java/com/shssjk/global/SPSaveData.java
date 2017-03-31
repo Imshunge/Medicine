@@ -11,11 +11,9 @@ import com.shssjk.utils.SSUtils;
 //存储 信息
 
 public class SPSaveData {
-
     public final static String KEY_IS_FIRST_STARTUP = "is_first_startup";
     private final static String TAG = "SPSaveData";
     static SharedPreferences mShare = null;
-
     private static SharedPreferences getShared(Context context) {
         if (mShare == null) {
             mShare = context.getSharedPreferences(MobileConstants.APP_NAME, Context.MODE_PRIVATE);
@@ -31,7 +29,9 @@ public class SPSaveData {
         return getShared(context).getLong(key, 0L);
     }
 
-
+    public static int getIntValue(Context context, String key) {
+        return getShared(context).getInt(key,0);
+    }
     public static boolean getValue(Context context, String key, boolean defaultValue) {
         return getShared(context).getBoolean(key, defaultValue);
     }
@@ -45,7 +45,6 @@ public class SPSaveData {
         editor.putString(key, val);
         editor.commit();
     }
-    //
     public static SPUser loadUser(Context context) {
 //
         SPUser user = new SPUser();
@@ -65,8 +64,6 @@ public class SPSaveData {
         String birthday = getShared(context).getString("birthday","");
         String sex = getShared(context).getString("sex","0");
         String phone = getShared(context).getString("mobile","");
-
-
         user.setCouponCount(couponCount);
         user.setUserMoney(userMoney);
         user.setPayPoints(payPoints);

@@ -857,7 +857,6 @@ public class BridgeService extends Service
 		}
 
 	}
-
 	/**
 	 * 
 	 * @param did
@@ -891,7 +890,6 @@ public class BridgeService extends Service
 				+ "   sensoraction:" + sensoraction + "   channel:" + channel
 				+ "  sensorid1:" + sensorid1 + "  sensorid2" + sensorid2
 				+ "  sensorid3:" + sensorid3);
-
 		if (sensoraction == ContentCommon.SENSOR_ALARM_ACTION_GARRISON)// 联动摄像机布防返回
 		{
 

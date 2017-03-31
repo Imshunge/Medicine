@@ -1,11 +1,9 @@
 package com.shssjk.fragment;
 
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -36,9 +33,7 @@ import com.shssjk.activity.IViewController;
 import com.shssjk.activity.health.BindDeviceActivity;
 import com.shssjk.activity.shop.ProductListActivity;
 import com.shssjk.adapter.BloodAdapter;
-import com.shssjk.adapter.DeviceTypeAdapter;
 import com.shssjk.adapter.DeviceRelationAdapter;
-import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
@@ -60,13 +55,10 @@ import com.shssjk.view.RoundImageView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cz.msebera.android.httpclient.NameValuePair;
 
 /**
  * 健康云 血压
@@ -74,7 +66,6 @@ import cz.msebera.android.httpclient.NameValuePair;
 
 public class FragmentBlood extends BaseFragment implements View.OnClickListener {
     Typeface mTf;
-    protected ExecutorService pool = null;
     @Bind(R.id.all_image1)
     RoundImageView allImage1;
     @Bind(R.id.tv_all1)
@@ -105,7 +96,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     TextView tongjiAll2;
     @Bind(R.id.tongji_all3)
     TextView tongjiAll3;
-    private LineData data0;
     private LineChart mChart;
     private TextView chart_title1, chart_title2, chart_title3, chart_bg;
     private RadioButton rd_father, rd_mother;
@@ -114,19 +104,10 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     private int clickId = 1;
     private ListView list_chart;   //血压列表
     private LinearLayout layout_list_chart, layout_tongji;
-    private String code = "";
-    private ArrayList<NameValuePair> nParams;
     private RadioGroup radioGroup_blood;
-    // 声明一个独一无二的标识，来作为要显示DatePicker的Dialog的ID：
-    static final int DATE_DIALOG_ID1 = 0;
-    static final int DATE_DIALOG_ID2 = 1;
     private TextView tv_date1, tv_date2;
-    private int dataID;
-    private Date date_start, date_end;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     private Spinner spiner;
-    private String[] binds;
-    private int addId = 0;
     private String deviceType = "BLOOD";   //（BLOOD 血压计；XTY 血糖仪）
     List<Device> devices=new ArrayList<>();
     private Context mContext;
@@ -139,9 +120,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     private BloodAdapter bloodAdapter;
     private String deviceId = "";
     private int psotion = 0;
-    private DeviceListChangeReceiver mDeviceListChangeReceiver;
-    private boolean isFast = true;
-    private boolean isGoToLogin = false; //没登陆时去登录 记录状态
 
     private final Handler mHandler = new Handler() {
         @Override
@@ -156,7 +134,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     };
     //   购买商品的分类id
     private String categoryId = "850";
-    private DeviceTypeAdapter mDeviceTypeAdapter;
     private DeviceRelationAdapter resultAdapter;
 
     @Override
@@ -190,8 +167,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         radioGroup_blood = (RadioGroup) v.findViewById(R.id.test_radioGroup);
         rd_father = (RadioButton) v.findViewById(R.id.test_radio1);
         rd_mother = (RadioButton) v.findViewById(R.id.test_radio2);
-//        rd_father.setOnClickListener(this);
-//        rd_mother.setOnClickListener(this);
         radioGroup_blood.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -280,22 +255,15 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     @Override
     public void initEvent() {
 //        监听 刷新 设备列表
-        IntentFilter filter = new IntentFilter(MobileConstants.ACTION_HEALTH_LOADATA);
-        mContext.registerReceiver(mDeviceListChangeReceiver = new DeviceListChangeReceiver(), filter);
     }
     @Override
     public void initData() {
-        if (!MobileApplication.getInstance().isLogined) {
-//            clearData();
-        } else {
-            getDeviceList();
-        }
+
     }
     @Override
     public void onClick(View v) {
         if (!MobileApplication.getInstance().isLogined) {
             showToastUnLogin();
-            isGoToLogin = true;
             toLoginPage();
             return;
         }
@@ -311,11 +279,9 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 layout_tongji.setVisibility(View.GONE);
                 orderTypr = "desc";   //; order、排序（asc、desc）
                 if (bloodDatalist != null && bloodDatalist.size() > 1) {
-//                    setChart();
                 } else {
                     getBloodsList(deviceId, type_sex, orderTypr, startTime, endTime);
                 }
-//                getBloodsList(deviceId, type_sex, orderTypr, startTime, endTime);
                 break;
             case R.id.chart_title2:
 //       曲线图
@@ -326,7 +292,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 mChart.setVisibility(View.VISIBLE);
                 layout_list_chart.setVisibility(View.GONE);
                 layout_tongji.setVisibility(View.GONE);
-//                getListData(code, type_sex);
                 orderTypr = "asc";
                 if (bloodDatalist != null && bloodDatalist.size() > 1) {
                     setChart();
@@ -349,8 +314,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 getBloodsTongJi(deviceId, type_sex);
                 break;
             case R.id.btn_find:
-//                startTime = tv_date1.getText().toString().trim();
-//                endTime = tv_date2.getText().toString().trim();
                 startTime = tv_date1.getText().toString().trim();
                 if (startTime.equals("开始日期")) {
                     startTime = "";
@@ -385,12 +348,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
                 datePickDialog = new DatePickerUtil(getActivity(), dateTime);
                 datePickDialog.dateTimePicKDialog(tv_date2, 0);
                 break;
-//            case R.id.radio_1:
-//                type_sex="1";
-//                break;
-//            case R.id.radio_2:
-//                type_sex="2";
-//                break;
             default:
                 break;
         }
@@ -471,14 +428,11 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     private void showTypes(List<Device> devices, int psotion) {
         String[] types = getTyValue(devices);
         //            改变内容
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
-                android.R.layout.simple_spinner_item, types);
         resultAdapter = new DeviceRelationAdapter(getActivity(), R.layout.devicetype_item,devices);
         spiner.setAdapter(resultAdapter);
         spiner.setSelection(psotion, true);
         resultAdapter.setDropDownViewResource(R.layout.dropdown_stytle);
     }
-
     //    获取结果数组
     private String[] getTyValue(List<Device> devices) {
         int size = devices.size();
@@ -530,7 +484,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
             }
         });
     }
-
     public void setupChart(LineChart mChart, LineData data, int color) {
         // no description text
         mChart.setDescription("");
@@ -547,25 +500,15 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         mChart.setHighlightPerDragEnabled(true);
         // if disabled, scaling can be done on x- and y-axis separately
         mChart.setPinchZoom(false);//
-
         mChart.setBackgroundColor(color);// 设置背景
-
-//         mChart.setValueTypeface(mTf);// 设置字体
-
         // add data
         mChart.setData(data); // 设置数据
-
-        // mChart.animateX(2500);
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/OpenSans-Regular.ttf");
-        // get the legend (only possible after setting data)
         Legend l = mChart.getLegend(); // 设置标示，就是那个一组y的value的
-        // modify the legend ...
-        // l.setPosition(LegendPosition.LEFT_OF_CHART);
         l.setForm(Legend.LegendForm.CIRCLE);// 样式
         l.setFormSize(6f);// 字体
         l.setTextColor(Color.BLACK);// 颜色
         l.setTypeface(mTf);// 字体
-
         /**
          * 高压警示线
          */
@@ -576,7 +519,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         ll1.setTextSize(10f);
         ll1.setTextColor(Color.RED);
         ll1.setTypeface(tf);
-
         /**
          * 低压警示线
          */
@@ -610,8 +552,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         leftAxis.setDrawLimitLinesBehindData(true);
 
         mChart.getAxisRight().setEnabled(false);
-
-        // animate calls invalidate()...
         mChart.animateX(2500); // 立即执行的动画,x轴
     }
 
@@ -807,11 +747,10 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     public void onResume() {
         super.onResume();
         Logger.e("FragmentBlood", "onResume");
-        if (isGoToLogin) {
-//            getProductDetails();
-            if (MobileApplication.getInstance().isLogined) {
-                getDeviceList();
-            }
+        if (!MobileApplication.getInstance().isLogined) {
+            clearData();
+        } else {
+            getDeviceList();
         }
     }
 
@@ -819,22 +758,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     public void gotoLoginPageClearUserDate() {
 
     }
-
-    //广播接收器  设备列表变化
-    class DeviceListChangeReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(MobileConstants.ACTION_HEALTH_LOADATA)) {
-                Logger.e("FragmentBlood", "DeviceListChangeReceiver");
-                if (!MobileApplication.getInstance().isLogined) {
-                    clearData();
-                } else {
-                    getDeviceList();
-                }
-            }
-        }
-    }
-
     /**
      * 去够购买
      */
@@ -843,7 +766,6 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
         intent.putExtra("category", categoryId);
         mContext.startActivity(intent);
     }
-
     //   清除数据
     private void clearData() {
 //        数据列表
@@ -859,7 +781,5 @@ public class FragmentBlood extends BaseFragment implements View.OnClickListener 
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        解除 mDeviceListChangeReceiver
-        mContext.unregisterReceiver(mDeviceListChangeReceiver);
     }
 }

@@ -4,6 +4,8 @@
     xmlns:uses-permissionandroid="http://schemas.android.com/tools"
     package="com.shssjk.activity">
 
+    <!-- 电源管理权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -116,9 +118,9 @@
         <activity android:name=".person.SettingActivity" />
         <activity android:name=".person.HelpActivity" />
         <activity android:name=".person.ServiceActivity" />
-        <activity android:name=".person.UserDetailsActivity"
-            android:configChanges="orientation|keyboardHidden"
-            />
+        <activity
+            android:name=".person.UserDetailsActivity"
+            android:configChanges="orientation|keyboardHidden" />
         <activity android:name=".shop.OrderListActivity" />
         <activity
             android:name=".shop.OrderBaseActivity"
@@ -231,6 +233,8 @@
         <service
             android:name="com.baidu.android.pushservice.CommandService"
             android:exported="true" />
+        <!-- 计步器 -->
+        <service android:name="com.shssjk.service.StepCounterService" />
 
         <!-- 适配Android N系统必需的ContentProvider声明，写权限包含应用包名 -->
         <provider
@@ -298,7 +302,16 @@
             android:label="@string/title_activity_stone_detail" />
         <activity
             android:name=".shop.StonePayActivity"
-            android:label="@string/title_activity_stone_pay_actuvuty"></activity>
+            android:label="@string/title_activity_stone_pay_actuvuty" />
+        <activity
+            android:name=".health.BloodActivity"
+            android:label="@string/title_activity_blood" />
+        <activity android:name=".health.SugarActivity" />
+        <activity
+            android:name=".health.StepCounterActivity"
+            android:launchMode="standard" />
+        <activity android:name=".health.PersonActivity" />
+        <activity android:name=".health.HistoryActivity"></activity>
     </application>
 
 </manifest>

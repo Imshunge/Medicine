@@ -226,7 +226,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         settingBtn.setOnClickListener(this);
         accountView.setOnClickListener(this);
         mystoneView.setOnClickListener(this);
-
         int delayTime=2000;
         mycameraView.setOnClickListener(new OnClickEvent(delayTime) {
             @Override
@@ -236,7 +235,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 startCameraListActivity();
             }
         });
-
 
     }
 
@@ -483,16 +481,12 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 Glide.with(this)
                         .load(url).transform(new GlideCircleTransform(mContext)).
                         into(nickImage);
-
             }
             accountView.setVisibility(View.VISIBLE);
             settingBtn.setVisibility(View.VISIBLE);
             customProgressBar.setVisibility(View.VISIBLE);
             getInfoLevel();
         } else {
-//            stoneTxtv.setText("0");
-//            pointTxtv.setText("0");
-//            couponCountTxtv.setText("0");
             nickNameTxtv.setText("点击登录");
             levelImgv.setVisibility(View.INVISIBLE);
             levelName.setVisibility(View.INVISIBLE);

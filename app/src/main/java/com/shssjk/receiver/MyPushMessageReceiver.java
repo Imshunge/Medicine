@@ -240,21 +240,21 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
                 context.getApplicationContext().startActivity(intent);
 			}
             else if (mytype.equals("TEST")) {// 健康云
-                if (context != null) {
-                    context.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT));
-                }
+//                if (context != null) {
+//                    context.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT));
+//                }
             }
         }else{
             if (title.equals("血压测试通知")||title.equals("血糖测试通知")) {
                 //跳转健康云界面
-                if (context != null) {
-                    context.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT));
-                }
+//                if (context != null) {
+//                    context.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT));
+//                }
             }else if(title.equals("血糖测试通知")){
                 //跳转健康云界面
-                if (context != null) {
-                    context.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT));
-                }
+//                if (context != null) {
+//                    context.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT));
+//                }
             }else{
                 updateContent(context, title, description, customContentString);
             }

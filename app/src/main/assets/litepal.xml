@@ -19,7 +19,7 @@
 		For example:    
     	<version value="1" ></version>
     -->
-    <version value="3" ></version>
+    <version value="4" ></version>
 
     <!--
     	Define your models in the list with mapping tag, LitePal will
@@ -37,21 +37,9 @@
 	<list>
 		<mapping class="com.shssjk.model.Searchhistory"></mapping>
 	</list>
-    <!-- 
-    	Define the cases of the tables and columns name. Java is a
-    	case sensitive language, while database is case insensitive.
-    	LitePal will turn all classes names and fields names into lowercase
-    	by default while create or upgrade database. Users can change
-    	this behavior into the styles their like. "keep" will keep the
-    	cases of classes and fields. "upper" will turn all classes names
-    	and fields names into uppercase. "lower" will act as default. 
-    	Do not change the value after you run your app for the first time,
-    	or it might cause the exception that columns can not be found.
-    	value options: keep lower upper
-    	For example:    
-    	<cases value="keep" ></cases>
-    			Note this mark is optional for developers.
-     -->
+   <list>
+	   <mapping class="com.shssjk.model.health.Step"></mapping>
+   </list>
     <cases value="lower" ></cases>
 
 </litepal>
