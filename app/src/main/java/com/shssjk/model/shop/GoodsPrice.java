@@ -1,40 +1,37 @@
 package com.shssjk.model.shop;
-import com.shssjk.model.Model;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  
  */
-public class GoodsPrice implements Model, Serializable {
-
-    private String id;
-    private String name;
-    private List<GoodsList> goods_list;
-    public void setId(String id) {
-         this.id = id;
-     }
-     public String getId() {
-         return id;
-     }
-
-    public void setName(String name) {
-         this.name = name;
-     }
-     public String getName() {
-         return name;
-     }
-
-    public void setGoodsList(List<GoodsList> goods_list) {
-         this.goods_list = goods_list;
-     }
-     public List<GoodsList> getGoodsList() {
-         return goods_list;
-     }
-
-    @Override
-    public String[] replaceKeyFromPropertyName() {
-        return new String[0];
+public class GoodsPrice implements  Serializable {
+    public String getKey() {
+        return key;
     }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getStore_count() {
+        return store_count;
+    }
+
+    public void setStore_count(String store_count) {
+        this.store_count = store_count;
+    }
+
+    private  String key;
+    private String price;
+    private String store_count;
+
 }

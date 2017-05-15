@@ -13,11 +13,25 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.shssjk.activity.BaseActivity;
+import com.shssjk.activity.IViewController;
 import com.shssjk.activity.R;
 import com.shssjk.adapter.SteptAdapter;
+import com.shssjk.http.base.SPFailuredListener;
+import com.shssjk.http.base.SPSuccessListener;
+import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.health.BloodDevice;
+import com.shssjk.model.health.StepHistory;
+import com.shssjk.model.person.StepPersonInfo;
+import com.shssjk.utils.Logger;
+import com.shssjk.utils.SSUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.Bind;
@@ -38,17 +52,16 @@ public class HistoryActivity extends BaseActivity {
     ListView listStep;
     private BarData mBarData;
     private SteptAdapter septAdapter;
-    private List<BloodDevice>deviceList= new ArrayList<>();
+    private List<StepHistory> stepHistories = new ArrayList<>();
     private Context mContext;
+    private String count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setCustomerTitle(true, true, "历史记录");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-        mContext=this;
+        mContext = this;
         ButterKnife.bind(this);
-        mBarData = getBarData(7, 100);
-        showBarChart(mBarChart, mBarData);
         super.init();
     }
     @Override
@@ -58,24 +71,18 @@ public class HistoryActivity extends BaseActivity {
     }
     @Override
     public void initData() {
-        if (getIntent() != null ) {
+        if (getIntent() != null) {
             String calories = getIntent().getStringExtra("calories");
             String distance = getIntent().getStringExtra("distance");
-            String count = getIntent().getStringExtra("count");
+            count = getIntent().getStringExtra("count");
             tvCalories.setText(calories);
             tvMileage.setText(distance);
             tvStep.setText(count);
         }
-        BloodDevice device = new BloodDevice();
-      for (int i=0;i<10;i++){
-           device.setId(i+"");
-          deviceList.add(device);
-      }
-        septAdapter.setData(deviceList);
+        getStepHistory();
     }
     @Override
     public void initEvent() {
-
     }
     private void showBarChart(BarChart barChart, BarData barData) {
         barChart.setDrawBorders(false);  ////是否在折线图上添加边框
@@ -100,15 +107,22 @@ public class HistoryActivity extends BaseActivity {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         barChart.animateX(2500); // 立即执行的动画,x轴
     }
-    private BarData getBarData(int count, float range) {
+    private BarData getBarData(int count, float range, List<StepHistory> stepHistories) {
+
+        Logger.e("","============================");
+        for (int l = 0; l < stepHistories.size(); l++) {
+            StepHistory temp = stepHistories.get(l);
+             Logger.e(this, temp.getStep() + "stepHistories  " + l + "   "
+                     + temp.getDate());
+        }
+        Collections.reverse(stepHistories);
         ArrayList<String> xValues = new ArrayList<String>();
         for (int i = 0; i < count; i++) {
-            xValues.add("第" + (i + 1) + "天");
+            xValues.add(stepHistories.get(i).getDate());
         }
         ArrayList<BarEntry> yValues = new ArrayList<BarEntry>();
         for (int i = 0; i < count; i++) {
-            float value = (float) (Math.random() * range/*100以内的随机数*/) + 3;
-            yValues.add(new BarEntry(value, i));
+            yValues.add(new BarEntry(SSUtils.string2float(stepHistories.get(i).getStep()),i));
         }
         // y轴的数据集合
         BarDataSet barDataSet = new BarDataSet(yValues, "日期");
@@ -116,6 +130,65 @@ public class HistoryActivity extends BaseActivity {
         ArrayList<BarDataSet> barDataSets = new ArrayList<BarDataSet>();
         barDataSets.add(barDataSet); // add the datasets
         BarData barData = new BarData(xValues, barDataSets);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        Date now = new Date();
+        df.format(now);
         return barData;
+    }
+    public void getStepHistory() {
+        PersonRequest.getSteptRecord(new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+                    List<StepHistory> stepHistories = (List<StepHistory>) response;
+                    dealWithStepHistory(stepHistories);
+                } else {
+                    showToast(msg);
+                }
+            }
+        }, new SPFailuredListener((IViewController) mContext) {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+                showToast(msg);
+                List<StepHistory> stepHistories= new ArrayList<StepHistory>();
+                dealWithStepHistory(stepHistories);
+            }
+        });
+    }
+    private void dealWithStepHistory(List<StepHistory> stepHistories) {
+        List<StepHistory> tempstepHistories = new ArrayList<>();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();// 取时间
+        for (int i = 0; i < 7; i++) {
+            Calendar calendar = new GregorianCalendar();
+            calendar.add(calendar.DATE, -i);// 把日期往后增加一天.整数往后推,负数往前移动
+            date = calendar.getTime(); // 这个时间就是日期往后推一天的结果
+            StepHistory tempHistory = new StepHistory();
+            String dateStr = df.format(date);
+            tempHistory.setDate(dateStr);
+            tempHistory.setStep("0");
+            if (i == 0) {
+                tempHistory.setStep(count);
+            }
+            tempstepHistories.add(tempHistory);
+        }
+        for (int j = 0; j < stepHistories.size(); j++) {
+            StepHistory stepHistorytrue = stepHistories.get(j);
+            for (int k = 0; k < tempstepHistories.size(); k++) {
+                StepHistory tempHis = tempstepHistories.get(k);
+                if (stepHistorytrue.getDate().equals(tempHis.getDate())) {
+                    tempHis.setStep(stepHistorytrue.getStep());
+                    Logger.e(this, stepHistorytrue.getStep() + "1111" + stepHistorytrue.getDate());
+                } else {
+                    Logger.e(this, stepHistorytrue.getStep() + "1111" + stepHistorytrue.getDate());
+                }
+            }
+        }
+        mBarData = getBarData(7, 100, tempstepHistories);
+
+        Collections.reverse(tempstepHistories);
+
+        showBarChart(mBarChart, mBarData);
+        septAdapter.setData(tempstepHistories);
     }
 }

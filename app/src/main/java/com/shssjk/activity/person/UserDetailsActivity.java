@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shssjk.activity.R;
 import com.shssjk.activity.BaseActivity;
 import com.shssjk.common.MobileConstants;
@@ -126,9 +124,14 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
                  }
              }
             if (MobileApplication.getInstance().isLogined){
-                String url = MobileConstants.BASE_HOST+ mUser.getHeader_pic();
+                String url ="";
+                if(!SSUtils.isEmpty(mUser.getHeader_pic())){
+                    url=  MobileConstants.BASE_HOST+ mUser.getHeader_pic();
+                }else{
+                    url=   mUser.getHeadPic();
+                }
                 Glide.with(this)
-                        .load(url).transform(new GlideCircleTransform(mContext)).
+                        .load(url).placeholder(R.drawable.person_default_head).transform(new GlideCircleTransform(mContext)).
                         into(headImage);
             }else{
                 Glide.with(this)
@@ -228,11 +231,9 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
                         ActivityCompat.requestPermissions((Activity) mContext,
                                 new String[]{Manifest.permission.CAMERA},
                                 MY_PERMISSIONS_REQUEST_TAKE_PHOTO);
-
                     } else {
                         takePhoto();
                     }
-//                    takePhoto();
                 } else if (item == 1) {
                     if (ContextCompat.checkSelfPermission(mContext,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE)

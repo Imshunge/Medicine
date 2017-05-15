@@ -101,7 +101,7 @@
                 style="@style/textStyle.Big.subTitle"
                 android:textColor="@color/sub_title"
                 android:gravity="center"
-                android:text="里程(米)" />
+                android:text="里程(公里)" />
         </LinearLayout>
     </LinearLayout>
     <TextView

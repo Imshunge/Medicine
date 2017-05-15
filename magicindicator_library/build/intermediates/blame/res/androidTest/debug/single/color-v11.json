@@ -4,14 +4,6 @@
         "source": "E:\\android\\MedicineVersion3\\Medicine\\magicindicator_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\22.1.1\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
     },
     {
-        "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\magicindicator_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
-        "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\magicindicator_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\22.1.1\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
-    },
-    {
-        "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\magicindicator_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
-        "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\magicindicator_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\22.1.1\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
-    },
-    {
         "merged": "E:\\android\\MedicineVersion3\\Medicine\\magicindicator_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
         "source": "E:\\android\\MedicineVersion3\\Medicine\\magicindicator_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\22.1.1\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
     }

@@ -65,7 +65,6 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
     private Boolean intentData;//摄像头服务会出现反复连接问题，所以设置了一个跳转状态参数 true：可以跳转，false:不可跳转
     private Camera camera;
     private MyBroadCast receiver;
-
 //    private Handler mHandler = new Handler() {
 //        public void handleMessage(Message msg) {
 //            Intent in = new Intent(CameraListActivity.this, AddCameraActivity.class);
@@ -79,7 +78,6 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_list);
         mContext=this;
-
         BridgeService.setAddCameraInterface(this);
         BridgeService.setCallBackMessage(this);
         receiver = new MyBroadCast();
@@ -102,10 +100,8 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
     }
 
     private class MyBroadCast extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context arg0, Intent arg1) {
-
             CameraListActivity.this.finish();
             Log.d("ip", "AddCameraActivity.this.finish()");
         }
@@ -229,7 +225,7 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
 //        intent.setClass(CameraListActivity.this, BridgeService.class);
 //        startService(intent);
 //        NativeCaller.PPPPInitialOther("ADCBBFAOPPJAHGJGBBGLFLAGDBJJHNJGGMBFBKHIBBNKOKLDHOBHCBOEHOKJJJKJBPMFLGCPPJMJAPDOIPNL");
-//
+
 ////        new Thread(new Runnable() {
 ////            @Override
 ////            public void run() {
@@ -337,7 +333,6 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
     }
     private Handler PPPPMsgHandler = new Handler() {
         public void handleMessage(Message msg) {
-
             Bundle bd = msg.getData();
             int msgParam = bd.getInt(STR_MSG_PARAM);
             int msgType = msg.what;
@@ -432,8 +427,6 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
-
-
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 弹出确定退出对话框
 

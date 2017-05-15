@@ -1,24 +1,18 @@
 package com.shssjk.model.health;
-import java.util.Date;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.shssjk.model.Model;
 /**
  * Auto-generated: 2017-04-10 15:5:17
- *
- * @author www.jsons.cn 
- * @website http://www.jsons.cn/json2java/ 
- */
-public class Data {
+  */
+public class StepHistory implements Model{
 
-    private Date date;
+    private String date;
     private String id;
     private String step;
-    @JsonProperty("user_id")
     private String userId;
-    public void setDate(Date date) {
+    public void setDate(String date) {
          this.date = date;
      }
-     public Date getDate() {
+     public String getDate() {
          return date;
      }
 
@@ -42,5 +36,15 @@ public class Data {
      public String getUserId() {
          return userId;
      }
+
+
+    @Override
+    public String[] replaceKeyFromPropertyName() {
+        return new String[]{
+                "userId","user_id",
+                   };
+    }
+
+
 
 }

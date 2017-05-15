@@ -619,4 +619,59 @@ public class HealthRequest {
         });
     }
 
+
+    /**
+     * 健康云 banner 图
+     * HealthCloud/banner_url
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getHealthBanner(
+                                      final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("HealthCloud", "banner_url");
+        RequestParams params = new RequestParams();
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    if(status>=0) {
+                        if (status == 0) {
+                            /** 工具类json转为User实体 **/
+                            String str = response.getString(Response.DATA);
+                            if (str != null) {
+                                successListener.onRespone(msg, str);
+                            }
+                        } else {
+                            failuredListener.onRespone(msg, 1);
+                        }
+                    }else{
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+
 }

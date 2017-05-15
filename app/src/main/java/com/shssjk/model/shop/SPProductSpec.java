@@ -30,6 +30,25 @@ public class SPProductSpec implements Model,Serializable ,Comparable<SPProductSp
      */
     String src;
 
+
+    public String getStore_count() {
+        return store_count;
+    }
+
+    public void setStore_count(String store_count) {
+        this.store_count = store_count;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    String price;
+    String store_count;
     @Override
     public String[] replaceKeyFromPropertyName() {
         return new String[]{

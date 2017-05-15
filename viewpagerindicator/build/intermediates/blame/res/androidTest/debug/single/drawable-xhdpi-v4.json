@@ -1,15 +1,7 @@
 [
     {
-        "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
-        "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png"
-    },
-    {
         "merged": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
         "source": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png"
-    },
-    {
-        "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
-        "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png"
     },
     {
         "merged": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png",
@@ -20,24 +12,12 @@
         "source": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png"
     },
     {
-        "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png",
-        "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png"
-    },
-    {
         "merged": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
         "source": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png"
     },
     {
-        "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
-        "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png"
-    },
-    {
         "merged": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ic_launcher.png",
         "source": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_launcher.png"
-    },
-    {
-        "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
-        "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png"
     },
     {
         "merged": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
@@ -46,13 +26,5 @@
     {
         "merged": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
         "source": "E:\\android\\MedicineVersion3\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png"
-    },
-    {
-        "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png",
-        "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png"
-    },
-    {
-        "merged": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ic_launcher.png",
-        "source": "E:\\android\\guoqing\\Medicine930\\Medicine\\viewpagerindicator\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_launcher.png"
     }
 ]

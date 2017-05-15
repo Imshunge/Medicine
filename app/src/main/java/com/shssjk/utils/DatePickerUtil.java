@@ -7,10 +7,7 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
-
 import com.shssjk.activity.R;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -36,7 +33,6 @@ public class DatePickerUtil implements DatePicker.OnDateChangedListener
         this.activity = activity;
         this.initDateTime = initDateTime;
     }
-
              /**
               *
               * @param datePicker
@@ -54,8 +50,6 @@ public class DatePickerUtil implements DatePicker.OnDateChangedListener
         datePicker.init(calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH), this);
-        //timePicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
-        //timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
     }
              /**
               *
@@ -81,8 +75,6 @@ public class DatePickerUtil implements DatePicker.OnDateChangedListener
                  datePicker.init(calendar.get(Calendar.YEAR),
                          calendar.get(Calendar.MONTH),
                          calendar.get(Calendar.DAY_OF_MONTH), this);
-                 //timePicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
-                 //timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
              }
     /**
      * 弹出日期时间选择框方法

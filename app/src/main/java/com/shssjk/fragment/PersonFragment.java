@@ -8,19 +8,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +27,6 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shssjk.MainActivity;
 import com.shssjk.activity.IViewController;
 import com.shssjk.activity.R;
@@ -76,8 +68,6 @@ import vstc2.nativecaller.NativeCaller;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
 /**
  *  首页 -> 我的
  *
@@ -93,7 +83,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     View waitCommentLayout;        //待评价
     View waitReturnLayout;        //退换货
     View collectLayout;            //收藏
-
 //    View integrateView;            //积分,余额
     View receiveAddressView;    //收货地址
     View couponView;            //优惠券
@@ -198,12 +187,16 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
         if (MobileApplication.getInstance().isLogined){
             SPUser    spUser=   MobileApplication.getInstance().getLoginUser();
-            String url = MobileConstants.BASE_HOST+ MobileApplication.getInstance().getLoginUser().getHeader_pic();
-//            Glide.with(mContext).load(url).placeholder(R.drawable.product_default).
-//                    diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage).transform(new GlideCircleTransform(this);
+            String url ="";
+            if(!SSUtils.isEmpty(spUser.getHeader_pic())){
+                url=  MobileConstants.BASE_HOST+ spUser.getHeader_pic();
+            }else{
+                url=   spUser.getHeadPic();
+            }
             Glide.with(this)
-                    .load(url).transform(new GlideCircleTransform(mContext)).
+                    .load(url).placeholder(R.drawable.person_default_head).transform(new GlideCircleTransform(mContext)).
                     into(nickImage);
+
         }
     }
 
@@ -244,7 +237,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         mHomeListView.setAdapter(homeProductListAdapter);
         refreshData(1);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -433,17 +425,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     public void refreshView() {
         if (MobileApplication.getInstance().isLogined) {
             SPUser user = MobileApplication.getInstance().getLoginUser();
-//            if(!SSUtils.isEmpty(user.getDo_earnings())) {
-//                stoneTxtv.setText(user.getDo_earnings());
-//            }
-//            if(!SSUtils.isEmpty(user.getDo_score())){
-//                pointTxtv.setText(user.getDo_score());
-//            }
-//            if (SPStringUtils.isEmpty(user.getCoupon())) {
-//                couponCountTxtv.setText("0");
-//            } else {
-//                couponCountTxtv.setText(user.getCoupon());
-//            }
             if (!SPStringUtils.isEmpty(user.getNickname())) {
                 nickNameTxtv.setText(user.getNickname());
             }
@@ -476,10 +457,15 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 }
             }
             if (MobileApplication.getInstance().isLogined){
-                String url = MobileConstants.BASE_HOST+ MobileApplication.getInstance().getLoginUser().getHeader_pic();
-//                Glide.with(mContext).load(url).placeholder(R.drawable.icon_header).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nickImage);
+                SPUser mUser = MobileApplication.getInstance().getLoginUser();
+                String url ="";
+                if(!SSUtils.isEmpty(mUser.getHeader_pic())){
+                    url=  MobileConstants.BASE_HOST+ mUser.getHeader_pic();
+                }else{
+                    url=   mUser.getHeadPic();
+                }
                 Glide.with(this)
-                        .load(url).transform(new GlideCircleTransform(mContext)).
+                        .load(url).placeholder(R.drawable.person_default_head).transform(new GlideCircleTransform(mContext)).
                         into(nickImage);
             }
             accountView.setVisibility(View.VISIBLE);
@@ -506,7 +492,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             }
         }
     }
-
     public void getInfoLevel() {
         PersonRequest.getLevelInfo(new SPSuccessListener() {
             @Override

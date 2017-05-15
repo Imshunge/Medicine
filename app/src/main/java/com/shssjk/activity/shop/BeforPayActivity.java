@@ -2,9 +2,11 @@ package com.shssjk.activity.shop;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,10 +28,14 @@ import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.order.PayOrder;
 import com.shssjk.model.order.SPOrder;
 import com.shssjk.model.person.Alipay;
+import com.shssjk.model.shop.WeChat;
 import com.shssjk.utils.AuthResult;
 import com.shssjk.utils.ConfirmDialog;
 import com.shssjk.utils.PayResult;
 import com.shssjk.utils.SSUtils;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.unionpay.UPPayAssistEx;
 
 import java.util.Map;
@@ -50,12 +56,8 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
     TextView tvPaysum;
     @Bind(R.id.ll_frist)
     LinearLayout llFrist;
-    @Bind(R.id.line1)
-    View line1;
     @Bind(R.id.tv_hiti)
     TextView tvHiti;
-    //    @Bind(R.id.btn_gopay)
-//    Button btnGopay;
     @Bind(R.id.tv_state)
     TextView tvState;
     @Bind(R.id.ll_alipay_pay)
@@ -70,6 +72,8 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
     TextView hiniTxtv;
     @Bind(R.id.ll_payway)
     LinearLayout llPayway;
+    @Bind(R.id.ll_wechat_pay)
+    LinearLayout ll_wechat_pay;
     private PayOrder payOrder;//确认订单跳转
     private SPOrder payOrderFromOrderList;
     private Context mContext;
@@ -132,24 +136,27 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
                     break;
             }
         }
-
     };
-
+    private IWXAPI msgApi;
     private void dealWithPayAfter() {
 //        是否创业
         tvState.setText("支付成功");
         tvHiti.setText("订单已支付!");
-
-//        hiniTxtv.setVisibility(View.INVISIBLE);
-//        llAlipayPay.setVisibility(View.INVISIBLE);
-//        llUnionPay.setVisibility(View.INVISIBLE);
-//        llStonePay.setVisibility(View.INVISIBLE);
         llPayway.setVisibility(View.GONE);
         checkIsToWork();
     }
     private String orderAmount;
     private String orderId;
     private String orderSn;
+    private IntentFilter intentFilter;//1.创建IntentFilter实例
+    private StateChangeRevicer stateChangeRevicer;
+//    微信支付状态改变
+    class StateChangeRevicer extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            dealWithPayAfter();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setCustomerTitle(true, true, getString(R.string.activity_title_pay_befor));
@@ -186,7 +193,17 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
             orderSn = payOrderFromOrderList.getOrderSN();
         }
         showData(orderSn, orderAmount);
+
+        msgApi = WXAPIFactory.createWXAPI(mContext, null);
+        // 将该app注册到微信
+        msgApi.registerApp(MobileConstants.APP_ID);
     }
+
+    /**
+     * 展示订单信息
+     * @param orderId
+     * @param orderAmount
+     */
     private void showData(String orderId, String orderAmount) {
         if (!SSUtils.isEmpty(orderId)) {
             tvOrderid.setText("订单号:" + orderId);
@@ -197,6 +214,9 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
     }
     @Override
     public void initEvent() {
+        stateChangeRevicer = new StateChangeRevicer();
+        intentFilter = new IntentFilter(MobileConstants.ACTION_PAY_CHANGE);
+        registerReceiver(stateChangeRevicer, intentFilter);
     }
     //   银联支付
     private void payOrderWithUnionPay(String orderId, String orderAmount) {
@@ -222,29 +242,10 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
         });
     }
 
-    // 支付宝  支付
-    private void payWithAlipay(String orderId) {
-        showLoadingToast("正在支付");
-        ShopRequest.orderAliPay(orderId, new SPSuccessListener() {
-            @Override
-            public void onRespone(String msg, Object response) {
-                if (response != null) {
-                    Alipay alipay = (Alipay) response;
-                    AlipayV2(alipay);
-                } else {
-
-                }
-                hideLoadingToast();
-            }
-        }, new SPFailuredListener() {
-            @Override
-            public void onRespone(String msg, int errorCode) {
-                hideLoadingToast();
-                showToast(msg);
-            }
-        });
-    }
-
+    /**
+     * 支付宝 调控件
+     * @param alipay
+     */
     private void AlipayV2(Alipay alipay) {
         final String orderInfo = alipay.getString();
         Runnable payRunnable = new Runnable() {
@@ -290,8 +291,7 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
 
     /**
      * 银联支付支付
-     *
-     * @param data
+     * @param data 接口返回数据
      */
     private void dealWithPay(String data) {
         int ret = UPPayAssistEx.startPay(this, null, null, data.trim(), mMode);
@@ -321,7 +321,9 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
         builder.create().show();
     }
 
-    //    判断是否创业
+    /**
+     * 判断是否创业
+     */
     public void checkIsToWork() {
         PersonRequest.isWork(new SPSuccessListener() {
             @Override
@@ -365,7 +367,9 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
         });
     }
 
-    //    我的银行卡 列表
+    /**
+     * 跳我的银行卡 列表 未创业 开启创业时跳转
+     */
     private void startBankListActivity() {
         Intent intent = new Intent();
         intent.setClass(mContext, BankListActivity.class);
@@ -413,13 +417,11 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
     public void clickOk(int actionType) {
         startBankListActivity();
     }
-
     /**
      * 支付类型判断
-     *
      * @param view
      */
-    @OnClick({R.id.ll_alipay_pay, R.id.ll_union_pay, R.id.ll_stone_pay})
+    @OnClick({R.id.ll_alipay_pay, R.id.ll_union_pay, R.id.ll_stone_pay, R.id.ll_wechat_pay})
     public void onClick(View view) {
         Float sum1 = SSUtils.string2float(orderAmount);
         if (sum1 == 0) {
@@ -433,17 +435,96 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
                     payOrderWithUnionPay(orderId, orderAmount);
                     break;
                 case R.id.ll_stone_pay:
-//                    payOrderWithUnionPay(orderId, orderAmount);
                     startStonePayActuvuty();
+                    break;
+                case R.id.ll_wechat_pay:
+                    startWeChatPay();
                     break;
             }
         }
     }
+    /**
+     * 微信支付
+     */
+    private void startWeChatPay() {
+        showLoadingToast("正在支付");
+        ShopRequest.orderPayWithWeChat(orderId, new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+                    WeChat weChat = (WeChat) response;
+                    dealWithWeChat(weChat);
+              }
+                hideLoadingToast();
+            }
+        }, new SPFailuredListener() {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+                hideLoadingToast();
+                showToast(msg);
+            }
+        });
+    }
+    private void dealWithWeChat(WeChat weChat) {
+        if(!msgApi.isWXAppInstalled()){
+            showToast("未检测到微信程序,不能使用微信支付功能!");
+            return;
+       }
+        if(!msgApi.isWXAppSupportAPI()){
+            showToast("当前微信版本过低，不支持支付");
+            return;
+        }
+        PayReq req = new PayReq();
+        req.appId=weChat.getAppid();
+        req.partnerId=weChat.getPartnerid();
+        req.prepayId=weChat.getPrepayid();
+        req.nonceStr=weChat.getNoncestr();
+        req.timeStamp=String.valueOf(weChat.getTimestamp());
+        req.packageValue=weChat.getPackage();
+        req.sign=weChat.getSign();
+        req.extData="app data";
+        msgApi.sendReq(req);
 
+
+//        SSUtils
+    }
+    /**
+     * 跳转 石头支付页面
+     */
     private void startStonePayActuvuty() {
         Intent intent = new Intent(this, StonePayActivity.class);
         intent.putExtra("orderId", orderId);
         startActivityForResult(intent, MobileConstants.Result_Code_Refresh);
     }
+    /**
+     * 支付宝  支付
+     * @param orderId
+     */
+    private void payWithAlipay(String orderId) {
+        showLoadingToast("正在支付");
+        ShopRequest.orderAliPay(orderId, new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+                    Alipay alipay = (Alipay) response;
+                    AlipayV2(alipay);
+                } else {
 
+                }
+                hideLoadingToast();
+            }
+        }, new SPFailuredListener() {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+                hideLoadingToast();
+                showToast(msg);
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(stateChangeRevicer);
+    }
 }

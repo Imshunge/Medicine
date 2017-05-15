@@ -17,6 +17,7 @@ import com.shssjk.model.person.Alipay;
 import com.shssjk.model.person.SPConsigneeAddress;
 import com.shssjk.model.shop.Data;
 import com.shssjk.model.shop.Coupon;
+import com.shssjk.model.shop.GoodsPrice;
 import com.shssjk.model.shop.SPFilter;
 import com.shssjk.model.shop.SPFilterItem;
 import com.shssjk.model.shop.GoodsComment;
@@ -26,6 +27,7 @@ import com.shssjk.model.shop.SPShopOrder;
 import com.shssjk.model.shop.StoneOrderInfo;
 import com.shssjk.model.shop.Tmenu;
 import com.shssjk.model.shop.Totalprice;
+import com.shssjk.model.shop.WeChat;
 import com.shssjk.utils.Logger;
 import com.shssjk.utils.SMobileLog;
 import com.shssjk.utils.SSUtils;
@@ -197,44 +199,24 @@ public class ShopRequest {
      * 商品分类接口：
      * 地址：http://192.168.0.169:8080/index.php/Api/Goods/get_goods_category_tree
      * 参数： 无
-     *
+     * sign 传 1 显示；  宴界是否显示
      * @param successListener
      * @param failuredListener
      */
     public static void getShopCategory(final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-
         assert (successListener != null);
         assert (failuredListener != null);
         String url = SPMobileHttptRequest.getRequestUrl("Goods", "get_goods_category_tree");
-
         RequestParams params = new RequestParams();
-//		params.put("p",productCondition.page);
-//		params.put("pagesize", MobileConstants.SizeOfPage);
-//
-//		if (productCondition.href !=null){
-//			url = MobileConstants.BASE_HOST +productCondition.href;
-//		}
-//		/** 商品分类*/
-//		if(productCondition.categoryID > 0){
-//			params.put("id", productCondition.categoryID);
-//		}
-//
-//		/** 按照 productCondition.sort 字段进行 order 排序*/
-//		if(!SPStringUtils.isEmpty(productCondition.orderdesc) && !SPStringUtils.isEmpty(productCondition.orderby)){
-//			params.put("orderby", productCondition.orderby);
-//			params.put("orderdesc", productCondition.orderdesc );
-//		}
+		params.put("sign","1");
         SPMobileHttptRequest.get(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 /** 针对返回的业务数据会重新包装一遍再返回到View */
                 try {
                     String msg = (String) response.get(MobileConstants.Response.MSG);
-//					JSONObject resultJson = (JSONObject) response.getJSONObject(Response.DATA);
                     JSONObject dataJson = new JSONObject();
-
                     if (response != null) {
-//						ShopCategoryBean shopOrder = SPJsonUtil.fromJsonToModel(resultJson, ShopCategoryBean.class);
                         //商品列表
                         if (!response.isNull("data")) {
                             JSONArray goods = response.getJSONArray("data");
@@ -252,8 +234,6 @@ public class ShopRequest {
                                 dataJson.put("Categories", homeCategories);
                             }
                         }
-
-//						dataJson.put("filter", filters);
                         successListener.onRespone(msg, dataJson);
                     } else {
                         failuredListener.onRespone("not found data", -1);
@@ -426,15 +406,12 @@ public class ShopRequest {
      * @ 设定文件
      */
     public static void getProductByID(ProductCondition productCondition, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-//		assert(successListener!=null);
-//		assert(failuredListener!=null);
         String url = SPMobileHttptRequest.getRequestUrl("Goods", "goodsInfo");
 
         RequestParams params = new RequestParams();
         if (productCondition.goodsID > 0) {
             params.put("id", productCondition.goodsID);
         }
-//        SMobileLog.i(TAG, "getProductByID -> url : " + url + "&" + params.toString());
         SPMobileHttptRequest.post2(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -462,6 +439,13 @@ public class ShopRequest {
                             dataJson.put("comments", comments);
                         }
                     }
+//                    if (result.has("spec_goods_price")) {
+//                        Object obj = result.get("spec_goods_price");
+//                        if (!SSUtils.isEmpty(obj)) {
+//                            List<GoodsPrice> spec_goods_price = SPJsonUtil.fromJsonArrayToList(result.getJSONArray("spec_goods_price"), GoodsPrice.class);
+//                            dataJson.put("spec_goods_price", spec_goods_price);
+//                        }
+//                    }
                     if (product != null && result.has("gallery")) {
                         JSONArray jsonGarrys = result.getJSONArray("gallery");
                         dataJson.put("gallery", jsonGarrys);
@@ -950,7 +934,6 @@ public class ShopRequest {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
@@ -1346,11 +1329,6 @@ public class ShopRequest {
         });
     }
 
-
-
-
-
-
     /**
      * 2期接口
      * 使用石头支付
@@ -1406,6 +1384,59 @@ public class ShopRequest {
             }
         });
     }
+
+
+
+
+    public static void orderPayWithWeChat(String order_id, final SPSuccessListener successListener,
+                                         final SPFailuredListener failuredListener) {
+        assert (successListener != null);
+        assert (failuredListener != null);
+        String url = MobileConstants.PAY_WECHAT;
+        RequestParams params = new RequestParams();
+        params.put("order_id", order_id);
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(Response.MSG);
+                    int status = response.getInt(Response.STATUS);
+                    if (status == 0) {
+                        WeChat   weChat = SPJsonUtil.fromJsonToModel(response.getJSONObject(Response.DATA), WeChat.class);
+                        successListener.onRespone(msg, weChat);
+                    } else {
+                        failuredListener.onRespone(msg,-1);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+
+
+
 
 
     /**

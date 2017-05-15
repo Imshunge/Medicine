@@ -64,6 +64,9 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
     Button btnSearchCamera;
     @Bind(R.id.btn_settingwifi)
     Button btnSettingwifi;
+    @Bind(R.id.btn_localvideo)
+    Button btn_localvideo;
+
     @Bind(R.id.camera_state_txtv)
     TextView cameraStateTxtv;
     @Bind(R.id.main_model_progressBar1)
@@ -73,8 +76,8 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
     private EditText didEdit = null;
     private TextView textView_top_show = null;
     private Button done;
-//    @Bind(R.id.titlebar_menu_btn)
-     Button explainBtn;
+    //    @Bind(R.id.titlebar_menu_btn)
+    Button explainBtn;
     private static final int SEARCH_TIME = 3000;
     private int option = ContentCommon.INVALID_OPTION;
     private int CameraType = ContentCommon.CAMERA_TYPE_MJPEG;
@@ -84,7 +87,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
     private boolean isSearched;
     private MyBroadCast receiver;
     private WifiManager manager = null;
-//    private ProgressBar progressBar = null;
+    //    private ProgressBar progressBar = null;
     private static final String STR_DID = "did";
     private static final String STR_MSG_PARAM = "msgparam";
     private MyWifiThread myWifiThread = null;
@@ -102,15 +105,17 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
     private Button button_setwifi;
     private EditText nameEdit;
     private Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.setCustomerTitle(true, true, getString(R.string.camera_add),true);
+        super.setCustomerTitle(true, true, getString(R.string.camera_add), true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_camera);
         ButterKnife.bind(this);
-        mContext=this;
+        mContext = this;
         super.init();
     }
+
     @Override
     public void initSubViews() {
         explainBtn = (Button) findViewById(R.id.titlebar_menu_btn);
@@ -126,10 +131,12 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
         progressdlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressdlg.setMessage(getString(R.string.searching_tip));
     }
+
     @Override
     public void initData() {
 
     }
+
     @Override
     public void initEvent() {
         manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -142,6 +149,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
         intentbrod = new Intent("drop");
 //        explainBtn.setOnClickListener(this);
     }
+
     @Override
     public void callBackSearchResultData(int cameraType, String strMac, String strName, String strDeviceID,
                                          String strIpAddr, int port) {
@@ -149,6 +157,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
             return;
         }
     }
+
     @Override
     public void CallBackGetStatus(String did, String resultPbuf, int cmd) {
         if (cmd == ContentCommon.CGI_IEGET_STATUS) {
@@ -163,6 +172,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
             }
         }
     }
+
     @Override
     public void BSMsgNotifyData(String did, int type, int param) {
         Bundle bd = new Bundle();
@@ -177,6 +187,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
             sendBroadcast(intentbrod);
         }
     }
+
     @Override
     public void BSSnapshotNotify(String did, byte[] bImage, int len) {
 
@@ -232,6 +243,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
         stopService(intent);
         tag = 0;
     }
+
     class MyTimerTask extends TimerTask {
 
         public void run() {
@@ -336,8 +348,8 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
         }
     };
 
-    @OnClick({R.id.btn_link, R.id.btn_preview, R.id.btn_searchCamera, R.id.btn_settingwifi
-
+    @OnClick({R.id.btn_link, R.id.btn_preview, R.id.btn_searchCamera, R.id.btn_settingwifi,
+            R.id.btn_localvideo
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -355,16 +367,16 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
             case R.id.btn_preview:
                 if (checkIsEmpty()) return;
                 Intent playIntent = new Intent(AddCameraActivity.this, PlayActivity.class);
-                playIntent.putExtra("name",consigneeNameEdtv.getText().toString().trim());
-                playIntent.putExtra("id",deviceIdEdtv.getText().toString().trim());
+                playIntent.putExtra("name", consigneeNameEdtv.getText().toString().trim());
+                playIntent.putExtra("id", deviceIdEdtv.getText().toString().trim());
                 startActivity(playIntent);
                 break;
             case R.id.btn_searchCamera:
                 stopCameraPPPP();
                 //把相机状态，设备id置空
-                tag=0;
+                tag = 0;
                 cameraStateTxtv.setText(R.string.login_stuta_camer);
-                SystemValue.deviceId=null;
+                SystemValue.deviceId = null;
                 searchCamera();
                 break;
             case R.id.btn_settingwifi:
@@ -376,15 +388,19 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
 ////                startActivity(setwifi);
 //                showToast("说明");
 //                break;
+            case R.id.btn_localvideo:
+                Intent localVideo = new Intent(AddCameraActivity.this, LocalVideoListActivity.class);
+                startActivity(localVideo);
+                break;
         }
     }
 
     private boolean checkIsEmpty() {
-        if(SSUtils.isEmpty(consigneeNameEdtv.getText())){
+        if (SSUtils.isEmpty(consigneeNameEdtv.getText())) {
             showToast("设备名不能为空");
             return true;
         }
-        if(SSUtils.isEmpty(deviceIdEdtv.getText())){
+        if (SSUtils.isEmpty(deviceIdEdtv.getText())) {
             showToast("设备ID不能为空");
             return true;
         }
@@ -417,6 +433,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
                     getResources().getString(R.string.input_camera_user), Toast.LENGTH_SHORT).show();
             return;
         }
+        addCamera();//添加摄像机
         if (option == ContentCommon.INVALID_OPTION) {
             option = ContentCommon.ADD_CAMERA;
         }
@@ -504,7 +521,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
                                     + "&user=admin&pwd=" + SystemValue.devicePass;
                             NativeCaller.TransferMessage(did, cmd, 1);
                             tag = 1;
-                            send();//保存数据
+//                            send();//保存数据
                             break;
                         case ContentCommon.PPPP_STATUS_DEVICE_NOT_ON_LINE://6
                             resid = R.string.device_not_on_line;
@@ -545,7 +562,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
     };
 
     // 添加设备到用户
-    public void send() {
+    public void addCamera() {
         String name = consigneeNameEdtv.getText().toString();
         String id = deviceIdEdtv.getText().toString();
         showLoadingToast();
@@ -621,7 +638,6 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
             dialog.setPositiveButton(
                     getResources().getString(R.string.refresh),
                     new DialogInterface.OnClickListener() {
-
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             startSearch();

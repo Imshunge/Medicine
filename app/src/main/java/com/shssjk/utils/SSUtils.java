@@ -11,11 +11,13 @@ import android.widget.ListView;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -172,8 +174,6 @@ public class SSUtils {
     //    string   转 float
     public static Float string2float(String content) {
 //        BigDecimal b2 = new BigDecimal(content);
-
-
         if (!SSUtils.isEmpty(content)) {
             return Float.parseFloat(content);
         }
@@ -429,4 +429,44 @@ public class SSUtils {
         }
         return step/2;
     }
+
+
+    /**
+     * 两个时间之间相差距离多少天
+     *
+     * @param str1
+     *            时间参数 1：
+     * @param str2
+     *            时间参数 2：
+     * @return 相差天数
+     */
+    public static long getDistanceDays(String str1, String str2)
+            throws Exception {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date one;
+        Date two;
+        long days = 0;
+        try {
+            one = df.parse(str1);
+            two = df.parse(str2);
+            long time1 = one.getTime();
+            long time2 = two.getTime();
+            long diff;
+            if (time1 < time2) {
+                diff = time2 - time1;
+            } else {
+                diff = time1 - time2;
+            }
+            days = diff / (1000 * 60 * 60 * 24);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return days;
+    }
+
+
+
+
+
+
 }

@@ -1,7 +1,6 @@
 package com.shssjk.model.health;
 
 import org.litepal.crud.DataSupport;
-
 import java.io.Serializable;
 
 /**
@@ -13,6 +12,15 @@ public class Step  extends DataSupport implements Serializable {
     private String time;
     private int count;
 
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    private String timestamp;
     public int getCount() {
         return count;
     }

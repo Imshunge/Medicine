@@ -14,10 +14,11 @@
             android:id="@+id/head_mimgv"
             android:layout_width="@dimen/margin50dp"
             android:layout_height="@dimen/margin50dp"
-            android:layout_marginLeft="@dimen/margin20dp"
+            android:layout_marginLeft="@dimen/margi30dp"
             android:layout_marginTop="@dimen/margin10dp"
             android:layout_marginBottom="@dimen/margin10dp"
-            android:src="@drawable/person_default_head" />
+            android:src="@drawable/person_default_head"
+            />
         <TextView
             android:id="@+id/name_txtv"
             style="@style/textStyle.Medium.User"
@@ -48,6 +49,7 @@
             android:layout_width="@dimen/margin50dp"
             android:layout_height="@dimen/margi30dp"
             android:layout_marginLeft="@dimen/margin20dp"
+            android:gravity="left"
             android:text="" />
     </LinearLayout>
     <View
@@ -58,28 +60,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <TextView
             style="@style/textStyle.Medium.User"
             android:layout_width="@dimen/margin70dp"
             android:layout_height="@dimen/margi30dp"
             android:layout_marginLeft="@dimen/margin20dp"
             android:text="@string/person_age" />
-
         <TextView
             android:id="@+id/age_txtv"
             style="@style/textStyle.Medium.User"
             android:layout_width="@dimen/margin50dp"
             android:layout_height="@dimen/margi30dp"
             android:layout_marginLeft="@dimen/margin20dp"
+            android:gravity="left"
             android:text="0" />
     </LinearLayout>
-
     <View
         style="@style/separator_line"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,22 +93,27 @@
         <TextView
             android:id="@+id/hight_txtv"
             style="@style/textStyle.Medium.User"
-            android:layout_width="@dimen/margin50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="@dimen/margi30dp"
-            android:layout_marginLeft="@dimen/margin20dp" />
-
+            android:layout_marginLeft="@dimen/margin20dp"
+            android:gravity="left"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            style="@style/textStyle.Medium.User"
+            android:src="@drawable/arrow_right"
+            android:layout_marginRight="@dimen/margin10dp"
+        />
     </LinearLayout>
-
     <View
         style="@style/separator_line"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <TextView
             style="@style/textStyle.Medium.User"
             android:layout_width="@dimen/margin70dp"
@@ -119,18 +123,24 @@
         <TextView
             android:id="@+id/weight_txtv"
             style="@style/textStyle.Medium.User"
-            android:layout_width="@dimen/margin50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="@dimen/margi30dp"
-            android:layout_marginLeft="@dimen/margin20dp" />
-
+            android:layout_marginLeft="@dimen/margin20dp"
+            android:gravity="left"
+            android:text=""
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            style="@style/textStyle.Medium.User"
+            android:src="@drawable/arrow_right"
+            android:layout_marginRight="@dimen/margin10dp"
+            />
     </LinearLayout>
-
     <View
         style="@style/separator_line"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -144,13 +154,20 @@
         <TextView
             android:id="@+id/goal_txtv"
             style="@style/textStyle.Medium.User"
-            android:layout_width="@dimen/margin50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="@dimen/margi30dp"
-
-            android:layout_marginLeft="@dimen/margin20dp" />
-
+            android:layout_marginLeft="@dimen/margin20dp"
+            android:gravity="left"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            style="@style/textStyle.Medium.User"
+            android:id="@+id/nick_arrow_age"
+            android:src="@drawable/arrow_right"
+            android:layout_marginRight="@dimen/margin10dp"
+            />
     </LinearLayout>
-
     <View
         style="@style/separator_line"
         android:layout_marginBottom="5dp"

@@ -679,8 +679,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
         ptzResolutoin.setOnClickListener(this);
         ptzDefaultSet.setOnClickListener(this);
         preset.setOnClickListener(this);
-
-
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
                 R.drawable.top_bg);
         drawable = new BitmapDrawable(bitmap);
@@ -704,7 +702,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-
         if (!isDown) {
             x1 = event.getX();
             y1 = event.getY();
@@ -755,7 +752,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
                     mode = ZOOM;
                 }
                 break;
-
             case MotionEvent.ACTION_MOVE:
                 x2 = event.getX();
                 y2 = event.getY();
@@ -767,14 +763,11 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
                     }
                 }
         }
-
         return gt.onTouchEvent(event);
     }
-
     private static final int NONE = 0;
     private static final int DRAG = 1;
     private static final int ZOOM = 2;
-
     private int mode = NONE;
     private float oldDist;
     private Matrix matrix = new Matrix();
@@ -789,7 +782,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
     protected Matrix mSuppMatrix = new Matrix();
     private Matrix mDisplayMatrix = new Matrix();
     private final float[] mMatrixValues = new float[9];
-
     protected void zoomTo(float scale, float centerX, float centerY) {
         Log.d("zoomTo", "zoomTo scale:" + scale);
         if (scale > mMaxZoom) {
@@ -797,7 +789,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
         } else if (scale < mMinZoom) {
             scale = mMinZoom;
         }
-
         float oldScale = getScale();
         float deltaScale = scale / oldScale;
         Log.d("deltaScale", "deltaScale:" + deltaScale);
@@ -805,13 +796,11 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
         videoViewStandard.setScaleType(ImageView.ScaleType.MATRIX);
         videoViewStandard.setImageMatrix(getImageViewMatrix());
     }
-
     protected Matrix getImageViewMatrix() {
         mDisplayMatrix.set(mBaseMatrix);
         mDisplayMatrix.postConcat(mSuppMatrix);
         return mDisplayMatrix;
     }
-
     protected float getScale(Matrix matrix) {
         return getValue(matrix, Matrix.MSCALE_X);
     }
@@ -824,7 +813,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
         matrix.getValues(mMatrixValues);
         return mMatrixValues[whichValue];
     }
-
     private float spacing(MotionEvent event) {
         try {
             float x = event.getX(0) - event.getX(1);
@@ -874,12 +862,10 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
             if ((x1 > x2) && (xx > MINLEN)) {// right
                 if (!isControlDevice)
                     new ControlDeviceTask(ContentCommon.CMD_PTZ_RIGHT).execute();
-
             } else if ((x1 < x2) && (xx > MINLEN)) {// left
                 if (!isControlDevice)
                     new ControlDeviceTask(ContentCommon.CMD_PTZ_LEFT).execute();
             }
-
         } else {
             if ((y1 > y2) && (yy > MINLEN)) {// down
                 if (!isControlDevice)
@@ -930,7 +916,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
         builder.setNegativeButton(R.string.str_cancel, null);
         builder.show();
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -1034,7 +1019,7 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
             case R.id.ptz_take_photos://拍照
                 dismissBrightAndContrastProgress();
                 if (existSdcard()) {// 判断sd卡是否存在
-                    //takePicture(mBmp);
+                    takePicture(mBmp);
                     isTakepic = true;
                 } else {
                     showToast(R.string.ptz_takepic_save_fail);
@@ -1167,11 +1152,11 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
 
                 if (irSwitch.isChecked()) {
                     NativeCaller.PPPPCameraControl(strDID, IR_STATE, 1);
-                    Toast.makeText(PlayActivity.this, "IR开", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PlayActivity.this, "夜视开", Toast.LENGTH_SHORT).show();
 
                 } else {
                     NativeCaller.PPPPCameraControl(strDID, IR_STATE, 0);
-                    Toast.makeText(PlayActivity.this, "IR关", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PlayActivity.this, "夜视关", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -1578,7 +1563,7 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
         FileOutputStream fos = null;
         try {
             File div = new File(Environment.getExternalStorageDirectory(),
-                    "ipcamerademo/takepic");
+                    "ssjk/takepic");
             if (!div.exists()) {
                 div.mkdirs();
             }
@@ -1590,7 +1575,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
                 fos.flush();
                 Log.d("tag", "takepicture success");
                 runOnUiThread(new Runnable() {
-
                     @Override
                     public void run() {
                         showToast(R.string.ptz_takepic_ok);
@@ -1626,7 +1610,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
         String strDate = f.format(d);
         return strDate;
     }
-
     /*
      * 录像
      */
@@ -1638,7 +1621,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
             if (!isJpeg) {
                 NativeCaller.RecordLocal(strDID, 0);
             }
-
             isTakeVideo = false;
             ptzTake_vodeo.setImageResource(R.drawable.ptz_takevideo);
             myvideoRecorder.stopRecordVideo();
@@ -1651,7 +1633,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
             if (!isJpeg) {
                 NativeCaller.RecordLocal(strDID, 1);
             }
-
             if (isJpeg) {
                 myvideoRecorder.startRecordVideo(2);
             } else {
@@ -1959,7 +1940,6 @@ public class PlayActivity extends BaseActivity implements OnTouchListener, OnGes
                 Gravity.TOP, 0, 0);
 
     }
-
     @Override
     protected void onDestroy() {
         NativeCaller.StopPPPPLivestream(strDID);

@@ -5,6 +5,7 @@ import android.util.Log;
 
 
 import com.shssjk.activity.person.PlayActivity;
+import com.shssjk.model.bean.VideoBean;
 import com.shssjk.model.bean.VideoRecordBean;
 
 import java.io.File;
@@ -90,7 +91,6 @@ public class CustomVideoRecord implements PlayActivity.VideoRecorder {
 							isFirstH264 = false;
 							Log.d("tag", "第一帧是i帧");
 						}
-
 					}
 					if (isBuffOut) {
 						isBuffOut = false;
@@ -131,7 +131,7 @@ public class CustomVideoRecord implements PlayActivity.VideoRecorder {
               
 			try {
 				File div = new File(Environment.getExternalStorageDirectory(),
-						"ipcamerademo/video");
+						"ssjk/video");
 				if (!div.exists()) {
 					div.mkdirs();
 				}
@@ -212,9 +212,19 @@ public class CustomVideoRecord implements PlayActivity.VideoRecorder {
 					dbUtil.createVideoOrPic(strDID, videopath,
 							DatabaseUtil.TYPE_VIDEO, "2323");
 					dbUtil.close();
-					
 					String filePath = file.getAbsolutePath();
 					String s1 = filePath.substring(filePath.lastIndexOf("/") + 1);
+					VideoBean videoBean =  new VideoBean();
+					videoBean.setPath(videopath);
+					videoBean.setType("TYPE_VIDEO");
+					videoBean.save();
+//					Push push = new Push();
+//					push.setCustomContentString(customContentString);
+//					push.setDescription(description);
+//					push.setTitle(title);
+//					push.setUserId(uid);
+//					push.setPushTime(date);
+//					videoBean.save();
 					//String date = s1.substring(0, 10);
 //					HistoryDateItem item = new HistoryDateItem();
 //
@@ -270,7 +280,6 @@ public class CustomVideoRecord implements PlayActivity.VideoRecorder {
 			temp = temp >> 8;
 		}
 		return b;
-
 	}
 
 	/**

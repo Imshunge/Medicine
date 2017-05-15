@@ -15,12 +15,14 @@ import com.shssjk.http.base.SPMobileHttptRequest;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.community.Quack;
+import com.shssjk.model.health.StepHistory;
 import com.shssjk.model.order.SPExchange;
 import com.shssjk.model.order.SPOrder;
 import com.shssjk.model.person.Bank;
 import com.shssjk.model.person.Camera;
 import com.shssjk.model.person.SPConsigneeAddress;
 import com.shssjk.model.person.SPRegionModel;
+import com.shssjk.model.person.StepPersonInfo;
 import com.shssjk.model.person.StoneDetail;
 import com.shssjk.model.person.StoneType;
 import com.shssjk.model.shop.CommentCondition;
@@ -64,7 +66,6 @@ public class PersonRequest {
         assert (successListener != null);
         assert (failuredListener != null);
         String url = SPMobileHttptRequest.getRequestUrl("Goods", "collectGoods");
-
         RequestParams params = new RequestParams();
         if (!SPStringUtils.isEmpty(goodsID)) {
             params.put("goods_id", goodsID);
@@ -210,16 +211,15 @@ public class PersonRequest {
                     /** 针对返回的业务数据会重新包装一遍再返回到View */
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     String msg = (String) response.get(MobileConstants.Response.MSG);
-                    List<SPConsigneeAddress> consignees= new ArrayList<SPConsigneeAddress>();
+                    List<SPConsigneeAddress> consignees = new ArrayList<SPConsigneeAddress>();
                     if (status > 0) {
-                        if(!msg.equals("没有数据")) {
-                           consignees = SPJsonUtil.fromJsonArrayToList(response.getJSONArray(MobileConstants.Response.RESULT), SPConsigneeAddress.class);
+                        if (!msg.equals("没有数据")) {
+                            consignees = SPJsonUtil.fromJsonArrayToList(response.getJSONArray(MobileConstants.Response.RESULT), SPConsigneeAddress.class);
                             successListener.onRespone(msg, consignees);
-                        }else{
+                        } else {
                             successListener.onRespone(msg, consignees);
                         }
-                    }
-                    else {
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (Exception e) {
@@ -321,8 +321,8 @@ public class PersonRequest {
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     String msg = (String) response.get(MobileConstants.Response.MSG);
 
-                    if (status >=0) {
-                        if(status==1) {
+                    if (status >= 0) {
+                        if (status == 1) {
                             List<SPOrder> orders = SPJsonUtil.fromJsonArrayToList(response.getJSONArray(MobileConstants.Response.RESULT), SPOrder.class);
                             if (orders != null) {
                                 for (SPOrder order : orders) {
@@ -331,7 +331,7 @@ public class PersonRequest {
                                 }
                             }
                             successListener.onRespone(msg, orders);
-                        }else{
+                        } else {
                             failuredListener.onRespone(msg, -1);
                         }
                     } else {
@@ -1096,7 +1096,7 @@ public class PersonRequest {
                     /** 针对返回的业务数据会重新包装一遍再返回到View */
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     String msg = (String) response.get(MobileConstants.Response.MSG);
-                    if(status>=0) {
+                    if (status >= 0) {
 
                         if (status == 0) {
 //                        JSONObject resultJson = (JSONObject) response.getJSONObject(MobileConstants.Response.DATA);
@@ -1122,7 +1122,7 @@ public class PersonRequest {
                         } else {
                             failuredListener.onRespone(msg, -1);
                         }
-                    }else{
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (Exception e) {
@@ -1168,7 +1168,7 @@ public class PersonRequest {
                     /** 针对返回的业务数据会重新包装一遍再返回到View */
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     String msg = (String) response.get(MobileConstants.Response.MSG);
-                    if(status>=0) {
+                    if (status >= 0) {
                         if (status == 0) {
                             //摄像头列表
                             if (!response.isNull("data")) {
@@ -1182,7 +1182,7 @@ public class PersonRequest {
                         } else {
                             failuredListener.onRespone(msg, -1);
                         }
-                    }else{
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (Exception e) {
@@ -1232,14 +1232,14 @@ public class PersonRequest {
                     /** 针对返回的业务数据会重新包装一遍再返回到View */
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     String msg = (String) response.get(MobileConstants.Response.MSG);
-                    if(status>=0) {
+                    if (status >= 0) {
                         if (status == 0) {
                             //摄像头列表
                             successListener.onRespone(msg, status);
                         } else {
                             failuredListener.onRespone(msg, -1);
                         }
-                    }else{
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (Exception e) {
@@ -1286,14 +1286,14 @@ public class PersonRequest {
                     /** 针对返回的业务数据会重新包装一遍再返回到View */
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     String msg = (String) response.get(MobileConstants.Response.MSG);
-                    if(status>=0) {
+                    if (status >= 0) {
                         if (status == 0) {
                             //摄像头列表
                             successListener.onRespone(msg, status);
                         } else {
                             failuredListener.onRespone(msg, -1);
                         }
-                    }else{
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (Exception e) {
@@ -1330,10 +1330,10 @@ public class PersonRequest {
      * "data": "2"		返回值（1、已创业；0未达到创业资格；2达到创业资格，但是未创业）
      * }
      *
-    * @param successListener
+     * @param successListener
      * @param failuredListener
      */
-    public static void isWork( final SPSuccessListener successListener,
+    public static void isWork(final SPSuccessListener successListener,
                               final SPFailuredListener failuredListener) {
         String url = SPMobileHttptRequest.getRequestUrl("IsWork", "is_work");
         RequestParams params = new RequestParams();
@@ -1346,13 +1346,13 @@ public class PersonRequest {
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     String data = (String) response.get(MobileConstants.Response.DATA);
-                    if(status>=0) {
+                    if (status >= 0) {
                         if (status == 0) {
                             successListener.onRespone(msg, data);
                         } else {
                             failuredListener.onRespone(msg, -1);
                         }
-                    }else{
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (Exception e) {
@@ -1380,16 +1380,16 @@ public class PersonRequest {
 
     /**
      * id
-     *  name
-     *  code
-     *  bank
-     *  is_default       0 否，1 是
+     * name
+     * code
+     * bank
+     * is_default       0 否，1 是
      * successListener
-     *  failuredListener {
-     *                         "status": "0",		状态（0成功，1，失败）
-     *                         "msg": "添加成功",	返回信息
-     *                         "data": "3"
-     *                         }
+     * failuredListener {
+     * "status": "0",		状态（0成功，1，失败）
+     * "msg": "添加成功",	返回信息
+     * "data": "3"
+     * }
      */
     public static void addBank(RequestParams params, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
 //        assert (successListener != null);
@@ -1409,7 +1409,7 @@ public class PersonRequest {
                     /** 针对返回的业务数据会重新包装一遍再返回到View */
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     int status = response.getInt(MobileConstants.Response.STATUS);
-                    if(status>=0) {
+                    if (status >= 0) {
                         if (status == 0) {
 //						JSONObject result = (JSONObject) response.getJSONObject(Response.DATA);
 //						/** 工具类json转为User实体 **/
@@ -1419,7 +1419,7 @@ public class PersonRequest {
                         } else {
                             failuredListener.onRespone(msg, -1);
                         }
-                    }else{
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (JSONException e) {
@@ -1452,15 +1452,15 @@ public class PersonRequest {
     /**
      * 修改银行卡
      * IsWork", "save_bank
-     *
+     * <p/>
      * id
-     *  name
-     *  code
-     *  bank
-     *  is_default
-     *  bi
-     *  successListener
-     *  failuredListener
+     * name
+     * code
+     * bank
+     * is_default
+     * bi
+     * successListener
+     * failuredListener
      */
     public static void saveBank(RequestParams params,
                                 final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
@@ -1481,7 +1481,7 @@ public class PersonRequest {
                     /** 针对返回的业务数据会重新包装一遍再返回到View */
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     int status = response.getInt(MobileConstants.Response.STATUS);
-                    if(status>=0) {
+                    if (status >= 0) {
                         if (status == 0) {
 //						JSONObject result = (JSONObject) response.getJSONObject(Response.DATA);
 //						/** 工具类json转为User实体 **/
@@ -1491,7 +1491,7 @@ public class PersonRequest {
                         } else {
                             failuredListener.onRespone(msg, -1);
                         }
-                    }else{
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (JSONException e) {
@@ -1523,7 +1523,8 @@ public class PersonRequest {
     /**
      * 删除银行卡
      * ("IsWork", "del_bank")
-     *bid 需删除银行卡的id、token token值
+     * bid 需删除银行卡的id、token token值
+     *
      * @param id
      * @param successListener
      * @param failuredListener
@@ -1539,13 +1540,13 @@ public class PersonRequest {
                     /** 针对返回的业务数据会重新包装一遍再返回到View */
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     int status = response.getInt(MobileConstants.Response.STATUS);
-                    if(status>=0) {
+                    if (status >= 0) {
                         if (status == 0) {
                             successListener.onRespone(msg, status);
                         } else {
                             failuredListener.onRespone(msg, -1);
                         }
-                    }else{
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (JSONException e) {
@@ -1556,6 +1557,7 @@ public class PersonRequest {
                     failuredListener.onRespone(e.getMessage(), -1);
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
@@ -1576,6 +1578,7 @@ public class PersonRequest {
     /**
      * 获取银行卡列表
      * IsWork/bank_list
+     *
      * @param successListener
      * @param failuredListener
      */
@@ -1594,7 +1597,7 @@ public class PersonRequest {
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     List<Bank> filters = new ArrayList<Bank>();
-                    if(status>=0) {
+                    if (status >= 0) {
                         if (status == 0) {
                             List<Bank> bankList = SPJsonUtil.fromJsonArrayToList(response.getJSONArray
                                     (MobileConstants.Response.DATA), Bank.class);
@@ -1602,7 +1605,7 @@ public class PersonRequest {
                         } else {
                             failuredListener.onRespone(msg, 1);
                         }
-                    }else{
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (JSONException e) {
@@ -1613,10 +1616,12 @@ public class PersonRequest {
                     failuredListener.onRespone(e.getMessage(), -1);
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
@@ -1632,15 +1637,16 @@ public class PersonRequest {
 
     /**
      * 接口名称：石头明细
-     接口地址：http://shssjk.com/index.php/Api/MyStone/stone_detail
-     参数：token （token值）
-     * @param ofseet   offset（分页起始变量，默认为0）
-     * @param r   r（分页结束变量，默认为20）
+     * 接口地址：http://shssjk.com/index.php/Api/MyStone/stone_detail
+     * 参数：token （token值）
+     *
+     * @param ofseet           offset（分页起始变量，默认为0）
+     * @param r                r（分页结束变量，默认为20）
      * @param successListener
      * @param failuredListener
      */
-    public static void getStoneDetailList(String ofseet,String r,final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-        String url =  SPMobileHttptRequest.getRequestUrl("MyStone", "stone_detail");
+    public static void getStoneDetailList(String ofseet, String r, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("MyStone", "stone_detail");
         RequestParams params = new RequestParams();
         params.put("offset", ofseet);
         params.put("r", r);
@@ -1684,14 +1690,16 @@ public class PersonRequest {
             }
         });
     }
+
     /**
      * 获取当前用户的 石头和积分数量
-     *  MyStone/stone_info   参数：token
+     * MyStone/stone_info   参数：token
+     *
      * @param successListener
      * @param failuredListener
      */
     public static void getMyStoneInfo(final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-        String url =  SPMobileHttptRequest.getRequestUrl("MyStone", "stone_info");
+        String url = SPMobileHttptRequest.getRequestUrl("MyStone", "stone_info");
         RequestParams params = new RequestParams();
         SPMobileHttptRequest.get(url, params, new JsonHttpResponseHandler() {
             @Override
@@ -1700,7 +1708,7 @@ public class PersonRequest {
                 try {
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     int status = response.getInt(MobileConstants.Response.STATUS);
-                    if (status >=0) {
+                    if (status >= 0) {
                         /** 工具类json转为User实体 **/
                         JSONObject jsonObject = response.getJSONObject(MobileConstants.Response.DATA);
                         successListener.onRespone(msg, jsonObject);
@@ -1735,13 +1743,14 @@ public class PersonRequest {
 
     /**
      * 接口名称：石头充值金额列表
-     *  MyStone/stone_info   参数：token
-     *  http://shssjk.com/index.php/Api/MyStone/stone_list
+     * MyStone/stone_info   参数：token
+     * http://shssjk.com/index.php/Api/MyStone/stone_list
+     *
      * @param successListener
      * @param failuredListener
      */
     public static void getStoneList(final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-        String url =  SPMobileHttptRequest.getRequestUrl("MyStone", "stone_list");
+        String url = SPMobileHttptRequest.getRequestUrl("MyStone", "stone_list");
         RequestParams params = new RequestParams();
         SPMobileHttptRequest.get(url, params, new JsonHttpResponseHandler() {
             @Override
@@ -1751,9 +1760,9 @@ public class PersonRequest {
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     List<StoneType> filters = new ArrayList<StoneType>();
-                    if (status >=0) {
+                    if (status >= 0) {
                         /** 工具类json转为User实体 **/
-                        filters=   SPJsonUtil.fromJsonArrayToList(response.getJSONArray(MobileConstants.Response.DATA),StoneType.class);
+                        filters = SPJsonUtil.fromJsonArrayToList(response.getJSONArray(MobileConstants.Response.DATA), StoneType.class);
                         successListener.onRespone(msg, filters);
                     } else {
                         failuredListener.handleResponse(msg, status);
@@ -1766,6 +1775,7 @@ public class PersonRequest {
                     failuredListener.onRespone(e.getMessage(), -1);
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
@@ -1782,13 +1792,14 @@ public class PersonRequest {
             }
         });
     }
+
     /**
-     接口名称：生成石头支付的订单
-     接口地址：http://shssjk.com/index.php/Api/MyStone/add_order
-     参数：token （token值）、goods_id（商品id）、key（商品key值）
+     * 接口名称：生成石头支付的订单
+     * 接口地址：http://shssjk.com/index.php/Api/MyStone/add_order
+     * 参数：token （token值）、goods_id（商品id）、key（商品key值）
      */
-    public static void addStoneOrder(String  goods_id,String key,final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-        String url =  SPMobileHttptRequest.getRequestUrl("MyStone", "add_order");
+    public static void addStoneOrder(String goods_id, String key, final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("MyStone", "add_order");
         RequestParams params = new RequestParams();
         params.put("goods_id", goods_id);
         params.put("key", key);
@@ -1832,13 +1843,13 @@ public class PersonRequest {
     }
 
     /**
-     接口地址：http://shssjk.com/index.php/Api/MyStone/apply
-     参数：token （token值）、bank_id（提现到银行卡id）、stone（提现石头数量）
-     新增：code（验证码）  mobile（手机号）
+     * 接口地址：http://shssjk.com/index.php/Api/MyStone/apply
+     * 参数：token （token值）、bank_id（提现到银行卡id）、stone（提现石头数量）
+     * 新增：code（验证码）  mobile（手机号）
      */
-    public static void myStoneApply(String  bank_id,String stone ,String code,String mobile,
+    public static void myStoneApply(String bank_id, String stone, String code, String mobile,
                                     final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-        String url =  SPMobileHttptRequest.getRequestUrl("MyStone", "apply");
+        String url = SPMobileHttptRequest.getRequestUrl("MyStone", "apply");
         RequestParams params = new RequestParams();
         params.put("bank_id", bank_id);
         params.put("stone", stone);
@@ -1851,9 +1862,128 @@ public class PersonRequest {
                 try {
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     int status = response.getInt(MobileConstants.Response.STATUS);
-                    if (status >=0) {
+                    if (status >= 0) {
 //                        JSONArray jsonObject = response.getJSONArray(MobileConstants.Response.DATA);
                         successListener.onRespone(msg, status);
+                    } else {
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+    /**
+     * 1．接口名称：获取积分等级相关参数
+     * 接口地址：http://shssjk.com/index.php/Api/User/level_info
+     * 参数：token （token值）
+     * 返回值：
+     * {
+     * "status": 0,		返回状态
+     * "msg": "成功",		返回信息
+     * "data": {
+     * "now_score": "19584.70",		当前现有积分
+     * "all_score": "6000"				下
+     * }一级所需积分
+     * }
+     *
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getLevelInfo(
+            final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("User", "level_info");
+        RequestParams params = new RequestParams();
+
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(MobileConstants.Response.MSG);
+                    int status = response.getInt(MobileConstants.Response.STATUS);
+                    if (status >= 0) {
+                        if (status == 0) {
+                            Level level = SPJsonUtil.fromJsonToModel(response.getJSONObject(MobileConstants.Response.DATA), Level.class);
+                            successListener.onRespone(msg, level);
+                        } else {
+                            failuredListener.onRespone(msg, 1);
+                        }
+                    } else {
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+    /**
+     * 接口名称：根据用户id 获取身高、体重、目标数等数据 接口
+     * 用户id post方法 统一处理了
+     *
+     * @param successListener
+     * @param failuredListener 0 成功、1 失败 2 未设置身高体重
+     */
+    public static void getUserSteptInfo(
+            final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("Passometer", "user_info");
+        RequestParams params = new RequestParams();
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(MobileConstants.Response.MSG);
+                    int status = response.getInt(MobileConstants.Response.STATUS);
+                    if (status >= 0) {
+                        if (status == 0) {
+                            StepPersonInfo stepPersonInfo = SPJsonUtil.fromJsonToModel(response.getJSONObject(MobileConstants.Response.DATA), StepPersonInfo.class);
+                            successListener.onRespone(msg, stepPersonInfo);
+                        } else {
+                            failuredListener.onRespone(msg, 1);
+                        }
                     } else {
                         failuredListener.handleResponse(msg, status);
                     }
@@ -1882,27 +2012,31 @@ public class PersonRequest {
         });
     }
 
+
     /**
-     * 1．接口名称：获取积分等级相关参数
-     接口地址：http://shssjk.com/index.php/Api/User/level_info
-     参数：token （token值）
-     返回值：
-     {
-     "status": 0,		返回状态
-     "msg": "成功",		返回信息
-     "data": {
-     "now_score": "19584.70",		当前现有积分
-     "all_score": "6000"				下
-     }一级所需积分
-     }
+     * 接口名称：上传身高、体重、目标步数
+     * user_id（用户id）、high（身高）、weight（体重）、target（目标步数）
+     * 用户id post方法 统一处理了
+     *
+     * @param hight
+     * @param weight
+     * @param target
      * @param successListener
      * @param failuredListener
      */
-    public static void getLevelInfo(
-            final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
-        String url = SPMobileHttptRequest.getRequestUrl("User", "level_info");
+    public static void addUserSteptInfo(String hight, String weight, String target,
+                                        final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("Passometer", "add_info");
         RequestParams params = new RequestParams();
-
+        if (!SSUtils.isEmpty(hight)) {
+            params.put("high", hight);
+        }
+        if (!SSUtils.isEmpty(weight)) {
+            params.put("weight", weight);
+        }
+        if (!SSUtils.isEmpty(target)) {
+            params.put("target", target);
+        }
         SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -1910,14 +2044,66 @@ public class PersonRequest {
                 try {
                     String msg = (String) response.get(MobileConstants.Response.MSG);
                     int status = response.getInt(MobileConstants.Response.STATUS);
-                    if(status>=0) {
+                    if (status >= 0) {
                         if (status == 0) {
-                            Level level = SPJsonUtil.fromJsonToModel(response.getJSONObject(MobileConstants.Response.DATA), Level.class);
-                            successListener.onRespone(msg, level);
+                            successListener.onRespone(msg, response);
                         } else {
                             failuredListener.onRespone(msg, 1);
                         }
-                    }else{
+                    } else {
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+
+    /**
+     * 接口名称：计步器记录
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getSteptRecord(
+            final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("Passometer", "step_record");
+        RequestParams params = new RequestParams();
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(MobileConstants.Response.MSG);
+                    int status = response.getInt(MobileConstants.Response.STATUS);
+                    if (status >= 0) {
+                        List<StepHistory> stepHistories =  new ArrayList<StepHistory>();
+                        if (status == 0) {
+                            stepHistories = SPJsonUtil.fromJsonArrayToList(response.getJSONArray(MobileConstants.Response.DATA), StepHistory.class);
+                            successListener.onRespone(msg, stepHistories);
+                        } else {
+                            failuredListener.onRespone(msg, 1);
+                        }
+                    } else {
                         failuredListener.handleResponse(msg, status);
                     }
                 } catch (JSONException e) {
@@ -1936,7 +2122,6 @@ public class PersonRequest {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);
@@ -1944,6 +2129,110 @@ public class PersonRequest {
         });
     }
 
+    /**
+     * 接口名称：计步器记录
+     * @param successListener
+     * @param failuredListener
+     * user_id（用户id）、step（步数）、date（日期 当前日期的时间戳）
+     */
+    public static void addStepRecord(RequestParams params,
+            final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("Passometer", "add_record");
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(MobileConstants.Response.MSG);
+                    int status = response.getInt(MobileConstants.Response.STATUS);
+                    if (status >= 0) {
+                        List<StepHistory> stepHistories =  new ArrayList<StepHistory>();
+                        if (status == 0) {
+//                            stepHistories = SPJsonUtil.fromJsonArrayToList(response.getJSONArray(MobileConstants.Response.DATA), StepHistory.class);
+                            successListener.onRespone(msg, status);
+                        } else {
+                            failuredListener.onRespone(msg, 1);
+                        }
+                    } else {
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
+//    last_record
+
+    /**
+     * http://shssjk.com/index.php/Api/Passometer/last_record
+     * 返回状态：status 0 (成功)、1（失败）、2(空数据，没有上传过数据)
+     * @param successListener
+     * @param failuredListener
+     */
+    public static void getLastRecord(
+            final SPSuccessListener successListener, final SPFailuredListener failuredListener) {
+        String url = SPMobileHttptRequest.getRequestUrl("Passometer", "last_record");
+        RequestParams params = new RequestParams();
+        SPMobileHttptRequest.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                /** 针对返回的业务数据会重新包装一遍再返回到View */
+                try {
+                    String msg = (String) response.get(MobileConstants.Response.MSG);
+                    int status = response.getInt(MobileConstants.Response.STATUS);
+                    if (status >= 0) {
+                        List<StepHistory> stepHistories =  new ArrayList<StepHistory>();
+                        if (status == 0) {
+                            successListener.onRespone(msg, response);
+                        }
+                        if(status==1){
+                            failuredListener.onRespone(msg, status);
+                        }
+                        else {
+                            failuredListener.onRespone(msg, 1);
+                        }
+                    } else {
+                        failuredListener.handleResponse(msg, status);
+                    }
+                } catch (JSONException e) {
+                    failuredListener.onRespone(e.getMessage(), -1);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    failuredListener.onRespone(e.getMessage(), -1);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                failuredListener.onRespone(throwable.getMessage(), statusCode);
+            }
+        });
+    }
 
 
 

@@ -341,7 +341,6 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
                     deviceId = devices.get(psotion).getValue().toString().trim();
                 }
                 if (SSUtils.isEmpty(deviceId)) {
-
                     return;
                 }
                 getSugarDataList(foodstatus, deviceId, orderTypr, startTime, endTime);
@@ -439,10 +438,8 @@ public class FragmentSurger extends BaseFragment implements View.OnClickListener
                 return i;
             }
         }
-
         return 0;
     }
-
     //    foodstatus、测试时间段 ; devicesn、设备号 ; start 、开始时间 ; end、结束时间 ; order 、 排序（asc 、desc）
     private void getSugarDataList(String foodstatus, String devicesn, String order, String start_time, String end_time) {
         showLoadingToast("正在加载数据");

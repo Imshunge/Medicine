@@ -23,7 +23,7 @@ import com.shssjk.view.MobileScrollLayout;
 import java.util.ArrayList;
 
 /**
- * 健康云
+ * 健康云  加计步器后 废弃，使用HealthyFragment2
  */
 
 public class HealthyFragment extends BaseFragment implements MobileScrollLayout.PageListener,
@@ -38,13 +38,11 @@ public class HealthyFragment extends BaseFragment implements MobileScrollLayout.
         this.mContext = context;
         Logger.e(context,"onAttach");
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.e("onCreate", "onCreate");
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

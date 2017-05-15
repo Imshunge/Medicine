@@ -1,6 +1,5 @@
 package com.shssjk.activity.health;
 
-
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,30 +10,42 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.loopj.android.http.RequestParams;
 import com.shssjk.activity.BaseActivity;
+import com.shssjk.activity.IViewController;
 import com.shssjk.activity.R;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.global.SPSaveData;
+import com.shssjk.http.base.SPFailuredListener;
+import com.shssjk.http.base.SPSuccessListener;
+import com.shssjk.http.person.PersonRequest;
+import com.shssjk.model.SPUser;
+import com.shssjk.model.health.Step;
+import com.shssjk.model.person.StepPersonInfo;
 import com.shssjk.service.StepCounterService;
 import com.shssjk.utils.Logger;
 import com.shssjk.utils.SSUtils;
 import com.shssjk.utils.StepMenuDialog;
 import com.shssjk.view.CircleBar;
 
+import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
+
 import java.text.DecimalFormat;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-
+/**
+ * 计步器
+ */
 public class StepCounterActivity extends BaseActivity {
     @Bind(R.id.circlestep)
     CircleBar circleBar;//进度显示
@@ -42,17 +53,21 @@ public class StepCounterActivity extends BaseActivity {
     TextView tvCalories;
     @Bind(R.id.tv_mileage)
     TextView tvMileage;
+    @Bind(R.id.tv_hint_setting)
+    TextView tvHintSetting;
     private StepCounterService.StepCpunterBinder stepCpunterBinder;
     private IntentFilter intentFilter;// 创建IntentFilter实例
     private Button menuBtn;
+    private int CALCALORIES = 2;   //计算卡路里
+    private boolean isShowCalcalories = false;   //气泡提示是否显示卡路里
     //   本地广播
     private StepCountChangeLocalReceiver stepCountChangeLocalReceiver;
     private LocalBroadcastManager localBroadcastManager;
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceDisconnected(ComponentName name) {
-        }
 
+        }
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             stepCpunterBinder = (StepCounterService.StepCpunterBinder) service;
@@ -76,14 +91,16 @@ public class StepCounterActivity extends BaseActivity {
             countDistanceAndCalories(stepCpunterBinder.getStepCpunt());
         }
     }
-
     @Override
     protected void onResume() {
         super.onResume();
-        String step = SPSaveData.getString(getBaseContext(), "goalStep");
-        String heightStr = SPSaveData.getString(getBaseContext(), "height");
-        String weightStr = SPSaveData.getString(getBaseContext(), "weight");
-        Logger.e("height :weight ", "weight " + weight + " height:" + weightStr);
+        if (MobileApplication.getInstance().isLogined) {
+            getStepUserInfo();
+        }else{
+
+        }
+    }
+    private void setStepInfo(String step, String heightStr, String weightStr) {
         if (!SSUtils.isEmpty(heightStr)) {
             step_length = SSUtils.getStepLenth(SSUtils.str2Int(heightStr));
         }
@@ -95,7 +112,6 @@ public class StepCounterActivity extends BaseActivity {
         }
         circleBar.setMax(SSUtils.str2Int(step));
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setCustomerTitle(true, true, "计步器", true);
@@ -110,7 +126,6 @@ public class StepCounterActivity extends BaseActivity {
     public void initSubViews() {
         menuBtn = (Button) findViewById(R.id.titlebar_menu_btn);
         menuBtn.setBackgroundResource(R.drawable.title_right_dot_selector);
-
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +179,13 @@ public class StepCounterActivity extends BaseActivity {
         String height = SPSaveData.getString(getBaseContext(), "height");
         String weight = SPSaveData.getString(getBaseContext(), "weight");
         Logger.e("height :weight ", "weight " + weight + " height:" + height);
+        if (MobileApplication.getInstance().isLogined) {
+            SPUser user = MobileApplication.getInstance().getLoginUser();
+//            getStepUserInfo();
+            addStepData(user.getUserID());
+        }
     }
+
 
     @Override
     public void initEvent() {
@@ -180,17 +201,33 @@ public class StepCounterActivity extends BaseActivity {
         Intent service = new Intent(StepCounterActivity.this, StepCounterService.class);
         startService(service);
         bindService(service, connection, BIND_AUTO_CREATE); // 绑定服务
+
+
+
+        tvHintSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!MobileApplication.getInstance().isLogined) {
+                    showToastUnLogin();
+                    toLoginPage();
+                    return;
+                }
+                Intent intent = new Intent(mContext, PersonActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
      * 计算行程
      */
     private void countDistanceAndCalories(int count) {
-        distance = count * step_length * 0.01;//步长试试cm   *0.01换算成米
+        distance = count * step_length * 0.01 * 0.001;//步长试试cm   *0.01换算成米
         // 计算消耗的卡路里热量
-        calories = weight * distance * 0.001;
+        calories = weight * distance;
         tvCalories.setText(formatDouble(calories));
         tvMileage.setText(formatDouble(distance));
+        setHintStr(calories + "", 2);
     }
 
     @Override
@@ -206,4 +243,107 @@ public class StepCounterActivity extends BaseActivity {
         return distanceStr.equals(getString(R.string.zero)) ? getString(R.string.double_zero)
                 : distanceStr;
     }
+
+    public void getStepUserInfo() {
+        PersonRequest.getUserSteptInfo(new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+                    StepPersonInfo stepPersonInfo = (StepPersonInfo) response;
+                    setStepInfo(stepPersonInfo);
+                } else {
+                    showToast(msg);
+                }
+                countDistanceAndCalories(stepCpunterBinder.getStepCpunt());
+                tvHintSetting.setEnabled(false);
+                isShowCalcalories = true;
+            }
+        }, new SPFailuredListener((IViewController) mContext) {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+                showToast(msg);
+                if (!SSUtils.isEmpty(errorCode) && errorCode == 1) {
+                    setHintStr(msg, errorCode);
+                    isShowCalcalories = false;
+                }
+            }
+        });
+    }
+
+    /**
+     * 设置气泡提示
+     *
+     * @param msg
+     * @param errorCode
+     */
+    private void setHintStr(String msg, int errorCode) {
+        if (1 == errorCode) {
+            tvHintSetting.setEnabled(true);
+            tvHintSetting.setText("点击设置身高体重，获取消耗的卡路里");
+
+        } else if (errorCode == CALCALORIES) {
+            if (isShowCalcalories) {
+                tvHintSetting.setEnabled(false);
+                tvHintSetting.setText(getString(R.string.stepcount, formatDouble(calories)));
+            }
+        }
+    }
+
+    private void setStepInfo(StepPersonInfo stepPersonInfo) {
+        if (!SSUtils.isEmpty(stepPersonInfo.getHigh())) {
+            step_length = SSUtils.getStepLenth(SSUtils.str2Int(stepPersonInfo.getHigh()));
+        }
+        if (!SSUtils.isEmpty(stepPersonInfo.getWeight())) {
+            weight = SSUtils.str2Int(stepPersonInfo.getWeight());
+        }
+        if (SSUtils.isEmpty(stepPersonInfo.getTarget())) {
+            stepPersonInfo.setTarget("5000");
+        }
+        circleBar.setMax(SSUtils.str2Int(stepPersonInfo.getTarget()));
+    }
+
+    private void addStepData(String userID) {
+        PersonRequest.getLastRecord(new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+                    JSONObject lastRecoerd = (JSONObject) response;
+                }
+            }
+        }, new SPFailuredListener((IViewController) mContext) {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+//                showToast(msg);
+            }
+        });
+//        RequestParams params = new RequestParams();
+        List<Step> stepList = DataSupport.select()
+                .order("id desc")
+                .find(Step.class);
+        //添加计步明细
+        RequestParams params = new RequestParams();
+        for (int i = 0; i < stepList.size(); i++) {
+            String step = "arr[" + i + "][step]";
+            params.put(step, stepList.get(i).getCount());
+            String date = "arr[" + i + "][date]";
+            params.put(date, stepList.get(i).getTimestamp());
+            String userId = "arr[" + i + "][user_id]";
+            params.put(userId, userID);
+        }
+        PersonRequest.addStepRecord(params, new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+//                    JSONObject lastRecoerd = (JSONObject) response;
+                }
+            }
+        }, new SPFailuredListener((IViewController) mContext) {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+                showToast(msg);
+            }
+        });
+    }
+
+
 }

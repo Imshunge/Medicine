@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/magicindicator_library" />
             <option value="$PROJECT_DIR$/slidingMenu_library" />
             <option value="$PROJECT_DIR$/viewpagerindicator" />
+            <option value="$PROJECT_DIR$/wheelview" />
           </set>
         </option>
       </GradleProjectSettings>

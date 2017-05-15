@@ -177,7 +177,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         btnStone = (Button) findViewById(R.id.btn_stone);
         rl_coupon= (RelativeLayout) findViewById(R.id.rl_coupon);
         title_coupon_txtv=(TextView) findViewById(R.id.title_coupon_txtv);
-
     }
 
     @Override
@@ -247,7 +246,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         });
 //        initEvent();
     }
-
     public void getPointsConfirmOrderData( ){
         ShopRequest.getPointsConfirmOrderData(goodsId,spec_key,new SPSuccessListener() {
             @Override

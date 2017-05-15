@@ -40,43 +40,97 @@
             android:text="@string/tab_item_healthy"
             android:textColor="@color/white" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tv_blood"
-        style="@style/textStyle.Big.black"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/rab_xueya" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/health_banner_imgv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin55dp">
+        <ImageView
+            android:id="@+id/blood_imgv"
+            android:layout_width="@dimen/margin50dp"
+            android:layout_height="@dimen/margin50dp"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="@dimen/margin20dp"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/blood" />
+
+        <TextView
+            android:id="@+id/tv_blood"
+            style="@style/textStyle.Big.black"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin50dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/rab_xueya2"
+            android:textSize="@dimen/textSizeHuge" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="8px"
         android:background="@drawable/line_01" />
 
-    <TextView
-        android:id="@+id/tv_sugar"
-        style="@style/textStyle.Big.black"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/rab_xuetang" />
+        android:layout_height="@dimen/margin55dp">
+
+        <ImageView
+            android:layout_width="@dimen/margin50dp"
+            android:layout_height="@dimen/margin50dp"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="@dimen/margin20dp"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/sugar" />
+
+        <TextView
+            android:id="@+id/tv_sugar"
+            style="@style/textStyle.Big.black"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin50dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/rab_xuetang2"
+            android:textSize="@dimen/textSizeHuge" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="8px"
         android:background="@drawable/line_01" />
 
-    <TextView
-        android:id="@+id/tv_stepcounter"
-        style="@style/textStyle.Big.black"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/rab_stepcount" />
+        android:layout_height="@dimen/margin55dp">
+
+        <ImageView
+            android:layout_width="@dimen/margin50dp"
+            android:layout_height="@dimen/margin50dp"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="@dimen/margin20dp"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/footstep" />
+
+        <TextView
+            android:id="@+id/tv_stepcounter"
+            style="@style/textStyle.Big.black"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin50dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/rab_stepcount"
+            android:textSize="@dimen/textSizeHuge" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

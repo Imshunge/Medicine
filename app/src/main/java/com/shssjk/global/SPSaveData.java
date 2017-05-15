@@ -56,10 +56,10 @@ public class SPSaveData {
         String level = getShared(context).getString("level", "0");
         String levelName = getShared(context).getString("levelName", "0");
         String token = getShared(context).getString("token", "0");
-
         String do_score = getShared(context).getString("do_score", "0");
         String do_earnings = getShared(context).getString("do_earnings", "0");
         String header_pic = getShared(context).getString("header_pic", "");
+        String header_pic_wx = getShared(context).getString("header_pic_wx", "");
         String coupon = getShared(context).getString("coupon", "0");
         String birthday = getShared(context).getString("birthday","");
         String sex = getShared(context).getString("sex","0");
@@ -71,6 +71,7 @@ public class SPSaveData {
         user.setLevelName(levelName);
         user.setToken(token);
         user.setHeader_pic(header_pic);
+        user.setHeadPic(header_pic_wx);
         user.setDo_score(do_score);
         user.setCoupon(coupon);
         user.setDo_earnings(do_earnings);
@@ -79,7 +80,6 @@ public class SPSaveData {
         user.setMobile(phone);
         return user;
     }
-
     public static void clearUser(Context context) {
         Editor editor = getShared(context).edit();
         editor.putString("userId", "-1");
@@ -93,6 +93,7 @@ public class SPSaveData {
         editor.putString("do_score", "");
         editor.putString("do_earnings","");
         editor.putString("header_pic","");
+        editor.putString("header_pic_wx","");
         editor.putString("coupon","");
         editor.putString("birthday","");
         editor.putString("sex","");
@@ -101,7 +102,6 @@ public class SPSaveData {
         editor.commit();
     }
     public static void saveUser(Context context, String key, SPUser user) {
-//
         Editor editor = getShared(context).edit();
         editor.putString("userId", user.getUserID());
         editor.putString("nickName", user.getNickname());
@@ -112,6 +112,14 @@ public class SPSaveData {
         }else{
             editor.putString("header_pic", "");
         }
+        if (!SSUtils.isEmpty(user.getHeadPic())) {
+            editor.putString("header_pic_wx", user.getHeadPic());
+        }else{
+            editor.putString("header_pic_wx", "");
+        }
+
+
+
         editor.putString("coupon", user.getCoupon());
         editor.putString("payPoints", String.valueOf(user.getPayPoints()));
         editor.putString("couponCount", String.valueOf(user.getCouponCount()));
@@ -153,13 +161,11 @@ public class SPSaveData {
         editor.putBoolean(key, val);
         editor.commit();
     }
-
     public static void removeValue(Context context, String key) {
         Editor editor = getShared(context).edit();
         editor.remove(key);
         editor.commit();
     }
-
     // 保存 登陆信息 包括推送信息
     public static void saveLoginData(String s, String s1, String channalId, String appId, String spikey, String deviceyppe) {
 

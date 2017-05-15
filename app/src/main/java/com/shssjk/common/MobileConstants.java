@@ -12,8 +12,8 @@ public class MobileConstants {
 	//URL
 	//www服务器临时屏蔽方法:
 //	public static final String BASE_HOST = "http://192.168.0.169:8080";
-	public static final String BASE_HOST = "http://test.shssjk.com";
-//	public static final String BASE_HOST_TEST = "http://test.shssjk.com";
+//	public static final String BASE_HOST = "http://test.shssjk.com";
+	public static final String BASE_HOST = "http://www.shssjk.com";
 //http://www.shssjk.com"
 	public static final String BASE_URL = BASE_HOST + "/index.php?m=api";
 	public static final String FLEXIBLE_THUMBNAIL = BASE_HOST + "/index.php?m=Api&c=Goods&a=goodsThumImages&width=%d&height=%d&goods_id=%s";
@@ -25,7 +25,12 @@ public class MobileConstants {
 //	http://shssjk.com/index.php/Alipay/Index/doalipay
 //	支付宝支付URL
 	public static final String PAY_ALIPAY =BASE_HOST + "/index.php/Alipay/Index/doalipay";
+	/**
+	 * 微信支付
+	 */
+	public static final String PAY_WECHAT =BASE_HOST + "/index.php/WxPay/Index/buy";
 
+	public static final String APP_ID="wxd95666723c3a2fc7";
 	//石头支付：
 	public static final String PAY_STONE =BASE_HOST + "/index.php/UnionPay/Buy/set_status";
 
@@ -42,8 +47,6 @@ public class MobileConstants {
 
 //	推送
 	public static final String API_KEY="REFrXPcaTeHzooL58tCdZaUp";
-
-
 	public static final String APP_NAME = "ssjk";
 	public static final String DB_NAME = "tpshop.db";
 	public static final String DB2_NAME = "tpshop2.db";//内置数据库名称, 不可更改, 该名称对于asset目录下的tpshop2.db文件名
@@ -55,12 +58,11 @@ public class MobileConstants {
 		public static final String DOWNLOADAPP =  "http://www.shssjk.com/index.php/Api/AppUpdate/download";
 	}
 
-
-
-
 	/****系统所使用到的广播***/
 	public static final String ACTION_SHOPCART_CHNAGE = "com.shssjk.shoprcart_change";
 	public static final String ACTION_HEALTH_LOADATA = "com.shssjk.loaddata";
+	public static final String ACTION_PAY_CHANGE = "com.shssjk.paychange";
+
 	public static final String ACTION_HEALTH_SUAGR_LOADATA = "com.shssjk.loaddata_sugar";
 	public static final String ACTION_HEALTH_CHANGE_FRAGMENT = "com.shssjk.change_health_fragment";
 

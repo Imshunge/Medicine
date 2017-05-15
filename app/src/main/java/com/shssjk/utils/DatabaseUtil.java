@@ -328,7 +328,7 @@ public class DatabaseUtil {
 	 * This Method is used to query all video record from video_picture_table
 	 * **/
 	public Cursor queryAllVideo(String did){
-		String sql="select * from "+DATABASW_VIDEOPICTURE_TABLE+ " where  "+KEY_TYPE+"='"+TYPE_VIDEO+"' and "+KEY_DID+"='"+did+"' order by "+KEY_FILEPATH+" desc";
+		String sql="select * from "+DATABASW_VIDEOPICTURE_TABLE+ " where  "+KEY_TYPE+"='"+TYPE_VIDEO+"' order by "+KEY_FILEPATH+" desc";
 		return mDb.rawQuery(sql,null);
 	}
 	

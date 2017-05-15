@@ -11,7 +11,8 @@
         android:layout_centerInParent="true"
         android:id="@+id/circlestep"
         android:layout_width="300dp"
-        android:layout_height="380dp" >
+        android:layout_height="380dp"
+        >
     </com.shssjk.view.CircleBar>
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +40,6 @@
             android:text=""
             />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/ll_title2"
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                 style="@style/textStyle.Hug.black"
                 android:textColor="@color/black"
                 android:gravity="center"
-                android:text="" />
+                android:text="0" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,19 +92,43 @@
                 android:layout_height="wrap_content"
                 style="@style/textStyle.Hug.black"
                 android:textColor="@color/black"
-
                 android:gravity="center"
-                android:text="" />
+                android:text="0" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/textStyle.Hug.black"
                 android:textColor="@color/black"
                 android:gravity="center"
-                android:text="里程(米)" />
+                android:text="里程(公里)" />
         </LinearLayout>
     </LinearLayout>
-
-
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/margin20dp"
+        android:layout_height="@dimen/margin100dp"
+        android:layout_below="@+id/ll_title2"
+        >
+        <ImageView
+            android:id="@+id/blood_imgv"
+            android:layout_width="@dimen/margin100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="@dimen/margin20dp"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/child" />
+        <TextView
+            android:id="@+id/tv_hint_setting"
+            style="@style/textStyle.Big.black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin20dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="点击设置身高体重，获取消耗的卡路里"
+            android:background="@drawable/tips"
+            android:textSize="@dimen/textSizeBig"
+            />
+    </LinearLayout>
 </RelativeLayout>

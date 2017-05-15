@@ -33,7 +33,6 @@
     <string name="sort_filter">筛选</string>
     <string name="hint_search">请输入要搜索的商品</string>
     <string name="hint_comment">请输入评价</string>
-
     <!-- 产品列表 -> 产品详情 -->
     <string name="product_details_spec">产品规格</string>
     <string name="product_details_attr">商品属性</string>
@@ -112,6 +111,8 @@
     <string name="addcameraactivity_btn_search">局域网搜索</string>
     <string name="addcameraactivity_btn_setting_wifi">配置WiFi</string>
     <string name="cameralistactivity_nodata_hint">您还没有绑定摄像机</string>
+    <string name="cameralistactivity_local_video">本地视频</string>
+
     <string name="camera_wifi_name">WiFi名称</string>
     <string name="camera_wifi_paw">WiFi密码</string>
     <!-- 我的 -> 收货地址  -->
@@ -227,6 +228,7 @@
     <string name="register_sub_title">请输入手机号码<xliff:g id="step_count">%1$s</xliff:g>收到的校验码</string>
     <string name="register_check_code">校验码</string>
     <string name="register_btn_re_code"><xliff:g id="step_count">%1$d</xliff:g>秒后重发</string>
+
     <string name="register_btn_re_code_done">获取验证码</string>
     <string name="edit_code_null">请输入验证码</string>
     <string name="register_inviter">邀请码</string>
@@ -405,6 +407,9 @@
     <string name="bind_number">设备编码</string>
     <string name="rab_xueya">血压</string>
     <string name="rab_xuetang">血糖</string>
+    <string name="rab_xuetang2">血糖仪</string>
+    <string name="rab_xueya2">血压计</string>
+
     <string name="rab_stepcount">计步器</string>
     <string name="start_time">开始日期</string>
     <string name="end_time">结束日期</string>
@@ -456,6 +461,7 @@
     <string name="activity_title_pay_alipay">支付宝</string>
     <string name="activity_title_pay_union">银联支付</string>
     <string name="activity_title_pay_stone">石头支付</string>
+    <string name="activity_title_pay_wechat">微信支付</string>
 
     <string name="activity_title_pay_befor_btn_pay">支付</string>
 
@@ -634,5 +640,10 @@
     <string name="person_height">身高    </string>
     <string name="today">今天</string>
     <string name="todaystep">每日步数</string>
+
+
+    <string name="stepcount"><xliff:g id="step_count">消耗%1$s</xliff:g>千卡</string>
+
+
 
 </resources>

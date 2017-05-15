@@ -9,8 +9,6 @@ import android.graphics.Bitmap;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 
-
-import com.afollestad.materialdialogs.BuildConfig;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -19,6 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.shssjk.CrashHandler.CrashHandler;
 import com.shssjk.activity.R;
 import com.shssjk.http.base.SPMobileHttptRequest;
 import com.shssjk.model.SPCategory;
@@ -37,17 +36,13 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 /**
  * @author
  *
  */
 public class MobileApplication extends Application {
-
 	private static MobileApplication instance ;
-
 	public List<SPCollect> collects;
-
 	public boolean isLogined ;
 	private SPUser loginUser ;
 	private String deviceId ;
@@ -64,16 +59,16 @@ public class MobileApplication extends Application {
 	private Map<String , SPPlugin> servicePluginMap;
 	private TelephonyManager telephonyManager;
 	private List<Activity> activityList = new LinkedList<Activity>();
-
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
+		//在这里为应用设置异常处理程序，然后我们的程序才能捕获未处理的异常
+		CrashHandler crashHandler = CrashHandler.getInstance();
+		crashHandler.init(this);
 		/** 初始化 Vollery 网络请求 */
 		SPMobileHttptRequest.init(getApplicationContext());
 		/** 初始化 Facebook SimpleDraweeView 网络请求 */
 		loginUser = SPSaveData.loadUser(getApplicationContext());
-
 		if (SPStringUtils.isEmpty(loginUser.getUserID()) || loginUser.getUserID().equals("-1")){
 			isLogined = false;
 		}else{

@@ -15,9 +15,8 @@ public class Checker {
 //		System.loadLibrary("curl");
 //        System.loadLibrary("SPMobile");
     }
-	
-	public static native boolean Init();    
-    public static native int Check(String header, String url);    
+    public static native boolean Init();
+    public static native int Check(String header, String url);
     public static native void Finished();
     public void responseMessage(String mesage){
        try {

@@ -1,9 +1,11 @@
 package com.shssjk.activity.person;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,16 +21,21 @@ import com.shssjk.activity.BaseActivity;
 import com.shssjk.activity.IViewController;
 import com.shssjk.activity.R;
 import com.shssjk.adapter.StoneTypeAdapter;
+import com.shssjk.common.MobileConstants;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.person.PersonRequest;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.person.Alipay;
 import com.shssjk.model.person.StoneType;
+import com.shssjk.model.shop.WeChat;
 import com.shssjk.utils.AuthResult;
 import com.shssjk.utils.ConfirmDialog;
 import com.shssjk.utils.PayResult;
 import com.shssjk.utils.SSUtils;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.unionpay.UPPayAssistEx;
 
 import org.json.JSONObject;
@@ -53,6 +60,7 @@ public class StoneRechargeActivity extends BaseActivity {
     ImageView arrowImgv;
     @Bind(R.id.ll_union_pay)
     LinearLayout llUnionPay;
+    private IWXAPI msgApi;
     private Context mContext;
     private StoneTypeAdapter stoneTypeAdapter;
     private List<StoneType> mStoneList = new ArrayList<>();
@@ -119,6 +127,15 @@ public class StoneRechargeActivity extends BaseActivity {
         }
 
     };
+    class StateChangeRevicer extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            dealWithPayAfter();
+        }
+    }
+    private IntentFilter intentFilter;//1.创建IntentFilter实例
+    private StateChangeRevicer stateChangeRevicer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setCustomerTitle(true, true, getString(R.string.person_mystone_recharge));
@@ -144,11 +161,18 @@ public class StoneRechargeActivity extends BaseActivity {
                 }
             }
         });
+        msgApi = WXAPIFactory.createWXAPI(mContext, null);
+        // 将该app注册到微信
+        msgApi.registerApp(MobileConstants.APP_ID);
+
     }
     @Override
     public void initEvent() {
         stoneTypeAdapter = new StoneTypeAdapter(this);
         stoneTypeGrid.setAdapter(stoneTypeAdapter);
+        stateChangeRevicer = new StateChangeRevicer();
+        intentFilter = new IntentFilter(MobileConstants.ACTION_PAY_CHANGE);
+        registerReceiver(stateChangeRevicer, intentFilter);
     }
     private void addStoneOrder(StoneType stoneType) {
 //        showLoadingToast("正在加载数据...");
@@ -195,7 +219,7 @@ public class StoneRechargeActivity extends BaseActivity {
                 });
     }
 
-    @OnClick({R.id.ll_alipay_pay, R.id.ll_union_pay})
+    @OnClick({R.id.ll_alipay_pay, R.id.ll_union_pay,R.id.ll_wechat_pay})
     public void onClick(View view) {
         try {
             if (mStoneOdrerInfo!=null&&!mStoneOdrerInfo.isNull("order_amount")) {
@@ -220,7 +244,53 @@ public class StoneRechargeActivity extends BaseActivity {
             case R.id.ll_union_pay:
                 payOrderWithUnionPay(order_id,order_amount);
                 break;
+            case R.id.ll_wechat_pay:
+                startWeChatPay(order_id);
         }
+    }
+
+    /**
+     * 微信支付
+     * @param order_id
+     */
+    private void startWeChatPay(String order_id) {
+        showLoadingToast("正在支付");
+        ShopRequest.orderPayWithWeChat(order_id, new SPSuccessListener() {
+            @Override
+            public void onRespone(String msg, Object response) {
+                if (response != null) {
+                    WeChat weChat = (WeChat) response;
+                    dealWithWeChat(weChat);
+                }
+                hideLoadingToast();
+            }
+        }, new SPFailuredListener() {
+            @Override
+            public void onRespone(String msg, int errorCode) {
+                hideLoadingToast();
+                showToast(msg);
+            }
+        });
+    }
+    private void dealWithWeChat(WeChat weChat) {
+        if(!msgApi.isWXAppInstalled()){
+            showToast("未检测到微信程序,不能使用微信支付功能!");
+            return;
+        }
+        if(!msgApi.isWXAppSupportAPI()){
+            showToast("当前微信版本过低，不支持支付");
+            return;
+        }
+        PayReq req = new PayReq();
+        req.appId=weChat.getAppid();
+        req.partnerId=weChat.getPartnerid();
+        req.prepayId=weChat.getPrepayid();
+        req.nonceStr=weChat.getNoncestr();
+        req.timeStamp=String.valueOf(weChat.getTimestamp());
+        req.packageValue=weChat.getPackage();
+        req.sign=weChat.getSign();
+        req.extData="app data";
+        msgApi.sendReq(req);
     }
 
     //   银联支付
@@ -249,7 +319,6 @@ public class StoneRechargeActivity extends BaseActivity {
     }
     /**
      *银联支付支付
-     *
      * @param data
      */
     private void dealWithPay(String data) {
@@ -357,5 +426,11 @@ public class StoneRechargeActivity extends BaseActivity {
                     }
                 });
         builder.create().show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(stateChangeRevicer);
     }
 }

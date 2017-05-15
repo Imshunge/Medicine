@@ -155,7 +155,17 @@
             android:paddingLeft="15dp"
             android:text="@string/addcameraactivity_btn_setting_wifi"
             android:background="@drawable/button_pop_selector"
-
+            />
+        <Button
+            android:layout_marginTop="@dimen/margin5dp"
+            android:id="@+id/btn_localvideo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:text="@string/cameralistactivity_local_video"
+            android:background="@drawable/button_pop_selector"
             />
     </LinearLayout>
     <View  style="@style/separator_line"/>

@@ -17,7 +17,7 @@
             android:id="@+id/item_chart1"
             style="@style/text_13"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:textStyle="bold"
             android:text="120" />
@@ -25,9 +25,10 @@
             android:id="@+id/item_chart2"
             style="@style/text_13"
             android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
             android:textStyle="bold"
-            android:layout_weight="1"
             android:gravity="center"
+            android:layout_marginRight="@dimen/margin80dp"
             android:text="70" />
     </LinearLayout>
 

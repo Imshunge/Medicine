@@ -2,7 +2,6 @@
 package com.shssjk.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.shssjk.activity.R;
-import com.shssjk.model.health.BloodDevice;
+import com.shssjk.model.health.StepHistory;
 import com.shssjk.utils.SSUtils;
 
 import java.util.List;
-
 
 /**
  * @author
@@ -24,7 +22,7 @@ public class SteptAdapter extends BaseAdapter {
 
 	private String TAG = "BloodAdapter";
 
-	private List<BloodDevice> mArticle;
+	private List<StepHistory> mArticle;
 	private Context mContext ;
 
 	public SteptAdapter(Context context){
@@ -32,7 +30,7 @@ public class SteptAdapter extends BaseAdapter {
 
 	}
 
-	public void setData(List<BloodDevice> articles){
+	public void setData(List<StepHistory> articles){
 		if(articles == null)return;
 		this.mArticle = articles;
 		this.notifyDataSetChanged();
@@ -53,13 +51,12 @@ public class SteptAdapter extends BaseAdapter {
 	@Override
 	public long getItemId(int position) {
 		if(mArticle == null) return -1;
-		return Long.valueOf(mArticle.get(position).getId());
+		return position;
 
 	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-
 		//category_left_item.xml
 		final ViewHolder holder;
         if(convertView == null){
@@ -67,53 +64,25 @@ public class SteptAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.stepts_item, parent, false);
 	        //使用减少findView的次数
 			holder = new ViewHolder();
-
-			holder.dateTxtv = ((TextView) convertView.findViewById(R.id.item_chart1));
-//			holder.heightTxtv = ((TextView) convertView.findViewById(R.id.item_chart2));
-//			holder.blowTxtv = ((TextView) convertView.findViewById(R.id.item_chart3));
-//			holder.pulseTxtv = ((TextView) convertView.findViewById(R.id.item_chart4));
-
+			holder.stepTxtv = ((TextView) convertView.findViewById(R.id.item_chart1));
+			holder.dateTxtv = ((TextView) convertView.findViewById(R.id.item_chart2));
 			//设置标记
 			  convertView.setTag(holder);
         }else{
       	  holder = (ViewHolder) convertView.getTag();
         }
-
         //获取该行数据
-		BloodDevice article = (BloodDevice) mArticle.get(position);
-
-//		if (!SSUtils.isEmpty(article.getCreateTime())){
-//			holder.dateTxtv.setText(SSUtils.TimeStamp2Date(article.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
-//		}
-//		if (!SSUtils.isEmpty(article.getSys())){
-//			holder.heightTxtv.setText(article.getSys());
-//			if(SSUtils.str2Int(article.getSys())>139){
-//				holder.heightTxtv.setTextColor(Color.RED);
-//			}else if(SSUtils.str2Int(article.getSys())<90){
-//				holder.heightTxtv.setTextColor(Color.BLUE);
-//			}else{
-//				holder.heightTxtv.setTextColor(Color.BLACK);
-//			}
-//		}
-//		if (!SSUtils.isEmpty(article.getDia())){
-//			holder.blowTxtv.setText(article.getDia());
-//			if(SSUtils.str2Int(article.getDia())>89){
-//				holder.blowTxtv.setTextColor(Color.RED);
-//			}else if(SSUtils.str2Int(article.getDia())<60){
-//				holder.blowTxtv.setTextColor(Color.BLUE);
-//			}else{
-//				holder.blowTxtv.setTextColor(Color.BLACK);
-//			}
-//		}
-		if (!SSUtils.isEmpty(article.getId())){
-			holder.dateTxtv.setText(article.getId());
+		StepHistory article = (StepHistory) mArticle.get(position);
+		if (!SSUtils.isEmpty(article.getDate())){
+			holder.dateTxtv.setText(article.getDate());
+		}
+		if (!SSUtils.isEmpty(article.getStep())){
+			holder.stepTxtv.setText(article.getStep());
 		}
 		return convertView;
 	}
 	class ViewHolder{
-		TextView dateTxtv;	//时间
-		TextView heightTxtv;	//高压
-		TextView blowTxtv;	//低压
-		TextView pulseTxtv;	//脉率
+		TextView dateTxtv;
+		TextView stepTxtv;
 	}
 }

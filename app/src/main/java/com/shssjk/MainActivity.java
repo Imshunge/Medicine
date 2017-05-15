@@ -35,6 +35,7 @@ import com.shssjk.fragment.PersonFragment;
 import com.shssjk.fragment.ShopFragment;
 
 import com.shssjk.model.info.Information;
+import com.shssjk.service.StepCounterService;
 import com.shssjk.utils.Logger;
 import com.shssjk.utils.SPDialogUtils;
 import com.shssjk.utils.Utils;
@@ -87,12 +88,9 @@ public class MainActivity extends BaseActivity {
 	};
 	FragmentManager mFragmentManager ;
 	InforFragment mInforFragment;
-//	HealthyFragment mHealthyFragment;
     HealthyFragment2 mHealthyFragment;
-//	CommunityFragment mCommunityFragment;
 	ShopFragment mShopFragment;
 	PersonFragment mPersonFragment ;
-
 	RadioGroup mRadioGroup;
 	RadioButton rbtnHome;
 //	RadioButton rbtnCategory;
@@ -195,6 +193,11 @@ public class MainActivity extends BaseActivity {
 
 			}
 		});
+
+
+		//开启服务
+		Intent service = new Intent(MainActivity.this, StepCounterService.class);
+		startService(service);
 	}
 
 	@Override

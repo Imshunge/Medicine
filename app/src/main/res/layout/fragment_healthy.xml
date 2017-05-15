@@ -45,7 +45,6 @@
                 android:text="@string/rab_xueya"
                 android:textColor="@drawable/color_radiobutton"
                 android:textSize="15sp" />
-
             <RadioButton
                 android:id="@+id/radio_2"
                 android:layout_width="50dp"

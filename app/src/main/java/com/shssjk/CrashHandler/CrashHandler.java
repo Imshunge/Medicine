@@ -18,11 +18,14 @@ import android.os.Environment;
 import android.os.Process;
 import android.util.Log;
 
+/**
+ * 异常处理 保存本地文件
+ */
 public class CrashHandler implements UncaughtExceptionHandler {
     private static final String TAG = "CrashHandler";
     private static final boolean DEBUG = true;
 
-    private static final String PATH = Environment.getExternalStorageDirectory().getPath() + "/CrashTest/log/";
+    private static final String PATH = Environment.getExternalStorageDirectory().getPath() + "/ssjk/log/";
     private static final String FILE_NAME = "crash";
     private static final String FILE_NAME_SUFFIX = ".trace";
 
@@ -44,23 +47,23 @@ public class CrashHandler implements UncaughtExceptionHandler {
     }
 
     /**
-     * �������ؼ��ĺ���������������δ��������쳣��ϵͳ�����Զ�����#uncaughtException����
-     * threadΪ����δ�����쳣���̣߳�exΪδ������쳣���������ex�����ǾͿ��Եõ��쳣��Ϣ��
+     * 这个是最关键的函数，当程序中有未被捕获的异常，系统将会自动调用#uncaughtException方法
+     * thread为出现未捕获异常的线程，ex为未捕获的异常，有了这个ex，我们就可以得到异常信息。
      */
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
         try {
-            //�����쳣��Ϣ��SD����
+            //导出异常信息到SD卡中
             dumpExceptionToSDCard(ex);
             uploadExceptionToServer();
-            //�������ͨ�������ϴ��쳣��Ϣ�������������ڿ�����Ա������־�Ӷ����bug
+            //这里可以通过网络上传异常信息到服务器，便于开发人员分析日志从而解决bug
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         ex.printStackTrace();
 
-        //���ϵͳ�ṩ��Ĭ�ϵ��쳣���������򽻸�ϵͳȥ�������ǵĳ��򣬷�����������Լ������Լ�
+        //如果系统提供了默认的异常处理器，则交给系统去结束我们的程序，否则就由我们自己结束自己
         if (mDefaultCrashHandler != null) {
             mDefaultCrashHandler.uncaughtException(thread, ex);
         } else {
@@ -70,7 +73,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
     }
 
     private void dumpExceptionToSDCard(Throwable ex) throws IOException {
-        //���SD�������ڻ��޷�ʹ�ã����޷����쳣��Ϣд��SD��
+        //如果SD卡不存在或无法使用，则无法把异常信息写入SD卡
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             if (DEBUG) {
                 Log.w(TAG, "sdcard unmounted,skip dump exception");
@@ -105,28 +108,27 @@ public class CrashHandler implements UncaughtExceptionHandler {
         pw.print(pi.versionName);
         pw.print('_');
         pw.println(pi.versionCode);
-
-        //android�汾��
+        //android版本号
         pw.print("OS Version: ");
         pw.print(Build.VERSION.RELEASE);
         pw.print("_");
         pw.println(Build.VERSION.SDK_INT);
-
-        //�ֻ�������
+        //手机制造商
         pw.print("Vendor: ");
         pw.println(Build.MANUFACTURER);
 
-        //�ֻ��ͺ�
+        //手机型号
         pw.print("Model: ");
         pw.println(Build.MODEL);
 
-        //cpu�ܹ�
+        //cpu架构
         pw.print("CPU ABI: ");
         pw.println(Build.CPU_ABI);
     }
 
     private void uploadExceptionToServer() {
-      //TODO Upload Exception Message To Your Web Server
+        //TODO Upload Exception Message To Your Web Server
     }
 
 }
+

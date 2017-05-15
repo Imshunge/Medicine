@@ -64,7 +64,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     TextView nicknameTxtv; 			//昵称
 
     RelativeLayout header_relayout;
-    SPMoreImageView nickImage;
+    ImageView nickImage;
     TextView nickNameTxtv;
 
     //setting_btn
@@ -112,7 +112,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         couponCountTxtv = (TextView)findViewById(R.id.person_coupon_txtv);		//优惠券数量
         nicknameTxtv = (TextView)findViewById(R.id.nickname_txtv);		//昵称
         header_relayout= (RelativeLayout)findViewById(R.id.header_relayout);
-        nickImage = (SPMoreImageView)findViewById(R.id.head_mimgv);
+        nickImage = (ImageView)findViewById(R.id.head_mimgv);
         mGridView = (GridView)findViewById(R.id.product_gdv);
 
         ////setting_btn

@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/magicindicator_library/magicindicator_library.iml" filepath="$PROJECT_DIR$/magicindicator_library/magicindicator_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/slidingMenu_library/slidingMenu_library.iml" filepath="$PROJECT_DIR$/slidingMenu_library/slidingMenu_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/viewpagerindicator/viewpagerindicator.iml" filepath="$PROJECT_DIR$/viewpagerindicator/viewpagerindicator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wheelview/wheelview.iml" filepath="$PROJECT_DIR$/wheelview/wheelview.iml" />
     </modules>
   </component>
 </project>
