@@ -30,8 +30,11 @@ import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.person.PersonRequest;
 import com.shssjk.utils.ContentCommon;
+import com.shssjk.utils.Logger;
 import com.shssjk.utils.SSUtils;
 import com.shssjk.utils.SystemValue;
+import  com.ipcamera.demo.BridgeService.CallBackMessageInterface;
+import  com.ipcamera.demo.BridgeService.IpcamClientInterface;
 
 import java.util.Map;
 import java.util.TimerTask;
@@ -47,7 +50,7 @@ import static com.shssjk.utils.SSUtils.getFromAssets;
  * 添加摄像机
  */
 public class AddCameraActivity extends BaseActivity implements BridgeService.AddCameraInterface
-        , BridgeService.IpcamClientInterface, BridgeService.CallBackMessageInterface {
+        , IpcamClientInterface, CallBackMessageInterface {
     @Bind(R.id.bankcard_user_txtv)
     TextView consigneeNameTxtv;
     @Bind(R.id.bankcard_user_edtv)
@@ -105,7 +108,6 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
     private Button button_setwifi;
     private EditText nameEdit;
     private Context mContext;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setCustomerTitle(true, true, getString(R.string.camera_add), true);
@@ -237,7 +239,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
-        NativeCaller.Free();
+//        NativeCaller.Free();
         Intent intent = new Intent();
         intent.setClass(this, BridgeService.class);
         stopService(intent);
@@ -421,18 +423,17 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
         String strName = consigneeNameEdtv.getText().toString();
         String strDID = deviceIdEdtv.getText().toString();
         if (strDID.length() == 0) {
-//            Toast.makeText(AddCameraActivity.this,
-//                    getResources().getString(R.string.input_camera_id), Toast.LENGTH_SHORT).show();
             showToast(getString(R.string.input_camera_id));
             return;
         }
 
         if (strUser.length() == 0) {
-            showToast(getString(R.string.input_camera_id));
+//            showToast(getString(R.string.input_camera_id));
             Toast.makeText(AddCameraActivity.this,
                     getResources().getString(R.string.input_camera_user), Toast.LENGTH_SHORT).show();
             return;
         }
+//        20170516
         addCamera();//添加摄像机
         if (option == ContentCommon.INVALID_OPTION) {
             option = ContentCommon.ADD_CAMERA;
@@ -467,14 +468,29 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
 
     //连接摄像头
     private void startCameraPPPP() {
+//        开启摄像头
         try {
             Thread.sleep(100);
         } catch (Exception e) {
         }
-        int result = NativeCaller.StartPPPP(SystemValue.deviceId, SystemValue.deviceUser,
-                SystemValue.devicePass, 1, "");//开启摄像头
+        if (SystemValue.deviceId.toLowerCase().startsWith("vsta")) {
+            int result=     NativeCaller.StartPPPPExt(SystemValue.deviceId, SystemValue.deviceUser,
+                    SystemValue.devicePass, 1, "", "EFGFFBBOKAIEGHJAEDHJFEEOHMNGDCNJCDFKAKHLEBJHKEKMCAFCDLLLHAOCJPPMBHMNOMCJKGJEBGGHJHIOMFBDNPKNFEGCEGCBGCALMFOHBCGMFK");
+            Logger.e("ip", "if result:" + result);
+        } else {
+        int result=    NativeCaller.StartPPPP(SystemValue.deviceId, SystemValue.deviceUser,
+                    SystemValue.devicePass, 1, "");
+            Logger.e("ip", "else result:" + result);
+        }
+//        int result = NativeCaller.StartPPPP(SystemValue.deviceId, SystemValue.deviceUser,
+//                SystemValue.devicePass, 1, "");//开启摄像头
 //        Log.i("ip", "result:"+result);
 //        Logger.e("ip", "result:" + result);
+
+        Logger.e("SystemValue.deviceId ", SystemValue.deviceId);
+        Logger.e("SystemValue.deviceName",SystemValue.deviceName);
+        Logger.e("SystemValue.devicePass ", SystemValue.devicePass);
+
     }
 
     private Handler PPPPMsgHandler = new Handler() {
@@ -520,6 +536,7 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
                             String cmd = "get_status.cgi?loginuse=admin&loginpas=" + SystemValue.devicePass
                                     + "&user=admin&pwd=" + SystemValue.devicePass;
                             NativeCaller.TransferMessage(did, cmd, 1);
+                            Logger.e("SystemValue.devicePass  ", SystemValue.devicePass);
                             tag = 1;
 //                            send();//保存数据
                             break;
@@ -574,7 +591,6 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
                 }
                 hideLoadingToast();
 //                setResult(MobileConstants.Result_Code_Refresh);
-
             }
         }, new SPFailuredListener(AddCameraActivity.this) {
             @Override
@@ -590,7 +606,6 @@ public class AddCameraActivity extends BaseActivity implements BridgeService.Add
         public void run() {
             while (blagg == true) {
                 super.run();
-
                 updateListHandler.sendEmptyMessage(100000);
                 try {
                     Thread.sleep(1000);

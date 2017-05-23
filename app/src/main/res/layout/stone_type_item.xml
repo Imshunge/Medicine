@@ -15,14 +15,14 @@
         android:singleLine="true"
         android:gravity="center"
         style="@style/textStyle.Hug.black"
-        android:text="10"
+        android:text=""
         />
     <TextView
         android:id="@+id/stone_des_txtv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin20dp"
         android:singleLine="true"
-        android:gravity="center"
-        android:text="10个石头"
-        style="@style/textStyle.Normal.black" />
+        android:gravity="left"
+        android:text=""
+        style="@style/textStyle.Small.black" />
 </LinearLayout>

@@ -117,10 +117,18 @@ public class SSUtils {
      * @return
      */
     public static String getNumbers(String content) {
-        Pattern pattern = Pattern.compile("\\d+");
-        Matcher matcher = pattern.matcher(content);
-        while (matcher.find()) {
-            return matcher.group(0);
+//        Pattern pattern = Pattern.compile("\\d+");
+//        Matcher matcher = pattern.matcher(content);
+//        matcher.groupCount();
+//        while (matcher.find()) {
+//            return matcher.group(0);
+//        }
+//        return "";
+        Pattern p = Pattern.compile("^.*((?<!\\d)\\d+).*$");
+        Matcher m = p.matcher(content);
+        if(m.matches()){
+            System.out.println(m.group(1));
+            return m.group(1);
         }
         return "";
     }

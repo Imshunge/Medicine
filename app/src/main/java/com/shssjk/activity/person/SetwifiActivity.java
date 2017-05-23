@@ -108,7 +108,7 @@ public class SetwifiActivity extends BaseActivity implements OnClickListener{
 			if(wifi_pwd.getText().toString()==null||wifi_pwd.getText().toString().equalsIgnoreCase(""))
 			{
 				Toast.makeText(SetwifiActivity.this, "WiFi 账号或密码不能为空", Toast.LENGTH_LONG).show();
-				return;
+//				return;
 			}
 			Log.e("��������", sendMac+"_______"+wifi_pwd.getText().toString());
 			sendSonic(sendMac,wifi_pwd.getText().toString());
@@ -121,7 +121,12 @@ public class SetwifiActivity extends BaseActivity implements OnClickListener{
         	player.stop();
         	if (IoTManager != null) 
         	{
-    			IoTManager.StopSmartConnection();
+				try {
+					IoTManager.StopSmartConnection();
+
+				}catch (Exception e){
+					e.printStackTrace();
+				}
     		}
 			break;
         case R.id.titlebar_back_btn:

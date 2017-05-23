@@ -53,7 +53,7 @@ public abstract class BaseActivity extends FragmentActivity implements IViewCont
 	public boolean isCustomerTtitle ;	//是否自定义标题栏
 	public boolean isBackShow ;			//是否显示返回箭头
 	public boolean isMenuShow ;			//是否显示功能按钮
-	private String mTtitle ;				//标题栏
+	private String mTtitle ;			//标题栏
 	private Button mMenuBtn	;
 	private Button mBackBtn	;
 	private TextView mTitleTxtv;

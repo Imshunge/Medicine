@@ -9,8 +9,8 @@ android {
         applicationId "com.shssjk.activity"
         minSdkVersion 16
         targetSdkVersion 20
-        versionCode 8
-        versionName "1.0.8"
+        versionCode 9
+        versionName "1.0.9"
         multiDexEnabled true
 //        ndk {
 //            abiFilters "armeabi", "armeabi-v7a"

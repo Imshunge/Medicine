@@ -145,6 +145,14 @@
     <string name="ok">确定</string>
 
     <string name="cancel">取消</string>
+
+    <string name="cancel2">残忍拒绝</string>
+
+    <string name="update2">马上升级</string>
+
+
+
+
     <string name="bind">去绑定</string>
 
     <string name="to_login">去登录</string>
@@ -632,7 +640,7 @@
     <string name="title_activity_stone_pay_actuvuty">StonePayActuvuty</string>
     <string name="title_activity_blood">BloodActivity</string>
     <!-- 计步器-->
-    <string name="menu_person">个人中心</string>
+    <string name="menu_person">设置</string>
     <string name="menu_hostory">历史记录</string>
     <string name="person_sex">性别    </string>
     <string name="person_age">年龄    </string>

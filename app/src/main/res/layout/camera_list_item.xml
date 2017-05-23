@@ -15,6 +15,16 @@
         android:scaleType="fitXY"
         android:background="@drawable/icon_camare"
      />
+
+
+    <TextView
+        android:id="@+id/devicname_txtv"
+        style="@style/text_13"
+        android:layout_height="match_parent"
+        android:layout_width="@dimen/margin150dp"
+        android:layout_marginLeft="@dimen/margin70dp"
+        android:gravity="left"
+        android:text="P10255555" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,18 +33,11 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/devicname_txtv"
-            style="@style/text_13"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="P10255555" />
-        <TextView
             android:id="@+id/devicenum_txtv"
             style="@style/text_13"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="left"
             android:text="P10255555" />
 
     </LinearLayout>

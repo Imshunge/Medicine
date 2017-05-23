@@ -116,7 +116,6 @@ public class BankListActivity extends BaseActivity implements BankListAdapter.Ba
     }
     @Override
     public void onItemDelete(Bank bank) {
-        showToast("删除");
          deletebank = bank;
         showConfirmDialog("确定删除该银行卡吗", "删除提醒", this, 1);
     }

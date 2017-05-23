@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -160,40 +161,16 @@ public class AppstartActivity extends BaseActivity {
     //    版本比较
     private void checkVersion(String path) {
         if (!TextUtils.isEmpty(path)) {
+
+//            测试   if (visionCode.equals(path))
             if (visionCode.equals(path)) {
                 startMainActivity();
                 finish();
             } else {
-//                new AlertDialog.Builder(mContext)
-//                        .setMessage("检测到有新版本").setTitle("系统提示")
-//                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                startMainActivity();
-//                            }
-//                        })
-//                        .setCancelable(false)
-//                        .setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-////                                android 6.0 动态权限申请
-//                                if (ContextCompat.checkSelfPermission(mContext,
-//                                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                                        != PackageManager.PERMISSION_GRANTED)
-//                                {
-//                                    ActivityCompat.requestPermissions((Activity) mContext,
-//                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-//                                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
-//                                }else {
-//                                    downloadApk();
-//                                    showDownloadDialog();
-//                                }
-//                            }
-//                        }).show();
                 ConfirmDialog.Builder builder = new ConfirmDialog.Builder(mContext);
-                builder.setMessage("检测到有新版本");
-                builder.setTitle("系统提示");
-                builder.setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
+                builder.setMessage(Html.fromHtml(appUpdate.getLog())+"");
+                builder.setTitle("新版本升级");
+                builder.setPositiveButton(R.string.update2, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         // android 6.0 动态权限申请
@@ -210,7 +187,7 @@ public class AppstartActivity extends BaseActivity {
                         }
                     }
                 });
-                builder.setNegativeButton(R.string.cancel,
+                builder.setNegativeButton(R.string.cancel2,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -258,9 +235,8 @@ public class AppstartActivity extends BaseActivity {
     /**
      * 下载文件线程
      *
-     * @author coolszy
+     * @author
      * @date
-     * @blog http:/blog/.92coding.com
      */
     private class downloadApkThread extends Thread {
         @Override
@@ -323,33 +299,6 @@ public class AppstartActivity extends BaseActivity {
                         limit++;
                         Logger.e("limit", limit + "");
                     } while (!cancelUpdate);// 点击取消就停止下载.
-//                    int limit=0;
-//                    while((numread = is.read(buf))!=-1){
-//                        if(!cancelUpdate){
-//                            fos.write(buf, 0, numread);
-////                            randomAccessFile.write(buffer, 0 ,length);
-////                             numread = is.read(buf);
-//                            count += numread;
-//                            if(count <=currentLength){
-//                                Log.e("tag", "count=" + count);
-//                                Log.e("tag", "numread="+numread);
-//                                progress = (int) ((count / currentLength) * 100);
-//                                Log.e("tag", "下载进度："+progress);
-//                                if(limit % 30==0 && progress <= 100){//隔30次更新一次notification
-////                                    sendProgressChangedMessage(progress);
-//                                    mHandler.sendEmptyMessage(DOWNLOAD);
-//                                }
-//                                limit++;
-//                                Log.e("tag", "limit="+limit);
-//                            }
-//                            if (numread <= 0) {
-////                            // 下载完成
-//                            mHandler.sendEmptyMessage(DOWNLOAD_FINISH);
-//                            Logger.e("下载完成", "下载完成");
-//                            break;
-//                        }
-//                        }
-//                    }
                     fos.close();
                     is.close();
                     }
@@ -373,7 +322,9 @@ public class AppstartActivity extends BaseActivity {
         final LayoutInflater inflater = LayoutInflater.from(mContext);
         View v = inflater.inflate(R.layout.softupdate_progress, null);
         mProgress = (ProgressBar) v.findViewById(R.id.update_progress);
+//        .
         builder.setView(v);
+        builder.setCancelable(false);
         // 取消更新
         builder.setNegativeButton(R.string.cancel,
                 new DialogInterface.OnClickListener() {
@@ -391,24 +342,6 @@ public class AppstartActivity extends BaseActivity {
         downloadApk();
     }
     public void showFailureDialog() {
-//        AlertDialog builder = new Builder(mContext)
-//                .setMessage("下载失败！")
-//                .setCancelable(false)
-//                .setPositiveButton("重新下载", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                        // 设置取消状态
-//                        cancelUpdate = false;
-//                        showDownloadDialog();
-//                    }
-//                }).setNegativeButton("暂不更新", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                        startMainActivity();
-//                    }
-//                }).show();
         ConfirmDialog.Builder builder = new ConfirmDialog.Builder(mContext);
         builder.setMessage("下载失败！");
         builder.setTitle("系统提示");
@@ -434,41 +367,8 @@ public class AppstartActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Logger.e("返回", "返回");
-           finish();
+        finish();
     }
-    private void getUserInfo() {
-        pref = getSharedPreferences("com.shssjk.activity.push",
-                MODE_PRIVATE);
-        channalId = pref.getString("channalId", "");
-        appId = pref.getString("appId", "");
-        spikey = "yYcn0KjvpIte4HVs7qYczEQMbvGYkE98";
-        deviceyppe = "android";
-        username= SPSaveData.getString(getBaseContext(), "username");
-        pass=SPSaveData.getString(getBaseContext(),"pwd");
-    }
-
-    private void doLogin(String username, String pass, String channalId, String appId, String spikey, String deviceyppe) {
-        SPUserRequest.doLogin(username, pass,
-                channalId, appId, spikey, deviceyppe,
-                new SPSuccessListener() {
-                    @Override
-                    public void onRespone(String msg, Object response) {
-                        if (response != null) {
-                            SPUser user = (SPUser) response;
-                            MobileApplication.getInstance().setLoginUser(user);
-                            Logger.e("MyService", "success" + user.getNickname());
-                            Logger.e("MyService  getToken", "success" + user.getToken());
-                        }
-                    }
-                }, new SPFailuredListener() {
-                    @Override
-                    public void onRespone(String msg, int errorCode) {
-                        Logger.e("MyService", "SPFailuredListener");
-                    }
-                });
-    }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
@@ -481,7 +381,6 @@ public class AppstartActivity extends BaseActivity {
                 showDownloadDialog();
             } else
             {
-                // Permission Denied
                 showToast("禁止使用储存权限将会导致软件更新功能异常!");
             }
         }

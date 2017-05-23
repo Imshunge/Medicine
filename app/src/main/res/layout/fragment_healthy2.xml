@@ -28,6 +28,7 @@
             android:layout_marginRight="6dp"
             android:gravity="center"
             android:text="设备"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <TextView
@@ -40,97 +41,104 @@
             android:text="@string/tab_item_healthy"
             android:textColor="@color/white" />
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/health_banner_imgv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin100dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon" />
+            android:scaleType="fitXY" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin55dp">
-        <ImageView
-            android:id="@+id/blood_imgv"
-            android:layout_width="@dimen/margin50dp"
-            android:layout_height="@dimen/margin50dp"
-            android:layout_gravity="center|left"
-            android:layout_marginLeft="@dimen/margin20dp"
-            android:gravity="center"
-            android:scaleType="fitXY"
-            android:src="@drawable/blood" />
 
+    <RelativeLayout
+        android:id="@+id/rl_blood"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        >
+        <Button
+            style="@style/health_home_item_icon"
+            android:background="@drawable/blood" />
+        <TextView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="14sp" />
         <TextView
             android:id="@+id/tv_blood"
-            style="@style/textStyle.Big.black"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin50dp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="@string/rab_xueya2"
-            android:textSize="@dimen/textSizeHuge" />
-    </LinearLayout>
+            style="@style/health_home_itme_content"
+            android:text="@string/rab_xueya2" />
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="8px"
         android:background="@drawable/line_01" />
 
-    <LinearLayout
+
+    <RelativeLayout
+        android:id="@+id/rl_sugar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin55dp">
+        android:layout_height="48dp">
 
-        <ImageView
-            android:layout_width="@dimen/margin50dp"
-            android:layout_height="@dimen/margin50dp"
-            android:layout_gravity="center|left"
-            android:layout_marginLeft="@dimen/margin20dp"
+        <Button
+            style="@style/health_home_item_icon"
+            android:background="@drawable/sugar" />
+
+        <TextView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
             android:gravity="center"
-            android:scaleType="fitXY"
-            android:src="@drawable/sugar" />
-
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="14sp" />
         <TextView
             android:id="@+id/tv_sugar"
-            style="@style/textStyle.Big.black"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin50dp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="@string/rab_xuetang2"
-            android:textSize="@dimen/textSizeHuge" />
-    </LinearLayout>
+            style="@style/health_home_itme_content"
+            android:text="@string/rab_xuetang2" />
+    </RelativeLayout>
+
+
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="8px"
         android:background="@drawable/line_01" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rl_stepcounter"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin55dp">
-
-        <ImageView
-            android:layout_width="@dimen/margin50dp"
-            android:layout_height="@dimen/margin50dp"
-            android:layout_gravity="center|left"
-            android:layout_marginLeft="@dimen/margin20dp"
-            android:gravity="center"
-            android:scaleType="fitXY"
-            android:src="@drawable/footstep" />
+        android:layout_height="48dp">
+        <Button
+            style="@style/health_home_item_icon"
+            android:background="@drawable/footstep" />
 
         <TextView
-            android:id="@+id/tv_stepcounter"
-            style="@style/textStyle.Big.black"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin50dp"
-            android:layout_centerHorizontal="true"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
             android:gravity="center"
-            android:text="@string/rab_stepcount"
-            android:textSize="@dimen/textSizeHuge" />
-    </LinearLayout>
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_stepcounter"
+            style="@style/health_home_itme_content"
+            android:text="@string/rab_stepcount" />
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

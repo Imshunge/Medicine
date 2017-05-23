@@ -179,16 +179,11 @@ public class SPMobileHttptRequest {
 	public interface FailuredListener{
 		public void onRespone(String msg , int errorCode);
 	}*/
-
 	/**
-
-
 	 *  每一个访问接口都要调用改函数进行签名
-	 *
 	 *  @param params
 	 */
 	public static void configSign(RequestParams params , String url){
-
 		long locaTime = SPCommonUtils.getCurrentTime();//本地时间
 		long cutTime = MobileApplication.getInstance().getCutServiceTime();
 		String time = String.valueOf(locaTime + cutTime);
@@ -199,7 +194,6 @@ public class SPMobileHttptRequest {
 	}
 
 	public static Map<String ,String> convertRequestParamsToMap(RequestParams params){
-
 		Map<String ,String> paramsMap = new HashMap<String ,String>();
 		if(params!=null){
 			try {

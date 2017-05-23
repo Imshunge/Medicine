@@ -47,445 +47,435 @@ import java.net.URL;
 import java.util.List;
 
 
-
 public class MainActivity extends BaseActivity {
-	
-	public static final String SELECT_INDEX = "selectIndex";
-//	List<SPRegionModel> mRegionModels;
-	public static final String CACHE_SELECT_INDEX = "cacheSelectIndex";
-	public static final int INDEX_INFOR = 0;
-	public static final int INDEX_COMMUNITY = 1;
-	public static final int INDEX_SHOP = 2;
-	public static final int INDEX_HEALTH = 3;
-	public static final int INDEX_PERSON = 4;
-	private static MainActivity mInstance;
-	public int mCurrentSelectIndex  ;
-//	侧滑
-	static SlidingMenu menu;
 
-	ListView categoryListv;
+    public static final String SELECT_INDEX = "selectIndex";
+    public static final String CACHE_SELECT_INDEX = "cacheSelectIndex";
+    public static final int INDEX_INFOR = 0;
+    public static final int INDEX_COMMUNITY = 1;
+    public static final int INDEX_SHOP = 2;
+    public static final int INDEX_HEALTH = 3;
+    public static final int INDEX_PERSON = 4;
+    private static MainActivity mInstance;
+    public int mCurrentSelectIndex;
+    //	侧滑
+    static SlidingMenu menu;
 
-	CategoryAdapter mCategoryAdapter ;
+    ListView categoryListv;
 
-	public Handler mHandler = new Handler(){
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.what){
-				case MobileConstants.MSG_CODE_LOAD_DATAE_CHANGE:
-					if (msg.obj !=null){
-//						mRegionModels = (List<SPRegionModel>)msg.obj ;
-						SaveAddressTask task = new SaveAddressTask();
-						task.execute();
-					}
-					break;
-				case MobileConstants.MSG_CODE_SHOW:
-					if (msg.obj!=null){
-						SPDialogUtils.showToast(MainActivity.this, msg.obj.toString());
-					}
-					break;
-			}
-		}
-	};
-	FragmentManager mFragmentManager ;
-	InforFragment mInforFragment;
+    CategoryAdapter mCategoryAdapter;
+
+    public Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MobileConstants.MSG_CODE_LOAD_DATAE_CHANGE:
+                    if (msg.obj != null) {
+                        SaveAddressTask task = new SaveAddressTask();
+                        task.execute();
+                    }
+                    break;
+                case MobileConstants.MSG_CODE_SHOW:
+                    if (msg.obj != null) {
+                        SPDialogUtils.showToast(MainActivity.this, msg.obj.toString());
+                    }
+                    break;
+            }
+        }
+    };
+    FragmentManager mFragmentManager;
+    InforFragment mInforFragment;
     HealthyFragment2 mHealthyFragment;
-	ShopFragment mShopFragment;
-	PersonFragment mPersonFragment ;
-	RadioGroup mRadioGroup;
-	RadioButton rbtnHome;
-//	RadioButton rbtnCategory;
-	RadioButton rbtnShopcart;
-	RadioButton rbtnPerson;
-	RadioButton rbtnMy; //我
-	RadioButton mCurrRb;
-	RadioButton mLastRb;
-	private String TAG = "MainActivity";
+    ShopFragment mShopFragment;
+    PersonFragment mPersonFragment;
+    RadioGroup mRadioGroup;
+    RadioButton rbtnHome;
+    //	RadioButton rbtnCategory;
+    RadioButton rbtnShopcart;
+    RadioButton rbtnPerson;
+    RadioButton rbtnMy; //我
+    RadioButton mCurrRb;
+    RadioButton mLastRb;
+    private String TAG = "MainActivity";
 
-	public List<Information> getInformations() {
-		return informations;
-	}
+    public List<Information> getInformations() {
+        return informations;
+    }
 
-	public void setInformations(List<Information> informations) {
-		this.informations = informations;
-	}
+    public void setInformations(List<Information> informations) {
+        this.informations = informations;
+    }
 
-	private List<Information> informations;
-	//退出时的时间
-	private long mExitTime;
+    private List<Information> informations;
+    //退出时的时间
+    private long mExitTime;
 
-	private ChageToHealthReceiver chageToHealthReceiver;
-	public static MainActivity getmInstance(){
-		return mInstance;
-	}
-	private Context mContext;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.setCustomerTitle(false, false, getString(R.string.title_home));
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-		mFragmentManager = this.getSupportFragmentManager();
-		mContext=this;
-		super.init();
-		addFragment();
-		hiddenFragment();
+    private ChageToHealthReceiver chageToHealthReceiver;
+
+    public static MainActivity getmInstance() {
+        return mInstance;
+    }
+
+    private Context mContext;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.setCustomerTitle(false, false, getString(R.string.title_home));
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        mFragmentManager = this.getSupportFragmentManager();
+        mContext = this;
+        super.init();
+        addFragment();
+        hiddenFragment();
 //		initSlidingMenu();//侧滑菜单
-		if (savedInstanceState!=null){
-			mCurrentSelectIndex = savedInstanceState.getInt(CACHE_SELECT_INDEX , INDEX_INFOR);
-		}else{
-			mCurrentSelectIndex = INDEX_INFOR;
-		}
-		setSelectIndex(mCurrentSelectIndex);
+        if (savedInstanceState != null) {
+            mCurrentSelectIndex = savedInstanceState.getInt(CACHE_SELECT_INDEX, INDEX_INFOR);
+        } else {
+            mCurrentSelectIndex = INDEX_INFOR;
+        }
+        setSelectIndex(mCurrentSelectIndex);
 
-		mInstance = this;
-		initPush();
-	}
-	@Override
-	protected void onResume() {
-		super.onResume();
-		Logger.e("MainActivity","onResume");
-	}
-	private void initPush() {
-		// 启动百度push
-		PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,
-				Utils.getMetaValue(MainActivity.this, "api_key"));
+        mInstance = this;
+        initPush();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Logger.e("MainActivity", "onResume");
+    }
+
+    private void initPush() {
+        // 启动百度push
+        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,
+                Utils.getMetaValue(MainActivity.this, "api_key"));
 //	  数据库使用 LitePal ；项目地址是:https://github.com/LitePalFramework/LitePal
-		Connector.getDatabase();
-	}
-	@Override
-	public void initSubViews() {
-		mInforFragment = new InforFragment();
+        Connector.getDatabase();
+    }
+
+    @Override
+    public void initSubViews() {
+        mInforFragment = new InforFragment();
 //		mHealthyFragment = new HealthyFragment();
-		mHealthyFragment = new HealthyFragment2();
+        mHealthyFragment = new HealthyFragment2();
 //		mCommunityFragment = new CommunityFragment();
-		mShopFragment = new ShopFragment();
+        mShopFragment = new ShopFragment();
 //		mInforFragment.setMainActivity(this);
-		mPersonFragment = new PersonFragment();
+        mPersonFragment = new PersonFragment();
 
-		mRadioGroup = (RadioGroup) this.findViewById(R.id.radioGroup);
-		rbtnHome = (RadioButton) this.findViewById(R.id.rbtn_home);
-		rbtnShopcart = (RadioButton) this.findViewById(R.id.rbtn_shopcart);
-		rbtnPerson = (RadioButton) this.findViewById(R.id.rbtn_mine);
-		rbtnMy = (RadioButton) this.findViewById(R.id.rbtn_my);
-	}
+        mRadioGroup = (RadioGroup) this.findViewById(R.id.radioGroup);
+        rbtnHome = (RadioButton) this.findViewById(R.id.rbtn_home);
+        rbtnShopcart = (RadioButton) this.findViewById(R.id.rbtn_shopcart);
+        rbtnPerson = (RadioButton) this.findViewById(R.id.rbtn_mine);
+        rbtnMy = (RadioButton) this.findViewById(R.id.rbtn_my);
+    }
 
-	@Override
-	public void initData() {
-		//同步数据
-		SPDataAsyncManager.getInstance(this, mHandler).startSyncData(new SPDataAsyncManager.SyncListener() {
-			@Override
-			public void onPreLoad() {
+    @Override
+    public void initData() {
+        //同步数据
+        SPDataAsyncManager.getInstance(this, mHandler).startSyncData(new SPDataAsyncManager.SyncListener() {
+            @Override
+            public void onPreLoad() {
 
-			}
+            }
 
-			@Override
-			public void onLoading() {
+            @Override
+            public void onLoading() {
 
-			}
+            }
 
-			@Override
-			public void onFinish() {
+            @Override
+            public void onFinish() {
 
-			}
+            }
 
-			@Override
-			public void onFailure(String error) {
+            @Override
+            public void onFailure(String error) {
 
-			}
-		});
+            }
+        });
 
 
-		//开启服务
-		Intent service = new Intent(MainActivity.this, StepCounterService.class);
-		startService(service);
-	}
+        //开启服务
+        Intent service = new Intent(MainActivity.this, StepCounterService.class);
+        startService(service);
+    }
 
-	@Override
-	public void initEvent() {
-		mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(RadioGroup arg0, int key) {
-				switch (key) {
-					case R.id.rbtn_home:
-						setSelectIndex(INDEX_INFOR);
-						break;
-					case R.id.rbtn_shopcart:
-						setSelectIndex(INDEX_SHOP);
-						break;
-					case R.id.rbtn_mine:
-						setSelectIndex(INDEX_HEALTH);
-						break;
-					case R.id.rbtn_my:
-						setSelectIndex(INDEX_PERSON);
-						break;
-					default:
-						break;
-				}
-			}
-		});
-		//        监听 消息推送信息
-		IntentFilter filter = new IntentFilter(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT);
-		chageToHealthReceiver = new ChageToHealthReceiver();
-		mContext.registerReceiver(chageToHealthReceiver, filter);
+    @Override
+    public void initEvent() {
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup arg0, int key) {
+                switch (key) {
+                    case R.id.rbtn_home:
+                        setSelectIndex(INDEX_INFOR);
+                        break;
+                    case R.id.rbtn_shopcart:
+                        setSelectIndex(INDEX_SHOP);
+                        break;
+                    case R.id.rbtn_mine:
+                        setSelectIndex(INDEX_HEALTH);
+                        break;
+                    case R.id.rbtn_my:
+                        setSelectIndex(INDEX_PERSON);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        //        监听 消息推送信息
+        IntentFilter filter = new IntentFilter(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT);
+        chageToHealthReceiver = new ChageToHealthReceiver();
+        mContext.registerReceiver(chageToHealthReceiver, filter);
+    }
 
-//		startService(new Intent(MainActivity.this, MyService.class));
+    public void setSelectIndex(int index) {
+        switch (index) {
+            case INDEX_INFOR:
+                showFragment(mInforFragment);
+                changeTabtextSelector(rbtnHome);
+                setTitle(getString(R.string.title_home));
+                mCurrentSelectIndex = INDEX_INFOR;
+                break;
+            case INDEX_COMMUNITY:
 
-	}
-	public void setSelectIndex(int index){
-		switch (index){
-			case INDEX_INFOR:
-				//setTitleType(TITLE_HOME);
-				showFragment(mInforFragment);
-				changeTabtextSelector(rbtnHome);
-				setTitle(getString(R.string.title_home));
-				mCurrentSelectIndex = INDEX_INFOR;
-				break;
-			case INDEX_COMMUNITY:
-
-				break;
-			case INDEX_SHOP:
-				//setTitleType(TITLE_DEFAULT);
-				showFragment(mShopFragment);
-				changeTabtextSelector(rbtnShopcart);
-				setTitle(getString(R.string.tab_item_community));
-				mCurrentSelectIndex = INDEX_SHOP;
-				break;
-			case INDEX_HEALTH:
-				//setTitleType(TITLE_DEFAULT);
-				showFragment(mHealthyFragment);
-				changeTabtextSelector(rbtnPerson);
-				setTitle(getString(R.string.tab_item_healthy));
-				mCurrentSelectIndex = INDEX_HEALTH;
-				//更新设备列表
-				if (mContext != null) {
-					mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_LOADATA));
-				}
+                break;
+            case INDEX_SHOP:
+                showFragment(mShopFragment);
+                changeTabtextSelector(rbtnShopcart);
+                setTitle(getString(R.string.tab_item_community));
+                mCurrentSelectIndex = INDEX_SHOP;
+                break;
+            case INDEX_HEALTH:
+                showFragment(mHealthyFragment);
+                changeTabtextSelector(rbtnPerson);
+                setTitle(getString(R.string.tab_item_healthy));
+                mCurrentSelectIndex = INDEX_HEALTH;
+                //更新设备列表
+                if (mContext != null) {
+                    mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_LOADATA));
+                }
 //				if (mContext != null) {
 //					mContext.sendBroadcast(new Intent(MobileConstants.ACTION_HEALTH_SUAGR_LOADATA));
 //				}
-				break;
-			case INDEX_PERSON:
-				//setTitleType(TITLE_DEFAULT);
-				showFragment(mPersonFragment);
-				changeTabtextSelector(rbtnMy);
-				setTitle(getString(R.string.tab_item_my));
-				mCurrentSelectIndex = INDEX_PERSON;
-				break;
-		}
-	}
+                break;
+            case INDEX_PERSON:
+                //setTitleType(TITLE_DEFAULT);
+                showFragment(mPersonFragment);
+                changeTabtextSelector(rbtnMy);
+                setTitle(getString(R.string.tab_item_my));
+                mCurrentSelectIndex = INDEX_PERSON;
+                break;
+        }
+    }
 
-	/**
-	 *
-	 * @Title: showFragment
-	 * @Description:
-	 * @param: @param fragment
-	 * @return: void
-	 * @throws
-	 */
-	private void showFragment(BaseFragment fragment) {
-		hiddenFragment();
-		FragmentTransaction mTransaction = mFragmentManager.beginTransaction();
-		mTransaction.show(fragment);
-		mTransaction.commitAllowingStateLoss();
-	}
+    /**
+     * @throws
+     * @Title: showFragment
+     * @Description:
+     * @param: @param fragment
+     * @return: void
+     */
+    private void showFragment(BaseFragment fragment) {
+        hiddenFragment();
+        FragmentTransaction mTransaction = mFragmentManager.beginTransaction();
+        mTransaction.show(fragment);
+        mTransaction.commitAllowingStateLoss();
+    }
 
-	//add by zzx
-	public void setShowFragment(Information information){
-		showFragment(mInforFragment);
-		changeTabtextSelector(rbtnHome);
-		menu.toggle(false);
-	}
-	
-	/**
-	 *
-	 * @Title: hiddenFragment
-	 * @Description:
-	 * @param:
-	 * @return: void
-	 * @throws
-	 */
-	private void hiddenFragment() {
-		FragmentTransaction mTransaction = mFragmentManager.beginTransaction();
-		mTransaction.hide(mInforFragment);
-		mTransaction.hide(mHealthyFragment);
+    //add by zzx
+    public void setShowFragment(Information information) {
+        showFragment(mInforFragment);
+        changeTabtextSelector(rbtnHome);
+        menu.toggle(false);
+    }
+
+    /**
+     * @throws
+     * @Title: hiddenFragment
+     * @Description:
+     * @param:
+     * @return: void
+     */
+    private void hiddenFragment() {
+        FragmentTransaction mTransaction = mFragmentManager.beginTransaction();
+        mTransaction.hide(mInforFragment);
+        mTransaction.hide(mHealthyFragment);
 //		mTransaction.hide(mCommunityFragment);
-		mTransaction.hide(mShopFragment);
-		mTransaction.hide(mPersonFragment);
-		mTransaction.commitAllowingStateLoss();
-	}
-	/**
-	 *
-	 * @Title: addFragment
-	 * @Description:
-	 * @param:
-	 * @return: void
-	 * @throws
-	 */
+        mTransaction.hide(mShopFragment);
+        mTransaction.hide(mPersonFragment);
+        mTransaction.commitAllowingStateLoss();
+    }
 
-	private void addFragment() {
+    /**
+     * @throws
+     * @Title: addFragment
+     * @Description:
+     * @param:
+     * @return: void
+     */
 
-		FragmentTransaction mTransaction = mFragmentManager.beginTransaction();
-		mTransaction.add(R.id.fragmentView, mInforFragment);
-		mTransaction.add(R.id.fragmentView, mShopFragment);
-		mTransaction.add(R.id.fragmentView, mHealthyFragment);
-		mTransaction.add(R.id.fragmentView, mPersonFragment);
-		mTransaction.commitAllowingStateLoss();
-	}
+    private void addFragment() {
 
-	public void changeTabtextSelector(RadioButton rb){
-		mLastRb = mCurrRb;
-		mCurrRb = rb;
-		if(mLastRb != null){
-			mLastRb.setTextColor(getResources().getColor(R.color.color_tab_item_normal));
-			mLastRb.setSelected(false);
-		}
-		if(mCurrRb != null){
-			mCurrRb.setTextColor(getResources().getColor(R.color.color_tab_item_fous));
-			mCurrRb.setChecked(true);
-		}
-	}
+        FragmentTransaction mTransaction = mFragmentManager.beginTransaction();
+        mTransaction.add(R.id.fragmentView, mInforFragment);
+        mTransaction.add(R.id.fragmentView, mShopFragment);
+        mTransaction.add(R.id.fragmentView, mHealthyFragment);
+        mTransaction.add(R.id.fragmentView, mPersonFragment);
+        mTransaction.commitAllowingStateLoss();
+    }
 
-	@Override
-	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-		setIntent(intent);
-	}
+    public void changeTabtextSelector(RadioButton rb) {
+        mLastRb = mCurrRb;
+        mCurrRb = rb;
+        if (mLastRb != null) {
+            mLastRb.setTextColor(getResources().getColor(R.color.color_tab_item_normal));
+            mLastRb.setSelected(false);
+        }
+        if (mCurrRb != null) {
+            mCurrRb.setTextColor(getResources().getColor(R.color.color_tab_item_fous));
+            mCurrRb.setChecked(true);
+        }
+    }
 
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		//Log.d(TAG, "onRestart.." +getIntent().hasExtra(SELECT_INDEX));
-		int selectIndex = -1;
-		if (getIntent()!=null && getIntent().hasExtra(SELECT_INDEX)){
-			selectIndex = getIntent().getIntExtra(SELECT_INDEX, -1);
-			//Log.d(TAG, "onRestart , selectIndex : " + selectIndex );
-			if (selectIndex!= -1)setSelectIndex(selectIndex);
-		}
-	}
-//
-//	@Override
-//	protected void onStart() {
-//		super.onStart();
-////		ShopRequest.refreshServiceTime(new SPSuccessListener() {
-////			@Override
-////			public void onRespone(String msg, Object response) {
-////
-////			}
-////		}, new SPFailuredListener() {
-////			@Override
-////			public void onRespone(String msg, int errorCode) {
-////
-////			}
-////		});
-//	}
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		outState.putInt(CACHE_SELECT_INDEX, mCurrentSelectIndex);
-	}
-	@Override
-	public void onBackPressed() {
-		if(mCurrRb == rbtnHome ){
-			super.onBackPressed();
-		}else{
-			setSelectIndex(INDEX_INFOR);
-		}
-	}
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
 
-	private class SaveAddressTask extends AsyncTask<URL, Integer, Long>{
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //Log.d(TAG, "onRestart.." +getIntent().hasExtra(SELECT_INDEX));
+        int selectIndex = -1;
+        if (getIntent() != null && getIntent().hasExtra(SELECT_INDEX)) {
+            selectIndex = getIntent().getIntExtra(SELECT_INDEX, -1);
+            //Log.d(TAG, "onRestart , selectIndex : " + selectIndex );
+            if (selectIndex != -1) setSelectIndex(selectIndex);
+        }
+    }
 
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-		}
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CACHE_SELECT_INDEX, mCurrentSelectIndex);
+    }
 
-		@Override
-		protected void onPostExecute(Long aLong) {
-			super.onPostExecute(aLong);
+    @Override
+    public void onBackPressed() {
+        if (mCurrRb == rbtnHome) {
+            super.onBackPressed();
+        } else {
+            setSelectIndex(INDEX_INFOR);
+        }
+    }
 
-		}
+    private class SaveAddressTask extends AsyncTask<URL, Integer, Long> {
 
-		@Override
-		protected Long doInBackground(URL... params) {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            super.onPostExecute(aLong);
+
+        }
+
+        @Override
+        protected Long doInBackground(URL... params) {
 
 
-//			SPPersonDao personDao = SPPersonDao.getInstance(SPMainActivity.this);
-//			personDao.insertRegionList(mRegionModels);
-//			SPSaveData.putValue(MainActivity.this, MobileConstants.KEY_IS_FIRST_STARTUP, false);
+            return null;
 
-			return null;
+        }
+    }
 
-		}
-	}
-//	显示侧滑菜单
-	public static void startMenu(){
-		menu.toggle();
-	}
-	/**
-	 * 侧滑菜单
-	 */
-	private void initSlidingMenu() {
-		menu = new SlidingMenu(this);
-		menu.setMode(SlidingMenu.LEFT);
-		// 设置触摸屏幕的模式
-		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-		menu.setShadowWidthRes(R.dimen.shadow_width);
-		// 设置滑动菜单视图的宽度
-		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		// 设置渐入渐出效果的值
-		menu.setFadeDegree(0.35f);
-		/**
-		 * SLIDING_WINDOW will include the Title/ActionBar in the content
-		 * section of the SlidingMenu, while SLIDING_CONTENT does not.
-		 */
-		menu.attachToActivity(MainActivity.this, SlidingMenu.SLIDING_WINDOW);
+    //	显示侧滑菜单
+    public static void startMenu() {
+        menu.toggle();
+    }
+
+    /**
+     * 侧滑菜单
+     */
+    private void initSlidingMenu() {
+        menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT);
+        // 设置触摸屏幕的模式
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        menu.setShadowWidthRes(R.dimen.shadow_width);
+        // 设置滑动菜单视图的宽度
+        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        // 设置渐入渐出效果的值
+        menu.setFadeDegree(0.35f);
+        /**
+         * SLIDING_WINDOW will include the Title/ActionBar in the content
+         * section of the SlidingMenu, while SLIDING_CONTENT does not.
+         */
+        menu.attachToActivity(MainActivity.this, SlidingMenu.SLIDING_WINDOW);
 //        menu.attachToActivity((Activity)mContext, SlidingMenu.SLIDING_WINDOW);
-		//为侧滑菜单设置布局
-		menu.setMenu(R.layout.left_menu);
-		categoryListv = (ListView) menu.findViewById(R.id.category_listv);
-		mCategoryAdapter = new CategoryAdapter(this);
-		categoryListv.setAdapter(mCategoryAdapter);
-		categoryListv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Information collect = (Information) mCategoryAdapter.getItem(position);
-				setShowFragment(collect);
+        //为侧滑菜单设置布局
+        menu.setMenu(R.layout.left_menu);
+        categoryListv = (ListView) menu.findViewById(R.id.category_listv);
+        mCategoryAdapter = new CategoryAdapter(this);
+        categoryListv.setAdapter(mCategoryAdapter);
+        categoryListv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Information collect = (Information) mCategoryAdapter.getItem(position);
+                setShowFragment(collect);
 //				Intent intent = new Intent(CollectListActivity.this, ProductActivity.class);
 //				intent.putExtra("goodsId", collect.getGoodsID());
 //				CollectListActivity.this.startActivity(intent);
-			}
-		});
-	}
-	//广播接收器  设备列表变化
-	class ChageToHealthReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			if (intent.getAction().equals(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT)) {
-				Logger.e("FragmentBlood", "ShowDataReceiver");
-				setSelectIndex(INDEX_HEALTH);
-			}
-		}
-	}
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		unregisterReceiver(chageToHealthReceiver);
-	}
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			exit();
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
-	public void exit() {
-		if ((System.currentTimeMillis() - mExitTime) > 2000) {
-			showToast("再按一次退出尚尚健康");
-			mExitTime = System.currentTimeMillis();
-		} else {
-			finish();
-		}
-	}
+            }
+        });
+    }
+
+    //广播接收器  设备列表变化
+    class ChageToHealthReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT)) {
+                Logger.e("FragmentBlood", "ShowDataReceiver");
+                setSelectIndex(INDEX_HEALTH);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(chageToHealthReceiver);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            showToast("再按一次退出尚尚健康");
+            mExitTime = System.currentTimeMillis();
+        } else {
+
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+
+//            finish();
+        }
+    }
 
 
 }

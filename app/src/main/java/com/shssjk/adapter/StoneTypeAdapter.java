@@ -1,6 +1,7 @@
 package com.shssjk.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class StoneTypeAdapter extends BaseAdapter {
     private String TAG = "SearchhistoryAdapter";
     private List<StoneType> stoneTypes;
     private Context mContext;
+    private int clickTemp = -1;
 
     public StoneTypeAdapter(Context context) {
         this.mContext = context;
@@ -64,6 +66,7 @@ public class StoneTypeAdapter extends BaseAdapter {
         if (convertView == null) {
             //使用自定义的list_items作为Layout
             convertView = LayoutInflater.from(mContext).inflate(R.layout.stone_type_item, parent, false);
+
             //使用减少findView的次数
             holder = new ViewHolder(convertView);
             //设置标记
@@ -81,6 +84,13 @@ public class StoneTypeAdapter extends BaseAdapter {
             holder.stoneDesTxtv.setText(article.getPrice() + "个石头");
         }
 
+        // 点击改变选中listItem的背景色
+        if (clickTemp == position) {
+            holder.ll_type.setBackgroundResource(R.drawable.mainbg);
+        } else {
+            holder.ll_type.setBackgroundResource(R.drawable.label_stonel);
+        }
+
 //        if(article.isSelect() == true){
 //            holder.ll_type.setBackgroundColor(mContext.getResources().getColor(R.color.grays));
 //        } else {
@@ -88,7 +98,10 @@ public class StoneTypeAdapter extends BaseAdapter {
 //        }
         return convertView;
     }
-
+    //标识选择的Item
+    public void setSeclection(int position) {
+        clickTemp = position;
+    }
     class ViewHolder {
         @Bind(R.id.stone_price_txtv)
         TextView stonePriceTxtv;

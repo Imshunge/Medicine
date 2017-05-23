@@ -20,7 +20,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shssjk.activity.R;
 import com.shssjk.activity.shop.ProductActivity;
 import com.shssjk.adapter.ProductAttrListAdapter;
-import com.shssjk.adapter.SPProductSpecListAdapter;
+import com.shssjk.adapter.ProductSpecListAdapter;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
 import com.shssjk.http.base.SPSuccessListener;
@@ -81,7 +81,7 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
     private String currShopPrice;//当前商品价格
     private Context mContext;
     private boolean isFirstLoad;
-    SPProductSpecListAdapter specAdapter;  //产品规格
+    ProductSpecListAdapter specAdapter;  //产品规格
     ListView specListv;
 
     @Override
@@ -137,7 +137,7 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
         minusBtn.setOnClickListener(this);
         plusBtn.setOnClickListener(this);
         mScroll.setPageListener(this);
-        specAdapter = new SPProductSpecListAdapter(mContext, this);
+        specAdapter = new ProductSpecListAdapter(mContext, this);
         specListv.setAdapter(specAdapter);
     }
 

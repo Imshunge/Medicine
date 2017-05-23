@@ -33,7 +33,34 @@ public class Tag implements Serializable {
     private String value ;
     private String key ;
 
+    public String getStore_count() {
+        return store_count;
+    }
 
+    public void setStore_count(String store_count) {
+        this.store_count = store_count;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    private String price ;
+    private String store_count;
+
+    public String getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(String item_id) {
+        this.item_id = item_id;
+    }
+
+    private String item_id;
 
     public Tag() {
 

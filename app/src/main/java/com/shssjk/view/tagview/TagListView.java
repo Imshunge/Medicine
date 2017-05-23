@@ -53,7 +53,6 @@ public class TagListView extends FlowLayout implements OnClickListener {
 	 */
 	public TagListView(Context context, AttributeSet attributeSet) {
 		super(context, attributeSet);
-		// TODO Auto-generated constructor stub
 		mContext = context;
 		init();
 	}
@@ -65,7 +64,6 @@ public class TagListView extends FlowLayout implements OnClickListener {
 	 */
 	public TagListView(Context context, AttributeSet attributeSet, int defStyle) {
 		super(context, attributeSet, defStyle);
-		// TODO Auto-generated constructor stub
 		mContext = context;
 		init();
 	}
@@ -82,7 +80,6 @@ public class TagListView extends FlowLayout implements OnClickListener {
 				this.mOnTagClickListener.onTagClick(checkTagView, localTag);
 			}
 		}
-
 		int count =this.getChildCount();
 		for (int i=0; i<count ; i++){
 			 View childrenView = getChildAt(i);
@@ -102,8 +99,6 @@ public class TagListView extends FlowLayout implements OnClickListener {
 	}
 
 	private void inflateTagView(final Tag t, boolean b) {
-
-
 		TagView localTagView = (TagView) View.inflate(getContext(), R.layout.tag, null);
 		localTagView.setText(t.getTitle());
 		localTagView.setTag(t);

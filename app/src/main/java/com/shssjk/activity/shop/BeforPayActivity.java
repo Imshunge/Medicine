@@ -193,12 +193,10 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
             orderSn = payOrderFromOrderList.getOrderSN();
         }
         showData(orderSn, orderAmount);
-
         msgApi = WXAPIFactory.createWXAPI(mContext, null);
         // 将该app注册到微信
         msgApi.registerApp(MobileConstants.APP_ID);
     }
-
     /**
      * 展示订单信息
      * @param orderId
@@ -218,7 +216,7 @@ public class BeforPayActivity extends BaseActivity implements ConfirmDialog.Conf
         intentFilter = new IntentFilter(MobileConstants.ACTION_PAY_CHANGE);
         registerReceiver(stateChangeRevicer, intentFilter);
     }
-    //   银联支付
+    //   银联 支付
     private void payOrderWithUnionPay(String orderId, String orderAmount) {
         showLoadingToast("正在支付");
         String sum = SSUtils.stringMul100(orderAmount) + "";

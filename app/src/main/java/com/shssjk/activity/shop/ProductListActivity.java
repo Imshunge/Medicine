@@ -106,7 +106,6 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
 
     @Override
     public void initSubViews() {
-        WindowManager wm = (WindowManager)getBaseContext().getSystemService(Context.WINDOW_SERVICE);
         mFilterTabView = (SPProductFilterTabView)findViewById(R.id.filter_tabv);
         mFilterTabView.setOnSortClickListener(this);
         ptrClassicFrameLayout = (PtrClassicFrameLayout) this.findViewById(R.id.test_list_view_frame);

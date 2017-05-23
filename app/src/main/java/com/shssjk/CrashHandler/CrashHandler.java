@@ -19,7 +19,8 @@ import android.os.Process;
 import android.util.Log;
 
 /**
- * 异常处理 保存本地文件
+ * 异常处理  程序崩溃本地 记录
+ * 保存本地文件  /ssjk/log/
  */
 public class CrashHandler implements UncaughtExceptionHandler {
     private static final String TAG = "CrashHandler";

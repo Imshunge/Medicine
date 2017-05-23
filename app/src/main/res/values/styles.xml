@@ -411,8 +411,21 @@
     </style>
 
 
+    <style name="health_home_item_icon">
+        <item name="android:layout_gravity">left|center_vertical</item>
+        <item name="android:layout_width">@dimen/margi30dp</item>
+        <item name="android:layout_height">@dimen/margi30dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin40dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="health_home_itme_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black</item>
 
-
+    </style>
 
 
 </resources>

@@ -23,21 +23,32 @@ import java.util.List;
 
 /**
  * Created by admin on 2016/6/23.
+ * 规格 
  */
-public class SPProductSpecListAdapter extends BaseAdapter {
+public class ProductSpecListAdapter extends BaseAdapter {
 
-    private String TAG = "SPProductSpecListAdapter";
     private List<String>  keys ;
     private Context mContext ;
     private TagListView.OnTagClickListener mTagClickListener;
     JSONObject mSpecJson;
+
+    public void setmSelectSpecs(Collection<String> mSelectSpecs) {
+        this.mSelectSpecs = mSelectSpecs;
+    }
+
     private  Collection<String> mSelectSpecs;
 
 
-    public SPProductSpecListAdapter(Context context, TagListView.OnTagClickListener tagClickListener){
+    public ProductSpecListAdapter(Context context, TagListView.OnTagClickListener tagClickListener){
+        this.mContext = context;
+        this.mTagClickListener = tagClickListener;
+    }
+
+    public ProductSpecListAdapter(Context context, TagListView.OnTagClickListener tagClickListener , Collection<String> selectSpecs){
         this.mContext = context;
         this.mTagClickListener = tagClickListener;
         keys = new ArrayList<String>();
+        this.mSelectSpecs = selectSpecs;
     }
 
     public void setData(JSONObject specJson){
@@ -55,8 +66,6 @@ public class SPProductSpecListAdapter extends BaseAdapter {
         this.mSelectSpecs = selectSpecs;
         this.notifyDataSetChanged();
     }
-
-
 
     @Override
     public int getCount() {
@@ -101,9 +110,7 @@ public class SPProductSpecListAdapter extends BaseAdapter {
             holder.tagListv.setTagViewTextColorRes(R.color.color_font_gray);
             holder.tagListv.setOnTagClickListener(mTagClickListener);
             holder.titleTxtv = (TextView)convertView.findViewById(R.id.filter_title_txtv);
-
             titleHeight = SPCommonUtils.dip2px(mContext, 20);
-
             //设置标记
             convertView.setTag(holder);
         }else{
@@ -144,6 +151,9 @@ public class SPProductSpecListAdapter extends BaseAdapter {
             tag.setKey(spec.getSpecName());
             tag.setValue(spec.getItemID());
             tag.setTitle(spec.getItem());
+            tag.setPrice(spec.getPrice());
+            tag.setStore_count(spec.getStore_count());
+//            tag.setKey(spec.get);
             mTags.add(tag);
         }
          return mTags;

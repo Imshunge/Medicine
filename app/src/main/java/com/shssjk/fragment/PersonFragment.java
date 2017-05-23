@@ -325,6 +325,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
     //    启动摄像机列表界面
     private void startCameraListActivity() {
+
         showLoadingToast("正在打开");
         Intent intent = new Intent();
         intent.setClass(getActivity(), BridgeService.class);
@@ -339,11 +340,19 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     Message msg = new Message();
                     mHandler.sendMessage(msg);
                 } catch (Exception e) {
-                 e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
         }).start();
 //        Intent in = new Intent(getActivity(), TestCameraActivity.class);
+//        getActivity().startActivity(in);
+
+
+        /**
+         * 测试
+         *
+         */
+//        Intent in = new Intent(getActivity(), CameraListActivity.class);
 //        getActivity().startActivity(in);
 
     }
@@ -655,10 +664,4 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
-
-
-
-
-
 }

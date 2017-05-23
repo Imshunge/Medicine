@@ -31,6 +31,8 @@ import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.person.PersonRequest;
 import com.shssjk.model.person.Camera;
 import com.shssjk.utils.ContentCommon;
+import com.shssjk.utils.Logger;
+import com.shssjk.utils.OnClickEvent;
 import com.shssjk.utils.SystemValue;
 
 import java.util.List;
@@ -41,7 +43,7 @@ import butterknife.OnClick;
 import vstc2.nativecaller.NativeCaller;
 
 public class CameraListActivity extends BaseActivity implements BridgeService.IpcamClientInterface,
-        BridgeService.AddCameraInterface,BridgeService.CallBackMessageInterface {
+        BridgeService.AddCameraInterface, BridgeService.CallBackMessageInterface {
     private static final int DATACHANGE = 3;
     @Bind(R.id.camera_listv)
     ListView camera_listv;
@@ -65,21 +67,29 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
     private Boolean intentData;//摄像头服务会出现反复连接问题，所以设置了一个跳转状态参数 true：可以跳转，false:不可跳转
     private Camera camera;
     private MyBroadCast receiver;
-//    private Handler mHandler = new Handler() {
-//        public void handleMessage(Message msg) {
-//            Intent in = new Intent(CameraListActivity.this, AddCameraActivity.class);
+    private Integer integer;
+    private int tag = 0;
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            hideLoadingToast();
+            Intent intent = new Intent(CameraListActivity.this, AddCameraActivity.class);
 //            startActivity(in);
+            startActivityForResult(intent, DATACHANGE);
 //            finish();
-//        }
-//    };
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setCustomerTitle(true, true, getString(R.string.cameralistactivity_title));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_list);
-        mContext=this;
-        BridgeService.setAddCameraInterface(this);
-        BridgeService.setCallBackMessage(this);
+        mContext = this;
+//        201705016
+//        BridgeService.setAddCameraInterface(this);
+//        BridgeService.setCallBackMessage(this);
+        //        201705016
         receiver = new MyBroadCast();
         IntentFilter filter = new IntentFilter();
         filter.addAction("finish");
@@ -106,12 +116,19 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
             Log.d("ip", "AddCameraActivity.this.finish()");
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        intentData=true;
+        intentData = true;
+
+        Intent intent = new Intent();
+        intent.setClass(CameraListActivity.this, BridgeService.class);
+        startService(intent);
+
 //        getList();
     }
+
     @Override
     public void initSubViews() {
         View emptyView = findViewById(R.id.empty_lstv);
@@ -121,6 +138,7 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 camera = (Camera) cameraAdapter.getItem(position);
                 sendData(camera.getName(), camera.getDid());
+                Logger.e("camera.getName() " + camera.getName(), "camera.getDid() " + camera.getDid());
             }
         });
         camera_listv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -145,10 +163,6 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
             }
         });
 
-
-
-
-
     }
 
     private void sendData(String strName, String strDID) {
@@ -157,7 +171,6 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
 //        mydialog.show();
         showLoadingToast("设备连接中...");
         Intent in = new Intent();
-
         if (strDID.length() == 0) {
             Toast.makeText(CameraListActivity.this, getResources().getString(R.string.input_camera_id), Toast.LENGTH_SHORT)
                     .show();
@@ -218,14 +231,14 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
     public void initData() {
 //        initCamera();
         getDeviceListData();
-   }
-//    初始化摄像机配置
+    }
+
+    //    初始化摄像机配置
     private void initCamera() {
 //        Intent intent = new Intent();
 //        intent.setClass(CameraListActivity.this, BridgeService.class);
 //        startService(intent);
 //        NativeCaller.PPPPInitialOther("ADCBBFAOPPJAHGJGBBGLFLAGDBJJHNJGGMBFBKHIBBNKOKLDHOBHCBOEHOKJJJKJBPMFLGCPPJMJAPDOIPNL");
-
 ////        new Thread(new Runnable() {
 ////            @Override
 ////            public void run() {
@@ -267,13 +280,30 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
         cameraAdapter = new CameraAdapter(this);
         camera_listv.setAdapter(cameraAdapter);
 
+        int delayTime=2000;
+        addAddressBtn.setOnClickListener(new OnClickEvent(delayTime) {
+            @Override
+            public void singleClick(View v) {
+//           我的摄像机 避免2次点击
+
+                showLoadingToast();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            NativeCaller.PPPPInitialOther("ADCBBFAOPPJAHGJGBBGLFLAGDBJJHNJGGMBFBKHIBBNKOKLDHOBHCBOEHOKJJJKJBPMFLGCPPJMJAPDOIPNL");
+                            Thread.sleep(3000);
+                            Message msg = new Message();
+                            mHandler.sendMessage(msg);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+        });
     }
 
-    @OnClick(R.id.add_address_btn)
-    public void onClick() {
-        Intent intent = new Intent(CameraListActivity.this, AddCameraActivity.class);
-        startActivityForResult(intent, DATACHANGE);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -310,6 +340,7 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
     public void CameraStatus(String did, int status) {
 
     }
+
     class StartPPPPThread implements Runnable {
         @Override
         public void run() {
@@ -328,9 +359,21 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
             Thread.sleep(100);
         } catch (Exception e) {
         }
-        int result = NativeCaller.StartPPPP(SystemValue.deviceId, SystemValue.deviceUser, SystemValue.devicePass, 1,
-                "");// 开启摄像头
+        if (SystemValue.deviceId.toLowerCase().startsWith("vsta")) {
+            NativeCaller.StartPPPPExt(SystemValue.deviceId, SystemValue.deviceUser,
+                    SystemValue.devicePass, 1, "", "EFGFFBBOKAIEGHJAEDHJFEEOHMNGDCNJCDFKAKHLEBJHKEKMCAFCDLLLHAOCJPPMBHMNOMCJKGJEBGGHJHIOMFBDNPKNFEGCEGCBGCALMFOHBCGMFK");
+        } else {
+            NativeCaller.StartPPPP(SystemValue.deviceId, SystemValue.deviceUser,
+                    SystemValue.devicePass, 1, "");
+        }
+        Logger.e("SystemValue.deviceId ", SystemValue.deviceId);
+        Logger.e("SystemValue.deviceName", SystemValue.deviceName);
+        Logger.e("SystemValue.devicePass ", SystemValue.devicePass);
+//        int result = NativeCaller.StartPPPP(SystemValue.deviceId, SystemValue.deviceUser, SystemValue.devicePass, 1,
+//                "");// 开启摄像头
+//
     }
+
     private Handler PPPPMsgHandler = new Handler() {
         public void handleMessage(Message msg) {
             Bundle bd = msg.getData();
@@ -344,14 +387,17 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
                     switch (msgParam) {
                         case ContentCommon.PPPP_STATUS_CONNECTING:// 0 连接中。。。
                             resid = R.string.pppp_status_connecting;
+                            tag = 2;
                             break;
                         case ContentCommon.PPPP_STATUS_CONNECT_FAILED:// 3 连接失败
                             resid = R.string.pppp_status_connect_failed;
                             closeDialog();
+                            tag = 0;
                             break;
                         case ContentCommon.PPPP_STATUS_DISCONNECT:// 4 断线
                             resid = R.string.pppp_status_disconnect;
                             closeDialog();
+                            tag = 0;
                             break;
                         case ContentCommon.PPPP_STATUS_INITIALING:// 1 正在初始化
                             resid = R.string.pppp_status_initialing;
@@ -359,6 +405,7 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
                         case ContentCommon.PPPP_STATUS_INVALID_ID:// 5  ID号无效
                             resid = R.string.pppp_status_invalid_id;
                             closeDialog();
+                            tag = 0;
                             break;
                         case ContentCommon.PPPP_STATUS_ON_LINE:// 2 在线状态
                             resid = R.string.pppp_status_online;
@@ -366,8 +413,9 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
                             // 摄像机在线之后读取摄像机类型
                             String cmd = "get_status.cgi?loginuse=admin&loginpas=" + SystemValue.devicePass + "&user=admin&pwd="
                                     + SystemValue.devicePass;
-                            NativeCaller.TransferMessage(did, cmd, 0);
+                            NativeCaller.TransferMessage(did, cmd, 1);
                             closeDialog();
+                            tag = 1;
                             setIntent();
                             break;
                         case ContentCommon.PPPP_STATUS_DEVICE_NOT_ON_LINE:// 6 不在线
@@ -401,18 +449,18 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
                     break;
                 case ContentCommon.PPPP_MSG_TYPE_PPPP_MODE:
                     break;
-
             }
 
         }
     };
-    //关闭进度框
-    public void closeDialog(){
 
+    //关闭进度框
+    public void closeDialog() {
         hideLoadingToast();
 //		Toast("连接成功");
         clicked = true;
     }
+
     // 跳转预览模式
     public void setIntent() {
         if (intentData) {
@@ -424,6 +472,7 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
         } else {
         }
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
@@ -451,5 +500,11 @@ public class CameraListActivity extends BaseActivity implements BridgeService.Ip
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+
+        NativeCaller.Free();
+        Intent intent = new Intent();
+        intent.setClass(this, BridgeService.class);
+        stopService(intent);
+
     }
 }

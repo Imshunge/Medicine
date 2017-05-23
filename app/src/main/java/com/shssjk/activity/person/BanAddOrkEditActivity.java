@@ -145,7 +145,7 @@ public class BanAddOrkEditActivity extends BaseActivity {
         }
 
         if (SPStringUtils.isEmpty(bankcardIssuerEdtv.getText().toString())) {
-            showToast("请输入发卡行");
+            showToast("请选择发卡行");
             return false;
         }
         bank.setBank(bankcardIssuerEdtv.getText().toString());

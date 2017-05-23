@@ -30,7 +30,7 @@ import com.shssjk.activity.IViewController;
 import com.shssjk.activity.R;
 import com.shssjk.adapter.ProductDetailCommentAdapter;
 import com.shssjk.adapter.ProductTabAdapter;
-import com.shssjk.adapter.SPProductSpecListAdapter;
+import com.shssjk.adapter.ProductSpecListAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
@@ -150,8 +150,6 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
 
     @Bind(R.id.rl_number_change)
     RelativeLayout rl_number_change;
-
-
     private String mGoodsID;
     private int gallerySize;//预览图数量
     private int galleryIndex;//预览图大小
@@ -178,12 +176,13 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
     private boolean isGoToLogin = false; //没登陆时去登录 记录状态
     private FragmentPagerAdapter fragPagerAdapter;
     private ProductTabAdapter productTabAdapter;
-    SPProductSpecListAdapter specAdapter;  //产品规格
+    ProductSpecListAdapter specAdapter;  //产品规格
     int mCartCount = 1;    //商品数量显示
     public static String[] productDetailInnerTitles = new String[]{"详情", "评价"};
     List<String> mDataList = Arrays.asList(productDetailInnerTitles);
     ProductDetailCommentAdapter mAdapter;
     int currentIndex = 0;//记录当前选择的是页签 还是详情
+    private Tag selectTag;
 
     public String getContents() {
         return contents;
@@ -216,8 +215,8 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
         mContext = this;
         super.init();
     }
-
     public void initSubViews() {
+
         this.mGoodsID = getIntent().getStringExtra("goodsId");
     }
 
@@ -232,13 +231,13 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
         if (isGoToLogin) {
             getProductDetails();
         }
-        if (!MobileApplication.getInstance().isLogined) {
+        if (MobileApplication.getInstance().isLogined) {
             getShopCarNum();
         }
     }
     @Override
     public void initData() {
-        selectSpecMap = new HashMap<String, String>();
+//        selectSpecMap = new HashMap<String, String>();
         getProductDetails();
         refreshData();
     }
@@ -248,8 +247,11 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
         commentListv.setInterface(this);
         bannerSlayout.setPageListener(this);
         detailScrollv.setScrollBottomListener(this);
-        specAdapter = new SPProductSpecListAdapter(mContext, this);
+        selectSpecMap = new HashMap<String,String>();
+
+        specAdapter = new ProductSpecListAdapter(mContext, this,selectSpecMap.values());
         productSpecLstv.setAdapter(specAdapter);
+
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.getSettings().setSupportMultipleWindows(true);
@@ -317,6 +319,12 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             isGoToLogin = true;
             return;
         }
+        int storeCount=0;
+        if(!SSUtils.isEmpty(selectTag)&&!SSUtils.isEmpty(selectTag.getStore_count())){
+            storeCount=SSUtils.str2Int(selectTag.getStore_count());
+        }else{
+            storeCount = SPShopUtils.getShopStoreCount(priceJson, selectSpecMap.values());
+        }
         switch (view.getId()) {
             case R.id.cart_minus_btn:
                 if (mCartCount <= 1) {
@@ -328,7 +336,14 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                 break;
             case R.id.cart_plus_btn:
                 // 库存不足
-                int storeCount = SPShopUtils.getShopStoreCount(priceJson, selectSpecMap.values());
+//                int storeCount = SPShopUtils.getShopStoreCount(priceJson, selectSpecMap.values());
+                //                数量库存判断
+//                int storeCount=0;
+//                if(!SSUtils.isEmpty(selectTag)){
+//                    storeCount=SSUtils.str2Int(selectTag.getStore_count());
+//                }else{
+//                    storeCount = SPShopUtils.getShopStoreCount(priceJson, selectSpecMap.values());
+//                }
                 if (mCartCount >= storeCount) {
                     showToast(getString(R.string.toast_low_stocks));
                     return;
@@ -344,7 +359,8 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             case R.id.add_cart_btn:
             case R.id.buy_btn:
                 //购买 加入购物车
-                storeCount = SPShopUtils.getShopStoreCount(priceJson, selectSpecMap.values());
+//                数量库存判断
+//                storeCount = SPShopUtils.getShopStoreCount(priceJson, selectSpecMap.values());
                 if (mCartCount > storeCount) {
                     showToast(getString(R.string.toast_low_stocks));
                     return;
@@ -401,7 +417,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             priceJson = MobileApplication.getInstance().json;
             specJson = MobileApplication.getInstance().json1;
             //获取每组规格中的第一个规格
-            selectSpecMap = new HashMap<String, String>();
+//            selectSpecMap = new HashMap<String, String>();
             Iterator<String> iterator = specJson.keys();
             while (iterator.hasNext()) {
                 String key = iterator.next();
@@ -425,7 +441,9 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             return;
         }
 //                规格
-        if (SSUtils.isEmpty(this.getSpecs()) && selectSpecMap.values().size() > 0) {
+        if(!SSUtils.isEmpty(selectTag)){
+            specs=selectTag.getValue();
+        }else  if (SSUtils.isEmpty(this.getSpecs()) && selectSpecMap.values().size() > 0) {
             specs = SPStringUtils.collectToString(getSelectSpecMap().values(), ",");
         }
         ShopRequest.shopCartGoodsOperation(mProduct.getGoodsID(), specs, mCartCount, new SPSuccessListener() {
@@ -434,7 +452,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                 if (response != null) {
                     productcartCount.setText(response.toString());
                     showToast(getString(R.string.toast_shopcart_action_success));
-                    //立即购买 先添加到购物车 在调转的购物车列表
+                    //立即购买 先添加到购物车 再跳转的购物车列表
                     if (view.getId() == R.id.buy_btn) {
                         gotoShopcart();
                     }
@@ -495,7 +513,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                         productcartCount.setText(cart_num);
                         Logger.e(this, "cart_num" + cart_num);
                     }
-                   dealModel();
+                    dealModel();
                 } catch (Exception e) {
                     showToast(e.getMessage());
                 }
@@ -509,7 +527,11 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             }
         });
     }
-// 积分商品 和普通商品
+
+    /**
+     * 积分 商品 和 普通 商品
+     * @param mProduct
+     */
     private void showBottomeLayout(SPProduct mProduct) {
         if(MobileConstants.POINT_ID.equals(mProduct.getCategoryID())){
             ll_buy_bottom.setVisibility(View.GONE);
@@ -612,9 +634,18 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                             specList = new ArrayList<SPProductSpec>();
                             specList.add(productSpec);
                         }
+//                      模拟数据
+//                        SPProductSpec productSpec1 = new SPProductSpec();
+//                        productSpec1.setItem("500g/袋");
+//                        productSpec1.setPrice("11.60");
+//                        productSpec1.setStore_count("2");
+//                        productSpec1.setItemID("123");
+//                        specList.add(productSpec1);
+
                         specJson.put(productSpec.getSpecName(), specList);
                         MobileApplication.getInstance().json1 = specJson;
                         specAdapter.setData(specJson);
+                        specAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -629,10 +660,13 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
                 if (specs != null && specs.size() > 0) {
                     SPProductSpec productSpec = specs.get(0);
                     selectSpecMap.put(key, productSpec.getItemID());
-                    specAdapter.setData(selectSpecMap.values());
-                    MobileApplication.getInstance().map = selectSpecMap;
+//                    specAdapter.setData(selectSpecMap.values());
+//                    MobileApplication.getInstance().map = selectSpecMap;
                 }
             }
+//           选中默认的第一个
+            specAdapter.setmSelectSpecs(selectSpecMap.values());
+            specAdapter.notifyDataSetChanged();
             refreshPriceView();
         } catch (Exception e) {
             e.printStackTrace();
@@ -652,7 +686,35 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
     @Override
     public void onTagClick(TagView tagView, Tag tag) {
         setSpecs(tag.getValue());
+        refreshPriceAndStoneCount(tag);
 
+        selectSpecMap.put(tag.getKey(), tag.getValue());
+        selectTag=tag;
+
+    }
+
+    /**
+     * 根据规格刷新价格和库存
+     * @param tag
+     */
+    private void refreshPriceAndStoneCount(Tag tag) {
+        if(!SSUtils.isEmpty(tag.getStore_count())){
+            int storeCount = SSUtils.str2Int(tag.getStore_count());
+            if (storeCount == 0) {
+                productIsinventories.setText("无货");
+            }else{
+                productIsinventories.setText("有货");
+            }
+        }
+
+        if(!SSUtils.isEmpty(tag.getPrice())){
+            detailsNowPriceTxtv.setText("现价：¥" + tag.getPrice());
+        }
+
+//        选择的数目
+        mCartCount=1;
+
+        cartCountDtxtv.setText(String.valueOf(mCartCount));
     }
 
     public void gotoShopcart() {
@@ -667,7 +729,6 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
         galleryIndex = page;
         refreshGalleryViewData();
     }
-
     //     is_collect  1收藏  0 未收藏
     public void refreshCollectButton(String is_collect) {
         Logger.e(this, "is_collect" + is_collect);

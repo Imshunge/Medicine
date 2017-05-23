@@ -158,6 +158,8 @@ public class StoneRechargeActivity extends BaseActivity {
                 if (mStoneList.size() > 0) {
                     StoneType stoneType = mStoneList.get(position);
                     addStoneOrder(stoneType);
+                    stoneTypeAdapter.setSeclection(position);
+                    stoneTypeAdapter.notifyDataSetChanged();
                 }
             }
         });

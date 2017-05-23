@@ -48,7 +48,7 @@ public class ArticleDetailActivity extends BaseActivity implements View.OnClickL
     private String articleId;
     private String articleTitle;
     private String id;
-    private Article mArticle;
+    private Article mArticle=new Article();
     private ImageView likeImgv;//收藏图标
     private Button backBtn;//返回按钮
     private Button likeBtn;//收藏按钮
@@ -253,15 +253,17 @@ public class ArticleDetailActivity extends BaseActivity implements View.OnClickL
                     toLoginPage();
                     return;
                 }
-//                if(mArti)
-                String type = mArticle.getType();
-                String act = "";
-                if (mArticle.getIs_collect().equals("1")) {//收藏 -> 取消收藏
-                    act = "cancel";
-                } else {
-                    act = "add";
+                if(!SSUtils.isEmpty(mArticle.getType())){
+                    String type = mArticle.getType();
+                    String act = "";
+                    if (mArticle.getIs_collect().equals("1")) {//收藏 -> 取消收藏
+                        act = "cancel";
+                    } else {
+                        act = "add";
+                    }
+                    collectOrCancelArtucile(type, act);
                 }
-                collectOrCancelArtucile(type, act);
+
                 break;
             case R.id.send_pinglun:
                 if (!MobileApplication.getInstance().isLogined) {
@@ -304,6 +306,10 @@ public class ArticleDetailActivity extends BaseActivity implements View.OnClickL
 
     //发表评论
     private void sendPingLunData(String content) {
+        if(SSUtils.isEmpty(mArticle.getArticleId())){
+            showToast("该文章不能发表评论");
+            return;
+        }
         InformationRequest.publishComment(mArticle.getArticleId(), "", content, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {

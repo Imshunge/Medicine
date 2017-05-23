@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,7 @@ import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
 import static com.shssjk.utils.SSUtils.getFromAssets;
+
 
 /**
  * 描述: 扫描2维码界面
@@ -235,7 +237,7 @@ public class CaptureActivity extends BaseActivity implements QRCodeView.Delegate
                         if (mProduct.getSpecArr() != null) {
 
                         }
-                        showToast("此商品无法添加到购物车");
+//                        showToast("此商品无法添加到购物车");
                         mQRCodeView.startSpot();
                     }
 
@@ -268,18 +270,40 @@ public class CaptureActivity extends BaseActivity implements QRCodeView.Delegate
         return super.onKeyDown(keyCode, event);
     }
     //显示结果
-    public void showDialog(final String msg) {
-        String[] strarray = msg.split("[&]");
-        String[] strarray1 = strarray[0].split("[=]");
+    public void showDialog(String msg) {
+        int goodsID = 0;
+        String goodsid="";
+        String[] strarray1 = new String[0];
+        boolean isUrl=false;
+//        判断是否为URL类型
+        if (Patterns.WEB_URL.matcher(msg).matches()) {
+            //符合标准
+            isUrl=true;
+        } else{
+            //不符合标准
+            isUrl=false;
+        }
+        if(isUrl){
+            strarray1 = new String[]{"", "该商品"};
+        }else{
+
+            String[] strarray = msg.split("[&]");
+            strarray1 = strarray[0].split("[=]");
+        }
+        goodsid = SSUtils.getNumbers(msg);
+        goodsID = SSUtils.str2Int(goodsid);
         ConfirmDialog.Builder builder = new ConfirmDialog.Builder(mContext);
-        builder.setMessage(String.format("是否添加:%1$s 到购物车?", strarray1[1]));
+        if(strarray1.length>=2){
+            builder.setMessage(String.format("是否添加:%1$s 到购物车?", strarray1[1]));
+        }else {
+            builder.setMessage("是否添加到购物车?");
+        }
         builder.setTitle("系统提示");
+        final int finalGoodsID = goodsID;
         builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                String goodsid = SSUtils.getNumbers(msg);
-                int goodsID = SSUtils.str2Int(goodsid);
-                getGoodsspec(goodsID);
+                getGoodsspec(finalGoodsID);
             }
         });
         builder.setNegativeButton(R.string.cancel,
@@ -296,6 +320,8 @@ public class CaptureActivity extends BaseActivity implements QRCodeView.Delegate
         switch (v.getId()) {
             case R.id.ritht_title_txtv:
                 showConfirmDialog(getFromAssets(("guid_capture.txt"), mContext),"使用说明");
+//                showDialog("http://www.shssjk.com/index.php/Mobile/Goods/goodsInfo/id/333.html");
+//                showDialog("title=猴头菇&goodid=333");
                break;
         }
     }

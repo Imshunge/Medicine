@@ -9,7 +9,7 @@ import android.util.Log;
 public class Logger {
 
 	/** Log输出的控制开关 */
-	public static boolean isShowLog = true;
+	public static boolean isShowLog = false;
 	public static void e(Object objTag, String msg) {
 		if (!isShowLog) {
 			return;

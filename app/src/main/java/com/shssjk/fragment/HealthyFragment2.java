@@ -126,22 +126,22 @@ public class HealthyFragment2 extends BaseFragment implements MobileScrollLayout
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.right_button, R.id.tv_blood, R.id.tv_sugar, R.id.tv_stepcounter})
+    @OnClick({R.id.right_button , R.id.rl_sugar,R.id.rl_blood, R.id.rl_stepcounter})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.right_button:
                 startupBindDeviceActivity();
                 break;
-            case R.id.tv_blood:
+            case R.id.rl_blood:
                 Intent bloodActivityIntent = new Intent(mContext, BloodActivity.class);
                 startActivity(bloodActivityIntent);
                 break;
-            case R.id.tv_sugar:
+            case R.id.rl_sugar:
                 //更新设备列表 血糖仪
                 Intent sugarActivityIntent = new Intent(mContext, SugarActivity.class);
                 startActivity(sugarActivityIntent);
                 break;
-            case R.id.tv_stepcounter:
+            case R.id.rl_stepcounter:
                 Intent stepCounterActivityIntent = new Intent(mContext, StepCounterActivity.class);
                 startActivity(stepCounterActivityIntent);
                 break;

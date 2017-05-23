@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".person.AddCameraActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,9 +57,7 @@
             android:layout_height="@dimen/height_text"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_space"
-            android:gravity="center_vertical|right"
-            android:text=""
-            />
+            android:gravity="center_vertical|right" />
     </RelativeLayout>
     <View  style="@style/separator_line"/>
 
@@ -89,9 +86,7 @@
             android:layout_height="@dimen/height_text"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_space"
-            android:gravity="center_vertical|right"
-            android:text=""
-            />
+            android:gravity="center_vertical|right" />
     </RelativeLayout>
     </LinearLayout>
     <View  style="@style/separator_line"/>
@@ -166,6 +161,7 @@
             android:paddingLeft="15dp"
             android:text="@string/cameralistactivity_local_video"
             android:background="@drawable/button_pop_selector"
+            android:visibility="gone"
             />
     </LinearLayout>
     <View  style="@style/separator_line"/>
