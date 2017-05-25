@@ -209,7 +209,7 @@ public class SSUtils {
      */
     public static String stampToDate(String s) {
         String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         long lt = new Long(s);
         Date date = new Date(lt);
         res = simpleDateFormat.format(date);
@@ -403,20 +403,20 @@ public class SSUtils {
         int monthBirth = cal.get(Calendar.MONTH);
         int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
         int age = yearNow - yearBirth;
-        if (monthNow <= monthBirth) {
-            if (monthNow == monthBirth) {
-                //monthNow==monthBirth
-                if (dayOfMonthNow < dayOfMonthBirth) {
-                    age--;
-                } else {
-                }
-            } else {
-                age--;
-            }
-        } else {
-            //monthNow<monthBirth
-            //donothing
-        }
+//        if (monthNow <= monthBirth) {
+//            if (monthNow == monthBirth) {
+//                //monthNow==monthBirth
+//                if (dayOfMonthNow < dayOfMonthBirth) {
+//                    age--;
+//                } else {
+//                }
+//            } else {
+//                age--;
+//            }
+//        } else {
+//            //monthNow<monthBirth
+//            //donothing
+//        }
         return age + "";
     }
 

@@ -115,9 +115,7 @@ public class MainActivity extends BaseActivity {
     public static MainActivity getmInstance() {
         return mInstance;
     }
-
     private Context mContext;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setCustomerTitle(false, false, getString(R.string.title_home));
@@ -136,7 +134,6 @@ public class MainActivity extends BaseActivity {
             mCurrentSelectIndex = INDEX_INFOR;
         }
         setSelectIndex(mCurrentSelectIndex);
-
         mInstance = this;
         initPush();
     }
@@ -350,11 +347,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        //Log.d(TAG, "onRestart.." +getIntent().hasExtra(SELECT_INDEX));
+        //Logger.d(TAG, "onRestart.." +getIntent().hasExtra(SELECT_INDEX));
         int selectIndex = -1;
         if (getIntent() != null && getIntent().hasExtra(SELECT_INDEX)) {
             selectIndex = getIntent().getIntExtra(SELECT_INDEX, -1);
-            //Log.d(TAG, "onRestart , selectIndex : " + selectIndex );
+            //Logger.d(TAG, "onRestart , selectIndex : " + selectIndex );
             if (selectIndex != -1) setSelectIndex(selectIndex);
         }
     }
@@ -451,10 +448,12 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(chageToHealthReceiver);
+        Logger.e("====", "onResume()");
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             exit();
             return true;
@@ -467,15 +466,28 @@ public class MainActivity extends BaseActivity {
             showToast("再按一次退出尚尚健康");
             mExitTime = System.currentTimeMillis();
         } else {
-
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            startActivity(intent);
-
-//            finish();
+//      在activity中调用 moveTaskToBack (boolean nonRoot)方法即可将activity 退到后台，注意不是finish()退出。
+            moveTaskToBack(true);
         }
     }
+    @Override
+    protected void onPause() {
+        Logger.e("====", "onPause()");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Logger.e("====", "onStop()");
+        super.onStop();
+    }
+
+      @Override
+    protected void onStart() {
+        Logger.e("====", "onStart()");
+        super.onStart();
+    }
+
 
 
 }

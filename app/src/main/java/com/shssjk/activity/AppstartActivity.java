@@ -163,7 +163,10 @@ public class AppstartActivity extends BaseActivity {
         if (!TextUtils.isEmpty(path)) {
 
 //            测试   if (visionCode.equals(path))
-            if (visionCode.equals(path)) {
+
+//            check_version(visionCode,path);
+//            if (visionCode.equals(path)) {
+            if (!check_version(visionCode,path)) {
                 startMainActivity();
                 finish();
             } else {
@@ -203,7 +206,7 @@ public class AppstartActivity extends BaseActivity {
         Intent intent = new Intent(mContext,
                 MainActivity.class);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     /**
@@ -385,5 +388,32 @@ public class AppstartActivity extends BaseActivity {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    /**
+     *
+     * @param ver1 当前版本
+     * @param ver2  服务器版本
+     * @return  true  更新
+     */
+    // 比较版本号检测更新
+    public final static boolean check_version(String ver1, String ver2) {
+        String[] ver1s = ver1.split("\\.");
+        String[] ver2s = ver2.split("\\.");
+        // 循环检测
+        for (int i = 0; i < ver1s.length; i++) {
+            if (i < ver1s.length && i < ver2s.length) {
+                if (Integer.valueOf(ver2s[i]) > Integer.valueOf(ver1s[i])) {
+                    return true;
+                } else if (Integer.valueOf(ver2s[i]) < Integer
+                        .valueOf(ver1s[i])) {
+                    return false;
+                }
+            }
+        }
+        if (ver2s.length > ver1s.length) {
+            return true;
+        }
+        return false;
     }
 }

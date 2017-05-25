@@ -5,7 +5,6 @@ package com.shssjk.activity.person;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +25,7 @@ import com.shssjk.http.person.SPUserRequest;
 import com.shssjk.model.person.Bank;
 import com.shssjk.utils.SPStringUtils;
 import com.shssjk.utils.SSUtils;
+import com.shssjk.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ public class StoneWithdrawActivity extends BaseActivity {
     private String code;
     private String stone;
     private boolean isAdd = false;//是否为添加 true 添加 ，false  修改
-
+    private double myCountStoeNum=0D;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setCustomerTitle(true, true, getString(R.string.person_mystone_withdraw));
@@ -79,9 +79,11 @@ public class StoneWithdrawActivity extends BaseActivity {
     @Override
     public void initData() {
         getBankList();
-
-
         bankcardIssuerEdtv.setText("");
+        String strStoneNum =getIntent().getStringExtra("StoneNum");
+        if (getIntent() != null || strStoneNum != null) {
+            myCountStoeNum=  SSUtils.string2double(strStoneNum);
+        }
     }
     @Override
     public void initEvent() {
@@ -91,7 +93,7 @@ public class StoneWithdrawActivity extends BaseActivity {
                                        int pos, long id) {
                 if (isSpinnerFirst) {
                     bankcardIssuerEdtv.setText("");
-                    if(!isAdd){
+                    if (!isAdd) {
 //                        bankcardIssuerEdtv.setText(bank.getBank());
                     }
                 } else {
@@ -138,6 +140,26 @@ public class StoneWithdrawActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_send_sms:
                 codeNumEdtv.setText("");
+
+                if (SPStringUtils.isEditEmpty(bankNumEdtv) ) {
+                    showToast("请输提现金额");
+                    return;
+                }else{
+                    if(myCountStoeNum<500){
+                        showToast("提现金额下限为500,您账户的石头数目为 "+myCountStoeNum);
+                        return;
+                    }else{
+                        stone = bankNumEdtv.getText().toString().trim();
+                        if(SSUtils.string2double(stone)<500){
+                            showToast("提现金额下限为500");
+                            return;
+                        }
+                    }
+                }
+//                if(myCountStoeNum<500){
+//                    showToast("提现金额不能小于500");
+//                    return;
+//                }
                 onBtnReCodeClick();
                 break;
             case R.id.btn_withdraw:
@@ -145,11 +167,20 @@ public class StoneWithdrawActivity extends BaseActivity {
                     showToast("银行卡号不能为空");
                     return;
                 }
-                if (SPStringUtils.isEditEmpty(bankNumEdtv)) {
+                if (SPStringUtils.isEditEmpty(bankNumEdtv) ) {
                     showToast("请输提现金额");
                     return;
                 }else{
-                    stone = bankNumEdtv.getText().toString().trim();
+                    if(myCountStoeNum<500){
+                        showToast("提现金额下限为500,您账户的石头数目为 "+myCountStoeNum);
+                     return;
+                    }else{
+                        stone = bankNumEdtv.getText().toString().trim();
+                        if(SSUtils.string2double(stone)<500){
+                            showToast("提现金额下限为500");
+                            return;
+                        }
+                    }
                 }
                 if (SPStringUtils.isEditEmpty(codeNumEdtv)) {
                     showToast("请输入验证码");

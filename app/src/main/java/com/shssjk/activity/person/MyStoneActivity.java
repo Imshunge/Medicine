@@ -93,7 +93,8 @@ public class MyStoneActivity extends BaseActivity {
             @Override
             public void singleClick(View v) {
 //            避免2次点击
-                checkIsToWork();
+//                checkIsToWork();
+                showToast("该功能暂未开放");
             }
         });
     }
@@ -141,8 +142,9 @@ public class MyStoneActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mystone_recharge_aview:
-                Intent rechargeIntent = new Intent(MyStoneActivity.this, StoneRechargeActivity.class);
-                startActivityForResult(rechargeIntent, MobileConstants.Result_Code_Refresh);
+//                Intent rechargeIntent = new Intent(MyStoneActivity.this, StoneRechargeActivity.class);
+//                startActivityForResult(rechargeIntent, MobileConstants.Result_Code_Refresh);
+                showToast("该功能暂未开放");
                 break;
             default:
                 break;
@@ -150,6 +152,8 @@ public class MyStoneActivity extends BaseActivity {
     }
     private void startStoneWithdrawActivity() {
         Intent mystoneWithdrawIntent = new Intent(MyStoneActivity.this, StoneWithdrawActivity.class);
+        mystoneWithdrawIntent.putExtra("StoneNum",tvStoneNum.getText().toString().trim());
+
         startActivity(mystoneWithdrawIntent);
     }
     //    判断是否创业

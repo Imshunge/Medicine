@@ -2205,6 +2205,9 @@ public class PersonRequest {
                         if(status==1){
                             failuredListener.onRespone(msg, status);
                         }
+                        if(status==2){
+                            failuredListener.onRespone(msg, status);
+                        }
                         else {
                             failuredListener.onRespone(msg, 1);
                         }

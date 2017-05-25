@@ -34,10 +34,13 @@ import com.shssjk.utils.SSUtils;
 import com.shssjk.utils.StepMenuDialog;
 import com.shssjk.view.CircleBar;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -82,6 +85,17 @@ public class StepCounterActivity extends BaseActivity {
     private int total_step = 0;   //当前步数
     private Context mContext;
 
+    public String getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
+    }
+
+    private String lastTime; //最后上传的时间
+
+
     // 本地广播
     class StepCountChangeLocalReceiver extends BroadcastReceiver {
         @Override
@@ -91,15 +105,17 @@ public class StepCounterActivity extends BaseActivity {
             countDistanceAndCalories(stepCpunterBinder.getStepCpunt());
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         if (MobileApplication.getInstance().isLogined) {
             getStepUserInfo();
-        }else{
+        } else {
 
         }
     }
+
     private void setStepInfo(String step, String heightStr, String weightStr) {
         if (!SSUtils.isEmpty(heightStr)) {
             step_length = SSUtils.getStepLenth(SSUtils.str2Int(heightStr));
@@ -112,6 +128,7 @@ public class StepCounterActivity extends BaseActivity {
         }
         circleBar.setMax(SSUtils.str2Int(step));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setCustomerTitle(true, true, "计步器", true);
@@ -201,7 +218,6 @@ public class StepCounterActivity extends BaseActivity {
         Intent service = new Intent(StepCounterActivity.this, StepCounterService.class);
         startService(service);
         bindService(service, connection, BIND_AUTO_CREATE); // 绑定服务
-
 
 
         tvHintSetting.setOnClickListener(new View.OnClickListener() {
@@ -302,34 +318,73 @@ public class StepCounterActivity extends BaseActivity {
         circleBar.setMax(SSUtils.str2Int(stepPersonInfo.getTarget()));
     }
 
-    private void addStepData(String userID) {
+    private void addStepData(final String userID) {
         PersonRequest.getLastRecord(new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {
                 if (response != null) {
                     JSONObject lastRecoerd = (JSONObject) response;
+                    try {
+                        setLastTime(SSUtils.TimeStamp2Date(lastRecoerd.getString("data"), "yyyy-MM-dd"));
+                        addStep2(userID, 2);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    };
                 }
             }
         }, new SPFailuredListener((IViewController) mContext) {
             @Override
             public void onRespone(String msg, int errorCode) {
 //                showToast(msg);
+                if(!SSUtils.isEmpty(errorCode)&&2==errorCode){
+                    addStep2(userID, 1);
+                }
             }
         });
-//        RequestParams params = new RequestParams();
+
+
+
+    }
+
+    private void addStep2(String userID, int type) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = new Date();
         List<Step> stepList = DataSupport.select()
-                .order("id desc")
-                .find(Step.class);
+                .where("time = ?", df.format(now)).find(Step.class);
         //添加计步明细
-        RequestParams params = new RequestParams();
-        for (int i = 0; i < stepList.size(); i++) {
-            String step = "arr[" + i + "][step]";
-            params.put(step, stepList.get(i).getCount());
-            String date = "arr[" + i + "][date]";
-            params.put(date, stepList.get(i).getTimestamp());
-            String userId = "arr[" + i + "][user_id]";
-            params.put(userId, userID);
+        int stepListSize = stepList.size();
+        long differLocal = 0;
+        long differService = 0;
+        try {
+            if(type==2){
+                differLocal = SSUtils.getDistanceDays(stepList.get(stepListSize-1).getTime(), getLastTime());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        int intdifferLocal = new Long(differLocal).intValue();
+
+        RequestParams params = new RequestParams();
+        if(intdifferLocal==0){
+            Step stepTemp = stepList.get(stepListSize-1);
+            String step = "arr[" + 0 + "][step]";
+            params.put(step, stepTemp.getCount());
+            String date = "arr[" + 0 + "][date]";
+            params.put(date, stepTemp.getTimestamp());
+            String userId = "arr[" + 0 + "][user_id]";
+            params.put(userId, userID);
+        }else{
+            for (int i = 0; i <((intdifferLocal >stepListSize)? stepListSize : intdifferLocal); i++) {
+                Step stepTemp = stepList.get(stepListSize-1-i);
+                String step = "arr[" + i + "][step]";
+                params.put(step, stepTemp.getCount());
+                String date = "arr[" + i + "][date]";
+                params.put(date, stepTemp.getTimestamp());
+                String userId = "arr[" + i + "][user_id]";
+                params.put(userId, userID);
+            }
+        }
+
         PersonRequest.addStepRecord(params, new SPSuccessListener() {
             @Override
             public void onRespone(String msg, Object response) {

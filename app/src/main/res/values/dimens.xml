@@ -138,6 +138,8 @@
     <dimen name="margin100dp">100dp</dimen>
     <dimen name="margin150dp">150dp</dimen>
     <dimen name="margin250dp">250dp</dimen>
+    <dimen name="margin220dp">220dp</dimen>
+
     <dimen name="margin200dp">200dp</dimen>
 
 </resources>

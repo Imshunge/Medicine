@@ -147,7 +147,12 @@ public class StoneRechargeActivity extends BaseActivity {
     }
     @Override
     public void initSubViews() {
-
+//        if (getIntent() == null || getIntent().getStringExtra("") == null) {
+//            showToast(getString(R.string.toast_no_data));
+//            this.finish();
+//            return;
+//        }
+//        this.myCountStoeNum = getIntent().getStringExtra("goodsId");
     }
     @Override
     public void initData() {

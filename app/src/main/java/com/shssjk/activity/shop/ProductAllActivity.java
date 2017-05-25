@@ -66,7 +66,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 /**
  * 商品详情
  */

@@ -15,8 +15,6 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.IBinder;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -29,7 +27,6 @@ import com.shssjk.model.health.Step;
 import com.shssjk.utils.Logger;
 
 import org.litepal.crud.DataSupport;
-import org.litepal.crud.callback.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,12 +35,13 @@ import java.util.List;
 
 
 public class StepCounterService extends Service {
+    private final static String TAG = StepCounterService.class.getSimpleName();
 
     public static Boolean FLAG = false;// ������
     private SensorManager mSensorManager;// ����������
     private StepDetector detector;// ��������������
     private LocalBroadcastManager localBroadcastManager;
-
+    private final static int GRAY_SERVICE_ID = -1001;
     private StepCountListener stepCountListener = new StepCountListener() {
         @Override
         public void onStept(int stept) {
@@ -95,6 +93,13 @@ public class StepCounterService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (Build.VERSION.SDK_INT < 18) {
+            startForeground(GRAY_SERVICE_ID, new Notification());//API < 18 ，此方法能有效隐藏Notification上的图标
+        } else {
+            Intent innerIntent = new Intent(this, StepCounterInnerService.class);
+            startService(innerIntent);
+            startForeground(GRAY_SERVICE_ID, new Notification());
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -105,6 +110,16 @@ public class StepCounterService extends Service {
                     Intent intent2 = new Intent("com.ssjk.stepchange.LocalReceiver");
                     localBroadcastManager.sendBroadcast(intent2);
                     isNewDay();
+                }else{
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    Date now = new Date();
+                    List<Step> stepList = DataSupport.select()
+                            .where("time = ?", df.format(now)).find(Step.class);
+                    if (stepList.size()>0&& stepList.get(0).getCount()!=0){
+                        StepDetector.CURRENT_SETP =stepList.get(0).getCount();
+                    }else if (stepList.size()==0 ){
+                        clearSetp();
+                    }
                 }
             }
         }).start();
@@ -165,50 +180,26 @@ public class StepCounterService extends Service {
     }
 
     private void save() {
+
+
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式3
         Date now = new Date();
+
+//        List<Step> stepList = DataSupport.select()
+//                .where("time = ?", df.format(now)).find(Step.class);
+//        Logger.e("StepCounterService", stepList.size() + "");
+
+
+
+
         Step step = new Step();
         step.setTimestamp(Calendar.getInstance().getTimeInMillis() / 1000 + "");
         step.setCount(steptemp);
-        step.setTime(df.toString());
-        step.saveOrUpdate("time=?", df.toString());
-        step.saveOrUpdateAsync("time=?", df.format(now)).listen(new SaveCallback() {
-            @Override
-            public void onFinish(boolean b) {
-                List<Step> pushs = DataSupport.select()
-                        .order("id desc")
-                        .find(Step.class);
-                for (Step push : pushs) {
-                    Logger.e("MainActivity", push.getTime() + "");
-                    Logger.e("MainActivity", push.getCount() + "");
-                }
-            }
-        });
+        step.setTime(df.format(now));
+        step.saveOrUpdate("time=?", df.format(now));
         List<Step> stepList = DataSupport.select()
                 .where("time = ?", df.format(now)).find(Step.class);
-        Logger.e("StepCounterService", stepList.size() + "");
-//        if(stepList.size()==0&&steptemp!=0){
-//            Logger.e("StepCounterService","清零");
-//            clearSetp();
-//            step.setCount(0);
-//            step.setTime(df.toString());
-//            step.setTimestamp(Calendar.getInstance().getTimeInMillis() / 1000 + "");
-//            step.saveOrUpdate("time=?", df.toString());
-//            step.save();
-////            step.saveOrUpdateAsync("time=?", df.format(now)).listen(new SaveCallback() {
-////                @Override
-////                public void onFinish(boolean b) {
-////                    List<Step> pushs = DataSupport.select()
-////                            .order("id desc")
-////                            .find(Step.class);
-////                    for (Step push : pushs) {
-////                        Logger.e("MainActivity", push.getTime() + "");
-////                        Logger.e("MainActivity", push.getCount() + "");
-////                    }
-////                }
-////            });
-//        }
-//        clearSetp();
+                Logger.e("StepCounterService", stepList.size() + "");
         isNewDay();
     }
 
@@ -230,6 +221,37 @@ public class StepCounterService extends Service {
         }
     }
 
+    /**
+     * 给 API >= 18 的平台上用的灰色保活手段
+     */
+    public static class StepCounterInnerService extends Service {
 
+        @Override
+        public void onCreate() {
+            Logger.e(TAG, "InnerService -> onCreate");
+            super.onCreate();
+        }
+
+        @Override
+        public int onStartCommand(Intent intent, int flags, int startId) {
+            Logger.e(TAG, "InnerService -> onStartCommand");
+            startForeground(GRAY_SERVICE_ID, new Notification());
+            //stopForeground(true);
+            stopSelf();
+            return super.onStartCommand(intent, flags, startId);
+        }
+
+        @Override
+        public IBinder onBind(Intent intent) {
+            // TODO: Return the communication channel to the service.
+            throw new UnsupportedOperationException("Not yet implemented");
+        }
+
+        @Override
+        public void onDestroy() {
+            Logger.e(TAG, "InnerService -> onDestroy");
+            super.onDestroy();
+        }
+    }
 
 }
