@@ -87,13 +87,14 @@ public class CollectListAdapter extends BaseAdapter {
         //获取该行数据
         SPCollect collect = (SPCollect)mCollectLst.get(position);
 
-		String imgUrl1 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, collect.getGoodsID());
+//		String imgUrl1 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, collect.getGoodsID());
 
-		Glide.with(mContext).load(imgUrl1).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.picIngv);
+		String imgUrl = MobileConstants.BASE_HOST+collect.getOriginal_img();
+
+		Glide.with(mContext).load(imgUrl).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.picIngv);
 		if (!SPStringUtils.isEmpty(collect.getGoodsName())){
 			holder.nameTxtv.setText(collect.getGoodsName());
 		}
-
 		if (!SPStringUtils.isEmpty(collect.getShopPrice())){
 			holder.priceTxtv.setText("¥"+collect.getShopPrice());
 		}

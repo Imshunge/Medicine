@@ -100,9 +100,12 @@ public class StepCounterActivity extends BaseActivity {
     class StepCountChangeLocalReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            total_step = stepCpunterBinder.getStepCpunt();
-            circleBar.setProgress(total_step, 1);
-            countDistanceAndCalories(stepCpunterBinder.getStepCpunt());
+
+            if(!SSUtils.isEmpty(stepCpunterBinder.getStepCpunt())){
+                total_step = stepCpunterBinder.getStepCpunt();
+                circleBar.setProgress(total_step, 1);
+                countDistanceAndCalories(stepCpunterBinder.getStepCpunt());
+            }
         }
     }
 
@@ -115,7 +118,6 @@ public class StepCounterActivity extends BaseActivity {
 
         }
     }
-
     private void setStepInfo(String step, String heightStr, String weightStr) {
         if (!SSUtils.isEmpty(heightStr)) {
             step_length = SSUtils.getStepLenth(SSUtils.str2Int(heightStr));
@@ -238,9 +240,9 @@ public class StepCounterActivity extends BaseActivity {
      * 计算行程
      */
     private void countDistanceAndCalories(int count) {
-        distance = count * step_length * 0.01 * 0.001;//步长试试cm   *0.01换算成米
+        distance = count * step_length * 0.01 * 0.001;//步长试试cm    公里
         // 计算消耗的卡路里热量
-        calories = weight * distance;
+        calories = weight * distance  ;
         tvCalories.setText(formatDouble(calories));
         tvMileage.setText(formatDouble(distance));
         setHintStr(calories + "", 2);
@@ -296,7 +298,6 @@ public class StepCounterActivity extends BaseActivity {
         if (1 == errorCode) {
             tvHintSetting.setEnabled(true);
             tvHintSetting.setText("点击设置身高体重，获取消耗的卡路里");
-
         } else if (errorCode == CALCALORIES) {
             if (isShowCalcalories) {
                 tvHintSetting.setEnabled(false);

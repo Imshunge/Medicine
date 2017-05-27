@@ -188,10 +188,6 @@ public class StepCounterService extends Service {
 //        List<Step> stepList = DataSupport.select()
 //                .where("time = ?", df.format(now)).find(Step.class);
 //        Logger.e("StepCounterService", stepList.size() + "");
-
-
-
-
         Step step = new Step();
         step.setTimestamp(Calendar.getInstance().getTimeInMillis() / 1000 + "");
         step.setCount(steptemp);
@@ -225,7 +221,6 @@ public class StepCounterService extends Service {
      * 给 API >= 18 的平台上用的灰色保活手段
      */
     public static class StepCounterInnerService extends Service {
-
         @Override
         public void onCreate() {
             Logger.e(TAG, "InnerService -> onCreate");

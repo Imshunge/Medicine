@@ -650,7 +650,7 @@
     <string name="todaystep">每日步数</string>
 
 
-    <string name="stepcount"><xliff:g id="step_count">消耗%1$s</xliff:g>千卡</string>
+    <string name="stepcount"><xliff:g id="step_count">消耗%1$s</xliff:g>大卡</string>
 
 
 

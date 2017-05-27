@@ -77,7 +77,7 @@
                 style="@style/textStyle.Hug.black"
                 android:textColor="@color/sub_title"
                 android:gravity="center"
-                android:text="消耗(千卡)" />
+                android:text="消耗(大卡)" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"

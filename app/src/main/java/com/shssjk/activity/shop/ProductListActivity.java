@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -81,7 +80,6 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
             }
         }
     };
-
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -99,7 +97,6 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
         refreshData();
         instance = this;
     }
-
     public static ProductListActivity getInstance(){
         return instance;
     }

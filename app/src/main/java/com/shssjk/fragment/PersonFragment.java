@@ -47,7 +47,6 @@ import com.shssjk.activity.person.UserDetailsActivity;
 import com.shssjk.activity.shop.ConsigneeAddressListActivity;
 import com.shssjk.activity.user.MyTeamActivity;
 import com.shssjk.adapter.GuessYouLiketListAdapter;
-import com.shssjk.adapter.SPGuessYouLikeAdapter;
 import com.shssjk.common.MobileConstants;
 import com.shssjk.global.MobileApplication;
 import com.shssjk.http.base.SPFailuredListener;
@@ -63,7 +62,7 @@ import com.shssjk.utils.SSUtils;
 import com.shssjk.view.CustomProgressBar;
 import com.shssjk.view.GlideCircleTransform;
 import com.shssjk.view.SPHomeListView;
-import com.shssjk.view.SPMoreImageView;
+
 import vstc2.nativecaller.NativeCaller;
 
 import java.util.ArrayList;
@@ -113,7 +112,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
     GridView mGridView;
     SPHomeListView mHomeListView;
-    SPGuessYouLikeAdapter mAdapter;
     List<SPProduct> mProducts=new ArrayList<>();
     CustomProgressBar  customProgressBar;//等级进度条
 

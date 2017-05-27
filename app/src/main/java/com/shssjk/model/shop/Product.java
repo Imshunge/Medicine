@@ -23,7 +23,7 @@ public class Product  implements Model, Serializable {
     private String keywords;
     private String goods_remark;
     private String goods_content;
-    private String original_img;
+    private String original_img="";
     private String is_real;
     private String is_on_sale;
     private String is_free_shipping;

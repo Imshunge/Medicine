@@ -324,7 +324,7 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
                     mBitmap = mBundle.getParcelable("data");
                     if (mBitmap != null) {
                         /** 上传到服务器 待--- */
-                        setPictureToSD(mBitmap);// 保存本地
+//                        setPictureToSD(mBitmap);// 保存本地
 //                        headImage.setImageBitmap(mBitmap);// 显示
 
 

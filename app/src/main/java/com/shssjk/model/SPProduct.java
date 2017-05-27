@@ -184,6 +184,12 @@ public class SPProduct implements Model, Serializable {
 	}
 
 
+	public String getOriginal_img() {
+		return original_img;
+	}
+
+	private String original_img ;
+
 	@Override
 	public String[] replaceKeyFromPropertyName() {
 

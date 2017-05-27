@@ -80,7 +80,6 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     TextView levelName;
 
     GridView mGridView;
-//    SPGuessYouLikeAdapter mAdapter;
     List<SPProduct> mProducts ;
 
 

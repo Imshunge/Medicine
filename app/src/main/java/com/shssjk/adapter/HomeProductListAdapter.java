@@ -25,7 +25,6 @@ import java.util.List;
  */
 public class HomeProductListAdapter extends BaseAdapter {
 
-	private String TAG = "SPProductListAdapter";
 
 	private List<Product> mProductLst ;
 	private Context mContext ;
@@ -105,8 +104,12 @@ public class HomeProductListAdapter extends BaseAdapter {
         holder.priceTxtv1.setText(""+String.valueOf(price1));
         holder.nameTxtv1.setText(product1.getGoodsName());
 
-		String imgUrl1 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, 400, 400, product1.getGoodsId());
-		Glide.with(mContext).load(imgUrl1).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.picImgv1);
+//		String imgUrl1 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, 400, 400, product1.getGoodsId());
+
+//		if()
+
+		String imgUrl = MobileConstants.BASE_HOST+product1.getOriginalImg();
+		Glide.with(mContext).load(imgUrl).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.picImgv1);
 		holder.view1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -126,7 +129,9 @@ public class HomeProductListAdapter extends BaseAdapter {
             holder.nameTxtv2.setText(product2.getGoodsName());
             holder.priceTxtv2.setText(""+String.valueOf(price2));
             holder.nameTxtv2.setText(product2.getGoodsName());
-			String imgUrl2 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, product2.getGoodsId());
+//			String imgUrl2 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, product2.getGoodsId());
+
+			String imgUrl2 = MobileConstants.BASE_HOST+product2.getOriginalImg();
 			Glide.with(mContext).load(imgUrl2).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.picImgv2);
             holder.view2.setOnClickListener(new View.OnClickListener() {
 				@Override

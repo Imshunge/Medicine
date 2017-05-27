@@ -95,19 +95,22 @@ public class GuessYouLiketListAdapter extends BaseAdapter {
         holder.priceTxtv1.setText(""+String.valueOf(price1));
         holder.nameTxtv1.setText(product1.getGoodsName());
 
-		String imgUrl1 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, 400, 400, product1.getGoodsID());
-		Glide.with(mContext).load(imgUrl1).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.picImgv1);
+//		String imgUrl1 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, 400, 400, product1.getGoodsID());
+		String imgUrl = MobileConstants.BASE_HOST+product1.getOriginalImg();
+
+		Glide.with(mContext).load(imgUrl).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.picImgv1);
 		holder.view1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (mListener != null) {
-					mListener.onItemClickListener((SPProduct)mProductLst.get(position * 2) );
+					mListener.onItemClickListener((SPProduct) mProductLst.get(position * 2));
 				}
 			}
-		 });
+		});
+		holder.view2.setVisibility(View.INVISIBLE);
 
         if ((position * 2 + 1) < mProductLst.size()) {
-
+			holder.view2.setVisibility(View.VISIBLE);
         	SPProduct product2 = (SPProduct)mProductLst.get(position * 2+1 );
 
             //设置数据到View
@@ -116,7 +119,8 @@ public class GuessYouLiketListAdapter extends BaseAdapter {
             holder.nameTxtv2.setText(product2.getGoodsName());
             holder.priceTxtv2.setText(""+String.valueOf(price2));
             holder.nameTxtv2.setText(product2.getGoodsName());
-			String imgUrl2 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, product2.getGoodsID());
+//			String imgUrl2 = SPCommonUtils.getThumbnail(MobileConstants.FLEXIBLE_THUMBNAIL, product2.getGoodsID());
+			String imgUrl2 = MobileConstants.BASE_HOST+product2.getOriginalImg();
 			Glide.with(mContext).load(imgUrl2).placeholder(R.drawable.product_default).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.picImgv2);
             holder.view2.setOnClickListener(new View.OnClickListener() {
 				@Override

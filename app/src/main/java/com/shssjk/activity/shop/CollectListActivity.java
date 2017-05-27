@@ -46,9 +46,7 @@ public class CollectListActivity extends BaseActivity {
         setContentView(R.layout.activity_spcollect_list);
         super.init();
     }
-//    initSubViews();
-//    initEvent();
-//    initData();
+
     @Override
     public void initSubViews() {
 //        标题颜色

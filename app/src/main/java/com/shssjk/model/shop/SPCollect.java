@@ -26,6 +26,12 @@ public class SPCollect implements Model {
    String imageThumlUrl;
 
 
+    public String getOriginal_img() {
+        return original_img;
+    }
+
+    String  original_img="";
+
     
     @Override
     public String[] replaceKeyFromPropertyName() {
