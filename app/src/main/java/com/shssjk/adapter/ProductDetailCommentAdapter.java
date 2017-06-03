@@ -79,29 +79,24 @@ public class ProductDetailCommentAdapter extends BaseAdapter {
 			holder.starView = ((StarView) convertView.findViewById(R.id.comment_star_layout));
 			holder.gallery = ((LinearLayout) convertView.findViewById(R.id.comment_gallery_lyaout));
 			holder.scrollv = ((HorizontalScrollView) convertView.findViewById(R.id.comment_product_scrollv));
-
 			holder.starView.setIsResponseClickListener(false);
 			  //设置标记
 			  convertView.setTag(holder);
         }else{
       	  holder = (ViewHolder) convertView.getTag();
         }
-
         //获取该行数据
 		GoodsComment goodsComment = (GoodsComment)mComments.get(position);
 		if (!SPStringUtils.isEmpty(goodsComment.getAddTime())){
 			holder.dateTxtv.setText(SSUtils.TimeStamp2Date(goodsComment.getAddTime(), "yyyy-MM-dd HH:mm:ss"));
 		}
 		Glide.with(mContext).load(goodsComment.getHead_pic()).placeholder(R.drawable.person_default_head).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.headImgv);
-
 		holder.usernameTxtv.setText(goodsComment.getUsername());
 		holder.contentTxtv.setText(goodsComment.getContent());
-
 		if (goodsComment.getGoodsRank()!=null){
 			int rank = Integer.valueOf(goodsComment.getGoodsRank());
 			holder.starView.checkStart(rank-1);
 		}
-
 		List<String> images = goodsComment.getImages();
 		if (SPCommonUtils.verifyArray(images)){
 			buildProductGallery(holder.gallery,goodsComment);
@@ -111,7 +106,6 @@ public class ProductDetailCommentAdapter extends BaseAdapter {
 			holder.scrollv.setVisibility(View.GONE);
 			convertView.setMinimumHeight(Float.valueOf(mContext.getResources().getDimension(R.dimen.comment_normal_height)).intValue());
 		}
-
         return convertView;
 	}
 	

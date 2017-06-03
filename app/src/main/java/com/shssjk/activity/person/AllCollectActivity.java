@@ -34,6 +34,7 @@ public class AllCollectActivity extends BaseActivity {
 
     @Bind(R.id.magic_indicator)
     MagicIndicator mMagicIndicator;
+//    https://github.com/hackware1993/MagicIndicator 使用
     @Bind(R.id.view_pager)
     ViewPager viewPager;
     private FragmentPagerAdapter fragPagerAdapter;

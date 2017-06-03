@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-
-
 import com.shssjk.activity.R;
 
 import java.util.ArrayList;
@@ -25,7 +23,6 @@ public class StarView extends RelativeLayout implements View.OnClickListener {
 	private boolean isResponseClickListener;
 	List<Button> starList;
 	private int rank; //星星数量
-	
 	public StarView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
@@ -89,7 +86,6 @@ public class StarView extends RelativeLayout implements View.OnClickListener {
 	 * @param
 	 */
 	public void checkStart(int rank){
-
 		for (int i = 0; i<5 ; i++){
 			Button starBtn = starList.get(i);
 			if (i <= rank){

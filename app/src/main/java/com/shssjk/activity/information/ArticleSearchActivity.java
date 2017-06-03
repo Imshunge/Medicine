@@ -28,7 +28,7 @@ import com.shssjk.http.information.InformationRequest;
 import com.shssjk.model.info.Article;
 import com.shssjk.model.info.Information;
 import com.shssjk.model.order.SPOrder;
-import com.shssjk.utils.SPDialogUtils;
+import com.shssjk.utils.DialogUtils;
 import com.soubao.tpshop.utils.SPStringUtils;
 
 import java.util.List;
@@ -158,7 +158,7 @@ public class ArticleSearchActivity extends BaseActivity  {
             @Override
             public void onClick(View v) {
                 if (SPStringUtils.isEmpty(searchText.getText().toString().trim())) {
-                    SPDialogUtils.showToast(mContext, "搜索内容不能为空");
+                    DialogUtils.showToast(mContext, "搜索内容不能为空");
                     return;
                 }
 //                startSearch(searchText.getText().toString().trim());
@@ -181,9 +181,8 @@ public class ArticleSearchActivity extends BaseActivity  {
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     //跳转activity
                     if (SPStringUtils.isEmpty(searchText.getText().toString().trim())) {
-                        SPDialogUtils.showToast(mContext, "搜索内容不能为空");
+                        DialogUtils.showToast(mContext, "搜索内容不能为空");
                     }else{
-//                        SPDialogUtils.showToast(mContext, "开始搜索");
                         searchStr = searchText.getText().toString().trim();
                         getArticleList();
                     }

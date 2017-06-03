@@ -31,7 +31,7 @@ import com.shssjk.model.shop.GoodsComment;
 import com.shssjk.model.shop.SPProductSpec;
 import com.shssjk.utils.Logger;
 import com.shssjk.utils.SMobileLog;
-import com.shssjk.utils.SPDialogUtils;
+import com.shssjk.utils.DialogUtils;
 import com.shssjk.utils.SPShopUtils;
 import com.shssjk.view.SPPageView;
 import com.shssjk.view.tagview.Tag;
@@ -202,7 +202,7 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
                 SMobileLog.e(TAG, "onRespone ,msg : " + msg);
-                SPDialogUtils.showToast(mContext, msg);
+                DialogUtils.showToast(mContext, msg);
             }
         });
     }

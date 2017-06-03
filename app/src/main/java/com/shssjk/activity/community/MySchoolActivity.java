@@ -125,33 +125,6 @@ public class MySchoolActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-//    public void getSchoolDetail() {
-//
-//        showLoadingToast("正在加载数据...");
-//
-//        CommunityRequest.getComquackDetailByID(cid,
-//                new SPSuccessListener() {
-//                    @Override
-//                    public void onRespone(String msg, Object response) {
-//                        hideLoadingToast();
-//                        if (response != null) {
-//                            mQuacks = (QuackDetail) response;
-////
-//                            showData(mQuacks);
-//                        }
-//
-//
-//                    }
-//                }, new SPFailuredListener() {
-//                    @Override
-//                    public void onRespone(String msg, int errorCode) {
-//                        hideLoadingToast();
-//                        showToast(msg);
-//                    }
-//                });
-//
-//    }
-
     private void showData(QuackDetail mQuacks) {
         tv_bodys.setText(mQuacks.getPersons());
         tv_essays.setText(mQuacks.getArticles());
@@ -193,32 +166,6 @@ public class MySchoolActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
     }
-
-//    private void addOrQuiteSchool() {
-//        showLoadingToast("正在操作...");
-//
-//        CommunityRequest.quitQuackWithCID(cid,
-//                new SPSuccessListener() {
-//                    @Override
-//                    public void onRespone(String msg, Object response) {
-//                        hideLoadingToast();
-//                        if (response != null) {
-////
-//                            showToast(msg);
-//
-//
-//                        }
-//
-//
-//                    }
-//                }, new SPFailuredListener() {
-//                    @Override
-//                    public void onRespone(String msg, int errorCode) {
-//                        hideLoadingToast();
-//                        showToast(msg);
-//                    }
-//                });
-//    }
 
     //    成员列表
     private void startComUserListActivity() {

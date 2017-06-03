@@ -1,4 +1,5 @@
 /**
+ * 特定 网络错误码 处理接口
  * @version V1.0
  */
 package com.shssjk.activity;

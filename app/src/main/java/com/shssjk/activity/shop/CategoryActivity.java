@@ -207,7 +207,6 @@ public class CategoryActivity extends BaseActivity {
 
     private void dealModels(List<Data> categories) {
         mAdapter.setData(categories);
-
     }
 
 

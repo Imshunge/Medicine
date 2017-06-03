@@ -12,8 +12,8 @@ import com.shssjk.activity.shop.ProductListActivity;
 import com.shssjk.activity.user.LoginActivity;
 import com.shssjk.utils.SMobileLog;
 import com.shssjk.utils.ConfirmDialog;
-import com.shssjk.utils.SPDialogUtils;
-import com.shssjk.utils.SPLoadingDialog;
+import com.shssjk.utils.DialogUtils;
+import com.shssjk.utils.LoadingDialog;
 
 import org.json.JSONObject;
 
@@ -24,7 +24,7 @@ import org.json.JSONObject;
  */
 public abstract class BaseFragment extends Fragment implements IViewController {
 
-	SPLoadingDialog mLoadingDialog;
+	LoadingDialog mLoadingDialog;
 	JSONObject mDataJson;
 	private String categoryId="850";
 	/**
@@ -51,7 +51,7 @@ public abstract class BaseFragment extends Fragment implements IViewController {
 
 	public void showToast(String msg){
 
-		SPDialogUtils.showToast(getActivity(), msg);
+		DialogUtils.showToast(getActivity(), msg);
 	}
 
 	public void showToastUnLogin(){
@@ -68,7 +68,7 @@ public abstract class BaseFragment extends Fragment implements IViewController {
 	}
 
 		public void showLoadingToast(String title){
-		mLoadingDialog = new SPLoadingDialog(getActivity() , title);
+		mLoadingDialog = new LoadingDialog(getActivity() , title);
 		mLoadingDialog.setCanceledOnTouchOutside(false);
 		mLoadingDialog.show();
 	}

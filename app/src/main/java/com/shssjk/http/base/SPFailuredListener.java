@@ -3,9 +3,8 @@ package com.shssjk.http.base;
 import com.shssjk.activity.IViewController;
 import com.shssjk.common.MobileConstants;
 
-
 /**
- * 首先会验证token是否过期/失效,
+ *  首先会验证token是否过期/失效,
  *  如果过期/失效会进入登录页面登录
  */
 public abstract class SPFailuredListener {
@@ -39,7 +38,6 @@ public abstract class SPFailuredListener {
             onRespone(msg , errorCode);
         }
     }
-
     public abstract void onRespone(String msg , int errorCode);
 
     public boolean preRespone(String msg , int errorCode){

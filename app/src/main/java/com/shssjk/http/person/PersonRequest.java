@@ -807,7 +807,6 @@ public class PersonRequest {
                     failuredListener.onRespone(e.getMessage(), -1);
                 }
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 failuredListener.onRespone(throwable.getMessage(), statusCode);

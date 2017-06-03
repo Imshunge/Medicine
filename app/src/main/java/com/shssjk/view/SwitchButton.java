@@ -70,7 +70,6 @@ public class SwitchButton extends View implements View.OnClickListener {
                 R.drawable.switch_mask);
         setOnClickListener(this);
         setOnTouchListener(new OnTouchListener() {
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return false;

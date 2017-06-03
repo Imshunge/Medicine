@@ -19,7 +19,7 @@ import com.shssjk.http.condition.ProductCondition;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.SPProduct;
 import com.shssjk.utils.SMobileLog;
-import com.shssjk.utils.SPDialogUtils;
+import com.shssjk.utils.DialogUtils;
 
 import org.json.JSONObject;
 
@@ -150,7 +150,7 @@ public class ProductPictureTextDetaiFragment extends BaseFragment {
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
                 SMobileLog.e(TAG, "onRespone ,msg : " + msg);
-                SPDialogUtils.showToast(mContext, msg);
+                DialogUtils.showToast(mContext, msg);
             }
         });
     }

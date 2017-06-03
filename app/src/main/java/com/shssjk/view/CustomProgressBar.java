@@ -22,7 +22,7 @@ import com.shssjk.activity.R;
 
 
 /**
- * 进度条
+ * 个人中心等级  自定义进度条
  */
 public class CustomProgressBar extends View {
 

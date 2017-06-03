@@ -1,6 +1,4 @@
 /**
-
- * Date: @date 2015年11月2日 下午8:30:29
  * Description: 自定义确认框
  * @version V1.0
  */
@@ -18,10 +16,6 @@ import android.widget.TextView;
 
 import com.shssjk.activity.R;
 
-
-/**
- * Created by admin on 2016/7/4.
- */
 public class ConfirmDialog extends Dialog {
 
     public ConfirmDialog(Context context, int theme) {

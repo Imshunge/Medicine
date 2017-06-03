@@ -1,6 +1,5 @@
 package com.shssjk.activity.shop;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,7 +29,7 @@ import com.shssjk.http.condition.ProductCondition;
 import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.shop.SPShopOrder;
-import com.shssjk.utils.SPDialogUtils;
+import com.shssjk.utils.DialogUtils;
 import com.shssjk.utils.SSUtils;
 import com.shssjk.view.SPProductFilterTabView;
 
@@ -229,7 +228,7 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
                 @Override
                 public void onRespone(String msg, int errorCode) {
                     hideLoadingToast();
-                    SPDialogUtils.showToast(ProductListActivity.this, msg);
+                    DialogUtils.showToast(ProductListActivity.this, msg);
                     ptrClassicFrameLayout.refreshComplete();
                     ptrClassicFrameLayout.setLoadMoreEnable(true);
                 }
@@ -296,7 +295,7 @@ public class ProductListActivity extends BaseActivity implements SPProductListAd
                 @Override
                 public void onRespone(String msg, int errorCode) {
                     hideLoadingToast();
-                    SPDialogUtils.showToast(ProductListActivity.this, msg);
+                    DialogUtils.showToast(ProductListActivity.this, msg);
                     ptrClassicFrameLayout.loadMoreComplete(true);
                     mPageIndex--;
                 }

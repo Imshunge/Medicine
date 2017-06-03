@@ -11,15 +11,16 @@ import com.shssjk.activity.R;
 
 
 /**
+ * 弹出 进度框
  * Created by admin on 2016/6/20.
  */
-public class SPLoadingDialog extends Dialog {
+public class LoadingDialog extends Dialog {
 
 
     private TextView tv;
     public String mTitle;
 
-    public SPLoadingDialog(Context context , String title) {
+    public LoadingDialog(Context context, String title) {
         super(context, R.style.loadingDialogStyle);
         mTitle = title;
     }

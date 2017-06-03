@@ -3,7 +3,6 @@ package com.shssjk.utils;
 import android.util.Log;
 
 /**
- * @author 飞龙
  *
  */
 public class SMobileLog {
@@ -16,7 +15,7 @@ public class SMobileLog {
 	}
 
 	public static void e(String TAG , String  msg) {
-		Log.e(TAG  , msg);
+		if(DEBUG)Log.e(TAG, msg);;
 	}
 
 

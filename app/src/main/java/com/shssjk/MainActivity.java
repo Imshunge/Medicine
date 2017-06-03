@@ -1,7 +1,10 @@
 
 package com.shssjk;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -30,14 +33,13 @@ import com.shssjk.common.MobileConstants;
 import com.shssjk.fragment.BaseFragment;
 import com.shssjk.fragment.HealthyFragment2;
 import com.shssjk.fragment.InforFragment;
-import com.shssjk.fragment.HealthyFragment;
 import com.shssjk.fragment.PersonFragment;
 import com.shssjk.fragment.ShopFragment;
 
 import com.shssjk.model.info.Information;
 import com.shssjk.service.StepCounterService;
 import com.shssjk.utils.Logger;
-import com.shssjk.utils.SPDialogUtils;
+import com.shssjk.utils.DialogUtils;
 import com.shssjk.utils.Utils;
 
 
@@ -77,7 +79,7 @@ public class MainActivity extends BaseActivity {
                     break;
                 case MobileConstants.MSG_CODE_SHOW:
                     if (msg.obj != null) {
-                        SPDialogUtils.showToast(MainActivity.this, msg.obj.toString());
+                        DialogUtils.showToast(MainActivity.this, msg.obj.toString());
                     }
                     break;
             }
@@ -136,6 +138,7 @@ public class MainActivity extends BaseActivity {
         setSelectIndex(mCurrentSelectIndex);
         mInstance = this;
         initPush();
+
     }
 
     @Override
@@ -227,6 +230,20 @@ public class MainActivity extends BaseActivity {
         IntentFilter filter = new IntentFilter(MobileConstants.ACTION_HEALTH_CHANGE_FRAGMENT);
         chageToHealthReceiver = new ChageToHealthReceiver();
         mContext.registerReceiver(chageToHealthReceiver, filter);
+
+
+
+        //添加账号
+        Account account = new Account("account_test", "com.crazyman.accountsyncdemo.type");
+        AccountManager accountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+        accountManager.addAccountExplicitly(account, null, null);
+        //测试同步
+        ContentResolver.setIsSyncable(account, "com.shssjk.activity.accountsync.provider", 1);
+        ContentResolver.setSyncAutomatically(account, "com.shssjk.activity.accountsync.provider", true);
+        ContentResolver.addPeriodicSync(account, "com.shssjk.activity.accountsync.provider",
+                Bundle.EMPTY, 10);
+
+
     }
 
     public void setSelectIndex(int index) {

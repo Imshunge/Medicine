@@ -143,17 +143,10 @@ public class PublishCommentActivity extends BaseActivity {
             Image image = null;
             for (Uri u : mSelected) {
                 Log.e("picture", u.getPath());
-
                 image = new Image("content://media" + u.getPath(), 50, 50);
                 list.add(image);
-
             }
             displayImg(list);
-
-
-
-
-
         }
     }
 
@@ -185,9 +178,7 @@ public class PublishCommentActivity extends BaseActivity {
         if (fileList.size() > 0) {
             commentCondition.setImages(fileList);
         }
-
     }
-
     @OnClick({R.id.ivbtn_add, R.id.comnnent_btn})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -208,7 +199,7 @@ public class PublishCommentActivity extends BaseActivity {
         }
         int commentDes=    commentStarDes.getRank();
         int quality=    commentStarQuality.getRank();
-        int starLogistics=    commentStarLogistics.getRank();
+        int starLogistics= commentStarLogistics.getRank();
         commentCondition.setGoods_id(mOrder.getGoodsId());
         commentCondition.setOrder_id(mOrder.getOrderId());
 

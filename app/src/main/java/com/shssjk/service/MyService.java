@@ -116,7 +116,7 @@ public class MyService extends Service {
                 }, new SPFailuredListener() {
                     @Override
                     public void onRespone(String msg, int errorCode) {
-                        Logger.e("MyService", "SPFailuredListener");
+                        Logger.e("MyService", "FailuredListener");
                     }
                 });
     }

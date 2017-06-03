@@ -34,7 +34,7 @@ import com.shssjk.http.shop.ShopRequest;
 import com.shssjk.model.SPCategory;
 import com.shssjk.model.SPProduct;
 import com.shssjk.model.shop.SPShopOrder;
-import com.shssjk.utils.SPDialogUtils;
+import com.shssjk.utils.DialogUtils;
 import com.shssjk.view.SPProductFilterTabView;
 import com.soubao.tpshop.utils.SPStringUtils;
 
@@ -252,7 +252,7 @@ public class ProductListSearchResultActivity extends BaseActivity implements SPP
                 @Override
                 public void onRespone(String msg, int errorCode) {
                     hideLoadingToast();
-                    SPDialogUtils.showToast(ProductListSearchResultActivity.this, msg);
+                    DialogUtils.showToast(ProductListSearchResultActivity.this, msg);
                     ptrClassicFrameLayout.refreshComplete();
                     ptrClassicFrameLayout.setLoadMoreEnable(true);
                 }
@@ -314,7 +314,7 @@ public class ProductListSearchResultActivity extends BaseActivity implements SPP
                 @Override
                 public void onRespone(String msg, int errorCode) {
                     hideLoadingToast();
-                    SPDialogUtils.showToast(ProductListSearchResultActivity.this, msg);
+                    DialogUtils.showToast(ProductListSearchResultActivity.this, msg);
                     ptrClassicFrameLayout.loadMoreComplete(true);
                     mPageIndex--;
                 }

@@ -4,13 +4,11 @@ package com.shssjk.utils;
 import android.content.Context;
 import android.widget.Toast;
 
-/** 
- * @author
- * @version
- * @Description
- * @category 
+/**
+ * @version         1.0
+ * @Description   Toast 统一处理
  */
-public class SPDialogUtils {
+public class DialogUtils {
 
 	
 	public static void showToast(Context context , String text){

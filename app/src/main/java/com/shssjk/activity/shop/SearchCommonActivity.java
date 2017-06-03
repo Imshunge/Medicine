@@ -31,7 +31,7 @@ import com.shssjk.http.base.SPSuccessListener;
 import com.shssjk.http.home.SPHomeRequest;
 import com.shssjk.model.SPServiceConfig;
 import com.shssjk.model.Searchhistory;
-import com.shssjk.utils.SPDialogUtils;
+import com.shssjk.utils.DialogUtils;
 import com.shssjk.utils.SPServerUtils;
 import com.shssjk.view.SPSearchView;
 import com.soubao.tpshop.utils.SPStringUtils;
@@ -132,7 +132,7 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
             @Override
             public void onClick(View v) {
                 if (SPStringUtils.isEmpty(searchedTextView.getText().toString().trim())) {
-                    SPDialogUtils.showToast(mContext, "搜索内容不能为空");
+                    DialogUtils.showToast(mContext, "搜索内容不能为空");
                     return;
                 }
                 startSearch(searchedTextView.getText().toString().trim());
@@ -152,7 +152,7 @@ public class SearchCommonActivity extends BaseActivity implements SPSearchView.S
 //                                    InputMethodManager.HIDE_NOT_ALWAYS);
                     //跳转activity
                     if (SPStringUtils.isEmpty(searchedTextView.getText().toString().trim())) {
-                        SPDialogUtils.showToast(mContext, "搜索内容不能为空");
+                        DialogUtils.showToast(mContext, "搜索内容不能为空");
                     } else {
                         startSearch(searchedTextView.getText().toString().trim());
                     }

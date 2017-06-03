@@ -42,7 +42,7 @@ import com.shssjk.model.SPProduct;
 import com.shssjk.model.shop.GoodsComment;
 import com.shssjk.model.shop.SPProductSpec;
 import com.shssjk.utils.Logger;
-import com.shssjk.utils.SPDialogUtils;
+import com.shssjk.utils.DialogUtils;
 import com.shssjk.utils.SPShopUtils;
 import com.shssjk.utils.SSUtils;
 import com.shssjk.view.LoadListView;
@@ -522,7 +522,7 @@ public class ProductAllActivity extends BaseActivity implements TagListView.OnTa
             @Override
             public void onRespone(String msg, int errorCode) {
                 hideLoadingToast();
-                SPDialogUtils.showToast(mContext, msg);
+                DialogUtils.showToast(mContext, msg);
             }
         });
     }
