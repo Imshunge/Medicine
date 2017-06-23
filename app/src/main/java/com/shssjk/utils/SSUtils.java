@@ -37,7 +37,6 @@ public class SSUtils {
         return url;
     }
 
-
     /**
      * @throws
      * @Title: isNetworkAvaiable

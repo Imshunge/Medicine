@@ -24,7 +24,6 @@ public class Logger {
 		} else {
 			tag = objTag.getClass().getSimpleName();
 		}
-
 		Log.e(tag, msg);
 	}
 }

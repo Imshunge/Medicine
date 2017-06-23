@@ -6,7 +6,6 @@ import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.SyncResult;
 import android.os.Bundle;
-import android.util.Log;
 
 /**
  * Created by heyangya on 17-1-10.

@@ -394,7 +394,7 @@ public class AppstartActivity extends BaseActivity {
      *
      * @param ver1 当前版本
      * @param ver2  服务器版本
-     * @return  true  更新
+     * @return  true  需要更新
      */
     // 比较版本号检测更新
     public final static boolean check_version(String ver1, String ver2) {

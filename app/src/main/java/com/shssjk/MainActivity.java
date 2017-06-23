@@ -234,7 +234,7 @@ public class MainActivity extends BaseActivity {
 
 
         //添加账号
-        Account account = new Account("account_test", "com.crazyman.accountsyncdemo.type");
+        Account account = new Account("account_ssjk", "com.shssjk.activity.type");
         AccountManager accountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
         accountManager.addAccountExplicitly(account, null, null);
         //测试同步
