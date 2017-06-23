@@ -29,6 +29,7 @@ import com.shssjk.model.shop.CommentCondition;
 import com.shssjk.model.shop.ProductCommnet;
 import com.shssjk.model.shop.SPCollect;
 import com.shssjk.model.shop.Coupon;
+import com.shssjk.utils.Logger;
 import com.shssjk.utils.SSUtils;
 import com.soubao.tpshop.utils.SPCommonUtils;
 import com.soubao.tpshop.utils.SPJsonUtil;
@@ -1921,6 +1922,7 @@ public class PersonRequest {
                 /** 针对返回的业务数据会重新包装一遍再返回到View */
                 try {
                     String msg = (String) response.get(MobileConstants.Response.MSG);
+                    Logger.e(this,response.toString());
                     int status = response.getInt(MobileConstants.Response.STATUS);
                     if (status >= 0) {
                         if (status == 0) {

@@ -234,14 +234,14 @@ public class MainActivity extends BaseActivity {
 
 
         //添加账号
-        Account account = new Account("account_ssjk", "com.shssjk.activity.type");
-        AccountManager accountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
-        accountManager.addAccountExplicitly(account, null, null);
-        //测试同步
-        ContentResolver.setIsSyncable(account, "com.shssjk.activity.accountsync.provider", 1);
-        ContentResolver.setSyncAutomatically(account, "com.shssjk.activity.accountsync.provider", true);
-        ContentResolver.addPeriodicSync(account, "com.shssjk.activity.accountsync.provider",
-                Bundle.EMPTY, 10);
+//        Account account = new Account("account_ssjk", "com.shssjk.activity.type");
+//        AccountManager accountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+//        accountManager.addAccountExplicitly(account, null, null);
+//        //测试同步
+//        ContentResolver.setIsSyncable(account, "com.shssjk.activity.accountsync.provider", 1);
+//        ContentResolver.setSyncAutomatically(account, "com.shssjk.activity.accountsync.provider", true);
+//        ContentResolver.addPeriodicSync(account, "com.shssjk.activity.accountsync.provider",
+//                Bundle.EMPTY, 10);
 
 
     }

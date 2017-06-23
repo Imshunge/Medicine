@@ -61,7 +61,6 @@ public class SPUser implements Model, Serializable {
     String levelName;
     String level;
 
-
     /************
      * 以下是额外增加字段, 数据库表无对应
      **********/

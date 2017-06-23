@@ -435,34 +435,34 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             if (!SPStringUtils.isEmpty(user.getNickname())) {
                 nickNameTxtv.setText(user.getNickname());
             }
-            if (!SPStringUtils.isEmpty(user.getLevelName())) {
-                levelImgv.setVisibility(View.VISIBLE);
-                levelName.setVisibility(View.VISIBLE);
-                levelName.setText(user.getLevelName());
-                switch (Integer.valueOf(user.getLevel())) {
-                    case 1:
-                        levelImgv.setImageResource(R.drawable.icon_level_one);
-                        break;
-                    case 2:
-                        levelImgv.setImageResource(R.drawable.icon_level_two);
-                        break;
-                    case 3:
-                        levelImgv.setImageResource(R.drawable.icon_level_three);
-                        break;
-                    case 4:
-                        levelImgv.setImageResource(R.drawable.icon_level_four);
-                        break;
-                    case 5:
-                        levelImgv.setImageResource(R.drawable.icon_level_five);
-                        break;
-                    case 6:
-                        levelImgv.setImageResource(R.drawable.icon_level_six);
-                        break;
-                    default:
-                        levelImgv.setImageResource(R.drawable.icon_level_one);
-                        break;
-                }
-            }
+//            if (!SPStringUtils.isEmpty(user.getLevelName())) {
+//                levelImgv.setVisibility(View.VISIBLE);
+//                levelName.setVisibility(View.VISIBLE);
+//                levelName.setText(user.getLevelName());
+//                switch (Integer.valueOf(user.getLevel())) {
+//                    case 1:
+//                        levelImgv.setImageResource(R.drawable.icon_level_one);
+//                        break;
+//                    case 2:
+//                        levelImgv.setImageResource(R.drawable.icon_level_two);
+//                        break;
+//                    case 3:
+//                        levelImgv.setImageResource(R.drawable.icon_level_three);
+//                        break;
+//                    case 4:
+//                        levelImgv.setImageResource(R.drawable.icon_level_four);
+//                        break;
+//                    case 5:
+//                        levelImgv.setImageResource(R.drawable.icon_level_five);
+//                        break;
+//                    case 6:
+//                        levelImgv.setImageResource(R.drawable.icon_level_six);
+//                        break;
+//                    default:
+//                        levelImgv.setImageResource(R.drawable.icon_level_one);
+//                        break;
+//                }
+//            }
             if (MobileApplication.getInstance().isLogined){
                 SPUser mUser = MobileApplication.getInstance().getLoginUser();
                 String url ="";
@@ -509,6 +509,35 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     customProgressBar.setMaxProgress(SSUtils.str2Int(level.getAll_score()));
                     customProgressBar.setProgressColor(Color.parseColor("#79aa6b"));
                     customProgressBar.setCurProgress(SSUtils.str2Int(level.getNow_score()));
+
+                    if (!SPStringUtils.isEmpty(level.getLevel_name())) {
+                        levelImgv.setVisibility(View.VISIBLE);
+                        levelName.setVisibility(View.VISIBLE);
+                        levelName.setText(level.getLevel_name());
+                        switch (Integer.valueOf(level.getLevel())) {
+                            case 1:
+                                levelImgv.setImageResource(R.drawable.icon_level_one);
+                                break;
+                            case 2:
+                                levelImgv.setImageResource(R.drawable.icon_level_two);
+                                break;
+                            case 3:
+                                levelImgv.setImageResource(R.drawable.icon_level_three);
+                                break;
+                            case 4:
+                                levelImgv.setImageResource(R.drawable.icon_level_four);
+                                break;
+                            case 5:
+                                levelImgv.setImageResource(R.drawable.icon_level_five);
+                                break;
+                            case 6:
+                                levelImgv.setImageResource(R.drawable.icon_level_six);
+                                break;
+                            default:
+                                levelImgv.setImageResource(R.drawable.icon_level_one);
+                                break;
+                        }
+                    }
                 } else {
                     showToast(msg);
                 }

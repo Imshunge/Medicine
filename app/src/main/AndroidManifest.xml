@@ -366,37 +366,37 @@
             android:launchMode="singleTop" />
         <activity android:name=".person.LocalVideoListActivity"></activity>
         <!-- 账号同步-->
-        <service
-            android:name="com.shssjk.activity.accountsync.AuthenticatorService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator" />
-            </intent-filter>
+        <!--<service-->
+            <!--android:name="com.shssjk.activity.accountsync.AuthenticatorService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.accounts.AccountAuthenticator" />-->
+            <!--</intent-filter>-->
 
-            <meta-data
-                android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
-        </service>
+            <!--<meta-data-->
+                <!--android:name="android.accounts.AccountAuthenticator"-->
+                <!--android:resource="@xml/authenticator" />-->
+        <!--</service>-->
 
-        <provider
-            android:name="com.shssjk.activity.accountsync.StubProvider"
-            android:authorities="com.shssjk.activity.accountsync.provider"
-            android:exported="false"
-            android:syncable="true" />
+        <!--<provider-->
+            <!--android:name="com.shssjk.activity.accountsync.StubProvider"-->
+            <!--android:authorities="com.shssjk.activity.accountsync.provider"-->
+            <!--android:exported="false"-->
+            <!--android:syncable="true" />-->
 
-        <service
-            android:name="com.shssjk.activity.accountsync.SyncService"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":sync">
-            <intent-filter>
-                <action android:name="android.content.SyncAdapter" />
-            </intent-filter>
-            <meta-data
-                android:name="android.content.SyncAdapter"
-                android:resource="@xml/syncadapter" />
-        </service>
+        <!--<service-->
+            <!--android:name="com.shssjk.activity.accountsync.SyncService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true"-->
+            <!--android:process=":sync">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.content.SyncAdapter" />-->
+            <!--</intent-filter>-->
+            <!--<meta-data-->
+                <!--android:name="android.content.SyncAdapter"-->
+                <!--android:resource="@xml/syncadapter" />-->
+        <!--</service>-->
 
 
 
